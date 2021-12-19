@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+
+@layer base {
+  @font-face {
+    font-family: "Oswald";
+    src: url("./assets/fonts/Oswald-Bold.ttf");
+  }
+}
+@layer utilities {
+  .h-600 {
+    height: 600px;
+  }
+}
+
+/* 
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+ */
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: Helvetica, sans-serif;
+  /* height: 100%; */
+  width: 100%;
+  /* background-color: #131720; */
+  background-color: #06061b;
+  /* overflow: hidden; */
+}
+
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: auto;
+  right: auto;
+  bottom: 50%;
+  background-color: papayawhip;
+
+  /* top: "50%";
+  left: "50%";
+  right: "auto";
+  bottom: "auto";
+  marginright: "-50%";
+  transform: "translate(-50%, -50%)";
+  backgroundcolor: "#36393f"; */
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* background-color: rebeccapurple; */
+  opacity: 0.9;
+  background-color: black;
+}
