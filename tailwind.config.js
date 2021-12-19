@@ -14,6 +14,9 @@ module.exports = {
       },
       backgroundImage: {
       },
+      width: {
+        // '90': '18rem',
+      }
     },
     fontFamily: {
       sans: ["Helvetica", "Arial", "sans-serif", 'ui-sans-serif', 'system-ui'],

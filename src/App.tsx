@@ -28,7 +28,7 @@ function App() {
       <main
         className={`flex transition-all duration-500 ${
           isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-56" : ""
-        } px-10 xs:justify-center`}
+        } xs:justify-center`}
       >
         <Routes>
           <Route path="/" element={<Home />} />

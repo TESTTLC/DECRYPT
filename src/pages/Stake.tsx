@@ -62,7 +62,8 @@ const StakePage: React.FC = () => {
         {/* <UserBlock account={account} login={login} logout={logout} onPress={onDismiss} /> */}
       </>
     ) : (
-      <div className="relative">
+      // <div className="relative xs:mx-4 mx-10">
+      <div className="relative ">
         <div
           className="absolute -inset-0 bg-gradient-to-r
              from-green-500 to-indigo-600 
