@@ -58,7 +58,7 @@ const Home: React.FC = () => {
   }, []);
 
   return (
-    <main>
+    <div>
       {/* <button
         onClick={openSidebar}
         className={`${
@@ -67,7 +67,7 @@ const Home: React.FC = () => {
       >
         <FaBars className="w-5 h-5" />
       </button> */}
-    </main>
+    </div>
   );
 };
 
