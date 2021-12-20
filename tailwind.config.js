@@ -12,11 +12,6 @@ module.exports = {
           800: "#06061b"
         }
       },
-      backgroundImage: {
-      },
-      width: {
-        // '90': '18rem',
-      }
     },
     fontFamily: {
       sans: ["Helvetica", "Arial", "sans-serif", 'ui-sans-serif', 'system-ui'],
@@ -43,9 +38,9 @@ module.exports = {
       backgroundColor: ["disabled", "active"],
 			borderWidth: ['hover', 'focus'],
       textColor: ["active"],
-      boxShadow: {
-        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
-      }
+      // boxShadow: {
+      //   '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+      // }
 			
     },
 
