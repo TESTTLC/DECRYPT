@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FaBehance,
   FaFacebook,
@@ -8,10 +7,9 @@ import {
   FaHome,
   FaUserFriends,
   FaFolderOpen,
-  FaCalendarAlt,
 } from "react-icons/fa";
 
-import { HiDocument } from "react-icons/hi";
+// import { HiDocument } from "react-icons/hi";
 export const links = [
   {
     id: 1,

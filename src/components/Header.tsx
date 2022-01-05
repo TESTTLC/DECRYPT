@@ -3,14 +3,14 @@ import { useWalletConnector } from "../hooks/useWalletConnector";
 import { useGlobalContext } from "../utils/context";
 import small_logo from "../assets/images/small_logo.png";
 
-interface Props {
-  connectWallet: () => void;
-  disconnectWallet: () => void;
-  account?: string;
-  isMobile: boolean;
-}
+// interface Props {
+//   connectWallet: () => void;
+//   disconnectWallet: () => void;
+//   account?: string;
+//   isMobile: boolean;
+// }
 
-const Header: React.FC = ({}) => {
+const Header: React.FC = () => {
   const { account, connectWallet, disconnectWallet, isMobile } =
     useWalletConnector();
   const { isSidebarOpen } = useGlobalContext();

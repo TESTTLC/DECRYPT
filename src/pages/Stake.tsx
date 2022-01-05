@@ -1,10 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useWalletConnector } from "../hooks/useWalletConnector";
-import Header from "../components/Header";
-import Modal from "react-modal";
-import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../utils/context";
-import OpenSideBarButton from "../components/OpenSideBarButton";
 import GlowingButton from "../components/GlowingButton";
 import SelectDropdown from "../components/SelectDropdown";
 
@@ -13,18 +8,15 @@ import Stats from "../components/Stats";
 import { useTLXContracts } from "../hooks/useTLXContracts";
 import {
   getUserStakes,
-  getVolume24h,
   renderStakePeriod,
   unstake,
   webStake,
 } from "../utils/functions/Contracts";
-import {
-  TLXStakeContractAddress,
-  TLXTokenContractAddress,
-} from "../utils/globals";
+import { TLXStakeContractAddress } from "../utils/globals";
 import { StackingDuration, Stake } from "../utils/types";
 import tlx_logo_2 from "../assets/images/small_logo_2.png";
 import { useWindowSize } from "../hooks/useWindowSize";
+import * as contracts from "../utils/functions/Contracts";
 
 const StakePage: React.FC = () => {
   const { openSidebar, isSidebarOpen, account } = useGlobalContext();
@@ -35,6 +27,14 @@ const StakePage: React.FC = () => {
   const [stakeAmount, setStakeAmount] = useState(0);
   const [userStakes, setUserStakes] = useState([]);
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
+  const [TLXbalance, setTLXBalance] = useState<number>();
+
+  const getUserTLXBalance = async () => {
+    if (account) {
+      const result = await contracts.getTLXBalance(tokenContract, account);
+      setTLXBalance(result);
+    }
+  };
 
   const getStakeTransactions = async () => {
     setActiveIndex(1);
@@ -44,6 +44,12 @@ const StakePage: React.FC = () => {
       setUserStakes(stakes);
     }
   };
+
+  useEffect(() => {
+    if (tokenContract) {
+      getUserTLXBalance();
+    }
+  }, [tokenContract]);
 
   useEffect(() => {
     if (stakeContract) {
@@ -95,19 +101,19 @@ const StakePage: React.FC = () => {
                   those future rewards.
                 </p>
               </div>
-              <div className="py-5 mt-6 flex flex-col">
+              <div className="py-5 pr-2 mt-6 flex flex-col">
                 <div className="flex justify-between border-b-2 border-opacity-30 pb-1 ">
                   <p className="text-xl text-white font-bold">Stake your TLX</p>
 
                   <p className="text-xl text-green-500 font-bold">
                     {" "}
-                    30 TLX available
+                    ${TLXbalance} TLX available
                   </p>
                 </div>
-                <span className="flex flex-row xs:flex-col mt-4">
+                <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
                   {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
                   <input
-                    className="h-8 rounded-md px-3"
+                    className="h-8 rounded-md px-3 my-2 mr-2 w-64"
                     type={"number"}
                     ref={stakeInputRef}
                     onChange={(e) => {
@@ -115,39 +121,25 @@ const StakePage: React.FC = () => {
                     }}
                     placeholder="Value..."
                   />
-                  <SelectDropdown
-                    text={"Staking duration (months)"}
-                    elements={[1, 3, 6, 12]}
-                    onSelect={(e) => {
-                      // const value = parseInt(e.target.value, 10);
-                      if (parseInt(e.target.value, 10) === 1) {
-                        setDuration(StackingDuration.ONE_MONTH);
-                      } else if (parseInt(e.target.value, 10) === 3) {
-                        setDuration(StackingDuration.THREE_MONTHS);
-                      } else if (parseInt(e.target.value, 10) === 6) {
-                        setDuration(StackingDuration.SIX_MONTHS);
-                      } else if (parseInt(e.target.value, 10) === 12) {
-                        setDuration(StackingDuration.ONE_YEAR);
-                      }
-                      // switch (value) {
-                      //   case 1:
-                      //     break;
-                      //   case 3:
-                      //     setDuration(1);
-                      //     break;
-                      //   case 6:
-                      //     setDuration(2);
-                      //     break;
-                      //   case 12:
-                      //     setDuration(3);
-                      //     break;
-                      //   default:
-                      //     setDuration(0);
-                      //     break;
-                      // }
-                    }}
-                  />
-                  <div className="mx-2 flex justify-center">
+                  <div className="my-2 mr-2 w-64">
+                    <SelectDropdown
+                      text={"Staking duration (months)"}
+                      elements={[1, 3, 6, 12]}
+                      onSelect={(e) => {
+                        // const value = parseInt(e.target.value, 10);
+                        if (parseInt(e.target.value, 10) === 1) {
+                          setDuration(StackingDuration.ONE_MONTH);
+                        } else if (parseInt(e.target.value, 10) === 3) {
+                          setDuration(StackingDuration.THREE_MONTHS);
+                        } else if (parseInt(e.target.value, 10) === 6) {
+                          setDuration(StackingDuration.SIX_MONTHS);
+                        } else if (parseInt(e.target.value, 10) === 12) {
+                          setDuration(StackingDuration.ONE_YEAR);
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="my-2 mr-2 flex ">
                     <GlowingButton
                       text={`Stake ${stakeAmount || 0}`}
                       onClick={() => {

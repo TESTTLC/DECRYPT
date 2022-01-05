@@ -13,7 +13,7 @@ interface Props {
 
 const InputDropdown: React.FC<Props> = ({ text, elements, onSelect }) => {
   return (
-    <div className=" inline-flex ">
+    <div className="inline-flex ">
       <svg
         className="w-4 h-2 absolute top-3 right-3  pointer-events-none"
         viewBox="0 0 412 232"

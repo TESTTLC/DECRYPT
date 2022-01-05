@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import TheLuxuryStake from "../contracts/TheLuxuryStake.json";
 import TheLuxuryOriginal from "../contracts/TheLuxuryOriginal.json";
-import { ethers, Contract } from "ethers";
+import { ethers, Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { useGlobalContext } from "../utils/context";
 import {
@@ -27,6 +27,16 @@ export const useTLXContracts = () => {
         TheLuxuryStake.abi,
         provider.getSigner()
       );
+      console.log("contractS: ", contractS);
+      console.log("contractT: ", contractT);
+
+      //Total TLX Staked
+      // const stakedAmount = await contractS.getStakedAmount();
+      // const formatedResult = parseFloat(
+      //   ethers.utils.formatUnits(stakedAmount._hex)
+      // ).toFixed(3);
+
+      // console.log("getStakedAmount: ", formatedResult);
 
       setTokenContract(contractT);
       setStakeContract(contractS);

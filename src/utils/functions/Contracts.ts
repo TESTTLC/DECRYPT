@@ -38,7 +38,7 @@ export const approveStakeTokens = async (
   return { errorOnApprove };
 };
 
-/** Stake for mobile */
+/** Stake for mobile if the provider can't see if the approve function from stake contract is done (TrustWallet)*/
 export const mobileStake = async (
   stakeContract: Contract,
   amount: number,
@@ -83,17 +83,11 @@ export const webStake = async (
     //   setErrorOnApprove(false)
     // }
 
-    const result = await tokenContract.functions.approve(
-      stakeContractAddress,
-      price
-    );
+    // const result =
+    await tokenContract.functions.approve(stakeContractAddress, price);
     // .send({ from: account });
-    console.log("result: ", result);
-    const result2 = await stakeContract.functions.stakeTokens(
-      price,
-      stakingDuration
-    );
-    console.log("result2: ", result2);
+    // const result2 =
+    await stakeContract.functions.stakeTokens(price, stakingDuration);
   } catch (error) {
     errorOnApprove = true;
     console.log("Error on stake: ", error);
@@ -153,18 +147,42 @@ export const getTotalRewards = async (stakeContract: Contract) => {
     console.log("err: ", err);
   }
 
-  return totalRewards;
+  const formatedResult = parseFloat(
+    ethers.utils.formatUnits(totalRewards._hex)
+  ).toFixed(3);
+  return parseFloat(formatedResult);
 };
 
+// export const calculateStakeRewards = async (
+//   stakeContract: Contract,
+//   userStakes: any
+// ) => {
+//   console.log("stake C: ", stakeContract);
+//   let userRewards;
+//   try {
+//     userRewards = await stakeContract.calculateStakeReward();
+//   } catch (err) {
+//     console.log("err: ", err);
+//   }
+//   console.log("userRewards: ", userRewards);
+//   const formatedResult = parseFloat(
+//     ethers.utils.formatUnits(userRewards._hex)
+//   ).toFixed(3);
+//   return parseFloat(formatedResult);
+// };
+
 export const getVolume24h = async () => {
+  let totalVolume = 0.0;
   try {
     const baseUrl =
       "https://staking-calculatorbackend-cais4.ondigitalocean.app/cryptocurrency/quotes/latest?symbol=TLX&convert=USD";
     const data = await fetch(baseUrl).then((result) => result.json());
-    return data.data.TLX.quote.USD.volume_24h;
+    console.log("Data: ", data.data.TLX.quote.USD);
+    totalVolume = data.data.TLX.quote.USD.volume_24h;
   } catch (err) {
     console.log("Err on get volume");
   }
+  return totalVolume;
 };
 
 export const renderStakePeriod = (period: any) => {
@@ -177,4 +195,12 @@ export const renderStakePeriod = (period: any) => {
   } else {
     return "12 months";
   }
+};
+
+export const getTLXBalance = async (tokenContract: any, account: string) => {
+  const balance = await tokenContract.balanceOf(account);
+
+  return parseFloat(
+    parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
+  );
 };

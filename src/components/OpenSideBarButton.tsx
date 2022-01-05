@@ -1,7 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useWalletConnector } from "../hooks/useWalletConnector";
-import Header from "./Header";
-import Modal from "react-modal";
+import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../utils/context";
 
