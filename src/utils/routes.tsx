@@ -13,6 +13,16 @@ import {
   FaAnchor,
   FaFaucet,
   FaFedora,
+  FaMoneyBillWave,
+  FaMoneyBill,
+  FaUniversalAccess,
+  FaImage,
+  FaImages,
+  FaCreativeCommons,
+  FaCreativeCommonsNc,
+  FaCreativeCommonsPdAlt,
+  FaCertificate,
+  FaStackExchange,
 } from "react-icons/fa";
 
 // import { HiDocument } from "react-icons/hi";
@@ -33,19 +43,37 @@ export const links = [
     id: 2,
     url: "/stake",
     text: "stake",
-    icon: <FaUserFriends className="w-5 h-5" />,
+    icon: <FaStackExchange className="w-5 h-5" />,
   },
   {
     id: 3,
-    url: "/chaindefi",
-    text: "tlchain defi",
-    icon: <FaFedora className="w-5 h-5" />,
-  },
-  {
-    id: 4,
     url: "/crosschainbridge",
     text: "cross chain bridge",
     icon: <FaExternalLinkAlt className="w-5 h-5" />,
+  },
+  {
+    id: 4,
+    url: "/createtoken",
+    text: "create your token",
+    icon: <FaCreativeCommons className="w-5 h-5" />,
+  },
+  {
+    id: 5,
+    url: "/nftmarketplace",
+    text: "nft marketplace",
+    icon: <FaImages className="w-5 h-5" />,
+  },
+  {
+    id: 6,
+    url: "/metaverse",
+    text: "metaverse",
+    icon: <FaUniversalAccess className="w-5 h-5" />,
+  },
+  {
+    id: 7,
+    url: "/lendingandborrowing",
+    text: "lending & borrowing",
+    icon: <FaMoneyBillWave className="w-5 h-5" />,
   },
 ];
 

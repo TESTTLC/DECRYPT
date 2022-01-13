@@ -29,7 +29,7 @@ const SideBar: React.FC = () => {
     >
       <div
         className="flex h-screen overflow-y-auto flex-col bg-customBlue-800 w-60
-       px-2 py-8 border-r border-opacity-20 border-indigo-600 min-h-screen relative"
+       px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative"
       >
         <button
           onClick={closeSidebar}
@@ -38,9 +38,9 @@ const SideBar: React.FC = () => {
           <HiX className="w-5 h-5" />
         </button>
         <h2 className="text-3xl font-semibold text-white">
-          TLX{" "}
+          TLChain{" "}
           <span className="text-green-400 ml-1 drop-shadow-2xl shadow-white">
-            Bank
+            DeFi
           </span>
         </h2>
 

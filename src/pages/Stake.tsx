@@ -61,7 +61,7 @@ const StakePage: React.FC = () => {
   const renderTable = () => {
     return !account ? (
       <>
-        <p>Connect to your wallet to have access</p>
+        {/* <p>Connect to your wallet to have access</p> */}
         {/* <UserBlock account={account} login={login} logout={logout} onPress={onDismiss} /> */}
       </>
     ) : (

@@ -23,7 +23,7 @@ const ProjectItem: React.FC<Props> = ({ item }) => {
   }, [item]);
 
   return (
-    <div className="w-72 h-96 bg-gray-300 relative rounded-md overflow-hidden">
+    <div className="flex flex-grow flex-col w-full h-96 bg-gray-300 relative rounded-md overflow-hidden">
       <img
         src={TheLuxuryPng}
         className="h-full aspect-w-1 object-cover object-top"

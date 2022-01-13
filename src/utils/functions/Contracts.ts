@@ -130,7 +130,7 @@ export const getTotalUserTLXStaked = async (stakeContract: Contract) => {
 };
 
 export const getUserStakes = async (stakeContract: Contract) => {
-  let userStakes;
+  let userStakes = [];
   try {
     userStakes = await stakeContract.getUserStakes();
   } catch (err) {

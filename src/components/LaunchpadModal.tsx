@@ -67,13 +67,13 @@ const LaunchpadModal: React.FC<Props> = ({ index }) => {
         overlayClassName="Overlay"
         // className="Modal"
       >
-        <div className="flex h-[28rem] w-[64rem] relative">
-          <div>
+        <div className="flex xs:flex-col xs:w-full sm:flex-col sm:w-full md:flex-col md:w-full h-full min-h-[28rem] w-[64rem] relative">
+          <div className="xs:w-full xs:h-60 sm:w-full sm:h-60 md:w-full md:h-60 w-60 relative">
             <img
               src={launchpadProjects.TLX.imageSource}
-              className="h-full w-60 object-cover"
+              className="h-full w-full object-cover xs:object-center sm:object-top"
             />
-            <div className="flex flex-col items-center justify-center absolute w-60 py-1 px-3 bottom-0 inset-x-0 bg-gray-700 bg-opacity-60 text-white text-xs leading-4">
+            <div className="flex flex-col w-full items-center justify-center absolute 60 py-1 px-3 bottom-0 inset-x-0 bg-gray-700 bg-opacity-60 text-white text-xs leading-4">
               <p className="font-bold text-lg mb-2">The Luxury</p>
               <p className="text-center font-poppins font-medium">
                 The reference cryptocurrency for the luxury industry.

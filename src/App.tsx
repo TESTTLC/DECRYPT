@@ -1,5 +1,6 @@
 import SideBar from "./components/SideBar";
 import OpenSideBarButton from "./components/OpenSideBarButton";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Stake from "./pages/Stake";
 import Launchpad from "./pages/Launchpad";
@@ -15,23 +16,25 @@ const App = () => {
   //   useWalletConnector();
 
   return (
-    <div className="w-full ">
+    <div>
       <SideBar />
-      <Header />
-      <main
-        className={`flex transition-all duration-500 ${
-          isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
-        } xs:justify-center px-5`}
-      >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/launchpad" element={<Launchpad />} />
-          <Route path="/stake" element={<Stake />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-        </Routes>
-      </main>
-
+      <div className="flex flex-col w-full h-screen">
+        <Header />
+        <main
+          className={`flex transition-all duration-500 ${
+            isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
+          } xs:justify-center px-5 mb-auto`}
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/launchpad" element={<Launchpad />} />
+            <Route path="/stake" element={<Stake />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
       <OpenSideBarButton />
     </div>
   );
