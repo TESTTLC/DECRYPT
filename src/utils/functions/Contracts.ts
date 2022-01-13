@@ -24,7 +24,7 @@ export const approveStakeTokens = async (
 
     approveResultPromise
       .then(() => {
-        console.log("here");
+        console.log("approved");
       })
       .catch((err) => {
         console.log("err: ", err);
@@ -103,11 +103,12 @@ export const unstake = async (
   let unstakingError;
   // setUnstakingError(undefined)
   try {
-    const parsedIntexOfStake = ethers.utils.parseUnits(
-      indexOfStake.toString(),
-      "ether"
-    );
-    await stakeContract.functions.withdrawStake(account, parsedIntexOfStake);
+    // const parsedIntexOfStake = ethers.utils.parseUnits(
+    //   indexOfStake.toString(),
+    //   "ether"
+    // );
+    console.log("Index of stake: ", indexOfStake);
+    await stakeContract.functions.withdrawStake(account, indexOfStake);
   } catch (error) {
     console.log("Error on unstaking: ", error);
     unstakingError = "The stake is still locked";
@@ -177,7 +178,6 @@ export const getVolume24h = async () => {
     const baseUrl =
       "https://staking-calculatorbackend-cais4.ondigitalocean.app/cryptocurrency/quotes/latest?symbol=TLX&convert=USD";
     const data = await fetch(baseUrl).then((result) => result.json());
-    console.log("Data: ", data.data.TLX.quote.USD);
     totalVolume = data.data.TLX.quote.USD.volume_24h;
   } catch (err) {
     console.log("Err on get volume");

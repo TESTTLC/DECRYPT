@@ -7,6 +7,12 @@ import {
   FaHome,
   FaUserFriends,
   FaFolderOpen,
+  FaGamepad,
+  FaBalanceScale,
+  FaExternalLinkAlt,
+  FaAnchor,
+  FaFaucet,
+  FaFedora,
 } from "react-icons/fa";
 
 // import { HiDocument } from "react-icons/hi";
@@ -18,6 +24,12 @@ export const links = [
     icon: <FaHome className="w-5 h-5" />,
   },
   {
+    id: 1,
+    url: "/launchpad",
+    text: "launchpad",
+    icon: <FaGamepad className="w-5 h-5" />,
+  },
+  {
     id: 2,
     url: "/stake",
     text: "stake",
@@ -25,11 +37,30 @@ export const links = [
   },
   {
     id: 3,
-    url: "/projects",
-    text: "projects",
-    icon: <FaFolderOpen className="w-5 h-5" />,
+    url: "/chaindefi",
+    text: "tlchain defi",
+    icon: <FaFedora className="w-5 h-5" />,
+  },
+  {
+    id: 4,
+    url: "/crosschainbridge",
+    text: "cross chain bridge",
+    icon: <FaExternalLinkAlt className="w-5 h-5" />,
   },
 ];
+
+export const routes = {
+  dashboard: {
+    id: 1,
+    url: "/dashboard",
+    title: "Dashboard",
+  },
+  launchpad: {
+    id: 2,
+    url: "/launchpad",
+    title: "Launchpad",
+  },
+};
 
 export const social = [
   {

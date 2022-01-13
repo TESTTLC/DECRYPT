@@ -27,16 +27,8 @@ export const useTLXContracts = () => {
         TheLuxuryStake.abi,
         provider.getSigner()
       );
-      console.log("contractS: ", contractS);
-      console.log("contractT: ", contractT);
 
-      //Total TLX Staked
-      // const stakedAmount = await contractS.getStakedAmount();
-      // const formatedResult = parseFloat(
-      //   ethers.utils.formatUnits(stakedAmount._hex)
-      // ).toFixed(3);
-
-      // console.log("getStakedAmount: ", formatedResult);
+      console.log("Contract: ", contractS);
 
       setTokenContract(contractT);
       setStakeContract(contractS);

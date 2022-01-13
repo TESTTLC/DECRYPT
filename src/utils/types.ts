@@ -10,3 +10,12 @@ export interface Stake {
   amount: number;
   period: any;
 }
+
+export interface LaunchpadProject {
+  id: number;
+  title: string;
+  coin: string;
+  description: string;
+  about: string;
+  imageSource: string;
+}

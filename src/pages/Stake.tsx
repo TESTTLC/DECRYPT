@@ -41,6 +41,7 @@ const StakePage: React.FC = () => {
 
     if (stakeContract) {
       const stakes = await getUserStakes(stakeContract);
+      console.log("STAKES: ", stakes);
       setUserStakes(stakes);
     }
   };
@@ -57,10 +58,6 @@ const StakePage: React.FC = () => {
     }
   }, [stakeContract]);
 
-  useEffect(() => {
-    console.log("duration: ", duration);
-  }, [duration]);
-
   const renderTable = () => {
     return !account ? (
       <>
@@ -72,7 +69,7 @@ const StakePage: React.FC = () => {
       <div className="relative ">
         <div
           className="absolute -inset-0 bg-gradient-to-r
-             from-green-500 to-indigo-600 
+             from-green-400 to-blue-600
           rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"
         ></div>
         <div
@@ -107,13 +104,13 @@ const StakePage: React.FC = () => {
 
                   <p className="text-xl text-green-500 font-bold">
                     {" "}
-                    ${TLXbalance} TLX available
+                    {TLXbalance} TLX available
                   </p>
                 </div>
                 <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
                   {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
                   <input
-                    className="h-8 rounded-md px-3 my-2 mr-2 w-64"
+                    className="text-white h-8 rounded-md px-3 my-2 mr-2 w-64 bg-customBlue-300"
                     type={"number"}
                     ref={stakeInputRef}
                     onChange={(e) => {
@@ -187,7 +184,7 @@ const StakePage: React.FC = () => {
               }`}
             >
               {userStakes.length ? (
-                userStakes.map((stake: Stake, index: number) => {
+                userStakes.map((stake: Stake, index) => {
                   const d = new Date(parseInt(stake.since, 10) * 1000)
                     .toDateString()
                     .slice(4);
@@ -232,7 +229,7 @@ const StakePage: React.FC = () => {
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}
           <div className="relative xs:w-80 w-60 h-60">
-            <div className="absolute -inset-0 bg-gradient-to-r from-green-500 to-indigo-600  rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+            <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
             <button
               onClick={() => {
                 setActiveIndex(0);
@@ -258,7 +255,7 @@ const StakePage: React.FC = () => {
 
           {/* here starts 1 */}
           <div className="relative xs:w-80 w-60 h-60">
-            <div className="absolute -inset-0 bg-gradient-to-r from-green-500 to-indigo-600 blur-sm rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+            <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600blur-sm rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
             <button
               onClick={getStakeTransactions}
               className="

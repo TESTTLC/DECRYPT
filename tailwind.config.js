@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      height: {
+        '128': '32rem',
+      },
       colors: {
         customBlue: {
           200: "#0f0437",
@@ -17,7 +20,8 @@ module.exports = {
       sans: ["Helvetica", "Arial", "sans-serif", 'ui-sans-serif', 'system-ui'],
       serif: ['ui-serif', 'Georgia'],
       mono: ['ui-monospace', 'SFMono-Regular'],
-      oswald: ["Oswald"]
+      oswald: ["Oswald"],
+      poppins: ["Poppins", 'sans-serif']
     },
     screens: {
       xs: { max: "640px" },
@@ -45,5 +49,9 @@ module.exports = {
     },
 
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+
+    
+  ],
 };

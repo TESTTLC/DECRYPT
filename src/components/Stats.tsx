@@ -30,7 +30,6 @@ const Stats: React.FC = () => {
 
   const getUserTLXBalance = async () => {
     if (account) {
-      console.log("TokenC: ", tokenContract);
       const result = await contracts.getTLXBalance(tokenContract, account);
       setTLXBalance(result);
     }
@@ -109,7 +108,7 @@ const Stats: React.FC = () => {
           Your Balance
         </p>
         <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          ${TLXbalance} TLX
+          {TLXbalance} TLX
         </p>
       </div>
     </div>

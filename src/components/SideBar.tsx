@@ -20,14 +20,17 @@ const SideBar: React.FC = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();
   const location = useLocation();
 
-  const [showSidebar, setShowSidebar] = useState("-left-56");
+  const [showSidebar, setShowSidebar] = useState("-left-60");
   return (
     <div
       className={`transition-all  duration-500  fixed top-0 ${
-        isSidebarOpen ? "left-0" : "-left-56"
+        isSidebarOpen ? "left-0" : "-left-60"
       } z-index-20 fixed z-50 h-screen`}
     >
-      <div className="flex h-screen overflow-y-auto flex-col bg-customBlue-800 w-56 px-4 py-8 border-r border-opacity-20 border-indigo-600 min-h-screen relative">
+      <div
+        className="flex h-screen overflow-y-auto flex-col bg-customBlue-800 w-60
+       px-2 py-8 border-r border-opacity-20 border-indigo-600 min-h-screen relative"
+      >
         <button
           onClick={closeSidebar}
           className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center active:bg-gray-300 focus:outline-none ml-6 hover:bg-gray-200 hover:text-gray-800"
@@ -48,10 +51,10 @@ const SideBar: React.FC = () => {
 
               return (
                 <Link
-                  key={id}
+                  key={`${id}/${url}`}
                   to={{ pathname: url }}
                   className={`
-                  capitalize flex items-center px-4 py-2 ${
+                  capitalize flex items-center px-2 py-2 ${
                     location.pathname === link.url
                       ? ""
                       : "hover:bg-gray-600 hover:text-gray-200"
@@ -90,13 +93,13 @@ const SideBar: React.FC = () => {
               </span>
             </a>
           </nav>
-          <div className="flex items-center px-4 -mx-2 mt-5">
+          <div className="flex items-center mt-5">
             <img
               src={small_logo}
               alt="avatar"
-              className="h-9 w-9 mx-2 object-center object-cover rounded-full"
+              className="h-6 w-6 mx-2 object-center object-cover rounded-full"
             />
-            <h4 className="mx-2 font-medium text-gray-800 hover:underline cursor-pointer">
+            <h4 className="font-medium text-sm font-poppins text-gray-300 hover:underline cursor-pointer">
               The Luxury Bank
             </h4>
           </div>

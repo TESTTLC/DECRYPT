@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../utils/context";
 import BigButton from "../components/BigButton";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { routes } from "../utils/routes";
 
 const options = { method: "GET" };
 
@@ -72,13 +73,81 @@ const Home: React.FC = () => {
         </div>
       </div> */}
 
-      <div className="w-full">
-        <div className="col-span-4 flex justify-center items-center mb-6">
-          <p className="text-white text-2xl font-bold">
+      <div className="w-full px-2">
+        <div className="col-span-4 mb-2">
+          <p className="text-white font-bold text-2xl">
             Select an asset to stake
           </p>
+          <Link
+            key={routes.launchpad.title}
+            to={{ pathname: routes.launchpad.url }}
+            type="button"
+            // className="flex h-8 mx-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+          >
+            <span className="text-white font-bold text-md mb-4 underline">
+              View all upcoming projects &rarr;
+            </span>
+          </Link>
         </div>
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 xs:grid-cols-1 mt-6 justify-center items-center">
+        <div className="grid gap-8 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 mt-6 justify-center items-center">
+          <div className="flex w-full h-72 justify-center items-center mb-6">
+            <BigButton
+              title="THE LUXURY"
+              subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
+              onClick={() => navigate("/stake")}
+              imageSource="https://forsite.ro/crx//local/images/stakingtlx.jpeg"
+            />
+          </div>
+          <div className="flex w-full h-72 justify-center items-center mb-6">
+            <BigButton
+              title="LUXANDIA"
+              subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
+              onClick={() => {}}
+              imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
+              showTopText
+            />
+          </div>
+          <div className="flex w-full h-72 justify-center items-center mb-6">
+            <BigButton
+              title="BEEZ"
+              subtitle=" The first functioning bridge connecting cryptocurrency and eCommerce. Accelerating The World’s Transition To Cryptocurrency."
+              onClick={() => {}}
+              imageSource="https://forsite.ro/crx//local/images/staking-beez.jpeg"
+              showTopText
+            />
+          </div>
+          {/* <div className="flex justify-center items-center mb-6"> */}
+          <div className="flex w-full h-72 justify-center items-center mb-6">
+            <BigButton
+              title="ICICB"
+              subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
+              onClick={() => {}}
+              imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"
+              showTopText
+            />
+          </div>
+          {/* <div className="flex justify-center items-center">
+            <div className="flex border-2 w-72 h-72 justify-center items-center">
+              <p className="text-white">1</p>
+            </div>
+          </div>
+          <div className="flex justify-center items-center">
+            <div className="flex border-2 w-72 h-72 justify-center items-center">
+              <p className="text-white">2</p>
+            </div>
+          </div>
+          <div className="flex justify-center items-center">
+            <div className="flex border-2 w-72 h-72 justify-center items-center">
+              <p className="text-white">3</p>
+            </div>
+          </div>
+          <div className="flex justify-center items-center">
+            <div className="flex border-2 w-72 h-72 justify-center items-center">
+              <p className="text-white">4</p>
+            </div>
+          </div> 
+        </div>
+        {/* <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-3 xs:grid-cols-1 mt-6 justify-center items-center">
           <div className="flex justify-center items-center mb-6">
             <BigButton
               title="THE LUXURY"
