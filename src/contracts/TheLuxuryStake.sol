@@ -17,16 +17,18 @@ contract TheLuxuryStake is Ownable {
         stakeholders.push();
 
         // populate rewards
-        _rewards.push(uint(1012783)); // 15.34 per year means 1.2783 % per month means 1.012783 factor
-        _rewards.push(uint(1017708)); // 21.25 per year means 1.7708 % per month means 1.017708 factor
-        _rewards.push(uint(1024733)); // 29.68 per year means 2.4733 % per month means 1.024733 factor
-        _rewards.push(uint(1033800)); // 40.56 per year means 3.3800 % per month means 1.033800 factor
+        _rewards.push(uint(1534)); // 15.35%
+        _rewards.push(uint(2125)); // 21.25%
+        _rewards.push(uint(2968)); // 29.68%
+        _rewards.push(uint(4056)); // 40.56%
+        _rewards.push(uint(8612)); // 86.12%s
 
         // populate periods with monts
         _periods.push(uint(1));
         _periods.push(uint(3));
         _periods.push(uint(6));
         _periods.push(uint(12));
+        _periods.push(uint(36));
     }
 
     /**
@@ -68,7 +70,8 @@ contract TheLuxuryStake is Ownable {
     
     /** CONSTANTS **/
 
-    address immutable tokenAddress = 0xEA255909E46A54d54255219468991C69ca0e659D;
+    // address immutable tokenAddress = 0xEA255909E46A54d54255219468991C69ca0e659D;
+    address immutable tokenAddress = 0xaE58BAaE4432A3485DE83C9Eb03b1c38B3Ff7a18;
 
 
     /** VARIABLES **/
@@ -99,20 +102,32 @@ contract TheLuxuryStake is Ownable {
     event StakeSuccessful(address indexed user, uint256 amount, uint256 index, uint256 timestamp, uint period);
     event StakeFailed(address indexed from_, address indexed to_, uint256 amount_);
 
+    event WithdrawStakeSuccessful(address indexed user, uint256 amount, uint period);
+    event WithdrawStakeFailed(address indexed to_, uint256 amount_);
+
     /** METHODS **/
 
     /**
     * getRewards will get the reward value for a specific period
     */
-    function getRewards(uint index) public view returns (uint) {
-        return _rewards[index];
+    function getRewards(uint index_) public view returns (uint) {
+        return _rewards[index_];
+    }
+
+    /**
+    * getRewards will get the reward value for a specific period
+    */
+    function setRewards(uint index_, uint256 percent_) external {
+        require(index_ >= 0,'Index out of range');
+        require(index_ < 5,'Index out of range');
+         _rewards[index_] = percent_;
     }
 
     /**
     * getPeriod will get the period in months for a specific index
     */
-    function getPeriod(uint index) public view returns (uint) {
-        return _periods[index];
+    function getPeriod(uint index_) public view returns (uint) {
+        return _periods[index_];
     }
 
     function getStakedAmount() public view returns (uint256) {
@@ -123,8 +138,10 @@ contract TheLuxuryStake is Ownable {
         return _total_reward;
     }
 
-    function balance() public view returns (uint256) {
-        return address(this).balance;
+    function balance() public onlyOwner returns (uint256) {
+        ERC20Interface =  ERC20(tokenAddress);
+        uint256 b = ERC20Interface.balanceOf(address(this));
+        return b;
     }
 
 
@@ -136,8 +153,7 @@ contract TheLuxuryStake is Ownable {
      */
     function calculateStakeReward(uint256 amount_, uint period_) internal view returns(uint256){
         uint reward = getRewards(period_);
-        uint period = getPeriod(period_);
-        return (amount_*reward*period)/1000000 - amount_;
+        return (amount_*reward)/10000; // reward = (amount*(percent/100))/100 => reward = (amount * percent)/10000
     }
 
     /*
@@ -173,6 +189,8 @@ contract TheLuxuryStake is Ownable {
             emit StakeFailed(from_, address(this), amount_);
             revert();
         }
+
+        // require(amount_ < 0, "blablabla");
 
         // IMPORTANT !!! //
         // Before calling transferFrom, you need to call approve on the token contract for this contract address
@@ -214,40 +232,48 @@ contract TheLuxuryStake is Ownable {
      * Will return the amount to MINT onto the acount
      * Will also calculateStakeReward and reset timer
     */
-    function _withdrawStake(uint256 index) internal view returns(uint256){
-        // Grab user_index which is the index to use to grab the Stake[]
-        uint256 user_index = stakes[msg.sender];
-        // identify the stake by stake index
-        Stake memory current_stake = stakeholders[user_index].address_stakes[index];
+    function withdrawStake(uint256 index_) external payable{
+        require(stakes[msg.sender] != 0, 'User has no stake!');
 
+        address beneficiary = msg.sender;
+
+               // Grab user_index which is the index to use to grab the Stake[]
+        uint256 user_index = stakes[msg.sender]; // msg sender is the beneficiary_
+        
+        // identify the stake by stake index
+        Stake memory current_stake = stakeholders[user_index].address_stakes[index_];
         uint256 amount = current_stake.amount;
         uint256 reward = current_stake.claimable;
-
+        
+        // check the conditions
+        require (amount >= address(this).balance, 'We cannot process your request right now. Please come back later. Not enough amount in the contract storage.');
+        
+        // now checking the periods
         // check to see if the stake is locked
         uint stakeAge = (block.timestamp - current_stake.since)/(3600*24); // number of days
         uint period = getPeriod(current_stake.period) * 30; // number of days for lock
 
         require (stakeAge >= period, "Stake is locked for the initial defined period");
-        
-        return amount+reward;
-    }
 
-    function withdrawStake(address beneficiary_, uint256 index) external payable{
-        require(stakes[msg.sender] != 0, 'User has no stake!');
-        uint256 amount = _withdrawStake(index);
-        require (amount >= address(this).balance, 'We cannot process your request right now. Please come back later.');
-        require(ERC20Interface.approve(address(this), amount), 'Failed to approve tokens');
-        require(ERC20Interface.transferFrom(address(this), beneficiary_, amount), 'Failed to transfer tokens to beneficiary');
+        // we can make the transfer now
+        uint256 total = amount + reward;
+
+        ERC20Interface =  ERC20(tokenAddress);
+        require(ERC20Interface.approve(address(this), total), 'Failed to approve tokens');
+        require(total <= ERC20Interface.balanceOf(address(this)), 'Not enough tokens in the balance. Come back later.');
+        require(ERC20Interface.transferFrom(address(this), beneficiary, total), 'Failed to transfer tokens to beneficiary');
         
-        // updating information
-        // Grab user_index which is the index to use to grab the Stake[]
-        uint256 user_index = stakes[msg.sender];
-        // identify the stake by stake index
-        Stake memory current_stake = stakeholders[user_index].address_stakes[index];
         // Remove by subtracting the money unstaked 
         current_stake.amount = current_stake.amount - amount;
+        
         // If stake is empty, 0, then remove it from the array of stakes
-        delete stakeholders[user_index].address_stakes[index];
+        delete stakeholders[user_index].address_stakes[index_];
+
+        // update the total staked amount
+        _total_staked = _total_staked - amount;
+        _total_reward = _total_reward - reward;
+
+        emit WithdrawStakeSuccessful(beneficiary, amount, period);
     }
 
     // getUserStakes will return all stakes for a user
@@ -279,3 +305,5 @@ contract TheLuxuryStake is Ownable {
     }
 
 }
+
+// label puppy turn honey bounce fox roof boss feed outdoor umbrella van

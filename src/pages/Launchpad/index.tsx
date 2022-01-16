@@ -41,11 +41,10 @@ const Launchpad: React.FC = () => {
           </GlowingWrapper>
         </div>
       </div>
-      <p className="text-white font-poppins mt-16 font-bold text-md">
+      <p className="text-white text-center font-poppins mt-16 font-bold text-md">
         Want to launch your project on Decryption? Apply to Launchpad
       </p>
-      {/* <p className="text-white font-poppins">Apply to Launchpad</p> */}
-      <div className="flex items-center mt-4">
+      <div className="flex items-center justify-center mt-4">
         <input
           type="text"
           className="

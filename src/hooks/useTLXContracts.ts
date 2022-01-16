@@ -28,8 +28,6 @@ export const useTLXContracts = () => {
         provider.getSigner()
       );
 
-      console.log("Contract: ", contractS);
-
       setTokenContract(contractT);
       setStakeContract(contractS);
     }

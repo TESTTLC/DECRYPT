@@ -1,24 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../utils/context";
-import GlowingButton from "../components/GlowingButton";
-import SelectDropdown from "../components/SelectDropdown";
+import { useGlobalContext } from "../../../utils/context";
+import GlowingButton from "../../../components/GlowingButton";
+import SelectDropdown from "../../../components/SelectDropdown";
 
-import Stats from "../components/Stats";
+import Stats from "../../../components/Stats";
 
-import { useTLXContracts } from "../hooks/useTLXContracts";
+import { useTLXContracts } from "../../../hooks/useTLXContracts";
 import {
   getUserStakes,
   renderStakePeriod,
   unstake,
   webStake,
-} from "../utils/functions/Contracts";
-import { TLXStakeContractAddress } from "../utils/globals";
-import { StackingDuration, Stake } from "../utils/types";
-import tlx_logo_2 from "../assets/images/small_logo_2.png";
-import { useWindowSize } from "../hooks/useWindowSize";
-import * as contracts from "../utils/functions/Contracts";
+} from "../../../utils/functions/Contracts";
+import { TLXStakeContractAddress } from "../../../utils/globals";
+import { StackingDuration, Stake } from "../../../utils/types";
+import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
+import { useWindowSize } from "../../../hooks/useWindowSize";
+import * as contracts from "../../../utils/functions/Contracts";
 
-const StakePage: React.FC = () => {
+const StakeCoin: React.FC = () => {
   const { openSidebar, isSidebarOpen, account } = useGlobalContext();
   const { stakeContract, tokenContract, provider } = useTLXContracts();
   const { isMobile } = useWindowSize();
@@ -274,4 +274,4 @@ const StakePage: React.FC = () => {
   );
 };
 
-export default StakePage;
+export default StakeCoin;

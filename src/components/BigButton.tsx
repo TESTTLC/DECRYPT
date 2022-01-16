@@ -7,6 +7,8 @@ interface Props {
   imageSource?: string;
   showTopText?: boolean;
   showPageTitle?: boolean;
+  imageContainerStyle?: string;
+  imageStyle?: string;
 }
 
 const BigButton: React.FC<Props> = ({
@@ -16,6 +18,8 @@ const BigButton: React.FC<Props> = ({
   imageSource,
   showTopText,
   showPageTitle,
+  imageContainerStyle,
+  imageStyle,
 }) => {
   return (
     <div className="h-full w-full">
@@ -37,10 +41,17 @@ const BigButton: React.FC<Props> = ({
           // hover:from-customBlue-300 hover:via-customBlue-700 hover:to-customBlue-700
         >
           {imageSource && (
-            <div className="relative h-1/2 w-full">
+            <div
+              className={`relative w-full ${
+                imageContainerStyle ? imageContainerStyle : "h-1/2"
+              }`}
+            >
               <img
+                alt={`${imageSource}`}
                 src={imageSource}
-                className="h-full w-full aspect-w-1 object-cover"
+                className={`h-full w-full aspect-w-1 object-cover ${
+                  imageStyle ? imageStyle : ""
+                }`}
               />
               {showTopText && (
                 <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">

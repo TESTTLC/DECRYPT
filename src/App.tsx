@@ -2,7 +2,8 @@ import SideBar from "./components/SideBar";
 import OpenSideBarButton from "./components/OpenSideBarButton";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Stake from "./pages/Stake";
+import Staking from "./pages/Staking";
+import StakeCoin from "./pages/Staking/components/StakeCoin";
 import Launchpad from "./pages/Launchpad";
 import Projects from "./pages/Projects";
 import Dashboard from "./pages/Dashboard";
@@ -27,10 +28,11 @@ const App = () => {
         >
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/staking" element={<Staking />} />
+            <Route path="/staking/:coin" element={<StakeCoin />} />
             <Route path="/launchpad" element={<Launchpad />} />
-            <Route path="/stake" element={<Stake />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
+            {/* <Route path="/crosschainbridge" element={<Projects />} /> */}
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
         <Footer />

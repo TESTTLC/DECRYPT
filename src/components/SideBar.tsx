@@ -47,7 +47,7 @@ const SideBar: React.FC = () => {
         <div className="flex flex-col mt-6  justify-between flex-1">
           <nav className="text">
             {links.map((link, index) => {
-              const { id, url, text, icon } = link;
+              const { id, url, text, icon, imageSource } = link;
 
               return (
                 <Link
@@ -62,7 +62,11 @@ const SideBar: React.FC = () => {
                    rounded-md font-oswald text-white`}
                   // text-gray-600`
                 >
-                  {icon}
+                  {imageSource ? (
+                    <img src={imageSource} className="w-5 h-5" />
+                  ) : (
+                    icon
+                  )}
                   <span
                     className={`mx-4 font-medium ${
                       location.pathname === link.url ? "text-green-500" : ""

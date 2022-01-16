@@ -141,17 +141,18 @@ export const getUserStakes = async (stakeContract: Contract) => {
 };
 
 export const getTotalRewards = async (stakeContract: Contract) => {
+  let formatedResult = "-";
   let totalRewards;
   try {
     totalRewards = await stakeContract.getTotalRewards();
+    formatedResult = parseFloat(
+      ethers.utils.formatUnits(totalRewards._hex)
+    ).toFixed(3);
   } catch (err) {
     console.log("err: ", err);
   }
 
-  const formatedResult = parseFloat(
-    ethers.utils.formatUnits(totalRewards._hex)
-  ).toFixed(3);
-  return parseFloat(formatedResult);
+  return parseFloat(formatedResult) || 0;
 };
 
 // export const calculateStakeRewards = async (
@@ -198,9 +199,16 @@ export const renderStakePeriod = (period: any) => {
 };
 
 export const getTLXBalance = async (tokenContract: any, account: string) => {
-  const balance = await tokenContract.balanceOf(account);
+  let userBalance = 0;
+  try {
+    const balance = await tokenContract.balanceOf(account);
 
-  return parseFloat(
-    parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
-  );
+    userBalance = parseFloat(
+      parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
+    );
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+
+  return userBalance;
 };
