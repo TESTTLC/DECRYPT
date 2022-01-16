@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { useTLXContracts } from "../hooks/useTLXContracts";
+import { useContracts } from "../hooks/useContracts";
 import { useGlobalContext } from "../utils/context";
 import { webStake } from "../utils/functions/Contracts";
 import { TLXStakeContractAddress } from "../utils/globals";
@@ -31,15 +31,16 @@ Modal.setAppElement("#root");
 
 interface Props {
   index: number;
+  coin: string;
 }
 
-const LaunchpadModal: React.FC<Props> = ({ index }) => {
+const LaunchpadModal: React.FC<Props> = ({ index, coin }) => {
   const { account } = useGlobalContext();
   let subtitle = "";
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
-  const { stakeContract, tokenContract, provider } = useTLXContracts();
+  const { stakeContract, tokenContract, provider } = useContracts(coin);
 
   function openModal() {
     setIsOpen(true);

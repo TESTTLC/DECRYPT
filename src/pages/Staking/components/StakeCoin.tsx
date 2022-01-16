@@ -5,7 +5,7 @@ import SelectDropdown from "../../../components/SelectDropdown";
 
 import Stats from "../../../components/Stats";
 
-import { useTLXContracts } from "../../../hooks/useTLXContracts";
+import { useContracts } from "../../../hooks/useContracts";
 import {
   getUserStakes,
   renderStakePeriod,
@@ -18,9 +18,13 @@ import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import * as contracts from "../../../utils/functions/Contracts";
 
-const StakeCoin: React.FC = () => {
+interface Props {
+  coin: string;
+}
+
+const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
   const { openSidebar, isSidebarOpen, account } = useGlobalContext();
-  const { stakeContract, tokenContract, provider } = useTLXContracts();
+  const { stakeContract, tokenContract, provider } = useContracts(coin);
   const { isMobile } = useWindowSize();
   const [duration, setDuration] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -202,9 +206,7 @@ const StakeCoin: React.FC = () => {
                         {stakeContract ? (
                           <GlowingButton
                             text={`Unstake ${stake.amount / 10 ** 18} TLX`}
-                            onClick={() =>
-                              unstake(index, account, stakeContract)
-                            }
+                            onClick={() => unstake(index, stakeContract)}
                           />
                         ) : null}
                       </div>
@@ -212,7 +214,9 @@ const StakeCoin: React.FC = () => {
                   );
                 })
               ) : (
-                <p>You have no staking transactions</p>
+                <p className="text-white font-poppins">
+                  You have no staking transactions
+                </p>
               )}
             </div>
           </div>

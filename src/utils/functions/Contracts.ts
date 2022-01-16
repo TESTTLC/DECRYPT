@@ -71,6 +71,7 @@ export const webStake = async (
   let errorOnApprove = false;
   try {
     const price = ethers.utils.parseUnits(amount.toString(), "ether");
+
     // if (provider) {
     //   await tokenContract.setProvider(provider);
     // }
@@ -83,11 +84,24 @@ export const webStake = async (
     //   setErrorOnApprove(false)
     // }
 
+    console.log("tokenContract: ", tokenContract);
     // const result =
-    await tokenContract.functions.approve(stakeContractAddress, price);
+    // await tokenContract.functions.approve(stakeContractAddress, price);
+    const result = await tokenContract.approve(stakeContractAddress, price);
     // .send({ from: account });
-    // const result2 =
-    await stakeContract.functions.stakeTokens(price, stakingDuration);
+    console.log("stakingD: ", stakingDuration);
+    console.log("stakeContract: ", stakeContract);
+    console.log("stake address: ", stakeContractAddress);
+    // setTimeout(async () => {
+    if (result) {
+      console.log("result is: ", result);
+      const r = await stakeContract.functions.stakeTokens(
+        price,
+        stakingDuration
+      );
+      console.log("R: ", r);
+    }
+    // }, 30000);
   } catch (error) {
     errorOnApprove = true;
     console.log("Error on stake: ", error);
@@ -97,7 +111,7 @@ export const webStake = async (
 
 export const unstake = async (
   indexOfStake: number,
-  account: string,
+  // account: string,
   stakeContract: Contract
 ) => {
   let unstakingError;
@@ -108,7 +122,7 @@ export const unstake = async (
     //   "ether"
     // );
     console.log("Index of stake: ", indexOfStake);
-    await stakeContract.functions.withdrawStake(account, indexOfStake);
+    await stakeContract.functions.withdrawStake(indexOfStake);
   } catch (error) {
     console.log("Error on unstaking: ", error);
     unstakingError = "The stake is still locked";
@@ -199,6 +213,7 @@ export const renderStakePeriod = (period: any) => {
 };
 
 export const getTLXBalance = async (tokenContract: any, account: string) => {
+  console.log("token is: ", tokenContract);
   let userBalance = 0;
   try {
     const balance = await tokenContract.balanceOf(account);

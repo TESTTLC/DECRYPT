@@ -5,11 +5,11 @@ import Modal from "react-modal";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../utils/context";
 import * as contracts from "../utils/functions/Contracts";
-import { useTLXContracts } from "../hooks/useTLXContracts";
+import { useContracts } from "../hooks/useContracts";
 import SNXStatBackground from "../assets/svg/snx-stat-background.svg";
 
 const Stats: React.FC = () => {
-  const { stakeContract, tokenContract } = useTLXContracts();
+  const { stakeContract, tokenContract } = useContracts("TLX");
   const { account } = useGlobalContext();
   const [volume24h, setVolume24h] = useState(0);
   const [totalRewards, setTotalRewards] = useState<number>();
