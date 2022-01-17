@@ -3,24 +3,24 @@ import { FaBars } from "react-icons/fa";
 import LaunchpadModal from "../../../components/LaunchpadModal";
 import TheLuxuryPng from "../../../assets/images/the_luxury.png";
 import { launchpadProjects } from "../../../utils/launchpadProjects";
-import { LaunchpadProject } from "../../../utils/types";
+import { LaunchpadProject, Project } from "../../../utils/types";
 
 interface Props {
-  item: "TLX" | "TLC";
+  coinTag: string;
 }
 
-const ProjectItem: React.FC<Props> = ({ item }) => {
+const ProjectItem: React.FC<Props> = ({ coinTag }) => {
   const [projectItem, setProjectItem] = useState<LaunchpadProject>(
     launchpadProjects.TLX
   );
 
   useEffect(() => {
-    if (item === "TLX") {
+    if (coinTag === "TLX") {
       setProjectItem(launchpadProjects.TLX);
-    } else if (item === "TLC") {
+    } else if (coinTag === "TLC") {
       setProjectItem(launchpadProjects.TLC);
     }
-  }, [item]);
+  }, [coinTag]);
 
   return (
     <div className="flex flex-grow flex-col w-full h-96 bg-gray-300 relative rounded-md overflow-hidden">
@@ -37,7 +37,7 @@ const ProjectItem: React.FC<Props> = ({ item }) => {
           The decentralized cryptocurrency created to become the token of
           reference for the luxury industry.
         </p>
-        <LaunchpadModal index={projectItem.id} />
+        <LaunchpadModal index={projectItem.id} coinTag={coinTag} />
       </div>
     </div>
   );

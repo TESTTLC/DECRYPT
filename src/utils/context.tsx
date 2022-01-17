@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { ethers } from "ethers";
 import { useWindowSize } from "../hooks/useWindowSize";
+import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 
 // const AppContext = createContext({
 //   isSidebarOpen: true,
@@ -23,8 +24,8 @@ interface IAppContext {
   isSidebarOpen: boolean;
   openSidebar: () => void;
   closeSidebar: () => void;
-  provider?: ethers.providers.Web3Provider;
-  setProvider: (value?: ethers.providers.Web3Provider) => void;
+  provider?: JsonRpcProvider | Web3Provider;
+  setProvider: (value?: Web3Provider | JsonRpcProvider) => void;
   account?: string | undefined;
   setAccount: (value?: string) => void;
 }

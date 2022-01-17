@@ -17,9 +17,10 @@ import { StackingDuration, Stake } from "../../../utils/types";
 import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import * as contracts from "../../../utils/functions/Contracts";
+import { ethers } from "ethers";
 
 interface Props {
-  coin: string;
+  coin?: string;
 }
 
 const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
@@ -188,6 +189,7 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
             >
               {userStakes.length ? (
                 userStakes.map((stake: Stake, index) => {
+                  console.log("Stake period: ", stake.period.toNumber());
                   const d = new Date(parseInt(stake.since, 10) * 1000)
                     .toDateString()
                     .slice(4);
@@ -200,8 +202,9 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
                           <b className="text-white">
                             {stake.amount / 10 ** 18} TLX{" "}
                           </b>{" "}
-                          on {d}
-                          for {renderStakePeriod(stake.period.toNumber())}{" "}
+                          on {d} for
+                          {" " +
+                            renderStakePeriod(stake.period.toNumber())}{" "}
                         </p>
                         {stakeContract ? (
                           <GlowingButton

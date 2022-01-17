@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../../utils/context";
 import TheLuxuryPng from "../../assets/images/the_luxury.png";
 import LaunchpadModal from "../../components/LaunchpadModal";
 import ProjectItem from "./components/ProjectItem";
 import GlowingWrapper from "../../components/GlowingWrapper";
+import { useContracts } from "../../hooks/useContracts";
+import { getUserStakes } from "../../utils/functions/Contracts";
+import { Stake } from "../../utils/types";
+import { ethers } from "ethers";
+import { formatEther } from "ethers/lib/utils";
 
 const Launchpad: React.FC = () => {
   return (
@@ -22,22 +27,22 @@ const Launchpad: React.FC = () => {
       <div className="grid gap-8 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 ">
         <div className="flex">
           <GlowingWrapper>
-            <ProjectItem item={"TLX"} />
+            <ProjectItem coinTag={"TLX"} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper customStyles="">
-            <ProjectItem item={"TLC"} />
+            <ProjectItem coinTag={"TLC"} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper>
-            <ProjectItem item={"TLX"} />
+            <ProjectItem coinTag={"LUSSO"} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper customStyles="">
-            <ProjectItem item={"TLC"} />
+            <ProjectItem coinTag={"BEEZ"} />
           </GlowingWrapper>
         </div>
       </div>

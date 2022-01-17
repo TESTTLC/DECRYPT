@@ -1,20 +1,34 @@
 import { Provider, useEffect, useState } from "react";
-import Web3Modal, { local } from "web3modal";
+import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { Signer } from "crypto";
 import { useWindowSize } from "./useWindowSize";
 import { useGlobalContext } from "../utils/context";
 
+// export const providerOptions = {
+//   walletconnect: {
+//     package: WalletConnectProvider,
+//     options: {
+//       infuraId: "ecce1e30e55349abbac0be46d97dd143", // required
+//     },
+//   },
+// };
+
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider,
 
     options: {
+      // rpc: {
+      //   97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+      // },
+      // network: "binance-testnet",
+      provider: "metamask",
       rpc: {
-        5177: "https://mainnet-rpc.tlxscan.com/",
+        56: "https://bsc-dataseed.binance.org/",
       },
-      // infuraId: "https://mainnet.infura.io/v3/ecce1e30e55349abbac0be46d97dd143",
+      network: "binance",
     },
   },
 };
@@ -23,6 +37,7 @@ export const useWalletConnector = () => {
   const { provider, setProvider, setAccount, account } = useGlobalContext();
   const { isMobile } = useWindowSize();
   const web3Modal = new Web3Modal({
+    network: "binance-testnet", // optional
     cacheProvider: true, // optional
     providerOptions, // required
     theme: "dark",
@@ -61,16 +76,13 @@ export const useWalletConnector = () => {
     const p = new ethers.providers.Web3Provider(connection);
     setProvider(p);
     const signer = p.getSigner();
-    const accountAddress = await signer.getAddress();
-    setAccount(accountAddress);
-    localStorage.setItem("account", accountAddress);
+    setAccount(await signer.getAddress());
   };
 
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
     setAccount(undefined);
     console.log("disconnected");
-    localStorage.removeItem("account");
   };
 
   const enableWindowEthereum = async () => {
@@ -80,63 +92,50 @@ export const useWalletConnector = () => {
           method: "eth_requestAccounts",
         });
         if (ethAccounts && web3Modal.cachedProvider) {
-          const connection = await web3Modal.connect();
-          const p = new ethers.providers.Web3Provider(connection);
-          setProvider(p);
           setAccount(ethAccounts[0]);
-          localStorage.setItem("account", ethAccounts[0]);
-          return true;
         }
       } catch (err) {
         console.log("user did not add account...", err);
       }
     }
-    return false;
   };
 
-  const initialize = async () => {
-    const localStorageAccount = localStorage.getItem("account");
-
+  const tryLogin = async () => {
     if (isMobile) {
-      if (web3Modal.cachedProvider && localStorageAccount) {
+      if (web3Modal.cachedProvider) {
         const connection = await web3Modal.connect();
+        subscribeProvider(connection);
         const p = new ethers.providers.Web3Provider(connection);
         setProvider(p);
-        // subscribeProvider(p.connection);
         const signer = p.getSigner();
         const userAccountAddress = await signer.getAddress();
         setAccount(userAccountAddress);
       }
     } else {
-      const ethEnabled = await enableWindowEthereum();
-      if (ethEnabled) {
-        const connection = await web3Modal.connect();
-        const p = new ethers.providers.Web3Provider(connection);
-        setProvider(p);
-      }
+      enableWindowEthereum();
     }
+  };
 
-    // const localStorageAccount = localStorage.getItem("account");
-    // if (web3Modal.cachedProvider && localStorageAccount) {
-    //   setAccount(localStorageAccount);
-    //   const p = new ethers.providers.JsonRpcProvider();
-    //   setProvider(p);
-    // }
+  const reSetProvider = async () => {
+    const connection = await web3Modal.connect();
+    subscribeProvider(connection);
+    const p = new ethers.providers.Web3Provider(connection);
+    setProvider(p);
   };
 
   useEffect(() => {
-    initialize();
+    tryLogin();
   }, []);
 
-  // useEffect(() => {
-  //   if (!provider) {
-  //     reSetProvider();
-  //   }
-  // }, [provider, account]);
+  useEffect(() => {
+    if (!provider) {
+      reSetProvider();
+    }
+  }, [provider, account]);
 
-  // useEffect(() => {
-  //   console.log("web3Modal.cachedProvider: ", web3Modal.cachedProvider);
-  // }, [web3Modal.cachedProvider]);
+  useEffect(() => {
+    console.log("web3Modal.cachedProvider: ", web3Modal.cachedProvider);
+  }, [web3Modal.cachedProvider]);
 
   return {
     isMobile,

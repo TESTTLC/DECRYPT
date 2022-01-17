@@ -85,20 +85,19 @@ export const webStake = async (
     // }
 
     console.log("tokenContract: ", tokenContract);
-    // const result =
-    // await tokenContract.functions.approve(stakeContractAddress, price);
-    const result = await tokenContract.approve(stakeContractAddress, price);
+    console.log("stakeContract: ", stakeContract);
+    const result = await tokenContract.functions.approve(
+      stakeContractAddress,
+      price
+    );
+    console.log("price is: ", price);
     // .send({ from: account });
     console.log("stakingD: ", stakingDuration);
-    console.log("stakeContract: ", stakeContract);
     console.log("stake address: ", stakeContractAddress);
     // setTimeout(async () => {
     if (result) {
-      console.log("result is: ", result);
-      const r = await stakeContract.functions.stakeTokens(
-        price,
-        stakingDuration
-      );
+      console.log("result is: ", result.wait);
+      const r = await stakeContract.stakeTokens(price, stakingDuration);
       console.log("R: ", r);
     }
     // }, 30000);
@@ -213,7 +212,6 @@ export const renderStakePeriod = (period: any) => {
 };
 
 export const getTLXBalance = async (tokenContract: any, account: string) => {
-  console.log("token is: ", tokenContract);
   let userBalance = 0;
   try {
     const balance = await tokenContract.balanceOf(account);

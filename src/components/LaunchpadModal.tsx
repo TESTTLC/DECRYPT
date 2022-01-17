@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import { ethers } from "ethers";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useContracts } from "../hooks/useContracts";
 import { useGlobalContext } from "../utils/context";
-import { webStake } from "../utils/functions/Contracts";
+import { getUserStakes, webStake } from "../utils/functions/Contracts";
 import { TLXStakeContractAddress } from "../utils/globals";
 import { launchpadProjects } from "../utils/launchpadProjects";
-import { StackingDuration } from "../utils/types";
+import {
+  defaultPowers,
+  Project,
+  StackingDuration,
+  Stake,
+} from "../utils/types";
 import GlowingButton from "./GlowingButton";
 import SelectDropdown from "./SelectDropdown";
 
@@ -31,16 +37,72 @@ Modal.setAppElement("#root");
 
 interface Props {
   index: number;
-  coin: string;
+  coinTag: string;
 }
 
-const LaunchpadModal: React.FC<Props> = ({ index, coin }) => {
+const totalValueAllocated = 300;
+
+const LaunchpadModal: React.FC<Props> = ({ index, coinTag }) => {
   const { account } = useGlobalContext();
   let subtitle = "";
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
-  const { stakeContract, tokenContract, provider } = useContracts(coin);
+  const { stakeContract, tokenContract, provider } = useContracts(coinTag);
+  const [power, setPower] = useState(0);
+  const [userStakes, setUserStakes] = useState(0);
+  const [totalStakedAmount, setTotalStakedAmount] = useState(0);
+
+  const getStakes = async () => {
+    if (stakeContract) {
+      console.log("here 1");
+      const stakes = await getUserStakes(stakeContract);
+      let totalAmout = 0;
+      let totalPower = 0;
+      stakes.forEach((stake: Stake, index: number) => {
+        totalAmout += parseFloat(ethers.utils.formatEther(stake.amount));
+        // totalPower += parseFloat(ethers.utils.formatEther(stake.amount));
+        totalPower += determinePowerForStake(
+          stake.amount,
+          stake.period.toNumber()
+        );
+      });
+
+      setPower(totalPower);
+      setTotalStakedAmount(totalAmout);
+      setUserStakes(stakes);
+    }
+  };
+
+  const determinePowerForStake = (amount: number, period: number): number => {
+    let currentPower = 0;
+    if (coinTag === "TLX") {
+      currentPower = (defaultPowers.tlx[period] / 100) * totalValueAllocated;
+    }
+
+    return currentPower;
+  };
+
+  useEffect(() => {
+    console.log("my power is: ", power);
+    console.log("stake amount: ", totalStakedAmount);
+  }, [power]);
+
+  useEffect(() => {
+    if (power === 0) {
+      getStakes();
+    }
+  }, [stakeContract]);
+
+  // const calculatePower = () => {
+  //   let currentPower = 0;
+  //   // TLX
+
+  //   if (totalStakedAmount <= 1000) {
+  //     currentPower = (totalStakedAmount / 100) * 1000;
+  //     setPower(currentPower);
+  //   }
+  // };
 
   function openModal() {
     setIsOpen(true);
