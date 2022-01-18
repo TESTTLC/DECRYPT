@@ -106,13 +106,7 @@ export const unstake = async (
   stakeContract: Contract
 ) => {
   let unstakingError;
-  // setUnstakingError(undefined)
   try {
-    // const parsedIntexOfStake = ethers.utils.parseUnits(
-    //   indexOfStake.toString(),
-    //   "ether"
-    // );
-    console.log("Index of stake: ", indexOfStake);
     await stakeContract.functions.withdrawStake(indexOfStake);
   } catch (error) {
     console.log("Error on unstaking: ", error);

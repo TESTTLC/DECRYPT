@@ -135,7 +135,7 @@ const StakeCoin: React.FC<Props> = () => {
                   <div className="my-2 mr-2 w-64">
                     <SelectDropdown
                       text={"Staking duration (months)"}
-                      elements={[1, 3, 6, 12]}
+                      elements={[1, 3, 6, 12, 36]}
                       onSelect={(e) => {
                         // const value = parseInt(e.target.value, 10);
                         if (parseInt(e.target.value, 10) === 1) {
@@ -243,7 +243,7 @@ const StakeCoin: React.FC<Props> = () => {
 
   return coinsTags.includes(coinTag ?? "") ? (
     <div className="w-full border-t-2 border-white border-opacity-60">
-      <Stats coinTag={coinTag} />
+      <Stats coinTag={coinTag as "TLC" | "TLX" | "LSO"} />
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}

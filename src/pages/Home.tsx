@@ -8,6 +8,7 @@ import createTokenImage from "../assets/images/Create_Your_Own_Token.jpg";
 import crossChainBridgeImage from "../assets/images/Cross_Chain_Bridge.jpg";
 import exchangeImage from "../assets/images/Decentralized_Exchange.jpg";
 import nftMarketplaceImage from "../assets/images/NFT_Marketplace.jpg";
+import metaverseImage from "../assets/images/Metaverse.jpg";
 import lendingAndBorrowingImage from "../assets/images/Lending_And_Borrowing.jpg";
 
 const Home: React.FC = () => {
@@ -121,7 +122,7 @@ const Home: React.FC = () => {
               onClick={() => {
                 metaverseRef.current?.click();
               }}
-              imageSource={nftMarketplaceImage}
+              imageSource={metaverseImage}
               showTopText
             />
             {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}

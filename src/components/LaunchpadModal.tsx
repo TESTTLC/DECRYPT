@@ -104,8 +104,9 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     powerCoin: "TLX" | "TLC"
   ): number => {
     let currentStakePower = 0;
-    currentStakePower =
-      (defaultPowers[powerCoin][period] / 100) * totalLSOValueAlocated * amount;
+    // currentStakePower =
+    //   (defaultPowers[powerCoin][period] / 100) * totalLSOValueAlocated * amount;
+    currentStakePower = defaultPowers[powerCoin][period] * amount;
 
     return currentStakePower;
   };
@@ -131,7 +132,12 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   };
 
   useEffect(() => {
-    setPower(TLXPower + TLCPower);
+    // const p = ((TLXPower + TLCPower) / totalLSOValueAlocated) * 100;
+    let p = TLXPower + TLCPower;
+    if (p > 100) {
+      p = 100;
+    }
+    setPower(parseFloat(p.toFixed(4)));
   }, [TLXPower, TLCPower]);
 
   useEffect(() => {
@@ -206,7 +212,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
               <span className=" text-white text-lg font-poppins">
                 <span className="flex">
                   Current power:{" "}
-                  <p className="text-green-300">&nbsp; {power}</p>
+                  <p className="text-green-300">&nbsp; {power}%</p>
                 </span>
                 {/* <p>{launchpadProjects.TLX.description}</p> */}
               </span>
@@ -226,7 +232,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                 <div className="my-2 mr-2 w-60">
                   <SelectDropdown
                     text={"Staking duration (months)"}
-                    elements={[1, 3, 6, 12]}
+                    elements={[1, 3, 6, 12, 36]}
                     onSelect={(e) => {
                       // const value = parseInt(e.target.value, 10);
                       if (parseInt(e.target.value, 10) === 1) {

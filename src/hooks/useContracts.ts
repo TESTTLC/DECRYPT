@@ -54,13 +54,14 @@ export const useContracts = (coinTag: string) => {
   const connectToContracts = async () => {
     try {
       if (provider) {
-        console.log("provider: ", provider);
+        // console.log("provider: ", provider);
+        // console.log("tokenAddress: ", tokenAddress);
+        // console.log("stakeAddress: ", stakeAddress);
         const contractT = new ethers.Contract(
           tokenAddress,
           tokenAbi,
           provider.getSigner()
         );
-        console.log("contractT: ", contractT);
 
         const contractS = new ethers.Contract(
           stakeAddress,
@@ -68,7 +69,8 @@ export const useContracts = (coinTag: string) => {
           provider.getSigner()
         );
 
-        console.log("contractS: ", contractS);
+        // console.log("contractT: ", contractT);
+        // console.log("contractS: ", contractS);
 
         setTokenContract(contractT);
         setStakeContract(contractS);
@@ -80,11 +82,18 @@ export const useContracts = (coinTag: string) => {
   };
 
   useEffect(() => {
-    if (provider && account && !alreadyConnectedToContracts) {
-      console.log("connect?");
+    if (
+      provider &&
+      account &&
+      tokenAbi &&
+      stakeAbi &&
+      tokenAddress &&
+      stakeAddress &&
+      !alreadyConnectedToContracts
+    ) {
       connectToContracts();
     }
-  }, [provider, account, tokenAbi, stakeAbi]);
+  }, [provider, account, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
 
   return { provider, stakeContract, tokenContract, stakeAddress };
 };

@@ -3,27 +3,13 @@ import { useGlobalContext } from "../../utils/context";
 import BigButton from "../../components/BigButton";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utils/routes";
+import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
 
 const options = { method: "GET" };
 
 interface Asset {
   image_preview_url: string;
 }
-
-// const customStyles = {
-//   content: {
-//     top: 0,
-//     bottom: 0,
-//     left: 0,
-//     right: 0,
-//     border: 0,
-//     background: "rgba(0, 0, 0, 0.3)",
-//   },
-
-//   overlay: {
-//     background: "rgba(0, 0, 0, 0.3)",
-//   },
-// };
 
 const Stake: React.FC = () => {
   const imagesRef = useRef<null | HTMLDivElement>(null);
@@ -76,10 +62,10 @@ const Stake: React.FC = () => {
         <div className="mt-8 grid gap-8 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 justify-center items-center">
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              title="THE LUXURY"
-              subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
-              onClick={() => navigate(`/staking/TLX`)}
-              imageSource="https://forsite.ro/crx//local/images/stakingtlx.jpeg"
+              title="TLChain"
+              subtitle="$TLC is the native, energy-efficient cryptocurrency of TLChain that powers the full DeFi, GameFi and Metaverse ecosystem."
+              onClick={() => navigate(`/staking/TLC`)}
+              imageSource={TheLuxuryCoin}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
@@ -88,18 +74,23 @@ const Stake: React.FC = () => {
               subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
               onClick={() => navigate(`/staking/LSO`)}
               imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
-              // showTopText
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
+              title="THE LUXURY"
+              subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
+              onClick={() => navigate(`/staking/TLX`)}
+              imageSource="https://forsite.ro/crx//local/images/stakingtlx.jpeg"
+            />
+          </div>
+          {/* <BigButton
               title="BEEZ"
               subtitle=" The first functioning bridge connecting cryptocurrency and eCommerce. Accelerating The World’s Transition To Cryptocurrency."
               onClick={() => {}}
               imageSource="https://forsite.ro/crx//local/images/staking-beez.jpeg"
               showTopText
-            />
-          </div>
+            /> */}
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
               title="ICICB"

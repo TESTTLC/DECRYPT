@@ -50,6 +50,7 @@ const SideBar: React.FC = () => {
               const { id, url, text, icon, imageSource } = link;
               return id === 6 || id === 7 ? (
                 <a
+                  key={`${id}/${url}`}
                   href={url}
                   target={"_blank"}
                   rel="noreferrer"
