@@ -151,10 +151,14 @@ const Footer: React.FC = () => {
             </a>
           </div> */}
           <p className="font-poppins text-sm text-left xs:text-center">
-            Decryption is a decentralized multi-chain fundraising platform
+            {/* Decryption is a decentralized multi-chain fundraising platform
             enabling projects to raise capital and promise safety to early stage
             investors. Stake $TLC or $TLX token to get priority-access to
-            promising projects.
+            promising projects. */}
+            Mint, Stake, Swap, Lend, Borrow, Build, Level up with Metaverse and
+            NFT’s - a Full-Suite Decentralized and Multi-Chain DeFi Platform
+            with a foundation built on TLChain. An entire ecosystem designed for
+            the future.
           </p>
         </div>
         <div className="w-72">
@@ -249,11 +253,7 @@ const Footer: React.FC = () => {
         className="text-center font-poppins text-xs"
         // style="background-color: rgba(0, 0, 0, 0.2);"
       >
-        © 2022 Copyright:
-        <a className="text-white" href="https://tailwind-elements.com/">
-          {" "}
-          The Luxury Bank
-        </a>
+        © 2022 Copyright: Decryption – Powered by TLChain
       </div>
     </footer>
   );

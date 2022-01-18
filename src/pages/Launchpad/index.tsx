@@ -1,48 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../../utils/context";
-import TheLuxuryPng from "../../assets/images/the_luxury.png";
-import LaunchpadModal from "../../components/LaunchpadModal";
 import ProjectItem from "./components/ProjectItem";
 import GlowingWrapper from "../../components/GlowingWrapper";
-import { useContracts } from "../../hooks/useContracts";
-import { getUserStakes } from "../../utils/functions/Contracts";
-import { Stake } from "../../utils/types";
-import { ethers } from "ethers";
-import { formatEther } from "ethers/lib/utils";
 
 const Launchpad: React.FC = () => {
   return (
     <div className="w-full flex flex-col justify-center px-2">
-      <p className="text-white font-poppins font-bold text-2xl mb-2">
+      <div className="justify-center items-center flex flex-col">
+        <p className="text-white font-poppins font-bold text-3xl mb-2 mt-2 text-center">
+          DECRYPTION | Multi-Chain Launchpad
+        </p>
+        <p className="text-white font-poppins font-normal text-lg mb-2 text-center">
+          Hand-picked high-quality Blockchain projects.
+        </p>
+      </div>
+
+      {/* <p className="text-white font-poppins font-medium text-md mb-4">
+        Stake $TLC or $TLX tokens to get early-access to promising projects.
+      </p> */}
+      <p className="text-white font-poppins font-bold text-2xl mb-4 mt-4">
         Upcoming Projects
       </p>
-      <p className="text-white font-poppins font-medium text-md">
-        Launching hand-picked high-quality projects on the Blockchain.
-      </p>
-      <p className="text-white font-poppins font-medium text-md mb-4">
-        Stake $TLC or $TLX tokens to get early-access to promising projects.
-      </p>
-
       <div className="grid gap-8 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 ">
         <div className="flex">
-          <GlowingWrapper>
-            <ProjectItem coinTag={"TLX"} />
-          </GlowingWrapper>
-        </div>
-        <div className="flex">
           <GlowingWrapper customStyles="">
-            <ProjectItem coinTag={"TLC"} />
+            <ProjectItem coinTag={"LSO"} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper>
-            <ProjectItem coinTag={"LUSSO"} />
+            <ProjectItem coinTag={"default"} />
+          </GlowingWrapper>
+        </div>
+        <div className="flex">
+          <GlowingWrapper>
+            <ProjectItem coinTag={"default"} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper customStyles="">
-            <ProjectItem coinTag={"BEEZ"} />
+            <ProjectItem coinTag={"default"} />
           </GlowingWrapper>
         </div>
       </div>

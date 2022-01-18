@@ -20,10 +20,11 @@ export interface LaunchpadProject {
   about: string;
   imageSource: string;
 }
+export enum CoinTags {}
 
 export type Project = {
   name: "The Luxury Bank" | "The Luxury Coin" | "Luxanida" | "Beez";
-  tag: "TLX" | "TLC" | "LUSSO" | "BEEZ";
+  tag: "TLX" | "TLC" | "LSO" | "BEEZ";
 };
 
 // export const defaultPowers = {
@@ -53,7 +54,11 @@ export type Project = {
 
 export const defaultPowers = {
   // all values are represented as percentage
-  tlx: [0.1, 0.3, 0.5, 0.7, 1],
-  tlc: [0.01, 0.03, 0.05, 0.07, 0.1],
-  lso: [0.01, 0.03, 0.05, 0.07, 0.1],
+  TLX: [0.1, 0.3, 0.5, 0.7, 1],
+  TLC: [0.01, 0.03, 0.05, 0.07, 0.1],
+  LSO: [0.01, 0.03, 0.05, 0.07, 0.1],
+
+  // '"tlx"': [0.1, 0.3, 0.5, 0.7, 1],
+  // '"tlc"': [0.01, 0.03, 0.05, 0.07, 0.1],
+  // '"lso"': [0.01, 0.03, 0.05, 0.07, 0.1],
 };

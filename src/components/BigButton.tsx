@@ -30,8 +30,7 @@ const BigButton: React.FC<Props> = ({
         <button
           onClick={onClick}
           // className="flex flex-col rounded-lg relative xs:w-80 w-72 h-72
-          className="flex flex-col rounded-lg relative w-full h-full
-                    bg-gradient-to-b
+          className="flex flex-col rounded-lg relative w-full h-full bg-gradient-to-br
                     from-green-400 to-blue-600
                     transform duration-500 hover:scale-110 overflow-hidden "
           // overflow-hidden"

@@ -11,7 +11,6 @@ const Dashboard: React.FC = () => {
         <div className="flex w-full col-span-2 flex-col h-96 bg-customBlue-300 justify-center items-center">
           <p className="text-white font-bold text-2xl mb-4">0 Projects</p>
           <p className="text-white font-bold text-2xl mb-4">0 Tokens</p>
-          <p className="text-white font-bold text-2xl mb-4">3% Power</p>
         </div>
         <div className="w-full flex justify-center items-center col-start-3 col-span-5 md:col-span-1 sm:col-span-1 xs:col-span-1 h-96 bg-customBlue-300">
           <p className="text-white text-center font-poppins text-sm mb-4">

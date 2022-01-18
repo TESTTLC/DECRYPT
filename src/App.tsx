@@ -6,16 +6,18 @@ import Staking from "./pages/Staking";
 import StakeCoin from "./pages/Staking/components/StakeCoin";
 import Launchpad from "./pages/Launchpad";
 import Projects from "./pages/Projects";
+import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import { useGlobalContext } from "./utils/context";
 import Header from "./components/Header";
 
+export const coinsTags = ["TLX", "TLC", "LSO"];
+
 const App = () => {
   const { isSidebarOpen } = useGlobalContext();
   // const { account, connectWallet, disconnectWallet, isMobile } =
   //   useWalletConnector();
-
   return (
     <div>
       <SideBar />
@@ -29,10 +31,11 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/staking" element={<Staking />} />
-            <Route path="/staking/:coin" element={<StakeCoin />} />
+            <Route path="/staking/:coinTag" element={<StakeCoin />} />
             <Route path="/launchpad" element={<Launchpad />} />
             {/* <Route path="/crosschainbridge" element={<Projects />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
         <Footer />

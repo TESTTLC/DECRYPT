@@ -84,21 +84,13 @@ export const webStake = async (
     //   setErrorOnApprove(false)
     // }
 
-    console.log("tokenContract: ", tokenContract);
-    console.log("stakeContract: ", stakeContract);
     const result = await tokenContract.functions.approve(
       stakeContractAddress,
       price
     );
-    console.log("price is: ", price);
-    // .send({ from: account });
-    console.log("stakingD: ", stakingDuration);
-    console.log("stake address: ", stakeContractAddress);
     // setTimeout(async () => {
     if (result) {
-      console.log("result is: ", result.wait);
       const r = await stakeContract.stakeTokens(price, stakingDuration);
-      console.log("R: ", r);
     }
     // }, 30000);
   } catch (error) {

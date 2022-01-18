@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../utils/context";
+import React, { useRef } from "react";
 import BigButton from "../components/BigButton";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../utils/routes";
@@ -8,60 +7,14 @@ import launchpadImage from "../assets/images/Launchpad.jpg";
 import createTokenImage from "../assets/images/Create_Your_Own_Token.jpg";
 import crossChainBridgeImage from "../assets/images/Cross_Chain_Bridge.jpg";
 import exchangeImage from "../assets/images/Decentralized_Exchange.jpg";
-import metaverseImage from "../assets/images/Metaverse.jpg";
 import nftMarketplaceImage from "../assets/images/NFT_Marketplace.jpg";
 import lendingAndBorrowingImage from "../assets/images/Lending_And_Borrowing.jpg";
 
-const options = { method: "GET" };
-
-interface Asset {
-  image_preview_url: string;
-}
-
-// const customStyles = {
-//   content: {
-//     top: 0,
-//     bottom: 0,
-//     left: 0,
-//     right: 0,
-//     border: 0,
-//     background: "rgba(0, 0, 0, 0.3)",
-//   },
-
-//   overlay: {
-//     background: "rgba(0, 0, 0, 0.3)",
-//   },
-// };
-
 const Home: React.FC = () => {
-  const imagesRef = useRef<null | HTMLDivElement>(null);
-  const [assets, setAssets] = useState<Asset[]>([]);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate();
 
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const retreiveAssets = async () => {
-    fetch(
-      "https://api.opensea.io/api/v1/assets?owner=0xf56345338cb4cddaf915ebef3bfde63e70fe3053",
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setAssets(response.assets.reverse());
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    // retreiveAssets();
-  }, []);
+  const nftMarketplaceRef = useRef<HTMLAnchorElement>(null);
+  const metaverseRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <div className="w-full flex flex-col justify-center">
@@ -143,9 +96,19 @@ const Home: React.FC = () => {
               title="NFT MARKETPLACE"
               subtitle="Create, Buy, Sell NFTs."
               // onClick={() => navigate("/nftmarketplace")}
-              onClick={() => {}}
+              onClick={() => {
+                nftMarketplaceRef.current?.click();
+              }}
               imageSource={nftMarketplaceImage}
               showTopText
+            />
+            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+            <a
+              ref={nftMarketplaceRef}
+              className="z-0 h-0 w-0 hidden"
+              href="https://theluxury.gallery"
+              target="_blank"
+              rel="noreferrer"
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
@@ -155,9 +118,19 @@ const Home: React.FC = () => {
               title="METAVERSE"
               subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
               // onClick={() => navigate("/metaverse")}
-              onClick={() => {}}
-              imageSource={metaverseImage}
+              onClick={() => {
+                metaverseRef.current?.click();
+              }}
+              imageSource={nftMarketplaceImage}
               showTopText
+            />
+            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+            <a
+              ref={metaverseRef}
+              className="z-0 h-0 w-0 hidden"
+              href="https://luxandia.com"
+              target="_blank"
+              rel="noreferrer"
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">

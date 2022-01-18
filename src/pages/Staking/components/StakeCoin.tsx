@@ -18,26 +18,34 @@ import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import * as contracts from "../../../utils/functions/Contracts";
 import { ethers } from "ethers";
+import { useParams } from "react-router-dom";
+import NotFound from "../../NotFound";
+import { coinsTags } from "../../../App";
 
 interface Props {
-  coin?: string;
+  // coinTag: "TLX" | "TLC" | "LSO";
+  // match: any;
 }
 
-const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
+const StakeCoin: React.FC<Props> = () => {
+  const { coinTag } = useParams();
   const { openSidebar, isSidebarOpen, account } = useGlobalContext();
-  const { stakeContract, tokenContract, provider } = useContracts(coin);
+  const { stakeContract, tokenContract, stakeAddress, provider } = useContracts(
+    coinTag ?? "-"
+  );
+
   const { isMobile } = useWindowSize();
   const [duration, setDuration] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [userStakes, setUserStakes] = useState([]);
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
-  const [TLXbalance, setTLXBalance] = useState<number>();
+  const [balance, setBalance] = useState<number>();
 
   const getUserTLXBalance = async () => {
     if (account) {
       const result = await contracts.getTLXBalance(tokenContract, account);
-      setTLXBalance(result);
+      setBalance(result);
     }
   };
 
@@ -104,11 +112,13 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
               </div>
               <div className="py-5 pr-2 mt-6 flex flex-col">
                 <div className="flex justify-between border-b-2 border-opacity-30 pb-1 ">
-                  <p className="text-xl text-white font-bold">Stake your TLX</p>
+                  <p className="text-xl text-white font-bold">
+                    Stake your {coinTag}
+                  </p>
 
                   <p className="text-xl text-green-500 font-bold">
                     {" "}
-                    {TLXbalance} TLX available
+                    {balance} {coinTag} available
                   </p>
                 </div>
                 <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
@@ -136,6 +146,8 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
                           setDuration(StackingDuration.SIX_MONTHS);
                         } else if (parseInt(e.target.value, 10) === 12) {
                           setDuration(StackingDuration.ONE_YEAR);
+                        } else if (parseInt(e.target.value, 10) === 36) {
+                          setDuration(StackingDuration.THREE_YEARS);
                         }
                       }}
                     />
@@ -147,7 +159,7 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
                         webStake(
                           tokenContract,
                           stakeContract!,
-                          TLXStakeContractAddress,
+                          stakeAddress,
                           account!,
                           stakeAmount,
                           duration,
@@ -189,7 +201,6 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
             >
               {userStakes.length ? (
                 userStakes.map((stake: Stake, index) => {
-                  console.log("Stake period: ", stake.period.toNumber());
                   const d = new Date(parseInt(stake.since, 10) * 1000)
                     .toDateString()
                     .slice(4);
@@ -200,7 +211,7 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
                         <p className="text-gray-400">
                           You staked{" "}
                           <b className="text-white">
-                            {stake.amount / 10 ** 18} TLX{" "}
+                            {stake.amount / 10 ** 18} {coinTag}{" "}
                           </b>{" "}
                           on {d} for
                           {" " +
@@ -208,7 +219,9 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
                         </p>
                         {stakeContract ? (
                           <GlowingButton
-                            text={`Unstake ${stake.amount / 10 ** 18} TLX`}
+                            text={`Unstake ${
+                              stake.amount / 10 ** 18
+                            } ${coinTag}`}
                             onClick={() => unstake(index, stakeContract)}
                           />
                         ) : null}
@@ -228,9 +241,9 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
     );
   };
 
-  return (
+  return coinsTags.includes(coinTag ?? "") ? (
     <div className="w-full border-t-2 border-white border-opacity-60">
-      <Stats />
+      <Stats coinTag={coinTag} />
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}
@@ -254,7 +267,7 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
               // from-customBlue-700 via-customBlue-700 to-customBlue-200
               // hover:from-customBlue-300 hover:via-customBlue-700 hover:to-customBlue-700
             >
-              <p className="text-white font-oswald text-lg">Stake TLX</p>
+              <p className="text-white font-oswald text-lg">Stake {coinTag}</p>
             </button>
           </div>
           {/* here ends 1 */}
@@ -278,6 +291,8 @@ const StakeCoin: React.FC<Props> = ({ coin = "TLX" }) => {
 
       {renderTable()}
     </div>
+  ) : (
+    <NotFound />
   );
 };
 

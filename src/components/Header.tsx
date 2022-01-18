@@ -1,7 +1,7 @@
 import React from "react";
 import { useWalletConnector } from "../hooks/useWalletConnector";
 import { useGlobalContext } from "../utils/context";
-import small_logo from "../assets/images/small_logo.png";
+import small_logo from "../assets/images/logo.png";
 import GlowingButton from "./GlowingButton";
 import { routes } from "../utils/routes";
 import { Link } from "react-router-dom";

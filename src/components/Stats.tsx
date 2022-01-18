@@ -8,13 +8,17 @@ import * as contracts from "../utils/functions/Contracts";
 import { useContracts } from "../hooks/useContracts";
 import SNXStatBackground from "../assets/svg/snx-stat-background.svg";
 
-const Stats: React.FC = () => {
-  const { stakeContract, tokenContract } = useContracts("TLX");
+interface Props {
+  coinTag: "TLX" | "TLC" | "LSO";
+}
+
+const Stats: React.FC<Props> = ({ coinTag }) => {
+  const { stakeContract, tokenContract } = useContracts(coinTag);
   const { account } = useGlobalContext();
   const [volume24h, setVolume24h] = useState(0);
   const [totalRewards, setTotalRewards] = useState<number>();
   const [userRewards, setUserRewards] = useState<number>();
-  const [TLXbalance, setTLXBalance] = useState<number>();
+  const [balance, setBalance] = useState<number>();
 
   const getTotalVolume24h = async () => {
     const result = await contracts.getVolume24h();
@@ -31,7 +35,7 @@ const Stats: React.FC = () => {
   const getUserTLXBalance = async () => {
     if (account) {
       const result = await contracts.getTLXBalance(tokenContract, account);
-      setTLXBalance(result);
+      setBalance(result);
     }
   };
 
@@ -108,7 +112,7 @@ const Stats: React.FC = () => {
           Your Balance
         </p>
         <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {TLXbalance} TLX
+          {balance} {coinTag}
         </p>
       </div>
     </div>

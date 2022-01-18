@@ -85,7 +85,8 @@ export const links = [
   },
   {
     id: 6,
-    url: "/nftmarketplace",
+    // url: "/nftmarketplace",
+    url: "https://theluxury.gallery",
     text: "nft marketplace",
     icon: <FaImages className="w-5 h-5" />,
     // imageSource: nftMarketplaceImage,
@@ -93,7 +94,8 @@ export const links = [
   },
   {
     id: 7,
-    url: "/metaverse",
+    // url: "/metaverse",
+    url: "https://luxandia.com",
     text: "metaverse",
     icon: <FaUniversalAccess className="w-5 h-5" />,
     // imageSource: metaverseImage,

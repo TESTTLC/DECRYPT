@@ -86,9 +86,9 @@ const Stake: React.FC = () => {
             <BigButton
               title="LUXANDIA"
               subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
-              onClick={() => {}}
+              onClick={() => navigate(`/staking/LSO`)}
               imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
-              showTopText
+              // showTopText
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">

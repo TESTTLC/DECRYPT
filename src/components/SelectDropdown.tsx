@@ -14,7 +14,7 @@ interface Props {
 const InputDropdown: React.FC<Props> = ({ text, elements, onSelect }) => {
   const [itemIndex, setItemIndex] = useState(0);
   return (
-    <div className="inline-flex">
+    <div className="w-full relative inline-flex">
       <svg
         className="w-4 h-2 absolute top-3 right-3  pointer-events-none"
         viewBox="0 0 412 232"
@@ -33,8 +33,8 @@ const InputDropdown: React.FC<Props> = ({ text, elements, onSelect }) => {
         className={`
         ${
           itemIndex === 0 ? "text-gray-400" : "text-white"
-        } bg-customBlue-300 borde border-gray-300 rounded-md h-8 pl-5 pr-10 
-        hover:border-gray-400 focus:outline-none appearance-none`}
+        } bg-customBlue-300 borde border-gray-300 rounded-md h-8 px-4 
+        hover:border-gray-400 focus:outline-none appearance-none w-full`}
       >
         <option disabled>{text}</option>
         {elements.map((element, index) => (

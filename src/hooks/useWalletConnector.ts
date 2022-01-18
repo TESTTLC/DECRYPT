@@ -1,8 +1,7 @@
-import { Provider, useEffect, useState } from "react";
-import Web3Modal, { local } from "web3modal";
+import { useEffect } from "react";
+import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
-import { Signer } from "crypto";
 import { useWindowSize } from "./useWindowSize";
 import { useGlobalContext } from "../utils/context";
 
@@ -12,9 +11,9 @@ const providerOptions = {
 
     options: {
       rpc: {
-        5177: "https://mainnet-rpc.tlxscan.com/",
+        5177: "https://mainnet-rpc.tlxscan.com",
       },
-      // infuraId: "https://mainnet.infura.io/v3/ecce1e30e55349abbac0be46d97dd143",
+      infuraId: "ecce1e30e55349abbac0be46d97dd143",
     },
   },
 };
@@ -115,28 +114,11 @@ export const useWalletConnector = () => {
         setProvider(p);
       }
     }
-
-    // const localStorageAccount = localStorage.getItem("account");
-    // if (web3Modal.cachedProvider && localStorageAccount) {
-    //   setAccount(localStorageAccount);
-    //   const p = new ethers.providers.JsonRpcProvider();
-    //   setProvider(p);
-    // }
   };
 
   useEffect(() => {
     initialize();
   }, []);
-
-  // useEffect(() => {
-  //   if (!provider) {
-  //     reSetProvider();
-  //   }
-  // }, [provider, account]);
-
-  // useEffect(() => {
-  //   console.log("web3Modal.cachedProvider: ", web3Modal.cachedProvider);
-  // }, [web3Modal.cachedProvider]);
 
   return {
     isMobile,

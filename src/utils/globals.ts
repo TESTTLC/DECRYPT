@@ -5,8 +5,14 @@ export const TLXStakeContractAddress =
   "0xECcbd01302fB9E18bAFE63e13a912ACcf1F5d84B"; //new
 
 export const LussoTokenContractAddress =
-  "0xEA255909E46A54d54255219468991C69ca0e659D";
-export const LussoStakeContractAddress = "lussoStake"; //new
+  "0xD62052Cea41E22fb2B97835b53f41190Fe219001";
+export const LussoStakeContractAddress =
+  "0xe1A6E5f4BcFB9bC39c8f68B2b84BA41ca5681B36"; //new
+
+export const TLCTokenContractAddress =
+  "0xff8046Ae3b6E9c275728501856b5E0e37F59d6eb";
+export const TLCStakeContractAddress =
+  "0xb058f92410181368138279f13948b7ded15b0d4f"; //new
 
 /** Testnet */
 // export const TLXTokenContractAddress =
