@@ -28,6 +28,8 @@ interface IAppContext {
   setProvider: (value?: Web3Provider | JsonRpcProvider) => void;
   account?: string | undefined;
   setAccount: (value?: string) => void;
+  totalPower: number;
+  setTotalPower: (value: number) => void;
 }
 
 const AppContext = createContext<IAppContext>({} as IAppContext);
@@ -35,6 +37,7 @@ const AppContext = createContext<IAppContext>({} as IAppContext);
 const AppProvider = ({ children }: { children: ReactElement<any, any> }) => {
   const { isMobile } = useWindowSize();
   const [account, setAccount] = useState<string | undefined>();
+  const [totalPower, setTotalPower] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(!isMobile);
   const [provider, setProvider] = useState<
     ethers.providers.Web3Provider | any
@@ -58,6 +61,8 @@ const AppProvider = ({ children }: { children: ReactElement<any, any> }) => {
         setProvider,
         account,
         setAccount,
+        totalPower,
+        setTotalPower,
       }}
     >
       {children}

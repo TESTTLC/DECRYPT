@@ -214,7 +214,7 @@ const Footer: React.FC = () => {
             <ul className="list-none mb-0">
               <li>
                 <a
-                  href="https://theluxurybank.com"
+                  href="https://tlchain.network/"
                   target="_blank"
                   className="text-white underline"
                 >

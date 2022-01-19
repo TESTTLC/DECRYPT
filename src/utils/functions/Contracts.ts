@@ -1,5 +1,6 @@
 /** Functions from TLX Contracts */
 import { ethers, Contract } from "ethers";
+import { defaultPowers } from "../types";
 
 /** This function will call the tokenContract.methods.approve is done */
 export const approveStakeTokens = async (
@@ -84,6 +85,8 @@ export const webStake = async (
     //   setErrorOnApprove(false)
     // }
 
+    console.log("stakingDuration is: ", stakingDuration);
+
     const result = await tokenContract.functions.approve(
       stakeContractAddress,
       price
@@ -117,6 +120,7 @@ export const unstake = async (
 };
 
 export const getTotalUserTLXStaked = async (stakeContract: Contract) => {
+  console.log("Stake c: ", stakeContract);
   let totalValueStaked = 0;
   const userStakes = await stakeContract.getUserStakes();
   userStakes.forEach((s: any) => {
@@ -129,6 +133,7 @@ export const getTotalUserTLXStaked = async (stakeContract: Contract) => {
 };
 
 export const getUserStakes = async (stakeContract: Contract) => {
+  console.log("Stake c: ", stakeContract);
   let userStakes = [];
   try {
     userStakes = await stakeContract.getUserStakes();
@@ -152,6 +157,18 @@ export const getTotalRewards = async (stakeContract: Contract) => {
   }
 
   return parseFloat(formatedResult) || 0;
+};
+
+export const getTotalValueLocked = async (stakeContract: Contract) => {
+  let stakedAmount;
+  try {
+    stakedAmount = await stakeContract.getStakedAmount();
+  } catch (err) {
+    console.log("err: ", err);
+  }
+  // console.log("stakedAmount is : ", stakedAmount);
+  // console.log("Formatted: ", ethers.utils.formatEther(stakedAmount.toString()));
+  return parseFloat(ethers.utils.formatEther(stakedAmount.toString()));
 };
 
 // export const calculateStakeRewards = async (
@@ -192,8 +209,12 @@ export const renderStakePeriod = (period: any) => {
     return "3 months";
   } else if (period === 2) {
     return "6 months";
-  } else {
+  } else if (period === 3) {
     return "12 months";
+  } else if (period === 4) {
+    return "36 months";
+  } else {
+    return "- months";
   }
 };
 
@@ -210,4 +231,31 @@ export const getTLXBalance = async (tokenContract: any, account: string) => {
   }
 
   return userBalance;
+};
+
+export const getTLCBalance = async (account: string) => {
+  console.log("Acc: ", account);
+  const api = `https://tlxscan.com/api?module=account&action=balance&address=${account}`;
+  let balance = "0";
+  await fetch(api)
+    .then((response) => response.json())
+    .then((response) => {
+      console.log("RESPONSE: ", response);
+      balance = response.result;
+    });
+
+  return parseFloat(parseFloat(ethers.utils.formatEther(balance)).toFixed(3));
+};
+
+export const determinePowerForStake = (
+  amount: number,
+  period: number,
+  powerCoin: "TLX" | "TLC"
+): number => {
+  let currentStakePower = 0;
+  // currentStakePower =
+  //   (defaultPowers[powerCoin][period] / 100) * totalLSOValueAlocated * amount;
+  currentStakePower = defaultPowers[powerCoin][period] * amount;
+
+  return currentStakePower;
 };

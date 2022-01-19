@@ -15,14 +15,35 @@ interface Props {
 const Stats: React.FC<Props> = ({ coinTag }) => {
   const { stakeContract, tokenContract } = useContracts(coinTag);
   const { account } = useGlobalContext();
-  const [volume24h, setVolume24h] = useState(0);
+  const [totalStaked, setTotalStaked] = useState(0);
   const [totalRewards, setTotalRewards] = useState<number>();
   const [userRewards, setUserRewards] = useState<number>();
   const [balance, setBalance] = useState<number>();
 
-  const getTotalVolume24h = async () => {
-    const result = await contracts.getVolume24h();
-    setVolume24h(parseFloat(result.toFixed(2)));
+  const getUserTLCBalance = async () => {
+    if (account) {
+      const TLCBalance = await contracts.getTLCBalance(account);
+      console.log("TLC balance: ", TLCBalance);
+      setBalance(TLCBalance);
+    }
+  };
+
+  useEffect(() => {
+    if (coinTag === "TLC") {
+      getUserTLCBalance();
+    }
+  }, [account, coinTag]);
+
+  // const getTotalVolume24h = async () => {
+  //   const result = await contracts.getVolume24h();
+  //   setTotalStaked(parseFloat(result.toFixed(2)));
+  // };
+
+  const getTotalStaked = async () => {
+    if (stakeContract) {
+      const totalStaked = await contracts.getTotalValueLocked(stakeContract);
+      setTotalStaked(totalStaked);
+    }
   };
 
   const getTotalRewards = async () => {
@@ -33,7 +54,7 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
   };
 
   const getUserTLXBalance = async () => {
-    if (account) {
+    if (account && coinTag !== "TLC") {
       const result = await contracts.getTLXBalance(tokenContract, account);
       setBalance(result);
     }
@@ -51,12 +72,15 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
   };
 
   useEffect(() => {
-    getTotalVolume24h();
-  }, []);
+    getTotalStaked();
+  }, [stakeContract]);
 
   useEffect(() => {
     getTotalRewards();
     calculateStakeRewards();
+    if (stakeContract) {
+      contracts.getTotalValueLocked(stakeContract);
+    }
   }, [stakeContract]);
 
   useEffect(() => {
@@ -79,11 +103,11 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
 
         {/* <div className="w-10 h-10 bg-[url('../assets/images/small_logo.png')]"></div> */}
         <p className="text-white text-center text-sm font-oswald uppercase">
-          Value locked 24h
+          Total Value locked
         </p>
         <div>
           <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-            {volume24h}
+            {totalStaked}
           </p>
           {/* <p className="text-white">TLX</p> */}
         </div>

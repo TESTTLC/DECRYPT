@@ -1,2 +1,3 @@
-# app.theluxurybank.com
-Staking for Theluxurybank.com
+# decryption.com
+
+Staking for Decryption

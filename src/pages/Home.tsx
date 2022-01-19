@@ -21,7 +21,9 @@ const Home: React.FC = () => {
     <div className="w-full flex flex-col justify-center">
       <div className="w-full px-2">
         <div className="col-span-4 mb-2">
-          <p className="text-white font-bold text-2xl">Projects & Roadmap</p>
+          <p className="text-white font-bold font-poppins text-2xl">
+            Projects & Roadmap
+          </p>
           <Link
             key={routes.launchpad.title}
             to={{ pathname: routes.launchpad.url }}

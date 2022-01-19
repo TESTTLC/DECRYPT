@@ -107,7 +107,7 @@ const SideBar: React.FC = () => {
             })}
             <hr className="my-6" />
             <a
-              href="/color-shade-generator"
+              href="#"
               className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
               <HiTicket className="w-5 h-5" />
@@ -116,7 +116,7 @@ const SideBar: React.FC = () => {
               </span>
             </a>
             <a
-              href="/color-shade-generator"
+              href="#"
               className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
               <MdSettings className="w-5 h-5" />

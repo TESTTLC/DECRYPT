@@ -3,7 +3,11 @@ import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useContracts } from "../hooks/useContracts";
 import { useGlobalContext } from "../utils/context";
-import { getUserStakes, webStake } from "../utils/functions/Contracts";
+import {
+  determinePowerForStake,
+  getUserStakes,
+  webStake,
+} from "../utils/functions/Contracts";
 import {
   TLCStakeContractAddress,
   TLXStakeContractAddress,
@@ -49,7 +53,7 @@ const totalTLXValueAllocated = 10000000;
 const totalLSOValueAlocated = 100000000;
 
 const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
-  const { account } = useGlobalContext();
+  const { account, setTotalPower } = useGlobalContext();
   let subtitle = "";
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
@@ -98,19 +102,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     }
   };
 
-  const determinePowerForStake = (
-    amount: number,
-    period: number,
-    powerCoin: "TLX" | "TLC"
-  ): number => {
-    let currentStakePower = 0;
-    // currentStakePower =
-    //   (defaultPowers[powerCoin][period] / 100) * totalLSOValueAlocated * amount;
-    currentStakePower = defaultPowers[powerCoin][period] * amount;
-
-    return currentStakePower;
-  };
-
   const stakeTokens = () => {
     const tokenContract =
       stakingCoin === "TLX" ? TLXTokenContract : TLCTokenContract;
@@ -138,6 +129,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
       p = 100;
     }
     setPower(parseFloat(p.toFixed(4)));
+    setTotalPower(parseFloat(p.toFixed(4)));
   }, [TLXPower, TLCPower]);
 
   useEffect(() => {
@@ -243,6 +235,8 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                         setDuration(StackingDuration.SIX_MONTHS);
                       } else if (parseInt(e.target.value, 10) === 12) {
                         setDuration(StackingDuration.ONE_YEAR);
+                      } else if (parseInt(e.target.value, 10) === 36) {
+                        setDuration(StackingDuration.THREE_YEARS);
                       }
                     }}
                   />

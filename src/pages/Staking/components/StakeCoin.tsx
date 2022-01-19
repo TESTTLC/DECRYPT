@@ -36,11 +36,24 @@ const StakeCoin: React.FC<Props> = () => {
 
   const { isMobile } = useWindowSize();
   const [duration, setDuration] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [userStakes, setUserStakes] = useState([]);
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
   const [balance, setBalance] = useState<number>();
+
+  const getUserTLCBalance = async () => {
+    if (account) {
+      const TLCBalance = await contracts.getTLCBalance(account);
+      console.log("TLC balance: ", TLCBalance);
+      setBalance(TLCBalance);
+    }
+  };
+
+  useEffect(() => {
+    if (coinTag === "TLC") {
+      getUserTLCBalance();
+    }
+  }, [account, coinTag]);
 
   const getUserTLXBalance = async () => {
     if (account) {
@@ -50,8 +63,6 @@ const StakeCoin: React.FC<Props> = () => {
   };
 
   const getStakeTransactions = async () => {
-    setActiveIndex(1);
-
     if (stakeContract) {
       const stakes = await getUserStakes(stakeContract);
       setUserStakes(stakes);
@@ -156,6 +167,7 @@ const StakeCoin: React.FC<Props> = () => {
                     <GlowingButton
                       text={`Stake ${stakeAmount || 0}`}
                       onClick={() => {
+                        console.log("Duration is: ", duration);
                         webStake(
                           tokenContract,
                           stakeContract!,
@@ -251,8 +263,6 @@ const StakeCoin: React.FC<Props> = () => {
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
             <button
               onClick={() => {
-                setActiveIndex(0);
-
                 stakeInputRef.current?.scrollIntoView({
                   behavior: "smooth",
                 });

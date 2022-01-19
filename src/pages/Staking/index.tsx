@@ -4,6 +4,11 @@ import BigButton from "../../components/BigButton";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utils/routes";
 import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
+import TheLuxuryBank from "../../assets/images/the_luxury.png";
+import ICICB from "../../assets/images/ICICB.png";
+import GlowingWrapper from "../../components/GlowingWrapper";
+import ProjectItem from "../Launchpad/components/ProjectItem";
+import Item from "./components/Item";
 
 const options = { method: "GET" };
 
@@ -45,61 +50,60 @@ const Stake: React.FC = () => {
     <div className="w-full flex flex-col justify-center">
       <div className="w-full px-2">
         <div className="col-span-4 mb-2">
-          <p className="text-white font-bold text-2xl">
+          <p className="text-white font-bold font-poppins text-2xl">
             Select an asset to stake
           </p>
           <Link
             key={routes.launchpad.title}
             to={{ pathname: routes.launchpad.url }}
             type="button"
-            // className="flex h-8 mx-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
           >
             <span className="text-white font-bold text-md mb-4 underline">
               View all upcoming projects &rarr;
             </span>
           </Link>
         </div>
-        <div className="mt-8 grid gap-8 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 justify-center items-center">
-          <div className="flex w-full h-72 justify-center items-center mb-6">
-            <BigButton
+        <div className="mt-8 grid gap-8 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 justify-center items-center ">
+          <GlowingWrapper>
+            <Item
+              coinTag="TLC"
               title="TLChain"
               subtitle="$TLC is the native, energy-efficient cryptocurrency of TLChain that powers the full DeFi, GameFi and Metaverse ecosystem."
               onClick={() => navigate(`/staking/TLC`)}
               imageSource={TheLuxuryCoin}
             />
-          </div>
-          <div className="flex w-full h-72 justify-center items-center mb-6">
-            <BigButton
+          </GlowingWrapper>
+
+          <GlowingWrapper>
+            <Item
+              coinTag="LSO"
               title="LUXANDIA"
               subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
               onClick={() => navigate(`/staking/LSO`)}
               imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
             />
-          </div>
-          <div className="flex w-full h-72 justify-center items-center mb-6">
-            <BigButton
+          </GlowingWrapper>
+
+          <GlowingWrapper>
+            <Item
+              coinTag="TLX"
               title="THE LUXURY"
               subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
               onClick={() => navigate(`/staking/TLX`)}
-              imageSource="https://forsite.ro/crx//local/images/stakingtlx.jpeg"
+              imageSource={TheLuxuryBank}
             />
-          </div>
-          {/* <BigButton
-              title="BEEZ"
-              subtitle=" The first functioning bridge connecting cryptocurrency and eCommerce. Accelerating The World’s Transition To Cryptocurrency."
-              onClick={() => {}}
-              imageSource="https://forsite.ro/crx//local/images/staking-beez.jpeg"
-              showTopText
-            /> */}
-          <div className="flex w-full h-72 justify-center items-center mb-6">
-            <BigButton
+          </GlowingWrapper>
+          <GlowingWrapper>
+            <Item
+              coinTag="ICICB"
               title="ICICB"
               subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
               onClick={() => {}}
-              imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"
+              // imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"
+              imageSource={ICICB}
               showTopText
             />
-          </div>
+          </GlowingWrapper>
         </div>
       </div>
     </div>
