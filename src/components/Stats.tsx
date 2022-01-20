@@ -10,13 +10,14 @@ import SNXStatBackground from "../assets/svg/snx-stat-background.svg";
 
 interface Props {
   coinTag: "TLX" | "TLC" | "LSO";
+  totalRewards: number;
 }
 
-const Stats: React.FC<Props> = ({ coinTag }) => {
+const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const { stakeContract, tokenContract } = useContracts(coinTag);
   const { account } = useGlobalContext();
   const [totalStaked, setTotalStaked] = useState(0);
-  const [totalRewards, setTotalRewards] = useState<number>();
+  // const [totalRewards, setTotalRewards] = useState<number>();
   const [userRewards, setUserRewards] = useState<number>();
   const [balance, setBalance] = useState<number>();
 
@@ -46,12 +47,12 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
     }
   };
 
-  const getTotalRewards = async () => {
-    if (stakeContract) {
-      const rewards = await contracts.getTotalRewards(stakeContract);
-      setTotalRewards(rewards);
-    }
-  };
+  // const getTotalRewards = async () => {
+  //   if (stakeContract) {
+  //     const rewards = await contracts.getTotalRewards(stakeContract);
+  //     setTotalRewards(rewards);
+  //   }
+  // };
 
   const getUserTLXBalance = async () => {
     if (account && coinTag !== "TLC") {
@@ -76,7 +77,7 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
   }, [stakeContract]);
 
   useEffect(() => {
-    getTotalRewards();
+    // getTotalRewards();
     calculateStakeRewards();
     if (stakeContract) {
       contracts.getTotalValueLocked(stakeContract);
@@ -107,7 +108,7 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
         </p>
         <div>
           <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-            {totalStaked}
+            {totalStaked} {coinTag}
           </p>
           {/* <p className="text-white">TLX</p> */}
         </div>
@@ -123,7 +124,7 @@ const Stats: React.FC<Props> = ({ coinTag }) => {
           Total Rewards
         </p>
         <p className="text-green-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {totalRewards}
+          {totalRewards} {coinTag}
         </p>
       </div>
       <div className="flex flex-col justify-center items-center">

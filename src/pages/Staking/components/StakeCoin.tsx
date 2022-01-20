@@ -13,7 +13,7 @@ import {
   webStake,
 } from "../../../utils/functions/Contracts";
 import { TLXStakeContractAddress } from "../../../utils/globals";
-import { StackingDuration, Stake } from "../../../utils/types";
+import { StackingDuration, Stake, stakeRewards } from "../../../utils/types";
 import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import * as contracts from "../../../utils/functions/Contracts";
@@ -40,6 +40,7 @@ const StakeCoin: React.FC<Props> = () => {
   const [userStakes, setUserStakes] = useState([]);
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
   const [balance, setBalance] = useState<number>();
+  const [totalRewards, setTotalRewards] = useState(0);
 
   const getUserTLCBalance = async () => {
     if (account) {
@@ -65,6 +66,15 @@ const StakeCoin: React.FC<Props> = () => {
   const getStakeTransactions = async () => {
     if (stakeContract) {
       const stakes = await getUserStakes(stakeContract);
+
+      let totalRew = 0;
+      stakes.forEach((stake: Stake) => {
+        const amount = parseFloat(ethers.utils.formatEther(stake.amount));
+        if (coinTag === "TLX" || coinTag === "TLC" || coinTag === "LSO") {
+          totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
+        }
+      });
+      setTotalRewards(parseFloat(totalRew.toFixed(3)));
       setUserStakes(stakes);
     }
   };
@@ -255,7 +265,10 @@ const StakeCoin: React.FC<Props> = () => {
 
   return coinsTags.includes(coinTag ?? "") ? (
     <div className="w-full border-t-2 border-white border-opacity-60">
-      <Stats coinTag={coinTag as "TLC" | "TLX" | "LSO"} />
+      <Stats
+        coinTag={coinTag as "TLC" | "TLX" | "LSO"}
+        totalRewards={totalRewards}
+      />
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}

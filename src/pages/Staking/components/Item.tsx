@@ -29,6 +29,11 @@ const Item: React.FC<Props> = ({
         alt={title}
         className="h-full aspect-w-1 object-cover object-center"
       ></img>
+      {showTopText && (
+        <div className="w-full absolute py-1 top-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
+          <p className="font-poppins text-md font-semibold">Coming Soon</p>
+        </div>
+      )}
       <div className="flex flex-col items-center justify-between absolute w-full min-h-[9rem] flex-grow py-1 px-3 bottom-0 inset-x-0 bg-gray-700 bg-opacity-70 text-white text-xs leading-4">
         <p className="text-center font-oswald uppercase font-semibold text-xl mb-2">
           {title}

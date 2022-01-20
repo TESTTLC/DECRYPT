@@ -1,6 +1,7 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../utils/context";
+import small_logo from "../assets/images/logo.png";
 
 const Footer: React.FC = () => {
   const { isSidebarOpen } = useGlobalContext();
@@ -16,7 +17,12 @@ const Footer: React.FC = () => {
       // bg-red-200
     >
       <div className="flex xs:flex-col justify-around items-center ">
-        <div className="w-[17rem]">
+        {/* <img
+          src={small_logo}
+          alt="avatar"
+          className="h-28 w-28 mx-2 object-center object-cover rounded-full"
+        /> */}
+        <div className="w-[17rem] flex">
           {/* <div className="flex justify-start mb-2">
             <a
               href="#!"
@@ -206,7 +212,6 @@ const Footer: React.FC = () => {
             </div>
           </form>
         </div>
-
         <div className="w-72 grid grid-cols-1">
           <div className="mb-2">
             <h5 className="font-bold font-poppins mb-2.5">Links</h5>
