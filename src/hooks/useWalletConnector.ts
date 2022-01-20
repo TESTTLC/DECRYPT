@@ -1,17 +1,17 @@
 import { useEffect } from "react";
-import Web3Modal from "web3modal";
+import Web3Modal, { IProviderOptions } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { useWindowSize } from "./useWindowSize";
 import { useGlobalContext } from "../utils/context";
 
-const providerOptions = {
+const providerOptions: IProviderOptions = {
   walletconnect: {
     package: WalletConnectProvider,
-
     options: {
       rpc: {
         5177: "https://mainnet-rpc.tlxscan.com/",
+        // chainId: 5177,
       },
       infuraId: "ecce1e30e55349abbac0be46d97dd143",
     },
@@ -25,6 +25,7 @@ export const useWalletConnector = () => {
     cacheProvider: true, // optional
     providerOptions, // required
     theme: "dark",
+    // network: "https://mainnet-rpc.tlxscan.com/",
   });
 
   const subscribeProvider = async (providerConnection: any) => {

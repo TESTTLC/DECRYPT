@@ -4,12 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../utils/routes";
 import stakingImage from "../assets/images/Staking.jpg";
 import launchpadImage from "../assets/images/Launchpad.jpg";
-import createTokenImage from "../assets/images/Create_Your_Own_Token.jpg";
-import crossChainBridgeImage from "../assets/images/Cross_Chain_Bridge.jpg";
-import exchangeImage from "../assets/images/Decentralized_Exchange.jpg";
-import nftMarketplaceImage from "../assets/images/NFT_Marketplace.jpg";
+import createTokenImage from "../assets/images/Create-Your-Own-Token.jpg";
+import crossChainBridgeImage from "../assets/images/Cross-Chain-Bridge.jpg";
+import exchangeImage from "../assets/images/Decentralized-Exchange.jpg";
+import nftMarketplaceImage from "../assets/images/NFT-Marketplace.jpg";
 import metaverseImage from "../assets/images/Metaverse.jpg";
-import lendingAndBorrowingImage from "../assets/images/Lending_And_Borrowing.jpg";
+import lendingAndBorrowingImage from "../assets/images/Lending-And-Borrowing.jpg";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();

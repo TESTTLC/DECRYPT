@@ -22,17 +22,18 @@ const BigButton: React.FC<Props> = ({
   imageStyle,
 }) => {
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full transform duration-500 hover:scale-110">
       {/* <div className="relative xs:w-80 w-72 h-72"> */}
       <div className="relative w-full h-full">
-        <div className="absolute -inset-1 bg-gradient-to-r from-green-400 to-blue-600  rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+        <div className="\ hover:scale-110 absolute -inset-1 bg-gradient-to-r from-green-400 to-blue-600  rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
 
         <button
           onClick={onClick}
           // className="flex flex-col rounded-lg relative xs:w-80 w-72 h-72
           className="flex flex-col rounded-lg relative w-full h-full bg-gradient-to-br
-                    from-green-400 to-blue-600
-                    transform duration-500 hover:scale-110 overflow-hidden "
+           overflow-hidden bg-gray-700 bg-opacity-70"
+          //  transform duration-500 hover:scale-110
+          // from-green-400 to-blue-600
           // overflow-hidden"
           // hover:bg-gradient-to-r
           // hover:from-customBlue-300  hover:to-indigo-900 shadow-2xl
