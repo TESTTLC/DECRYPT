@@ -1,7 +1,9 @@
 import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
+import { isMobile } from "web3modal";
 import { useContracts } from "../hooks/useContracts";
+import { useWindowSize } from "../hooks/useWindowSize";
 import { useGlobalContext } from "../utils/context";
 import {
   determinePowerForStake,
@@ -23,24 +25,6 @@ import {
 import GlowingButton from "./GlowingButton";
 import SelectDropdown from "./SelectDropdown";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    // backgroundColor: "#080220",
-    backgroundColor: "#080220",
-    opacity: 1,
-    backgroundOpacity: 1,
-    borderWidth: 0,
-    padding: 0,
-    // width: "25rem",
-  },
-};
-
 Modal.setAppElement("#root");
 
 interface Props {
@@ -49,10 +33,28 @@ interface Props {
   projectItem: LaunchpadProject;
 }
 
-const totalTLXValueAllocated = 10000000;
-const totalLSOValueAlocated = 100000000;
-
 const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
+  const { isMobile } = useWindowSize();
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      // bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      // backgroundColor: "#080220",
+      backgroundColor: "#080220",
+      opacity: 1,
+      backgroundOpacity: 1,
+      borderWidth: 0,
+      padding: 0,
+      zIndex: 999,
+      minHeight: isMobile ? "40rem" : "30rem",
+      // width: "25rem",
+    },
+  };
+
   const { account, setTotalPower } = useGlobalContext();
   let subtitle = "";
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -173,8 +175,9 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
         contentLabel="Modal"
         overlayClassName="Overlay"
         // className="Modal"
+        preventScroll={false}
       >
-        <div className="flex xs:flex-col xs:w-full sm:flex-col sm:w-full md:flex-col md:w-full h-full min-h-[28rem] w-[64rem] relative">
+        <div className="z-50 flex xs:flex-col xs:w-full sm:flex-col sm:w-full md:flex-col md:w-full h-full min-h-[28rem] w-[64rem] relative">
           <div className="xs:w-full xs:h-60 sm:w-full sm:h-60 md:w-full md:h-60 w-60 relative">
             <img
               src={projectItem.imageSource}

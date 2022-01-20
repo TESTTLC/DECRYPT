@@ -59,8 +59,6 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  /* background-color: rebeccapurple; */
-  /* opacity: 0.9; */
-  /* opacity: 0.4; */
+  z-index: 99999;
   background-color: rgba(108, 122, 137, 0.6);
 }

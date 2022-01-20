@@ -190,24 +190,6 @@ const StakeCoin: React.FC<Props> = () => {
                       }}
                     />
                   </div>
-
-                  {/* <button
-                    className="
-                    text-gray-900 bg-indigo-400 h-8 w-24 px-4 py-1 rounded-lg"
-                    onClick={() => {
-                      webStake(
-                        tokenContract,
-                        stakeContract!,
-                        TLXStakeContractAddress,
-                        account!,
-                        parseFloat(stakeAmount)!,
-                        1,
-                        provider
-                      );
-                    }}
-                  >
-                    Stake
-                  </button> */}
                 </span>
               </div>
             </div>

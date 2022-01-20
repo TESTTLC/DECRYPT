@@ -223,27 +223,38 @@ const Footer: React.FC = () => {
                   target="_blank"
                   className="text-white underline"
                 >
+                  TLChain
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://tlxscan.com"
+                  target="_blank"
+                  className="text-white underline"
+                >
+                  TLX Scan
+                </a>
+              </li>
+
+              <li>
+                <a
+                  href="https://status.tlxscan.com"
+                  target="_blank"
+                  className="text-white underline"
+                >
+                  Status Network
+                </a>
+              </li>
+              {/* <li>
+                <a
+                  href="https://status.tlxscan.com"
+                  target="_blank"
+                  className="text-white underline"
+                >
                   The Luxury Bank
                 </a>
-              </li>
-              <li>
-                <a
-                  href="https://theluxury.gallery"
-                  target="_blank"
-                  className="text-white underline"
-                >
-                  NFT Marketplace
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://theluxurybank.org"
-                  target="_blank"
-                  className="text-white underline"
-                >
-                  Swap
-                </a>
-              </li>
+              </li> */}
+
               {/* <li>
                 <a href="#!" className="text-white">
                   Link 4

@@ -32,6 +32,7 @@
   },
   "scripts": {
     "start": "craco start",
+    "devHTTPS": "TAILWIND_MODE=watch HTTPS=true SSL_CRT_FILE=./.cert/cert.pem SSL_KEY_FILE=./.cert/key.pem craco start",
     "dev": "TAILWIND_MODE=watch craco start",
     "build": "craco build",
     "test": "craco test",
