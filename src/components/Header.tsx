@@ -24,12 +24,15 @@ const Header: React.FC = () => {
   const { isSidebarOpen } = useGlobalContext();
 
   // https://metamask.app.link/dapp/localhost:3000
-  const metamaskAppDeepLink = useRef(
-    "https://metamask.app.link/dapp/192.168.1.2:3000"
-  ).current;
+  // const metamaskAppDeepLink = useRef(
+  //   "https://metamask.app.link/dapp/192.168.1.2:3000"
+  // ).current;
   // const metamaskAppDeepLink = useRef(
   //   "https://metamask.app.link/dapp/decryption.com"
   // ).current;
+  const metamaskAppDeepLink = useRef(
+    "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app/"
+  ).current;
 
   return (
     <div className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5 bg-customBlue-800">
