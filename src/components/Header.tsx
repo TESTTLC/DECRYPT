@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useWalletConnector } from "../hooks/useWalletConnector";
 import { useGlobalContext } from "../utils/context";
 import small_logo from "../assets/images/logo.png";
@@ -10,13 +10,26 @@ import { Link } from "react-router-dom";
 //   connectWallet: () => void;
 //   disconnectWallet: () => void;
 //   account?: string;
-//   isMobile: boolean;
+//   isMobileSize: boolean;
 // }
 
 const Header: React.FC = () => {
-  const { account, connectWallet, disconnectWallet, isMobile } =
-    useWalletConnector();
+  const {
+    account,
+    connectWallet,
+    disconnectWallet,
+    isMobileSize,
+    isMobileDevice,
+  } = useWalletConnector();
   const { isSidebarOpen } = useGlobalContext();
+
+  // https://metamask.app.link/dapp/localhost:3000
+  const metamaskAppDeepLink = useRef(
+    "https://metamask.app.link/dapp/192.168.1.2:3000"
+  ).current;
+  // const metamaskAppDeepLink = useRef(
+  //   "https://metamask.app.link/dapp/decryption.com"
+  // ).current;
 
   return (
     <div className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5 bg-customBlue-800">
@@ -34,7 +47,7 @@ const Header: React.FC = () => {
               className="relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
             >
               <span className="xs:ml-10 flex items-center space-x-5">
-                {!isMobile ? (
+                {!isMobileSize ? (
                   <img
                     src={small_logo}
                     alt="TLX logo"
@@ -70,35 +83,38 @@ const Header: React.FC = () => {
         <div className="items-center justify-center mx-2">
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
-            {/* <button className="relative px-7 py-4 bg-black leading-none flex items-center divide-x divide-gray-600"> */}
-            <button
-              onClick={account ? disconnectWallet : connectWallet}
-              // className="h-10 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-3xl"
-              className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
-            >
-              <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
-                {account
-                  ? `Disconnect ${account.slice(0, 4)}...${account.slice(
-                      account.length - 4,
-                      account.length
-                    )}`
-                  : "Connect wallet"}{" "}
-              </span>
-            </button>
+            {isMobileDevice ? (
+              <a href={metamaskAppDeepLink}>
+                <button className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
+                  {/* Connect to MetaMask */}
+                  <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
+                    {account
+                      ? `Disconnect ${account.slice(0, 4)}...${account.slice(
+                          account.length - 4,
+                          account.length
+                        )}`
+                      : "Connect wallet"}{" "}
+                  </span>
+                </button>
+              </a>
+            ) : (
+              <button
+                onClick={account ? disconnectWallet : connectWallet}
+                // className="h-10 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-3xl"
+                className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+              >
+                <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
+                  {account
+                    ? `Disconnect ${account.slice(0, 4)}...${account.slice(
+                        account.length - 4,
+                        account.length
+                      )}`
+                    : "Connect wallet"}{" "}
+                </span>
+              </button>
+            )}
           </div>
         </div>
-
-        {/* <button
-          onClick={account ? disconnectWallet : connectWallet}
-          className="h-10 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-3xl"
-        >
-          {account
-            ? `Disconnect ${account.slice(0, 4)}...${account.slice(
-                account.length - 4,
-                account.length
-              )}`
-            : "Connect wallet"}
-        </button> */}
       </div>
     </div>
   );

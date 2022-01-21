@@ -1,7 +1,6 @@
 import { ethers } from "ethers";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
-import { isMobile } from "web3modal";
 import { useContracts } from "../hooks/useContracts";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useGlobalContext } from "../utils/context";
@@ -34,7 +33,7 @@ interface Props {
 }
 
 const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
   const customStyles = {
     content: {
       top: "50%",
@@ -50,7 +49,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
       borderWidth: 0,
       padding: 0,
       zIndex: 999,
-      minHeight: isMobile ? "40rem" : "30rem",
+      minHeight: isMobileSize ? "40rem" : "30rem",
       // width: "25rem",
     },
   };

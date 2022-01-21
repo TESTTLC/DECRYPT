@@ -7,7 +7,7 @@ import blockchain from "../assets/images/blockchain.jpg";
 import { useWindowSize } from "../hooks/useWindowSize";
 import Home from "./Home";
 const CountDown: React.FC = () => {
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
 
   const utcDate = new Date(Date.UTC(2021, 11, 1, 15, 0, 0));
   const renderer = ({
@@ -27,8 +27,8 @@ const CountDown: React.FC = () => {
       <div className="bg-black xs:pt-8 pt-24">
         <img
           src={logo}
-          width={isMobile ? 150 : 240}
-          height={isMobile ? 150 : 240}
+          width={isMobileSize ? 150 : 240}
+          height={isMobileSize ? 150 : 240}
           alt="logo"
           className="mx-auto"
         />

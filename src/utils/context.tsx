@@ -35,10 +35,10 @@ interface IAppContext {
 const AppContext = createContext<IAppContext>({} as IAppContext);
 
 const AppProvider = ({ children }: { children: ReactElement<any, any> }) => {
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
   const [account, setAccount] = useState<string | undefined>();
   const [totalPower, setTotalPower] = useState(0);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(!isMobile);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(!isMobileSize);
   const [provider, setProvider] = useState<
     ethers.providers.Web3Provider | any
   >();

@@ -34,7 +34,7 @@ const StakeCoin: React.FC<Props> = () => {
     coinTag ?? "-"
   );
 
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
   const [duration, setDuration] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [userStakes, setUserStakes] = useState([]);
@@ -80,7 +80,7 @@ const StakeCoin: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    if (tokenContract) {
+    if (tokenContract && coinTag !== "TLC") {
       getUserTLXBalance();
     }
   }, [tokenContract]);
@@ -195,12 +195,12 @@ const StakeCoin: React.FC<Props> = () => {
             </div>
             {/* <div
               className={`"text-center h-full p-5 flex flex-col justify-center overflow-y-scroll" ${
-                !isMobile ? "border-l-2" : ""
+                !isMobileSize ? "border-l-2" : ""
               }`}
             > */}
             <div
               className={`"text-center h-80 p-5 flex flex-col justify-center" overflow-y-scroll ${
-                !isMobile ? "border-l-2" : ""
+                !isMobileSize ? "border-l-2" : ""
               }`}
             >
               {userStakes.length ? (

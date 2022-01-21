@@ -35,7 +35,7 @@
 
 // export const useWalletConnector = () => {
 //   const { provider, setProvider, setAccount, account } = useGlobalContext();
-//   const { isMobile } = useWindowSize();
+//   const { isMobileSize } = useWindowSize();
 //   const web3Modal = new Web3Modal({
 //     network: "binance-testnet", // optional
 //     cacheProvider: true, // optional
@@ -101,7 +101,7 @@
 //   };
 
 //   const tryLogin = async () => {
-//     if (isMobile) {
+//     if (isMobileSize) {
 //       if (web3Modal.cachedProvider) {
 //         const connection = await web3Modal.connect();
 //         subscribeProvider(connection);
@@ -138,7 +138,7 @@
 //   }, [web3Modal.cachedProvider]);
 
 //   return {
-//     isMobile,
+//     isMobileSize,
 //     web3Modal,
 //     account,
 //     connectWallet,
@@ -169,7 +169,7 @@ const providerOptions = {
 
 export const useWalletConnector = () => {
   const { provider, setProvider, setAccount, account } = useGlobalContext();
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
   const walletConnectProvider = new WalletConnectProvider({
     chainId: 5177,
     rpc: {
@@ -262,7 +262,7 @@ export const useWalletConnector = () => {
   const initialize = async () => {
     const localStorageAccount = localStorage.getItem("account");
 
-    if (isMobile) {
+    if (isMobileSize) {
       if (localStorageAccount) {
         // const connection = await web3Modal.connect();
         await walletConnectProvider.enable();
@@ -292,7 +292,7 @@ export const useWalletConnector = () => {
   }, []);
 
   return {
-    isMobile,
+    isMobileSize,
     // web3Modal,
     account,
     connectWallet,

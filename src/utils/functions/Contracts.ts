@@ -77,7 +77,7 @@ export const webStake = async (
     //   await tokenContract.setProvider(provider);
     // }
 
-    // if (isMobile) {
+    // if (isMobileSize) {
     //   const result = stakeContract.functions.stakeTokens(price, manualStackingDuration)
     //   tokenContract.methods.approve(stakeContractAddress, price).send({ from: account })
 
