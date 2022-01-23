@@ -1,11 +1,6 @@
 import React from "react";
 
-interface ComponentProps {
-  value: number;
-  label: string;
-}
-
-const PrivacyPolicy = (props: ComponentProps) => {
+const PrivacyPolicy: React.FC = () => {
   return (
     <div className="pl-2 pr-8 text-white text-left font-poppins">
       <h1 className="text-3xl font-bold">Privacy Policy</h1>

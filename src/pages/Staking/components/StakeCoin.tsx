@@ -251,6 +251,11 @@ const StakeCoin: React.FC<Props> = () => {
         coinTag={coinTag as "TLC" | "TLX" | "LSO"}
         totalRewards={totalRewards}
       />
+      {!account && (
+        <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
+          Connect MetaMask wallet to access the staking options
+        </p>
+      )}
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}

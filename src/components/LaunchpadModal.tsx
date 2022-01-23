@@ -206,65 +206,73 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
               <span className=" text-white text-lg font-poppins">
                 <span className="flex">
                   Current power:{" "}
-                  <p className="text-green-300">&nbsp; {power}%</p>
+                  <p className="text-green-300">
+                    &nbsp; {account ? power + "%" : "-"}
+                  </p>
                 </span>
                 {/* <p>{launchpadProjects.TLX.description}</p> */}
               </span>
             </div>
-            <div>
-              <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
-                {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
-                <input
-                  className="text-white h-8 rounded-md px-3 my-2 mr-2 w-40 bg-customBlue-300"
-                  type={"number"}
-                  // ref={stakeInputRef}
-                  onChange={(e) => {
-                    setStakeAmount(parseFloat(e.target.value));
-                  }}
-                  placeholder="Value..."
-                />
-                <div className="my-2 mr-2 w-60">
-                  <SelectDropdown
-                    text={"Staking duration (months)"}
-                    elements={[1, 3, 6, 12, 36]}
-                    onSelect={(e) => {
-                      // const value = parseInt(e.target.value, 10);
-                      if (parseInt(e.target.value, 10) === 1) {
-                        setDuration(StackingDuration.ONE_MONTH);
-                      } else if (parseInt(e.target.value, 10) === 3) {
-                        setDuration(StackingDuration.THREE_MONTHS);
-                      } else if (parseInt(e.target.value, 10) === 6) {
-                        setDuration(StackingDuration.SIX_MONTHS);
-                      } else if (parseInt(e.target.value, 10) === 12) {
-                        setDuration(StackingDuration.ONE_YEAR);
-                      } else if (parseInt(e.target.value, 10) === 36) {
-                        setDuration(StackingDuration.THREE_YEARS);
-                      }
+            {account ? (
+              <div>
+                <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
+                  {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
+                  <input
+                    className="text-white h-8 rounded-md px-3 my-2 mr-2 w-40 bg-customBlue-300"
+                    type={"number"}
+                    // ref={stakeInputRef}
+                    onChange={(e) => {
+                      setStakeAmount(parseFloat(e.target.value));
                     }}
+                    placeholder="Value..."
                   />
-                </div>
-                <div className="my-2 mr-2 w-40">
-                  <SelectDropdown
-                    text={"Staking coin"}
-                    elements={["TLX", "TLC"]}
-                    onSelect={(e) => {
-                      // const value = parseInt(e.target.value, 10);
-                      if (e.target.value === "TLC") {
-                        setStakingCoin("TLC");
-                      } else {
-                        setStakingCoin("TLX");
-                      }
-                    }}
-                  />
-                </div>
-                <div className="my-2 mr-2 flex">
-                  <GlowingButton
-                    text={`Stake ${stakeAmount || 0}`}
-                    onClick={stakeTokens}
-                  />
-                </div>
-              </span>
-            </div>
+                  <div className="my-2 mr-2 w-60">
+                    <SelectDropdown
+                      text={"Staking duration (months)"}
+                      elements={[1, 3, 6, 12, 36]}
+                      onSelect={(e) => {
+                        // const value = parseInt(e.target.value, 10);
+                        if (parseInt(e.target.value, 10) === 1) {
+                          setDuration(StackingDuration.ONE_MONTH);
+                        } else if (parseInt(e.target.value, 10) === 3) {
+                          setDuration(StackingDuration.THREE_MONTHS);
+                        } else if (parseInt(e.target.value, 10) === 6) {
+                          setDuration(StackingDuration.SIX_MONTHS);
+                        } else if (parseInt(e.target.value, 10) === 12) {
+                          setDuration(StackingDuration.ONE_YEAR);
+                        } else if (parseInt(e.target.value, 10) === 36) {
+                          setDuration(StackingDuration.THREE_YEARS);
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="my-2 mr-2 w-40">
+                    <SelectDropdown
+                      text={"Staking coin"}
+                      elements={["TLX", "TLC"]}
+                      onSelect={(e) => {
+                        // const value = parseInt(e.target.value, 10);
+                        if (e.target.value === "TLC") {
+                          setStakingCoin("TLC");
+                        } else {
+                          setStakingCoin("TLX");
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="my-2 mr-2 flex">
+                    <GlowingButton
+                      text={`Stake ${stakeAmount || 0}`}
+                      onClick={stakeTokens}
+                    />
+                  </div>
+                </span>
+              </div>
+            ) : (
+              <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
+                Connect MetaMask wallet for access on staking options
+              </p>
+            )}
             <div className="">
               <p className="text-white font-poppins text-sm">
                 Empower the most innovative crypto projects across all
