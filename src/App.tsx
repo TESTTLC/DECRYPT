@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Staking from "./pages/Staking";
 import StakeCoin from "./pages/Staking/components/StakeCoin";
 import Launchpad from "./pages/Launchpad";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -35,6 +36,7 @@ const App = () => {
             <Route path="/launchpad" element={<Launchpad />} />
             {/* <Route path="/crosschainbridge" element={<Projects />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

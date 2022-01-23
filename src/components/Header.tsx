@@ -25,7 +25,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
   if (isMobileDevice) {
     if (!window.ethereum) {
       return (
-        <a href={metamaskAppDeepLink}>
+        <a href={metamaskAppDeepLink} target="_blank">
           <button className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
             {/* Connect to MetaMask */}
             <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">

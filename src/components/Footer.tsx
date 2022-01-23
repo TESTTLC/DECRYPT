@@ -2,6 +2,7 @@ import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../utils/context";
 import small_logo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   const { isSidebarOpen } = useGlobalContext();
@@ -244,6 +245,16 @@ const Footer: React.FC = () => {
                 >
                   Status Network
                 </a>
+              </li>
+
+              <li>
+                <Link
+                  to="privacyPolicy"
+                  type="button"
+                  className="text-white underline"
+                >
+                  Privacy Policy
+                </Link>
               </li>
               {/* <li>
                 <a

@@ -40,9 +40,9 @@ export const useWalletConnector = () => {
         const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(web3Provider);
       }
-      if (isMobileDevice) {
-        await connectWallet();
-      }
+      // if (isMobileDevice) {
+      //   await connectWallet();
+      // }
     }
   };
 
