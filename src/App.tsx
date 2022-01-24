@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Staking from "./pages/Staking";
 import StakeCoin from "./pages/Staking/components/StakeCoin";
 import Launchpad from "./pages/Launchpad";
+import CrossChainBridge from "./pages/CrossChainBridge";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
@@ -34,7 +35,7 @@ const App = () => {
             <Route path="/staking" element={<Staking />} />
             <Route path="/staking/:coinTag" element={<StakeCoin />} />
             <Route path="/launchpad" element={<Launchpad />} />
-            {/* <Route path="/crosschainbridge" element={<Projects />} /> */}
+            <Route path="/crosschainbridge" element={<CrossChainBridge />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route path="*" element={<NotFound />} />
