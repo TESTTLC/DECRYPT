@@ -8,7 +8,7 @@ const CrossChainBridge: React.FC = () => {
     <div className="flex flex-col flex-1 mt-10 items-center">
       <div className="flex flex-col">
         <GlowingWrapper>
-          <div className="relative items-center w-[44rem] xs:w-[24rem] h-[22rem] p-8 rounded-lg bg-gray-900">
+          <div className="relative items-center w-[44rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-gray-900">
             <GlowingWrapper>
               <div className="relative flex bg-gray-900 w-full h-20 rounded-lg pt-1 px-6 items-center">
                 <div className="flex w-1/2 flex-col h-full">
