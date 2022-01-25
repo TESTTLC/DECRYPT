@@ -156,7 +156,7 @@ export const getTotalRewards = async (stakeContract: Contract) => {
 };
 
 export const getTotalValueLocked = async (stakeContract: Contract) => {
-  let stakedAmount;
+  let stakedAmount = 0;
   try {
     stakedAmount = await stakeContract.getStakedAmount();
   } catch (err) {
