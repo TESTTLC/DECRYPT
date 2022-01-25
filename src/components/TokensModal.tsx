@@ -33,7 +33,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
       padding: 0,
       zIndex: 999,
       minHeight: "25rem",
-      width: "25rem",
+      width: isMobileSize ? "20rem" : "25rem",
     },
   };
 

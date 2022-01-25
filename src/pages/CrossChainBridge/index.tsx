@@ -8,7 +8,7 @@ const CrossChainBridge: React.FC = () => {
     <div className="flex flex-col flex-1 mt-10 items-center">
       <div className="flex flex-col">
         <GlowingWrapper>
-          <div className="relative items-center w-[44rem] xs:w-[28rem] h-[22rem] p-8 rounded-lg bg-gray-900">
+          <div className="relative items-center w-[44rem] xs:w-[24rem] h-[22rem] p-8 rounded-lg bg-gray-900">
             <GlowingWrapper>
               <div className="relative flex bg-gray-900 w-full h-20 rounded-lg pt-1 px-6 items-center">
                 <div className="flex w-1/2 flex-col h-full">
@@ -52,8 +52,7 @@ const CrossChainBridge: React.FC = () => {
                   </p>
                   <input
                     className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                    placeholder="Conversion coming soon..."
-                    // value="Conversion coming soon"
+                    // placeholder="Conversion coming soon..."
                     type="text"
                     disabled
                   ></input>
@@ -66,6 +65,14 @@ const CrossChainBridge: React.FC = () => {
             </button>
           </div>
         </GlowingWrapper>
+      </div>
+      <div className="w-[44rem] xs:w-[24rem] mt-10 text-sm">
+        <p className="font-poppins text-gray-300">
+          Because of the decentralized nature of Decryption Protocol and the
+          instability of different blockchain mainnets, your cross-chain
+          transaction could take 3-30 minutes to complete but your assets are
+          perfectly safe with Decryption protocol.
+        </p>
       </div>
     </div>
   );
