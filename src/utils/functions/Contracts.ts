@@ -85,8 +85,6 @@ export const webStake = async (
     //   setErrorOnApprove(false)
     // }
 
-    console.log("stakingDuration is: ", stakingDuration);
-
     const result = await tokenContract.functions.approve(
       stakeContractAddress,
       price
@@ -120,7 +118,6 @@ export const unstake = async (
 };
 
 export const getTotalUserTLXStaked = async (stakeContract: Contract) => {
-  console.log("Stake c: ", stakeContract);
   let totalValueStaked = 0;
   const userStakes = await stakeContract.getUserStakes();
   userStakes.forEach((s: any) => {
@@ -133,7 +130,6 @@ export const getTotalUserTLXStaked = async (stakeContract: Contract) => {
 };
 
 export const getUserStakes = async (stakeContract: Contract) => {
-  console.log("Stake c: ", stakeContract);
   let userStakes = [];
   try {
     userStakes = await stakeContract.getUserStakes();
@@ -234,13 +230,11 @@ export const getTLXBalance = async (tokenContract: any, account: string) => {
 };
 
 export const getTLCBalance = async (account: string) => {
-  console.log("Acc: ", account);
   const api = `https://tlxscan.com/api?module=account&action=balance&address=${account}`;
   let balance = "0";
   await fetch(api)
     .then((response) => response.json())
     .then((response) => {
-      console.log("RESPONSE: ", response);
       balance = response.result;
     });
 

@@ -24,7 +24,6 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const getUserTLCBalance = async () => {
     if (account) {
       const TLCBalance = await contracts.getTLCBalance(account);
-      console.log("TLC balance: ", TLCBalance);
       setBalance(TLCBalance);
     }
   };

@@ -7,7 +7,6 @@ import StakeCoin from "./pages/Staking/components/StakeCoin";
 import Launchpad from "./pages/Launchpad";
 import CrossChainBridge from "./pages/CrossChainBridge";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Projects from "./pages/Projects";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import { Route, Routes } from "react-router-dom";

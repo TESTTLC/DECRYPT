@@ -45,7 +45,6 @@ const StakeCoin: React.FC<Props> = () => {
   const getUserTLCBalance = async () => {
     if (account) {
       const TLCBalance = await contracts.getTLCBalance(account);
-      console.log("TLC balance: ", TLCBalance);
       setBalance(TLCBalance);
     }
   };
@@ -177,7 +176,6 @@ const StakeCoin: React.FC<Props> = () => {
                     <GlowingButton
                       text={`Stake ${stakeAmount || 0}`}
                       onClick={() => {
-                        console.log("Duration is: ", duration);
                         webStake(
                           tokenContract,
                           stakeContract!,

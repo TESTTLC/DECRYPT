@@ -61,7 +61,6 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("contractS TLX: ", TLXStakeContract);
     getTLXtakeTransactions();
     getTLCStakeTransactions();
   }, [TLXStakeContract, TLCStakeContract]);

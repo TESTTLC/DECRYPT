@@ -1,7 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { GoArrowDown } from "react-icons/all";
+import ftmBridgeImage from "../assets/images/ftm-bridge.png";
+import ethBridgeImage from "../assets/images/eth-bridge.png";
+import bscBridgeImage from "../assets/images/bsc-bridge.png";
+import solBridgeImage from "../assets/images/sol-bridge.png";
+import tlcBridgeImage from "../assets/images/tlc-bridge.png";
+import maticBridgeImage from "../assets/images/matic-bridge.png";
+import tlxOldToken from "../assets/images/tlx-token-old.png";
+import tlxNewToken from "../assets/images/tlx-token-new.png";
+import atariToken from "../assets/images/atari-token.png";
 
 Modal.setAppElement("#root");
 
@@ -14,8 +23,10 @@ interface Props {
 
 const TokensModal: React.FC<Props> = ({ tokens, type }) => {
   const { isMobileSize } = useWindowSize();
-  const [selectedToken, setSelectedToken] = useState(tokens[0]);
-  const [coinTag, setCoinTag] = useState("TLX");
+  const [selectedChain, setSelectedChain] = useState(tokens[0]);
+  const [imageUsed, setImageUsed] = useState("");
+  const [imageUsedToken, setImageUsedToken] = useState("");
+  const [selectedToken, setSelectedToken] = useState("TLX");
 
   const customStyles = {
     content: {
@@ -37,6 +48,30 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
     },
   };
 
+  useEffect(() => {
+    if (selectedChain === "BSC") {
+      setImageUsed(bscBridgeImage);
+    } else if (selectedChain === "ETH") {
+      setImageUsed(ethBridgeImage);
+    } else if (selectedChain === "FTM") {
+      setImageUsed(ftmBridgeImage);
+    } else if (selectedChain === "MATIC") {
+      setImageUsed(maticBridgeImage);
+    } else if (selectedChain === "SOL") {
+      setImageUsed(solBridgeImage);
+    } else if (selectedChain === "TLChain") {
+      setImageUsed(tlcBridgeImage);
+    }
+
+    if (selectedToken === "TLX" && type === "from") {
+      setImageUsedToken(tlxOldToken);
+    } else if (selectedToken === "TLX" && type === "to") {
+      setImageUsedToken(tlxNewToken);
+    } else if (selectedToken === "ATRI") {
+      setImageUsedToken(atariToken);
+    }
+  }, [selectedChain, selectedToken, type]);
+
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -49,17 +84,23 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
 
   return (
     <div className="flex flex-col h-full w-1/2 rounded-xl items-baseline justify-end">
-      <div className="flex w-full justify-end">
-        <div className="flex justify-start items-start">
+      <div className="flex w-full justify-end mb-4">
+        <div className="flex items-center">
           <button
             onClick={() => {
               if (type === "from") {
-                setCoinTag(coinTag === "TLX" ? "ATRI" : "TLX");
+                setSelectedToken(selectedToken === "TLX" ? "ATRI" : "TLX");
               }
             }}
-            className="flex text-white font-poppins"
+            className="flex text-white font-poppins items-center justify-center"
           >
-            {type === "from" ? coinTag : "TLX"}
+            <img
+              className="text-white font-poppins w-6 h-6 mr-2 object-cover"
+              src={imageUsedToken}
+            />
+            <p className="text-white font-poppins">
+              {type === "from" ? selectedToken : "TLX"}
+            </p>
 
             {type === "from" ? (
               <GoArrowDown className="h-4 w-4 ml-2 mt-1" color="white" />
@@ -71,9 +112,13 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
           onClick={openModal}
           type="button"
           // className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-          className="flex h-ful justify-end items-end pb-4"
+          className="flex h-full justify-end items-center "
         >
-          <p className="text-white font-poppins">{selectedToken}</p>{" "}
+          <img
+            className="text-white font-poppins w-7 h-7 mr-1 object-cover"
+            src={imageUsed}
+          />
+          <p className="text-white font-poppins">{selectedChain}</p>{" "}
           <GoArrowDown className="h-4 w-4 ml-2 mb-1" color="white" />
         </button>
       </div>
@@ -93,14 +138,17 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
           </div>
           <ul className="flex flex-col w-full text-white font-poppins justify-center items-center">
             {tokens.map((token, index) => (
-              <li className="w-full hover:bg-gray-800 ">
+              <li
+                key={`${token}/${index}`}
+                className="w-full hover:bg-gray-800 "
+              >
                 <button
                   className={` w-full flex ${
                     index === 0 || index === tokens.length
                       ? undefined
                       : "border-t-2"
                   } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
-                  onClick={() => setSelectedToken(token)}
+                  onClick={() => setSelectedChain(token)}
                 >
                   <p className="text-xl font-semibold">{token}</p>
                 </button>

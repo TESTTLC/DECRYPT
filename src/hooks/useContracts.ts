@@ -69,8 +69,8 @@ export const useContracts = (coinTag: string) => {
           provider.getSigner()
         );
 
-        console.log("contractT: ", contractT);
-        console.log("contractS: ", contractS);
+        // console.log("contractT: ", contractT);
+        // console.log("contractS: ", contractS);
 
         setTokenContract(contractT);
         setStakeContract(contractS);

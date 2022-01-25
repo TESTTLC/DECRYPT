@@ -20,3 +20,7 @@ export const TLCStakeContractAddress =
 
 // export const TLXStakeContractAddress =
 //   "0xC9e6FaBbb65d8B87E24a79483fF553ac423cF330";
+
+/** Bridge */
+export const BSCBridgeContractAddress =
+  "0xc74da56a703ae67969818018a7d1baa7d383d77a";

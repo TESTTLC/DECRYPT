@@ -1,9 +1,32 @@
-import React from "react";
+import { ethers } from "ethers";
+import React, { useEffect, useState } from "react";
 import { FaArrowCircleDown } from "react-icons/fa";
 import GlowingWrapper from "../../components/GlowingWrapper";
 import TokensModal from "../../components/TokensModal";
+import { useBridgeContracts } from "../../hooks/useBridgeContracts";
+
+import small_logo from "../assets/images/logo.png";
 
 const CrossChainBridge: React.FC = () => {
+  const { bridgeContract } = useBridgeContracts("BSC");
+
+  const callBridgeFunc = async () => {
+    const r = await bridgeContract?.functions.burnFreezed(
+      "0xff8046Ae3b6E9c275728501856b5E0e37F59d6eb",
+      1,
+      30322
+    );
+    // console.log("R IS: ", r);
+    // console.log("value is: ", ethers.utils.formatEther(r.value.toString()));
+  };
+
+  useEffect(() => {
+    if (bridgeContract) {
+      console.log("b c: ", bridgeContract);
+      callBridgeFunc();
+    }
+  }, [bridgeContract]);
+
   return (
     <div className="flex flex-col flex-1 mt-10 items-center">
       <div className="flex flex-col">
