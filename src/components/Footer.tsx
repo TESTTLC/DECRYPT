@@ -171,7 +171,7 @@ const Footer: React.FC = () => {
         <div className="w-72">
           <form action="">
             <div className="grid grid-cols-1 gap-4 justify-center items-center">
-              <div className="">
+              <div className="xs:mt-4 sm:mt-4">
                 <p className="font-poppins">
                   <strong>Sign up for our newsletter</strong>
                 </p>

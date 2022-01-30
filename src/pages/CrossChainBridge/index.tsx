@@ -26,15 +26,19 @@ const CrossChainBridge: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    window.ethereum.on("chainChanged", (chainId: any) => {
-      setCurrentChainId(chainId);
-    });
+    if (window.ethereum) {
+      window.ethereum.on("chainChanged", (chainId: any) => {
+        setCurrentChainId(chainId);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.ethereum]);
 
   useEffect(() => {
     if (tokenContract && account) {
       getBalance();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenContract, account, currentChainId]);
 
   const chainChange = async () => {
@@ -86,7 +90,7 @@ const CrossChainBridge: React.FC = () => {
   return (
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col">
-        <div className="w-[44rem] xs:w-[24rem] mt-10 text-sm mb-4">
+        <div className="w-[44rem] xs:w-[22rem] mt-10 text-sm mb-4">
           <p className="font-poppins text-gray-300">
             Before leaving the page, wait for the conversion to be complete. A
             smart contract is used to automate the process, eliminating the
@@ -175,7 +179,7 @@ const CrossChainBridge: React.FC = () => {
           </div>
         </GlowingWrapper>
       </div>
-      <div className="w-[44rem] xs:w-[24rem] mt-10 text-sm">
+      <div className="w-[44rem] xs:w-[22rem] mt-10 text-sm">
         <p className="font-poppins text-gray-300">
           Because of the decentralized nature of Decryption Protocol and the
           instability of different blockchain mainnets, your cross-chain

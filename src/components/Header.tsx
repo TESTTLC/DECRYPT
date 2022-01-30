@@ -26,7 +26,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
     if (!window.ethereum) {
       return (
         <a href={metamaskAppDeepLink} target="_blank" className="rounded-md">
-          <button className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
+          <button className="group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
             {/* Connect to MetaMask */}
             <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
               {account
@@ -43,7 +43,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
       return (
         <button
           onClick={account ? disconnectWallet : connectWallet}
-          className="rounded-md group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+          className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
         >
           {/* Connect to MetaMask */}
           <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
@@ -62,7 +62,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
       <button
         onClick={account ? disconnectWallet : connectWallet}
         // className="h-10 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-3xl"
-        className="rounded-md group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+        className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
       >
         <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
           {account
@@ -87,17 +87,6 @@ const Header: React.FC = () => {
   } = useWalletConnector();
   const { isSidebarOpen } = useGlobalContext();
 
-  // https://metamask.app.link/dapp/localhost:3000
-  // const metamaskAppDeepLink = useRef(
-  //   "https://metamask.app.link/dapp/192.168.1.2:3000"
-  // ).current;
-  // const metamaskAppDeepLink = useRef(
-  //   "https://metamask.app.link/dapp/decryption.com"
-  // ).current;
-  // const metamaskAppDeepLink = useRef(
-  //   "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app"
-  // ).current;
-
   return (
     <div className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5 bg-customBlue-800">
       <div
@@ -108,26 +97,26 @@ const Header: React.FC = () => {
         <div className="items-start justify-center xs:w-96">
           <div className="relative group">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-            <div className="relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600 rounded-md">
-              <span className="xs:ml-10 flex items-center space-x-5">
+            <div className="relative px-2xs:px-0 py-2 bg-black leading-none flex items-center divide-x divide-gray-600 rounded-md">
+              <span className="xs:ml-10 pl-2 mr-2 xs:pl-2 flex items-right text-center">
                 {!isMobileSize ? (
                   <img
                     src={small_logo}
                     alt="TLX logo"
-                    className="w-4 h-4"
+                    className="w-4 h-4 mr-2"
                     style={{ width: 20, height: 20 }}
                   />
                 ) : null}
-                <span className="pr-2 font-poppins text-sm text-gray-100">
+                <span className="pr-0 font-poppins text-sm text-gray-100">
                   New Release Coming Soon
                 </span>
               </span>
               <a
-                // href="https://tlchain.network/"
-                // target="_blank"
-                className="pl-2 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200"
+                href="https://tlchain.network/"
+                target="_blank"
+                className="text-center xs:ml-4 pl-4 pr-2 mr-2 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200"
               >
-                See what's new &rarr;
+                See what's new on our website &rarr;
               </a>
             </div>
           </div>
