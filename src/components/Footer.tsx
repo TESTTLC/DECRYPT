@@ -224,7 +224,7 @@ const Footer: React.FC = () => {
                   target="_blank"
                   className="text-white underline"
                 >
-                  TLChain Scan
+                  TLChain
                 </a>
               </li>
               <li>
@@ -233,7 +233,7 @@ const Footer: React.FC = () => {
                   target="_blank"
                   className="text-white underline"
                 >
-                  TLX Scan
+                  TLChain Scan
                 </a>
               </li>
 
