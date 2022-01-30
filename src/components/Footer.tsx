@@ -224,7 +224,7 @@ const Footer: React.FC = () => {
                   target="_blank"
                   className="text-white underline"
                 >
-                  TLChain
+                  TLChain Scan
                 </a>
               </li>
               <li>

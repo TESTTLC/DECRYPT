@@ -183,7 +183,7 @@ export const renderStakePeriod = (period: any) => {
 export const getTLXBalance = async (tokenContract: any, account: string) => {
   let userBalance = 0;
   try {
-    const balance = await tokenContract.balanceOf(account);
+    const balance = await tokenContract.actualBalanceOf(account);
 
     userBalance = parseFloat(
       parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)

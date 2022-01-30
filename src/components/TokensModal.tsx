@@ -11,19 +11,19 @@ import maticBridgeImage from "../assets/images/matic-bridge.png";
 import tlxOldToken from "../assets/images/tlx-token-old.png";
 import tlxNewToken from "../assets/images/tlx-token-new.png";
 import atariToken from "../assets/images/atari-token.png";
+import { Project } from "../utils/types";
 
 Modal.setAppElement("#root");
 
 interface Props {
   index?: number;
-  //   coinTag: string;
-  tokens: string[];
+  tokens: Project[];
   type: "from" | "to";
 }
 
 const TokensModal: React.FC<Props> = ({ tokens, type }) => {
   const { isMobileSize } = useWindowSize();
-  const [selectedChain, setSelectedChain] = useState(tokens[0]);
+  const [selectedChain, setSelectedChain] = useState(tokens[0].tag);
   const [imageUsed, setImageUsed] = useState("");
   const [imageUsedToken, setImageUsedToken] = useState("");
   const [selectedToken, setSelectedToken] = useState("TLX");
@@ -139,7 +139,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
           <ul className="flex flex-col w-full text-white font-poppins justify-center items-center">
             {tokens.map((token, index) => (
               <li
-                key={`${token}/${index}`}
+                key={`${token.name}/${index}`}
                 className="w-full hover:bg-gray-800 "
               >
                 <button
@@ -148,9 +148,12 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
                       ? undefined
                       : "border-t-2"
                   } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
-                  onClick={() => setSelectedChain(token)}
+                  onClick={() => setSelectedChain(token.tag)}
                 >
-                  <p className="text-xl font-semibold">{token}</p>
+                  <img src={token.image} className="w-10 h-10" />
+                  <p className="text-xl font-semibold">
+                    {token.tag} ({token.name})
+                  </p>
                 </button>
               </li>
             ))}

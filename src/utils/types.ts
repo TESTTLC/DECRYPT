@@ -23,8 +23,11 @@ export interface LaunchpadProject {
 export enum CoinTags {}
 
 export type Project = {
-  name: "The Luxury Bank" | "The Luxury Coin" | "Luxanida" | "Beez";
-  tag: "TLX" | "TLC" | "LSO" | "BEEZ";
+  // name: "The Luxury Bank" | "The Luxury Coin" | "Luxanida" | "Beez";
+  // tag: "TLX" | "TLC" | "LSO" | "BEEZ";
+  name: string;
+  tag: string;
+  image: string;
 };
 
 export enum ChainsIds {

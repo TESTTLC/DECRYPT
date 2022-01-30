@@ -8,7 +8,7 @@ import { changeChain } from "../../utils/functions/MetaMask";
 import { useContracts } from "../../hooks/useContracts";
 
 import { useGlobalContext } from "../../utils/context";
-import { OldTLXTokenContractAddress } from "../../utils/globals";
+import { modalTokens, OldTLXTokenContractAddress } from "../../utils/globals";
 import OldTLXToken from "../../contracts/OldTLXToken.json";
 import { getTransaction, initialize } from "../../api/index";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
@@ -33,9 +33,7 @@ const CrossChainBridge: React.FC = () => {
 
   useEffect(() => {
     if (tokenContract && account) {
-      // if (currentChainId === "0x38") {
       getBalance();
-      // }
     }
   }, [tokenContract, account, currentChainId]);
 
@@ -85,42 +83,16 @@ const CrossChainBridge: React.FC = () => {
     }
   };
 
-  // const mintNew = async () => {
-  //   try {
-  //     const result = await privateContract.functions.mint(
-  //       account,
-  //       ethers.utils.parseUnits("5", "ether")
-  //     );
-  //   } catch (error) {}
-  // };
-
-  // const burnAndMint = async (actualBalanceOf: number) => {
-  //   if (account) {
-  //     try {
-  //       const result = await tokenContract.functions.burn(
-  //         ethers.utils.parseUnits(actualBalanceOf.toString(), "ether")
-  //       );
-  //       if (result) {
-  //         console.log("Result of burn: ", result);
-  //         const status = await mintNewTokens(account);
-  //         if (status === 200) {
-  //           console.log("Minted");
-  //         } else {
-  //           console.log("Not minted");
-  //         }
-  //       } else {
-  //         updateTransaction(account, "failed");
-  //       }
-  //     } catch (error) {
-  //       updateTransaction(account, "failed");
-  //       console.warn("error on burn: ", error);
-  //     }
-  //   }
-  // };
-
   return (
-    <div className="flex flex-col flex-1 mt-10 items-center">
+    <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col">
+        <div className="w-[44rem] xs:w-[24rem] mt-10 text-sm mb-4">
+          <p className="font-poppins text-gray-300">
+            Before leaving the page, wait for the conversion to be complete. A
+            smart contract is used to automate the process, eliminating the
+            possibility of manual intervention in the conversion process.
+          </p>
+        </div>
         <div className="flex">
           <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
             {totalBalance} TLX
@@ -145,18 +117,19 @@ const CrossChainBridge: React.FC = () => {
                   ></input>
                 </div>
                 <TokensModal
-                  tokens={[
-                    "BSC",
-                    "ETH",
-                    "FTM",
-                    "SOL",
-                    "MATIC",
-                    // "Ethereum",
-                    // "Fantom",
-                    // "Solana",
-                    // "Polygon",
-                    // "Binance Smart Chain",
-                  ]}
+                  // tokens={[
+                  //   "BSC",
+                  //   "ETH",
+                  //   "FTM",
+                  //   "SOL",
+                  //   "MATIC",
+                  //   // "Ethereum",
+                  //   // "Fantom",
+                  //   // "Solana",
+                  //   // "Polygon",
+                  //   // "Binance Smart Chain",
+                  // ]}
+                  tokens={modalTokens}
                   type="from"
                 />
               </div>
@@ -181,7 +154,7 @@ const CrossChainBridge: React.FC = () => {
                     value={totalBalance}
                   ></input>
                 </div>
-                <TokensModal tokens={["TLChain"]} type="to" />
+                <TokensModal tokens={[modalTokens[5]]} type="to" />
               </div>
             </GlowingWrapper>
             <button
@@ -206,7 +179,7 @@ const CrossChainBridge: React.FC = () => {
         <p className="font-poppins text-gray-300">
           Because of the decentralized nature of Decryption Protocol and the
           instability of different blockchain mainnets, your cross-chain
-          transaction could take 3-30 minutes to complete but your assets are
+          transaction could take up to 1 minute to complete but your assets are
           perfectly safe with Decryption protocol.
         </p>
       </div>
