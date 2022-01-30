@@ -1,8 +1,10 @@
 // /** Mainnet */
 export const TLXTokenContractAddress =
-  "0xB5539B4428b99d7e8FDEd5129C8C3340CA9C6713";
+  "0xB8B538C5dD46d8D691f0A972754365be8c9DC20b";
+// "0xB5539B4428b99d7e8FDEd5129C8C3340CA9C6713";
 export const TLXStakeContractAddress =
-  "0xECcbd01302fB9E18bAFE63e13a912ACcf1F5d84B"; //new
+  "0x492eeF5e03024879444E46F3c57A5fBe5F793d32";
+// "0xECcbd01302fB9E18bAFE63e13a912ACcf1F5d84B"; //new
 
 export const LussoTokenContractAddress =
   "0xD62052Cea41E22fb2B97835b53f41190Fe219001";
@@ -16,7 +18,7 @@ export const TLCStakeContractAddress =
 
 /** Testnet */
 // export const TLXTokenContractAddress =
-//   "0xaE58BAaE4432A3485DE83C9Eb03b1c38B3Ff7a18";
+//   "0xea255909e46a54d54255219468991c69ca0e659d";
 
 // export const TLXStakeContractAddress =
 //   "0xC9e6FaBbb65d8B87E24a79483fF553ac423cF330";

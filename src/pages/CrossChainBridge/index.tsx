@@ -18,20 +18,34 @@ const CrossChainBridge: React.FC = () => {
   const [totalBalance, setTotalBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const { tokenContract } = useContracts("OldTLX");
-  const { account } = useGlobalContext();
+  const { account, provider } = useGlobalContext();
+  const [currentChainId, setCurrentChainId] = useState();
 
   useEffect(() => {
     chainChange();
   }, []);
 
   useEffect(() => {
+    window.ethereum.on("chainChanged", (chainId: any) => {
+      console.log("Changed chain => ", chainId);
+      console.log("type of chainId: ", typeof chainId);
+
+      setCurrentChainId(chainId);
+    });
+  }, [window.ethereum]);
+
+  useEffect(() => {
     if (tokenContract && account) {
+      // if (currentChainId === "0x38") {
       getBalance();
+      // }
     }
-  }, [tokenContract, account]);
+  }, [tokenContract, account, currentChainId]);
 
   const chainChange = async () => {
-    await changeChain(ChainsIds.BSC);
+    try {
+      await changeChain(ChainsIds.BSC);
+    } catch (error) {}
   };
 
   const getFreezedCount = async () => {
@@ -41,7 +55,7 @@ const CrossChainBridge: React.FC = () => {
   };
 
   const initializeSwap = async () => {
-    if (account) {
+    if (account && totalBalance > 0) {
       setIsLoading(true);
       const transaction = await initialize(account);
       if (transaction) {
