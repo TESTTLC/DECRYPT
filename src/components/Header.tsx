@@ -107,12 +107,8 @@ const Header: React.FC = () => {
       >
         <div className="items-start justify-center xs:w-96">
           <div className="relative group">
-            <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
-            <a
-              href="https://tlchain.network/"
-              target="_blank"
-              className="relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600 rounded-md"
-            >
+            <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+            <div className="relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600 rounded-md">
               <span className="xs:ml-10 flex items-center space-x-5">
                 {!isMobileSize ? (
                   <img
@@ -122,14 +118,18 @@ const Header: React.FC = () => {
                     style={{ width: 20, height: 20 }}
                   />
                 ) : null}
-                <span className="pr-6 font-poppins text-sm text-gray-100">
+                <span className="pr-2 font-poppins text-sm text-gray-100">
                   New Release Coming Soon
                 </span>
               </span>
-              <span className="pl-6 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200">
+              <a
+                // href="https://tlchain.network/"
+                // target="_blank"
+                className="pl-2 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200"
+              >
                 See what's new &rarr;
-              </span>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
       </div>
