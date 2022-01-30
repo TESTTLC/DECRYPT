@@ -76,19 +76,22 @@ const StakeCoin: React.FC<Props> = () => {
   };
 
   const getStakeTransactions = async () => {
-    if (stakeContract) {
-      const stakes = await getUserStakes(stakeContract);
-
-      let totalRew = 0;
-      stakes.forEach((stake: Stake) => {
-        const amount = parseFloat(ethers.utils.formatEther(stake.amount));
-        if (coinTag === "TLX" || coinTag === "TLC" || coinTag === "LSO") {
-          totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
+    try {
+      if (stakeContract) {
+        const stakes = await getUserStakes(stakeContract);
+        if (stakes && stakes.length) {
+          let totalRew = 0;
+          stakes.forEach((stake: Stake) => {
+            const amount = parseFloat(ethers.utils.formatEther(stake.amount));
+            if (coinTag === "TLX" || coinTag === "TLC" || coinTag === "LSO") {
+              totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
+            }
+          });
+          setTotalRewards(parseFloat(totalRew.toFixed(3)));
+          setUserStakes(stakes);
         }
-      });
-      setTotalRewards(parseFloat(totalRew.toFixed(3)));
-      setUserStakes(stakes);
-    }
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
