@@ -85,7 +85,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
       usedStakeContract = TLCStakeContract;
     }
     if (usedStakeContract) {
-      const stakes = await getUserStakes(usedStakeContract);
+      const stakes = (await getUserStakes(usedStakeContract)) || [];
       stakes.forEach((stake: Stake, index: number) => {
         currentAmout += parseFloat(ethers.utils.formatEther(stake.amount));
         currentPower += determinePowerForStake(

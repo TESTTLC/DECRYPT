@@ -40,10 +40,12 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   // };
 
   const getTotalStaked = async () => {
-    if (stakeContract) {
-      const totalStaked = await contracts.getTotalValueLocked(stakeContract);
-      setTotalStaked(totalStaked);
-    }
+    try {
+      if (stakeContract) {
+        const totalStaked = await contracts.getTotalValueLocked(stakeContract);
+        setTotalStaked(totalStaked);
+      }
+    } catch (error) {}
   };
 
   // const getTotalRewards = async () => {

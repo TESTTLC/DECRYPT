@@ -23,4 +23,11 @@ export const TLCStakeContractAddress =
 
 /** Bridge */
 export const BSCBridgeContractAddress =
-  "0xc74da56a703ae67969818018a7d1baa7d383d77a";
+  "0x8Ef7f7480F9c892E570cF655Ec678C47703e3d37";
+
+/** Mainnet */
+// export const OldTLXTokenContractAddress =
+//   "0xea255909e46a54d54255219468991c69ca0e659d";
+/** Testnet */
+export const OldTLXTokenContractAddress =
+  "0xea255909e46a54d54255219468991c69ca0e659d";

@@ -13,7 +13,6 @@ const providerOptions: IProviderOptions = {
         5177: "https://mainnet-rpc.tlxscan.com/",
         // chainId: 5177,
       },
-      infuraId: "ecce1e30e55349abbac0be46d97dd143",
     },
   },
 };

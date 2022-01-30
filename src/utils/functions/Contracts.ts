@@ -8,12 +8,9 @@ export const approveStakeTokens = async (
   stakeContractAddress: string,
   account: string,
   amount: number
-  // provider: any
 ) => {
   let errorOnApprove = false;
   try {
-    // await tokenContract.setProvider(provider)
-
     const price = ethers.utils.parseUnits(amount.toString(), "ether");
     const approveResultPromise = new Promise((resolve, reject) => {
       resolve(
@@ -25,15 +22,15 @@ export const approveStakeTokens = async (
 
     approveResultPromise
       .then(() => {
-        console.log("approved");
+        return;
+        // console.log("approved");
       })
       .catch((err) => {
-        console.log("err: ", err);
+        // console.log("err: ", err);
         errorOnApprove = true;
       });
   } catch (error) {
     errorOnApprove = true;
-    console.log("Error on approveStakeTokens: ", error);
   }
 
   return { errorOnApprove };
@@ -53,7 +50,7 @@ export const mobileStake = async (
     });
     stakeResultPromise.then((result) => {});
   } catch (error) {
-    console.log("Error on stakeTokens: ", error);
+    // console.log("Error on stakeTokens: ", error);
     errorOnApprove = true;
   }
   return { errorOnApprove };
@@ -73,30 +70,16 @@ export const webStake = async (
   try {
     const price = ethers.utils.parseUnits(amount.toString(), "ether");
 
-    // if (provider) {
-    //   await tokenContract.setProvider(provider);
-    // }
-
-    // if (isMobileSize) {
-    //   const result = stakeContract.functions.stakeTokens(price, manualStackingDuration)
-    //   tokenContract.methods.approve(stakeContractAddress, price).send({ from: account })
-
-    //   dispatch(setStakingApproved(true))
-    //   setErrorOnApprove(false)
-    // }
-
     const result = await tokenContract.functions.approve(
       stakeContractAddress,
       price
     );
-    // setTimeout(async () => {
     if (result) {
       const r = await stakeContract.stakeTokens(price, stakingDuration);
     }
-    // }, 30000);
   } catch (error) {
     errorOnApprove = true;
-    console.log("Error on stake: ", error);
+    // console.log("Error on stake: ", error);
   }
   return { errorOnApprove };
 };
@@ -110,7 +93,7 @@ export const unstake = async (
   try {
     await stakeContract.functions.withdrawStake(indexOfStake);
   } catch (error) {
-    console.log("Error on unstaking: ", error);
+    // console.log("Error on unstaking: ", error);
     unstakingError = "The stake is still locked";
   }
 
@@ -125,8 +108,6 @@ export const getTotalUserTLXStaked = async (stakeContract: Contract) => {
   });
 
   return { userStakes, totalValueStaked };
-  // setAllUserStakes(userStakes)
-  // setTotalUserTLXStaked(totalUserStaked)
 };
 
 export const getUserStakes = async (stakeContract: Contract) => {
@@ -134,7 +115,8 @@ export const getUserStakes = async (stakeContract: Contract) => {
   try {
     userStakes = await stakeContract.getUserStakes();
   } catch (err) {
-    console.log("err: ", err);
+    return;
+    // console.log("err: ", err);
   }
 
   return userStakes;
@@ -149,7 +131,8 @@ export const getTotalRewards = async (stakeContract: Contract) => {
       ethers.utils.formatUnits(totalRewards._hex)
     ).toFixed(3);
   } catch (err) {
-    console.log("err: ", err);
+    return;
+    // console.log("err: ", err);
   }
 
   return parseFloat(formatedResult) || 0;
@@ -160,30 +143,12 @@ export const getTotalValueLocked = async (stakeContract: Contract) => {
   try {
     stakedAmount = await stakeContract.getStakedAmount();
   } catch (err) {
-    console.log("err: ", err);
+    return stakedAmount;
+    // console.log("err: ", err);
   }
-  // console.log("stakedAmount is : ", stakedAmount);
-  // console.log("Formatted: ", ethers.utils.formatEther(stakedAmount.toString()));
+
   return parseFloat(ethers.utils.formatEther(stakedAmount.toString()));
 };
-
-// export const calculateStakeRewards = async (
-//   stakeContract: Contract,
-//   userStakes: any
-// ) => {
-//   console.log("stake C: ", stakeContract);
-//   let userRewards;
-//   try {
-//     userRewards = await stakeContract.calculateStakeReward();
-//   } catch (err) {
-//     console.log("err: ", err);
-//   }
-//   console.log("userRewards: ", userRewards);
-//   const formatedResult = parseFloat(
-//     ethers.utils.formatUnits(userRewards._hex)
-//   ).toFixed(3);
-//   return parseFloat(formatedResult);
-// };
 
 export const getVolume24h = async () => {
   let totalVolume = 0.0;
@@ -193,7 +158,8 @@ export const getVolume24h = async () => {
     const data = await fetch(baseUrl).then((result) => result.json());
     totalVolume = data.data.TLX.quote.USD.volume_24h;
   } catch (err) {
-    console.log("Err on get volume");
+    return;
+    // console.log("Err on get volume");
   }
   return totalVolume;
 };
@@ -223,7 +189,8 @@ export const getTLXBalance = async (tokenContract: any, account: string) => {
       parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
     );
   } catch (error) {
-    console.log("Error: ", error);
+    return;
+    // console.log("Error: ", error);
   }
 
   return userBalance;
@@ -247,9 +214,32 @@ export const determinePowerForStake = (
   powerCoin: "TLX" | "TLC"
 ): number => {
   let currentStakePower = 0;
-  // currentStakePower =
-  //   (defaultPowers[powerCoin][period] / 100) * totalLSOValueAlocated * amount;
   currentStakePower = defaultPowers[powerCoin][period] * amount;
 
   return currentStakePower;
 };
+
+// const freezeTo = async () => {
+//   const freezedResult = await tokenContract.freezeTo(
+//     account,
+//     ethers.utils.parseUnits("10", "ether"),
+//     // 10,
+//     1648170000
+//   );
+// };
+
+// export const calculateStakeRewards = async (
+//   stakeContract: Contract,
+//   userStakes: any
+// ) => {
+//   let userRewards;
+//   try {
+//     userRewards = await stakeContract.calculateStakeReward();
+//   } catch (err) {
+//     console.log("err: ", err);
+//   }
+//   const formatedResult = parseFloat(
+//     ethers.utils.formatUnits(userRewards._hex)
+//   ).toFixed(3);
+//   return parseFloat(formatedResult);
+// };

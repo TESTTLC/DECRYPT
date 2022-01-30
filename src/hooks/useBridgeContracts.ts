@@ -1,33 +1,42 @@
 import { useEffect, useState } from "react";
 
-import BridgeBSC from "../contracts/BridgeBSC.json";
+import BridgeTLC from "../contracts/BridgeTLC.json";
 
 import { ethers, Contract, utils } from "ethers";
 import { useGlobalContext } from "../utils/context";
 import { BSCBridgeContractAddress } from "../utils/globals";
+import Web3 from "web3";
 
 export const useBridgeContracts = (coinTag: string) => {
   const { provider, account } = useGlobalContext();
   const [bridgeContract, setBridgeContract] = useState<
     ethers.Contract | undefined
   >();
+  const [admin, setAdmin] = useState("");
+  const web3TLC = new Web3("https://data-seed-prebsc-1-s1.binance.org:8545/");
+  const { address: adminW } = web3TLC.eth.accounts.wallet.add(
+    process.env.REACT_APP_W_KEY || ""
+  );
+
+  useEffect(() => {
+    if (adminW) {
+      setAdmin(adminW);
+    }
+  }, [adminW]);
 
   const [alreadyConnectedToContracts, setAlreadyConnectedToContracts] =
     useState(false);
 
   useEffect(() => {
-    // setBridgeContracts()
+    connectToContracts();
   }, [coinTag]);
 
   const connectToContracts = async () => {
     try {
       if (provider) {
-        // console.log("tokenAddress: ", tokenAddress);
-        // console.log("stakeAddress: ", stakeAddress);
-        // console.log("Provider is: ", provider);
         const contractB = new ethers.Contract(
           BSCBridgeContractAddress,
-          BridgeBSC.abi,
+          BridgeTLC.abi,
           provider.getSigner()
         );
 
@@ -40,17 +49,11 @@ export const useBridgeContracts = (coinTag: string) => {
   };
 
   useEffect(() => {
-    if (
-      provider &&
-      account &&
-      //   tokenAbi &&
-
-      !alreadyConnectedToContracts
-    ) {
+    if (provider && account && !alreadyConnectedToContracts) {
       //   connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider, account]);
 
-  return { provider, bridgeContract };
+  return { provider, bridgeContract, admin };
 };

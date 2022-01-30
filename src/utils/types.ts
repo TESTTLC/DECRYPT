@@ -27,30 +27,11 @@ export type Project = {
   tag: "TLX" | "TLC" | "LSO" | "BEEZ";
 };
 
-// export const defaultPowers = {
-//   // all values are represented as percentage
-//   tlx: {
-//     one_month: 0.1,
-//     three_months: 0.3,
-//     six_months: 0.5,
-//     one_year: 0.7,
-//     three_years: 1,
-//   },
-//   tlc: {
-//     one_month: 0.01,
-//     three_months: 0.03,
-//     six_months: 0.05,
-//     one_year: 0.07,
-//     three_years: 0.1,
-//   },
-//   lso: {
-//     one_month: 0.01,
-//     three_months: 0.03,
-//     six_months: 0.05,
-//     one_year: 0.07,
-//     three_years: 0.1,
-//   },
-// };
+export enum ChainsIds {
+  BSC = "0x38",
+  BSC_TESTNET = "0x61", //97
+  TLC = "0x1439",
+}
 
 export const defaultPowers = {
   // all values are represented as percentage

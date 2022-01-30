@@ -25,7 +25,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
   if (isMobileDevice) {
     if (!window.ethereum) {
       return (
-        <a href={metamaskAppDeepLink} target="_blank">
+        <a href={metamaskAppDeepLink} target="_blank" className="rounded-md">
           <button className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
             {/* Connect to MetaMask */}
             <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
@@ -43,7 +43,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
       return (
         <button
           onClick={account ? disconnectWallet : connectWallet}
-          className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+          className="rounded-md group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
         >
           {/* Connect to MetaMask */}
           <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
@@ -62,7 +62,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
       <button
         onClick={account ? disconnectWallet : connectWallet}
         // className="h-10 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-3xl"
-        className="group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+        className="rounded-md group-hover:text-gray-100 h-8 relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
       >
         <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
           {account
@@ -111,7 +111,7 @@ const Header: React.FC = () => {
             <a
               href="https://tlchain.network/"
               target="_blank"
-              className="relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+              className="relative px-7 py-2 bg-black leading-none flex items-center divide-x divide-gray-600 rounded-md"
             >
               <span className="xs:ml-10 flex items-center space-x-5">
                 {!isMobileSize ? (

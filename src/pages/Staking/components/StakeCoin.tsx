@@ -13,7 +13,12 @@ import {
   webStake,
 } from "../../../utils/functions/Contracts";
 import { TLXStakeContractAddress } from "../../../utils/globals";
-import { StackingDuration, Stake, stakeRewards } from "../../../utils/types";
+import {
+  ChainsIds,
+  StackingDuration,
+  Stake,
+  stakeRewards,
+} from "../../../utils/types";
 import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import * as contracts from "../../../utils/functions/Contracts";
@@ -21,6 +26,7 @@ import { ethers } from "ethers";
 import { useParams } from "react-router-dom";
 import NotFound from "../../NotFound";
 import { coinsTags } from "../../../App";
+import { changeChain } from "../../../utils/functions/MetaMask";
 
 interface Props {
   // coinTag: "TLX" | "TLC" | "LSO";
@@ -48,6 +54,13 @@ const StakeCoin: React.FC<Props> = () => {
       setBalance(TLCBalance);
     }
   };
+  const chainChange = async () => {
+    await changeChain(ChainsIds.TLC);
+  };
+
+  useEffect(() => {
+    chainChange();
+  }, []);
 
   useEffect(() => {
     if (coinTag === "TLC") {

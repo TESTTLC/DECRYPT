@@ -5,6 +5,7 @@ import TheLuxuryCoinStake from "../contracts/TheLuxuryCoinStake.json";
 import TheLuxuryCoinToken from "../contracts/TheLuxuryCoinToken.json";
 import LuxandiaToken from "../contracts/LuxandiaToken.json";
 import LuxandiaStake from "../contracts/LuxandiaStake.json";
+import OldTLXToken from "../contracts/OldTLXToken.json";
 
 import { ethers, Contract, utils } from "ethers";
 import { useWeb3React } from "@web3-react/core";
@@ -16,6 +17,7 @@ import {
   TLXTokenContractAddress,
   TLCStakeContractAddress,
   TLCTokenContractAddress,
+  OldTLXTokenContractAddress,
 } from "../utils/globals";
 
 export const useContracts = (coinTag: string) => {
@@ -48,15 +50,17 @@ export const useContracts = (coinTag: string) => {
       setStakeAddress(TLCStakeContractAddress);
       setTokenAbi(TheLuxuryCoinToken.abi);
       setStakeAbi(TheLuxuryCoinStake.abi);
+    } else if (coinTag === "OldTLX") {
+      setTokenAddress(OldTLXTokenContractAddress);
+      setStakeAddress(TLXStakeContractAddress);
+      setTokenAbi(OldTLXToken.abi);
+      setStakeAbi(TheLuxuryBankStake.abi);
     }
   }, [coinTag]);
 
   const connectToContracts = async () => {
     try {
       if (provider) {
-        // console.log("provider: ", provider);
-        // console.log("tokenAddress: ", tokenAddress);
-        // console.log("stakeAddress: ", stakeAddress);
         const contractT = new ethers.Contract(
           tokenAddress,
           tokenAbi,
@@ -68,9 +72,6 @@ export const useContracts = (coinTag: string) => {
           stakeAbi,
           provider.getSigner()
         );
-
-        // console.log("contractT: ", contractT);
-        // console.log("contractS: ", contractS);
 
         setTokenContract(contractT);
         setStakeContract(contractS);
