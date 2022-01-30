@@ -27,9 +27,6 @@ const CrossChainBridge: React.FC = () => {
 
   useEffect(() => {
     window.ethereum.on("chainChanged", (chainId: any) => {
-      console.log("Changed chain => ", chainId);
-      console.log("type of chainId: ", typeof chainId);
-
       setCurrentChainId(chainId);
     });
   }, [window.ethereum]);
@@ -84,7 +81,7 @@ const CrossChainBridge: React.FC = () => {
         }
       }
     } catch (error) {
-      console.log("Err: ", error);
+      // console.log("Err: ", error);
     }
   };
 
