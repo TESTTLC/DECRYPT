@@ -59,7 +59,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
       setImageUsed(maticBridgeImage);
     } else if (selectedChain === "SOL") {
       setImageUsed(solBridgeImage);
-    } else if (selectedChain === "TLChain") {
+    } else if (selectedChain === "TLC") {
       setImageUsed(tlcBridgeImage);
     }
 

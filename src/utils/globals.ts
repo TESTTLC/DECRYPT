@@ -72,8 +72,8 @@ export const modalTokens: Project[] = [
     image: solBridgeImage,
   },
   {
-    name: "The Luxury Chain",
-    tag: "TLChain",
+    name: "TLChain",
+    tag: "TLC",
     image: tlcBridgeImage,
   },
 ];
