@@ -12,8 +12,8 @@ interface LoginButtonProps {
   account?: string;
   isMobileDevice: boolean;
 }
-const metamaskAppDeepLink =
-  "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app";
+const metamaskAppDeepLink = "https://metamask.app.link/dapp/decryption.com";
+// "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app";
 // const metamaskAppDeepLink = "https://metamask.app.link/dapp/192.168.1.2:3000";
 
 const LoginButton: React.FC<LoginButtonProps> = ({
