@@ -5,36 +5,15 @@ import {
   FaTwitter,
   FaSketch,
   FaHome,
-  FaUserFriends,
-  FaFolderOpen,
   FaGamepad,
-  FaBalanceScale,
   FaExternalLinkAlt,
-  FaAnchor,
-  FaFaucet,
-  FaFedora,
   FaMoneyBillWave,
-  FaMoneyBill,
   FaUniversalAccess,
-  FaImage,
   FaImages,
   FaCreativeCommons,
-  FaCreativeCommonsNc,
-  FaCreativeCommonsPdAlt,
-  FaCertificate,
   FaStackExchange,
 } from "react-icons/fa";
 
-import stakingImage from "../assets/images/Staking.png";
-import launchpadImage from "../assets/images/Launchpad.png";
-import createTokenImage from "../assets/images/Create_Your_Own_Token.png";
-import crossChainBridgeImage from "../assets/images/Cross_Chain_Bridge.png";
-import exchangeImage from "../assets/images/Decentralized_Exchange.png";
-import metaverseImage from "../assets/images/Metaverse.png";
-import nftMarketplaceImage from "../assets/images/NFT_Marketplace.png";
-import lendingAndBorrowingImage from "../assets/images/Lending_And_Borrowing.png";
-
-// import { HiDocument } from "react-icons/hi";
 export const links = [
   {
     id: 0,

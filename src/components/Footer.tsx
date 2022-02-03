@@ -13,8 +13,9 @@ const Footer: React.FC = () => {
           isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
         } xs:justify-center items-center px-5 pt-2
     text-center 
-    bg-customBlue-700
+    bg-transparent
     text-white bottom-0 mt-20`}
+      // bg-customBlue-700
       // bg-red-200
     >
       <div className="flex xs:flex-col justify-around items-center ">
@@ -189,7 +190,7 @@ const Footer: React.FC = () => {
                 text-base
                 font-normal
                 text-gray-700
-                bg-customBlue-300 bg-clip-padding
+                bg-black opacity-60 bg-clip-padding
                 rounded
                 transition
                 ease-in-out

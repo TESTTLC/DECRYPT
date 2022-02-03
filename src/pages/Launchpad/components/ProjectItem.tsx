@@ -27,7 +27,7 @@ const ProjectItem: React.FC<Props> = ({ coinTag }) => {
   }, [coinTag]);
 
   return (
-    <div className="flex flex-grow flex-col w-full h-96 bg-gray-300 relative rounded-md">
+    <div className="flex flex-grow flex-col w-full h-128 bg-gray-300 relative rounded-md">
       <img
         src={projectItem.imageSource}
         alt={projectItem.title}

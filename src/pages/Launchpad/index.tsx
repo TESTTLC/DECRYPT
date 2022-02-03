@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ProjectItem from "./components/ProjectItem";
+import ProjectElement from "./components/ProjectElement";
 import GlowingWrapper from "../../components/GlowingWrapper";
+import { useNavigate } from "react-router-dom";
 
 const Launchpad: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex flex-col justify-center px-2 overflow-hidden">
       <div className="justify-center items-center flex flex-col">
@@ -20,25 +23,29 @@ const Launchpad: React.FC = () => {
       <p className="text-white font-poppins font-bold text-2xl mb-4 mt-4">
         Upcoming Projects
       </p>
-      <div className="grid gap-8 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 ">
+      <div className="grid gap-4 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 ">
+        <div className="flex" onClick={() => navigate("/project/LSO")}>
+          {/* <GlowingWrapper customStyles=""> */}
+          {/* <ProjectItem coinTag={"LSO"} /> */}
+          <ProjectElement coinTag={"LSO"} />
+          {/* </GlowingWrapper> */}
+        </div>
         <div className="flex">
-          <GlowingWrapper customStyles="">
-            <ProjectItem coinTag={"LSO"} />
+          <GlowingWrapper>
+            <ProjectItem coinTag={"default"} />
+            {/* <ProjectElement coinTag={"default"} /> */}
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper>
             <ProjectItem coinTag={"default"} />
-          </GlowingWrapper>
-        </div>
-        <div className="flex">
-          <GlowingWrapper>
-            <ProjectItem coinTag={"default"} />
+            {/* <ProjectElement coinTag={"default"} /> */}
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper customStyles="">
             <ProjectItem coinTag={"default"} />
+            {/* <ProjectElement coinTag={"default"} /> */}
           </GlowingWrapper>
         </div>
       </div>
@@ -57,7 +64,7 @@ const Launchpad: React.FC = () => {
                 text-base
                 font-normal
                 text-gray-700
-                bg-customBlue-300 bg-clip-padding
+                bg-black opacity-60 bg-clip-padding
                 rounded
                 transition
                 ease-in-out

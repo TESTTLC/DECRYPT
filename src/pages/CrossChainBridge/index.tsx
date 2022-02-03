@@ -74,6 +74,7 @@ const CrossChainBridge: React.FC = () => {
       if (transaction && transaction.totalAmount) {
         const available =
           transaction.totalAmount - transaction.totalMintedAmount;
+
         setTotalBalance(parseFloat(available.toFixed(3)));
       } else {
         const result = await tokenContract.balanceOf(account);
@@ -105,79 +106,79 @@ const CrossChainBridge: React.FC = () => {
             &nbsp;available on BSC
           </p>
         </div>
-        <GlowingWrapper>
-          <div className="relative items-center w-[44rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-gray-900">
-            <GlowingWrapper>
-              <div className="relative flex bg-gray-900 w-full h-20 rounded-lg pt-1 px-6 items-center">
-                <div className="flex w-1/2 flex-col h-full">
-                  <p className="text-gray-400 font-medium font-poppins text-sm">
-                    From
-                  </p>
-                  <input
-                    className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                    value={totalBalance}
-                    type="text"
-                    disabled
-                  ></input>
-                </div>
-                <TokensModal
-                  // tokens={[
-                  //   "BSC",
-                  //   "ETH",
-                  //   "FTM",
-                  //   "SOL",
-                  //   "MATIC",
-                  //   // "Ethereum",
-                  //   // "Fantom",
-                  //   // "Solana",
-                  //   // "Polygon",
-                  //   // "Binance Smart Chain",
-                  // ]}
-                  tokens={modalTokens}
-                  type="from"
-                />
-              </div>
-            </GlowingWrapper>
-            <div className="w-full flex items-center justify-center h-14">
-              <FaArrowCircleDown
-                className="h-6 w-6 bg-transparent self-center "
-                color="gray"
-              />
+        {/* <GlowingWrapper> */}
+        <div className="relative items-center w-[44rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
+          {/* <GlowingWrapper> */}
+          <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
+            <div className="flex w-1/2 flex-col h-full">
+              <p className="text-gray-400 font-medium font-poppins text-sm">
+                From
+              </p>
+              <input
+                className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
+                value={totalBalance}
+                type="text"
+                disabled
+              ></input>
             </div>
-            <GlowingWrapper>
-              <div className="relative flex bg-gray-900 w-full h-20 rounded-lg pt-1 px-6 items-center">
-                <div className="flex w-1/2 flex-col h-full">
-                  <p className="text-gray-400 font-medium font-poppins text-sm">
-                    To
-                  </p>
-                  <input
-                    className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                    // placeholder="Conversion coming soon..."
-                    type="text"
-                    disabled
-                    value={totalBalance}
-                  ></input>
-                </div>
-                <TokensModal tokens={[modalTokens[5]]} type="to" />
-              </div>
-            </GlowingWrapper>
-            <button
-              onClick={initializeSwap}
-              className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  {" "}
-                  Swapping in progress &nbsp;
-                  <TailSpin color="#fff" height={18} width={18} />
-                </>
-              ) : (
-                "Swap"
-              )}
-            </button>
+            <TokensModal
+              // tokens={[
+              //   "BSC",
+              //   "ETH",
+              //   "FTM",
+              //   "SOL",
+              //   "MATIC",
+              //   // "Ethereum",
+              //   // "Fantom",
+              //   // "Solana",
+              //   // "Polygon",
+              //   // "Binance Smart Chain",
+              // ]}
+              tokens={modalTokens}
+              type="from"
+            />
           </div>
-        </GlowingWrapper>
+          {/* </GlowingWrapper> */}
+          <div className="w-full flex items-center justify-center h-14">
+            <FaArrowCircleDown
+              className="h-6 w-6 bg-transparent self-center "
+              color="gray"
+            />
+          </div>
+          {/* <GlowingWrapper> */}
+          <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
+            <div className="flex w-1/2 flex-col h-full">
+              <p className="text-gray-400 font-medium font-poppins text-sm">
+                To
+              </p>
+              <input
+                className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
+                // placeholder="Conversion coming soon..."
+                type="text"
+                disabled
+                value={totalBalance}
+              ></input>
+            </div>
+            <TokensModal tokens={[modalTokens[5]]} type="to" />
+          </div>
+          {/* </GlowingWrapper> */}
+          <button
+            onClick={initializeSwap}
+            className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                {" "}
+                Swapping in progress &nbsp;
+                <TailSpin color="#fff" height={18} width={18} />
+              </>
+            ) : (
+              "Swap"
+            )}
+          </button>
+        </div>
+        {/* </GlowingWrapper> */}
       </div>
       <div className="w-[44rem] xs:w-[22rem] mt-10 text-sm">
         <p className="font-poppins text-gray-300">

@@ -21,25 +21,9 @@
   }
 }
 
-/* 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
- */
-
 html {
-  height: 100%;
-  width: 100%;
+  /* height: 100%; */
+  /* width: 100%; */
 }
 
 body {
@@ -47,10 +31,20 @@ body {
   padding: 0px;
   font-family: Helvetica, sans-serif;
   /* height: 100%; */
-  width: 100%;
+  /* width: 100%; */
   /* background-color: #131720; */
   background-color: #06061b;
   /* overflow: hidden; */
+  /* filter: blur(18px); */
+}
+
+.bg-image {
+  background-image: url("./assets/images/blockchain2.jpeg");
+  filter: blur(30px);
+  /* position: absolute; */
+  position: fixed;
+  height: 100%;
+  width: 100%;
 }
 
 .Overlay {

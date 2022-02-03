@@ -88,7 +88,11 @@ const Header: React.FC = () => {
   const { isSidebarOpen } = useGlobalContext();
 
   return (
-    <div className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5 bg-customBlue-800">
+    <div
+      className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5
+    bg-transparent"
+    >
+      {/* //  bg-customBlue-800 */}
       <div
         className={`flex transition-all duration-500 ${
           isSidebarOpen ? "ml-60 xs:ml-0 sm:ml-0" : "ml-20 xs:ml-0 sm:ml-0"

@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export enum StackingDuration {
   ONE_MONTH = 0,
   THREE_MONTHS = 1,
@@ -15,10 +17,12 @@ export interface Stake {
 export interface LaunchpadProject {
   id: number;
   title: string;
-  coin: string;
+  coinTag: string;
   description: string;
   about: string;
   imageSource: string;
+  moreDetails: ReactElement;
+  website: string;
 }
 export enum CoinTags {}
 

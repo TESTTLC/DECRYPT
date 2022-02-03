@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
+import { useNavigate } from "react-router-dom";
 import { useContracts } from "../hooks/useContracts";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useGlobalContext } from "../utils/context";
@@ -55,7 +56,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   };
 
   const { account, setTotalPower } = useGlobalContext();
-  let subtitle = "";
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -67,6 +67,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   } = useContracts("TLX");
   const { stakeContract: TLCStakeContract, tokenContract: TLCTokenContract } =
     useContracts("TLC");
+  const navigate = useNavigate();
 
   const [power, setPower] = useState(0);
   const [TLXPower, setTLXPower] = useState(0);
@@ -158,7 +159,12 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   return (
     <div>
       <button
-        onClick={coinTag === "default" ? undefined : openModal}
+        // onClick={coinTag === "default" ? undefined : openModal}
+        onClick={
+          coinTag === "default"
+            ? undefined
+            : () => navigate(`/project/${coinTag}`)
+        }
         type="button"
         className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
       >
