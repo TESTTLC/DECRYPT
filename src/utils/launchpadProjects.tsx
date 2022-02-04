@@ -1,6 +1,4 @@
-import TheLuxuryPng from "../assets/images/the_luxury.png";
 import Default from "../assets/images/Default.png";
-// import TheLuxuryPng from "../../../assets/images/the_luxury.png";
 import LuxandiaPng from "../assets/images/Luxandia.png";
 import { LaunchpadProject } from "./types";
 

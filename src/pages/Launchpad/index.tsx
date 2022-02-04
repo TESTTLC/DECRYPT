@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ProjectItem from "./components/ProjectItem";
 import ProjectElement from "./components/ProjectElement";
 import GlowingWrapper from "../../components/GlowingWrapper";
@@ -16,36 +16,26 @@ const Launchpad: React.FC = () => {
           Hand-picked high-quality Blockchain projects.
         </p>
       </div>
-
-      {/* <p className="text-white font-poppins font-medium text-md mb-4">
-        Stake $TLC or $TLX tokens to get early-access to promising projects.
-      </p> */}
       <p className="text-white font-poppins font-bold text-2xl mb-4 mt-4">
         Upcoming Projects
       </p>
-      <div className="grid gap-4 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 ">
-        <div className="flex" onClick={() => navigate("/project/LSO")}>
-          {/* <GlowingWrapper customStyles=""> */}
-          {/* <ProjectItem coinTag={"LSO"} /> */}
-          <ProjectElement coinTag={"LSO"} />
-          {/* </GlowingWrapper> */}
+      <div className="grid gap-4 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1">
+        <div className="flex" onClick={() => navigate("/launchpad/LSO")}>
+          <ProjectElement coinTag={"LSO"} showHoverAnimation />
         </div>
         <div className="flex">
           <GlowingWrapper>
             <ProjectItem coinTag={"default"} />
-            {/* <ProjectElement coinTag={"default"} /> */}
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper>
             <ProjectItem coinTag={"default"} />
-            {/* <ProjectElement coinTag={"default"} /> */}
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper customStyles="">
             <ProjectItem coinTag={"default"} />
-            {/* <ProjectElement coinTag={"default"} /> */}
           </GlowingWrapper>
         </div>
       </div>
@@ -71,7 +61,6 @@ const Launchpad: React.FC = () => {
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                 "
-          // border border-solid border-gray-300
           id="exampleFormControlInput1"
           placeholder="Email address"
         />

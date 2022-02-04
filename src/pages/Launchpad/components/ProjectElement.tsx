@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
-import { FaBars } from "react-icons/fa";
 import SocialMediaIcons from "src/components/SocialMediaIcons";
 
 import LaunchpadModal from "../../../components/LaunchpadModal";
-
 import { launchpadProjects } from "../../../utils/launchpadProjects";
-import { LaunchpadProject, Project } from "../../../utils/types";
+import { LaunchpadProject } from "../../../utils/types";
 
 interface Props {
   coinTag: string;
+  showStakingButton?: boolean;
+  showHoverAnimation?: boolean;
 }
 
-const ProjectElement: React.FC<Props> = ({ coinTag }) => {
+const ProjectElement: React.FC<Props> = ({
+  coinTag,
+  showStakingButton,
+  showHoverAnimation,
+}) => {
   const [project, setProject] = useState<LaunchpadProject>(
     launchpadProjects.TLX
   );
@@ -56,9 +60,12 @@ const ProjectElement: React.FC<Props> = ({ coinTag }) => {
 
   return (
     <div
-      className="flex flex-grow flex-col w-full h-128 bg-black bg-opacity-50 relative rounded-md
-      transform duration-100 hover:scale-[1.04]
-    "
+      className={`flex flex-grow flex-col w-full h-128 bg-black bg-opacity-50 relative rounded-md
+      ${
+        showHoverAnimation
+          ? "transform duration-100 hover:scale-[1.04]"
+          : undefined
+      }`}
     >
       <div className="flex justify-between pl-4 pr-3 pt-4 text-white">
         <div>
@@ -110,14 +117,14 @@ const ProjectElement: React.FC<Props> = ({ coinTag }) => {
               <p className="text-green-400">TBA</p>
             </div>
           </div>
+          {showStakingButton ? (
+            <LaunchpadModal
+              index={project.id}
+              coinTag={coinTag}
+              projectItem={project}
+            />
+          ) : null}
         </div>
-        {/* <div className="absolute bottom-0"> */}
-        {/* <LaunchpadModal
-          index={project.id}
-          coinTag={coinTag}
-          project={project}
-        /> */}
-        {/* </div> */}
       </div>
     </div>
   );
