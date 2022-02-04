@@ -62,10 +62,50 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="CROSS CHAIN BRIDGE"
               subtitle="DeFi Innovations created for traders and retail users."
-              // onClick={() => navigate("/crosschainbridge")}
-              onClick={() => {}}
+              onClick={() => navigate("/crosschainbridge")}
               imageSource={crossChainBridgeImage}
-              showTopText
+            />
+          </div>
+          <div className="flex w-full h-72 justify-center items-center mb-6">
+            <BigButton
+              imageContainerStyle="h-3/5"
+              imageStyle="object-top"
+              title="NFT MARKETPLACE"
+              subtitle="Create, Buy, Sell NFTs."
+              // onClick={() => navigate("/nftmarketplace")}
+              onClick={() => {
+                nftMarketplaceRef.current?.click();
+              }}
+              imageSource={nftMarketplaceImage}
+            />
+            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+            <a
+              ref={nftMarketplaceRef}
+              className="z-0 h-0 w-0 hidden"
+              href="https://theluxury.gallery"
+              target="_blank"
+              rel="noreferrer"
+            />
+          </div>
+          <div className="flex w-full h-72 justify-center items-center mb-6">
+            <BigButton
+              imageContainerStyle="h-3/5"
+              imageStyle="object-top"
+              title="METAVERSE"
+              subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
+              // onClick={() => navigate("/metaverse")}
+              onClick={() => {
+                metaverseRef.current?.click();
+              }}
+              imageSource={metaverseImage}
+            />
+            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
+            <a
+              ref={metaverseRef}
+              className="z-0 h-0 w-0 hidden"
+              href="https://luxandia.com"
+              target="_blank"
+              rel="noreferrer"
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
@@ -92,50 +132,7 @@ const Home: React.FC = () => {
               showTopText
             />
           </div>
-          <div className="flex w-full h-72 justify-center items-center mb-6">
-            <BigButton
-              imageContainerStyle="h-3/5"
-              imageStyle="object-top"
-              title="NFT MARKETPLACE"
-              subtitle="Create, Buy, Sell NFTs."
-              // onClick={() => navigate("/nftmarketplace")}
-              onClick={() => {
-                nftMarketplaceRef.current?.click();
-              }}
-              imageSource={nftMarketplaceImage}
-              showTopText
-            />
-            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-            <a
-              ref={nftMarketplaceRef}
-              className="z-0 h-0 w-0 hidden"
-              href="https://theluxury.gallery"
-              target="_blank"
-              rel="noreferrer"
-            />
-          </div>
-          <div className="flex w-full h-72 justify-center items-center mb-6">
-            <BigButton
-              imageContainerStyle="h-3/5"
-              imageStyle="object-top"
-              title="METAVERSE"
-              subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
-              // onClick={() => navigate("/metaverse")}
-              onClick={() => {
-                metaverseRef.current?.click();
-              }}
-              imageSource={metaverseImage}
-              showTopText
-            />
-            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
-            <a
-              ref={metaverseRef}
-              className="z-0 h-0 w-0 hidden"
-              href="https://luxandia.com"
-              target="_blank"
-              rel="noreferrer"
-            />
-          </div>
+
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
               imageContainerStyle="h-3/5"

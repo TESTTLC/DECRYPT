@@ -3,9 +3,13 @@ import { useGlobalContext } from "../../utils/context";
 import BigButton from "../../components/BigButton";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utils/routes";
-import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
-import TheLuxuryBank from "../../assets/images/the_luxury.png";
-import ICICB from "../../assets/images/ICICB.png";
+// import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
+// import TheLuxuryBank from "../../assets/images/the_luxury.png";
+// import ICICB from "../../assets/images/ICICB.png";
+import TheLuxuryCoin from "../../assets/images/TLC.jpg";
+import TheLuxuryBank from "../../assets/images/TLX.jpg";
+import LSO from "../../assets/images/LSO.jpg";
+import ICICB from "../../assets/images/ATARI.jpg";
 import GlowingWrapper from "../../components/GlowingWrapper";
 import ProjectItem from "../Launchpad/components/ProjectItem";
 import Item from "./components/Item";
@@ -80,7 +84,8 @@ const Stake: React.FC = () => {
               title="LUXANDIA"
               subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
               onClick={() => navigate(`/staking/LSO`)}
-              imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
+              // imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
+              imageSource={LSO}
             />
           </GlowingWrapper>
 
@@ -95,8 +100,8 @@ const Stake: React.FC = () => {
           </GlowingWrapper>
           <GlowingWrapper>
             <Item
-              coinTag="ICICB"
-              title="ICICB"
+              coinTag="ATARI Token"
+              title="ATARI Token"
               subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
               onClick={() => {}}
               // imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"

@@ -13,7 +13,7 @@ export const useWindowSize = () => {
     };
   }, []);
 
-  let isMobile: boolean = width <= 768;
+  let isMobileSize: boolean = width <= 768;
 
-  return { isMobile };
+  return { isMobileSize };
 };

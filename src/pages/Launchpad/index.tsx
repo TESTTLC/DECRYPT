@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ProjectItem from "./components/ProjectItem";
+import ProjectElement from "./components/ProjectElement";
 import GlowingWrapper from "../../components/GlowingWrapper";
+import { useNavigate } from "react-router-dom";
 
 const Launchpad: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full flex flex-col justify-center px-2 overflow-hidden">
       <div className="justify-center items-center flex flex-col">
@@ -13,18 +16,12 @@ const Launchpad: React.FC = () => {
           Hand-picked high-quality Blockchain projects.
         </p>
       </div>
-
-      {/* <p className="text-white font-poppins font-medium text-md mb-4">
-        Stake $TLC or $TLX tokens to get early-access to promising projects.
-      </p> */}
       <p className="text-white font-poppins font-bold text-2xl mb-4 mt-4">
         Upcoming Projects
       </p>
-      <div className="grid gap-8 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1 ">
-        <div className="flex">
-          <GlowingWrapper customStyles="">
-            <ProjectItem coinTag={"LSO"} />
-          </GlowingWrapper>
+      <div className="grid gap-4 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1">
+        <div className="flex" onClick={() => navigate("/launchpad/LSO")}>
+          <ProjectElement coinTag={"LSO"} showHoverAnimation />
         </div>
         <div className="flex">
           <GlowingWrapper>
@@ -57,14 +54,13 @@ const Launchpad: React.FC = () => {
                 text-base
                 font-normal
                 text-gray-700
-                bg-customBlue-300 bg-clip-padding
+                bg-black opacity-60 bg-clip-padding
                 rounded
                 transition
                 ease-in-out
                 m-0
                 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
                 "
-          // border border-solid border-gray-300
           id="exampleFormControlInput1"
           placeholder="Email address"
         />

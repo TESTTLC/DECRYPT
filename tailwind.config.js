@@ -4,6 +4,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      backgroundImage: () => ({
+        blockchain: "url('assets/images/blockchain2.jpeg')"
+      }),
       height: {
         '128': '32rem',
       },

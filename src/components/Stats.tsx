@@ -24,7 +24,6 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const getUserTLCBalance = async () => {
     if (account) {
       const TLCBalance = await contracts.getTLCBalance(account);
-      console.log("TLC balance: ", TLCBalance);
       setBalance(TLCBalance);
     }
   };
@@ -41,10 +40,12 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   // };
 
   const getTotalStaked = async () => {
-    if (stakeContract) {
-      const totalStaked = await contracts.getTotalValueLocked(stakeContract);
-      setTotalStaked(totalStaked);
-    }
+    try {
+      if (stakeContract) {
+        const totalStaked = await contracts.getTotalValueLocked(stakeContract);
+        setTotalStaked(totalStaked);
+      }
+    } catch (error) {}
   };
 
   // const getTotalRewards = async () => {
@@ -108,7 +109,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
         </p>
         <div>
           <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-            {totalStaked} {coinTag}
+            {account ? totalStaked : "-"} {coinTag}
           </p>
           {/* <p className="text-white">TLX</p> */}
         </div>
@@ -124,7 +125,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
           Total Rewards
         </p>
         <p className="text-green-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {totalRewards} {coinTag}
+          {account ? totalRewards : "-"} {coinTag}
         </p>
       </div>
       <div className="flex flex-col justify-center items-center">
@@ -137,7 +138,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
           Your Balance
         </p>
         <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {balance} {coinTag}
+          {account ? balance : "-"} {coinTag}
         </p>
       </div>
     </div>

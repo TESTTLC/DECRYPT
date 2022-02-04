@@ -1,14 +1,10 @@
 import React from "react";
-import { useState } from "react";
 import { useGlobalContext } from "../utils/context";
-import { HiOutlineSearch, HiTicket, HiX } from "react-icons/hi";
+import { HiTicket, HiX } from "react-icons/hi";
 import { MdSettings } from "react-icons/md";
-// import { NavLink } from "react-router-dom";
-// import AdminNavbar from "./AdminNavbar";
-// import Icon from "@material-tailwind/react/Icon";
+
 import { links } from "../utils/routes";
 import { Link, useLocation } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
 import small_logo from "../assets/images/logo.png";
 
 <script
@@ -20,7 +16,6 @@ const SideBar: React.FC = () => {
   const { isSidebarOpen, closeSidebar } = useGlobalContext();
   const location = useLocation();
 
-  const [showSidebar, setShowSidebar] = useState("-left-60");
   return (
     <div
       className={`transition-all  duration-500  fixed top-0 ${
@@ -28,8 +23,9 @@ const SideBar: React.FC = () => {
       } z-index-20 fixed z-50 h-screen`}
     >
       <div
-        className="flex h-screen overflow-y-auto flex-col bg-customBlue-800 w-60
-       px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative"
+        className="flex h-screen overflow-y-auto flex-col w-60
+       px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative bg-transparent sm:bg-customBlue-800 xs:bg-customBlue-800"
+        //  bg-customBlue-800
       >
         <button
           onClick={closeSidebar}
@@ -80,7 +76,6 @@ const SideBar: React.FC = () => {
                 <Link
                   key={`${id}/${url}`}
                   to={{ pathname: url }}
-                  // target={id === 6 ? "_blank" : "_self"}
                   className={`
                   capitalize flex items-center px-2 py-2 ${
                     location.pathname === link.url
@@ -88,7 +83,6 @@ const SideBar: React.FC = () => {
                       : "hover:bg-gray-600 hover:text-gray-200"
                   }  mt-5 transition-colors duration-200 transform
                    rounded-md font-oswald text-white`}
-                  // text-gray-600`
                 >
                   {imageSource ? (
                     <img src={imageSource} className="w-5 h-5" />
@@ -107,7 +101,7 @@ const SideBar: React.FC = () => {
             })}
             <hr className="my-6" />
             <a
-              href="#"
+              href="#!"
               className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
               <HiTicket className="w-5 h-5" />
@@ -116,7 +110,7 @@ const SideBar: React.FC = () => {
               </span>
             </a>
             <a
-              href="#"
+              href="#!"
               className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
               <MdSettings className="w-5 h-5" />
@@ -132,7 +126,7 @@ const SideBar: React.FC = () => {
               className="h-6 w-6 mx-2 object-center object-cover rounded-full"
             />
             <h4 className="font-medium text-sm font-poppins text-gray-300 hover:underline cursor-pointer">
-              <a href="#">The Luxury Bank</a>
+              <a href="#!">The Luxury Bank</a>
             </h4>
           </div>
         </div>

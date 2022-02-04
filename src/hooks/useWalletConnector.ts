@@ -1,132 +1,81 @@
-import { useEffect } from "react";
-import Web3Modal, { IProviderOptions } from "web3modal";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-import { ethers } from "ethers";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useDeviceInfo } from "./useDeviceInfo";
 import { useWindowSize } from "./useWindowSize";
+
+import { ethers } from "ethers";
 import { useGlobalContext } from "../utils/context";
 
-const providerOptions: IProviderOptions = {
-  walletconnect: {
-    package: WalletConnectProvider,
-    options: {
-      rpc: {
-        5177: "https://mainnet-rpc.tlxscan.com/",
-        // chainId: 5177,
-      },
-      infuraId: "ecce1e30e55349abbac0be46d97dd143",
-    },
-  },
-};
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
 
 export const useWalletConnector = () => {
   const { provider, setProvider, setAccount, account } = useGlobalContext();
-  const { isMobile } = useWindowSize();
-  const web3Modal = new Web3Modal({
-    cacheProvider: true, // optional
-    providerOptions, // required
-    theme: "dark",
-    // network: "https://mainnet-rpc.tlxscan.com/",
-  });
+  const { isMobileDevice } = useDeviceInfo();
+  const { isMobileSize } = useWindowSize();
 
-  const subscribeProvider = async (providerConnection: any) => {
-    if (providerConnection) {
-      providerConnection.on("accountsChanged", (accounts: string[]) => {
-        console.log("1: ", accounts);
+  // https://metamask.app.link/dapp/decryption.com
+  // https://metamask.app.link/dapp/localhost:3000
+
+  useEffect(() => {
+    checkIfWalletConnected();
+  }, []);
+
+  useEffect(() => {
+    if (account) {
+      // onAddressChanged(account)
+    }
+  }, [account]);
+
+  const checkIfWalletConnected = async () => {
+    if (window.ethereum && localStorage.getItem("account")) {
+      const accounts = await window.ethereum.request({
+        method: "eth_accounts",
       });
 
-      // Subscribe to chainId change
-      providerConnection.on("chainChanged", (chainId: number) => {
-        console.log("Chain changed: ", chainId);
-      });
-
-      // Subscribe to p connection
-      providerConnection.on("connect", (info: { chainId: number }) => {
-        console.log("Info 3: ", info);
-      });
-      // Subscribe to p disconnection
-      providerConnection.on(
-        "disconnect",
-        (error: { code: number; message: string }) => {
-          web3Modal.clearCachedProvider();
-          setAccount(undefined);
-        }
-      );
+      if (accounts.length) {
+        setAccount(accounts[0]);
+        const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(web3Provider);
+      }
+      // if (isMobileDevice) {
+      //   await connectWallet();
+      // }
     }
   };
 
   const connectWallet = async () => {
-    const connection = await web3Modal.connect();
+    if (!window.ethereum) {
+      alert("Get metamask!");
 
-    subscribeProvider(connection);
-    const p = new ethers.providers.Web3Provider(connection);
-    setProvider(p);
-    const signer = p.getSigner();
-    const accountAddress = await signer.getAddress();
-    setAccount(accountAddress);
-    localStorage.setItem("account", accountAddress);
+      return;
+    }
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+
+    setAccount(accounts[0]);
+    const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(web3Provider);
+    localStorage.setItem("account", accounts[0]);
   };
 
   const disconnectWallet = async () => {
-    await web3Modal.clearCachedProvider();
+    if (localStorage.getItem("account")) {
+      localStorage.removeItem("account");
+    }
     setAccount(undefined);
-    console.log("disconnected");
-    localStorage.removeItem("account");
+    setProvider(undefined);
   };
-
-  const enableWindowEthereum = async () => {
-    if (window.ethereum) {
-      try {
-        const ethAccounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        if (ethAccounts && web3Modal.cachedProvider) {
-          const connection = await web3Modal.connect();
-          const p = new ethers.providers.Web3Provider(connection);
-          setProvider(p);
-          setAccount(ethAccounts[0]);
-          localStorage.setItem("account", ethAccounts[0]);
-          return true;
-        }
-      } catch (err) {
-        console.log("user did not add account...", err);
-      }
-    }
-    return false;
-  };
-
-  const initialize = async () => {
-    const localStorageAccount = localStorage.getItem("account");
-
-    if (isMobile) {
-      if (web3Modal.cachedProvider && localStorageAccount) {
-        const connection = await web3Modal.connect();
-        const p = new ethers.providers.Web3Provider(connection);
-        setProvider(p);
-        // subscribeProvider(p.connection);
-        const signer = p.getSigner();
-        const userAccountAddress = await signer.getAddress();
-        setAccount(userAccountAddress);
-      }
-    } else {
-      const ethEnabled = await enableWindowEthereum();
-      if (ethEnabled) {
-        const connection = await web3Modal.connect();
-        const p = new ethers.providers.Web3Provider(connection);
-        setProvider(p);
-      }
-    }
-  };
-
-  useEffect(() => {
-    initialize();
-  }, []);
 
   return {
-    isMobile,
-    web3Modal,
+    isMobileDevice,
+    isMobileSize,
     account,
     connectWallet,
     disconnectWallet,
-    cachedProvider: web3Modal.cachedProvider,
+    provider,
   };
 };

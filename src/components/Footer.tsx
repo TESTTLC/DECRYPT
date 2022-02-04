@@ -2,6 +2,7 @@ import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useGlobalContext } from "../utils/context";
 import small_logo from "../assets/images/logo.png";
+import { Link } from "react-router-dom";
 
 const Footer: React.FC = () => {
   const { isSidebarOpen } = useGlobalContext();
@@ -12,8 +13,9 @@ const Footer: React.FC = () => {
           isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
         } xs:justify-center items-center px-5 pt-2
     text-center 
-    bg-customBlue-700
+    bg-transparent
     text-white bottom-0 mt-20`}
+      // bg-customBlue-700
       // bg-red-200
     >
       <div className="flex xs:flex-col justify-around items-center ">
@@ -170,7 +172,7 @@ const Footer: React.FC = () => {
         <div className="w-72">
           <form action="">
             <div className="grid grid-cols-1 gap-4 justify-center items-center">
-              <div className="">
+              <div className="xs:mt-4 sm:mt-4">
                 <p className="font-poppins">
                   <strong>Sign up for our newsletter</strong>
                 </p>
@@ -188,7 +190,7 @@ const Footer: React.FC = () => {
                 text-base
                 font-normal
                 text-gray-700
-                bg-customBlue-300 bg-clip-padding
+                bg-black opacity-60 bg-clip-padding
                 rounded
                 transition
                 ease-in-out
@@ -232,7 +234,7 @@ const Footer: React.FC = () => {
                   target="_blank"
                   className="text-white underline"
                 >
-                  TLX Scan
+                  TLChain Scan
                 </a>
               </li>
 
@@ -244,6 +246,16 @@ const Footer: React.FC = () => {
                 >
                   Status Network
                 </a>
+              </li>
+
+              <li>
+                <Link
+                  to="privacyPolicy"
+                  type="button"
+                  className="text-white underline"
+                >
+                  Privacy Policy
+                </Link>
               </li>
               {/* <li>
                 <a

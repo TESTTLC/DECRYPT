@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import React, { useEffect, useRef, useState } from "react";
 import Modal from "react-modal";
-import { isMobile } from "web3modal";
+import { useNavigate } from "react-router-dom";
 import { useContracts } from "../hooks/useContracts";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { useGlobalContext } from "../utils/context";
@@ -34,7 +34,7 @@ interface Props {
 }
 
 const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
   const customStyles = {
     content: {
       top: "50%",
@@ -50,13 +50,12 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
       borderWidth: 0,
       padding: 0,
       zIndex: 999,
-      minHeight: isMobile ? "40rem" : "30rem",
+      minHeight: isMobileSize ? "40rem" : "30rem",
       // width: "25rem",
     },
   };
 
   const { account, setTotalPower } = useGlobalContext();
-  let subtitle = "";
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -68,6 +67,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   } = useContracts("TLX");
   const { stakeContract: TLCStakeContract, tokenContract: TLCTokenContract } =
     useContracts("TLC");
+  const navigate = useNavigate();
 
   const [power, setPower] = useState(0);
   const [TLXPower, setTLXPower] = useState(0);
@@ -86,7 +86,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
       usedStakeContract = TLCStakeContract;
     }
     if (usedStakeContract) {
-      const stakes = await getUserStakes(usedStakeContract);
+      const stakes = (await getUserStakes(usedStakeContract)) || [];
       stakes.forEach((stake: Stake, index: number) => {
         currentAmout += parseFloat(ethers.utils.formatEther(stake.amount));
         currentPower += determinePowerForStake(
@@ -160,6 +160,11 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     <div>
       <button
         onClick={coinTag === "default" ? undefined : openModal}
+        // onClick={
+        //   coinTag === "default"
+        //     ? undefined
+        //     : () => navigate(`/launchpad/${coinTag}`)
+        // }
         type="button"
         className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
       >
@@ -207,65 +212,73 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
               <span className=" text-white text-lg font-poppins">
                 <span className="flex">
                   Current power:{" "}
-                  <p className="text-green-300">&nbsp; {power}%</p>
+                  <p className="text-green-300">
+                    &nbsp; {account ? power + "%" : "-"}
+                  </p>
                 </span>
                 {/* <p>{launchpadProjects.TLX.description}</p> */}
               </span>
             </div>
-            <div>
-              <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
-                {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
-                <input
-                  className="text-white h-8 rounded-md px-3 my-2 mr-2 w-40 bg-customBlue-300"
-                  type={"number"}
-                  // ref={stakeInputRef}
-                  onChange={(e) => {
-                    setStakeAmount(parseFloat(e.target.value));
-                  }}
-                  placeholder="Value..."
-                />
-                <div className="my-2 mr-2 w-60">
-                  <SelectDropdown
-                    text={"Staking duration (months)"}
-                    elements={[1, 3, 6, 12, 36]}
-                    onSelect={(e) => {
-                      // const value = parseInt(e.target.value, 10);
-                      if (parseInt(e.target.value, 10) === 1) {
-                        setDuration(StackingDuration.ONE_MONTH);
-                      } else if (parseInt(e.target.value, 10) === 3) {
-                        setDuration(StackingDuration.THREE_MONTHS);
-                      } else if (parseInt(e.target.value, 10) === 6) {
-                        setDuration(StackingDuration.SIX_MONTHS);
-                      } else if (parseInt(e.target.value, 10) === 12) {
-                        setDuration(StackingDuration.ONE_YEAR);
-                      } else if (parseInt(e.target.value, 10) === 36) {
-                        setDuration(StackingDuration.THREE_YEARS);
-                      }
+            {account ? (
+              <div>
+                <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
+                  {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
+                  <input
+                    className="text-white h-8 rounded-md px-3 my-2 mr-2 w-40 bg-customBlue-300"
+                    type={"number"}
+                    // ref={stakeInputRef}
+                    onChange={(e) => {
+                      setStakeAmount(parseFloat(e.target.value));
                     }}
+                    placeholder="Value..."
                   />
-                </div>
-                <div className="my-2 mr-2 w-40">
-                  <SelectDropdown
-                    text={"Staking coin"}
-                    elements={["TLX", "TLC"]}
-                    onSelect={(e) => {
-                      // const value = parseInt(e.target.value, 10);
-                      if (e.target.value === "TLC") {
-                        setStakingCoin("TLC");
-                      } else {
-                        setStakingCoin("TLX");
-                      }
-                    }}
-                  />
-                </div>
-                <div className="my-2 mr-2 flex">
-                  <GlowingButton
-                    text={`Stake ${stakeAmount || 0}`}
-                    onClick={stakeTokens}
-                  />
-                </div>
-              </span>
-            </div>
+                  <div className="my-2 mr-2 w-60">
+                    <SelectDropdown
+                      text={"Staking duration (months)"}
+                      elements={[1, 3, 6, 12, 36]}
+                      onSelect={(e) => {
+                        // const value = parseInt(e.target.value, 10);
+                        if (parseInt(e.target.value, 10) === 1) {
+                          setDuration(StackingDuration.ONE_MONTH);
+                        } else if (parseInt(e.target.value, 10) === 3) {
+                          setDuration(StackingDuration.THREE_MONTHS);
+                        } else if (parseInt(e.target.value, 10) === 6) {
+                          setDuration(StackingDuration.SIX_MONTHS);
+                        } else if (parseInt(e.target.value, 10) === 12) {
+                          setDuration(StackingDuration.ONE_YEAR);
+                        } else if (parseInt(e.target.value, 10) === 36) {
+                          setDuration(StackingDuration.THREE_YEARS);
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="my-2 mr-2 w-40">
+                    <SelectDropdown
+                      text={"Staking coin"}
+                      elements={["TLX", "TLC"]}
+                      onSelect={(e) => {
+                        // const value = parseInt(e.target.value, 10);
+                        if (e.target.value === "TLC") {
+                          setStakingCoin("TLC");
+                        } else {
+                          setStakingCoin("TLX");
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="my-2 mr-2 flex">
+                    <GlowingButton
+                      text={`Stake ${stakeAmount || 0}`}
+                      onClick={stakeTokens}
+                    />
+                  </div>
+                </span>
+              </div>
+            ) : (
+              <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
+                Connect MetaMask wallet for access on staking options
+              </p>
+            )}
             <div className="">
               <p className="text-white font-poppins text-sm">
                 Empower the most innovative crypto projects across all

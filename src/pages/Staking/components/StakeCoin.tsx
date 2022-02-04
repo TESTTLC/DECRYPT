@@ -13,7 +13,12 @@ import {
   webStake,
 } from "../../../utils/functions/Contracts";
 import { TLXStakeContractAddress } from "../../../utils/globals";
-import { StackingDuration, Stake, stakeRewards } from "../../../utils/types";
+import {
+  ChainsIds,
+  StackingDuration,
+  Stake,
+  stakeRewards,
+} from "../../../utils/types";
 import tlx_logo_2 from "../../../assets/images/small_logo_2.png";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import * as contracts from "../../../utils/functions/Contracts";
@@ -21,6 +26,7 @@ import { ethers } from "ethers";
 import { useParams } from "react-router-dom";
 import NotFound from "../../NotFound";
 import { coinsTags } from "../../../App";
+import { changeChain } from "../../../utils/functions/MetaMask";
 
 interface Props {
   // coinTag: "TLX" | "TLC" | "LSO";
@@ -34,7 +40,7 @@ const StakeCoin: React.FC<Props> = () => {
     coinTag ?? "-"
   );
 
-  const { isMobile } = useWindowSize();
+  const { isMobileSize } = useWindowSize();
   const [duration, setDuration] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [userStakes, setUserStakes] = useState([]);
@@ -45,10 +51,16 @@ const StakeCoin: React.FC<Props> = () => {
   const getUserTLCBalance = async () => {
     if (account) {
       const TLCBalance = await contracts.getTLCBalance(account);
-      console.log("TLC balance: ", TLCBalance);
       setBalance(TLCBalance);
     }
   };
+  const chainChange = async () => {
+    await changeChain(ChainsIds.TLC);
+  };
+
+  useEffect(() => {
+    chainChange();
+  }, []);
 
   useEffect(() => {
     if (coinTag === "TLC") {
@@ -64,23 +76,26 @@ const StakeCoin: React.FC<Props> = () => {
   };
 
   const getStakeTransactions = async () => {
-    if (stakeContract) {
-      const stakes = await getUserStakes(stakeContract);
-
-      let totalRew = 0;
-      stakes.forEach((stake: Stake) => {
-        const amount = parseFloat(ethers.utils.formatEther(stake.amount));
-        if (coinTag === "TLX" || coinTag === "TLC" || coinTag === "LSO") {
-          totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
+    try {
+      if (stakeContract) {
+        const stakes = await getUserStakes(stakeContract);
+        if (stakes && stakes.length) {
+          let totalRew = 0;
+          stakes.forEach((stake: Stake) => {
+            const amount = parseFloat(ethers.utils.formatEther(stake.amount));
+            if (coinTag === "TLX" || coinTag === "TLC" || coinTag === "LSO") {
+              totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
+            }
+          });
+          setTotalRewards(parseFloat(totalRew.toFixed(3)));
+          setUserStakes(stakes);
         }
-      });
-      setTotalRewards(parseFloat(totalRew.toFixed(3)));
-      setUserStakes(stakes);
-    }
+      }
+    } catch (error) {}
   };
 
   useEffect(() => {
-    if (tokenContract) {
+    if (tokenContract && coinTag !== "TLC") {
       getUserTLXBalance();
     }
   }, [tokenContract]);
@@ -177,7 +192,6 @@ const StakeCoin: React.FC<Props> = () => {
                     <GlowingButton
                       text={`Stake ${stakeAmount || 0}`}
                       onClick={() => {
-                        console.log("Duration is: ", duration);
                         webStake(
                           tokenContract,
                           stakeContract!,
@@ -195,12 +209,12 @@ const StakeCoin: React.FC<Props> = () => {
             </div>
             {/* <div
               className={`"text-center h-full p-5 flex flex-col justify-center overflow-y-scroll" ${
-                !isMobile ? "border-l-2" : ""
+                !isMobileSize ? "border-l-2" : ""
               }`}
             > */}
             <div
               className={`"text-center h-80 p-5 flex flex-col justify-center" overflow-y-scroll ${
-                !isMobile ? "border-l-2" : ""
+                !isMobileSize ? "border-l-2" : ""
               }`}
             >
               {userStakes.length ? (
@@ -251,6 +265,11 @@ const StakeCoin: React.FC<Props> = () => {
         coinTag={coinTag as "TLC" | "TLX" | "LSO"}
         totalRewards={totalRewards}
       />
+      {!account && (
+        <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
+          Connect MetaMask wallet to access the staking options
+        </p>
+      )}
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}
