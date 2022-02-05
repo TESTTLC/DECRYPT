@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Launchpad: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <div className="w-full flex flex-col justify-center px-2 overflow-hidden">
+    <div className="w-full flex flex-col justify-center px-2">
       <div className="justify-center items-center flex flex-col">
         <p className="text-white font-poppins font-bold text-3xl mb-2 mt-2 text-center">
           DECRYPTION | Multi-Chain Launchpad
