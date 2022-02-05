@@ -81,8 +81,7 @@ const Dashboard: React.FC = () => {
       p = 100;
     }
 
-    // setPower(parseFloat(p.toFixed(4)));
-    setPower(70);
+    setPower(parseFloat(p.toFixed(4)));
   }, [TLXPower, TLCPower]);
 
   return (
