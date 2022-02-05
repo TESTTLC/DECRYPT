@@ -54,7 +54,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   const [TLXPower, setTLXPower] = useState(0);
   const [TLCPower, setTLCPower] = useState(0);
 
-  // const [userStakes, setUserStakes] = useState(0);
   const [totalStakedAmount, setTotalStakedAmount] = useState(0);
 
   useEffect(() => {
@@ -132,7 +131,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   };
 
   useEffect(() => {
-    // const p = ((TLXPower + TLCPower) / totalLSOValueAlocated) * 100;
     let p = TLXPower + TLCPower;
     if (p > 100) {
       p = 100;
@@ -167,11 +165,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     <div>
       <button
         onClick={coinTag === "default" ? undefined : openModal}
-        // onClick={
-        //   coinTag === "default"
-        //     ? undefined
-        //     : () => navigate(`/launchpad/${coinTag}`)
-        // }
         type="button"
         className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
       >
@@ -186,7 +179,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
         style={customStyles}
         contentLabel="Modal"
         overlayClassName="Overlay"
-        // className="Modal"
         preventScroll={true}
       >
         <div className="relative z-50 flex xs:flex-col xs:w-full sm:flex-col sm:w-full md:flex-col md:w-full h-full min-h-[28rem] w-[64rem]">
@@ -194,6 +186,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
             <img
               src={projectItem.imageSource}
               className="h-full w-full object-cover xs:object-center sm:object-top"
+              alt={projectItem.title}
             />
             <div className="flex flex-col w-full items-center justify-center absolute 60 py-1 px-3 bottom-0 inset-x-0 bg-gray-700 bg-opacity-60 text-white text-xs leading-4">
               <p className="font-bold text-lg mb-2">{projectItem.title}</p>
@@ -226,13 +219,11 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                     &nbsp; {account ? power + "%" : "-"}
                   </p>
                 </span>
-                {/* <p>{launchpadProjects.TLX.description}</p> */}
               </span>
             </div>
             {account ? (
               <div>
                 <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
-                  {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
                   <input
                     className="text-white h-8 rounded-md px-3 my-2 mr-2 w-40 bg-customBlue-300"
                     type={"number"}
@@ -247,7 +238,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                       text={"Staking duration (months)"}
                       elements={[1, 3, 6, 12, 36]}
                       onSelect={(e) => {
-                        // const value = parseInt(e.target.value, 10);
                         if (parseInt(e.target.value, 10) === 1) {
                           setDuration(StackingDuration.ONE_MONTH);
                         } else if (parseInt(e.target.value, 10) === 3) {
@@ -267,7 +257,6 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                       text={"Staking coin"}
                       elements={["TLX", "TLC"]}
                       onSelect={(e) => {
-                        // const value = parseInt(e.target.value, 10);
                         if (e.target.value === "TLC") {
                           setStakingCoin("TLC");
                         } else {
