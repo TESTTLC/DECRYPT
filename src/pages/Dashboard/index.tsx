@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
   const { stakeContract: TLXStakeContract } = useContracts("TLX");
   const { stakeContract: TLCStakeContract } = useContracts("TLC");
 
-  const [powerColor, setPowerColor] = useState("green-400");
+  const [powerColor, setPowerColor] = useState("red-400");
   const [TLXPower, setTLXPower] = useState(0);
   const [TLCPower, setTLCPower] = useState(0);
   const [totalTLXStaked, setTotalTLXStaked] = useState(0);
@@ -106,18 +106,18 @@ const Dashboard: React.FC = () => {
             <BatteryStatus power={power} powerColor={powerColor} />
           </div>
           <div className="w-full grid grid-cols-3">
-            <p className="text-center text-white text-2xl font-semibold font-poppins">
+            <div className="text-center text-white text-2xl font-semibold font-poppins">
               You staked{" "}
               <p className={`text-${powerColor}`}>{totalTLXStaked} TLX</p>
-            </p>
-            <p className="flex flex-col justify-center text-center text-white text-2xl font-semibold font-poppins">
+            </div>
+            <div className="flex flex-col justify-center text-center text-white text-2xl font-semibold font-poppins">
               {/* <BatteryStatus power={power} /> */}
               Total power <p className={`text-${powerColor}`}>{power}%</p>
-            </p>
-            <p className="text-center text-white text-2xl font-semibold font-poppins">
+            </div>
+            <div className="text-center text-white text-2xl font-semibold font-poppins">
               You staked{" "}
               <p className={`text-${powerColor}`}>{totalTLCStaked} TLC</p>
-            </p>
+            </div>
           </div>
         </div>
       </div>

@@ -33,11 +33,7 @@ const BatteryStatus: React.FC<Props> = ({ power, powerColor }) => {
           ></div>
           <div className="absolute z-50 left-0 mx-8 mt-2 text-yellow-400 ">
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"
-                clip-rule="evenodd"
-              ></path>
+              <path d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z"></path>
             </svg>
           </div>
         </div>
