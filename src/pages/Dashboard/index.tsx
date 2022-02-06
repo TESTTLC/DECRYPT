@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContracts } from "../../hooks/useContracts";
 import {
   determinePowerForStake,
@@ -21,17 +21,27 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (power < 20) {
-      setPowerColor("red-400");
+      setPowerColor("#f43f5e");
     } else if (power >= 20 && power < 50) {
-      setPowerColor("yellow-400");
+      setPowerColor("#fcd34d");
     } else {
-      setPowerColor("green-400");
+      setPowerColor("#4ade80");
     }
   }, [power]);
 
+  useEffect(() => {
+    getTLXtakeTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TLXStakeContract]);
+
+  useEffect(() => {
+    getTLCStakeTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TLCStakeContract]);
+
   const getTLXtakeTransactions = async () => {
     try {
-      if (TLXStakeContract && TLCStakeContract) {
+      if (TLXStakeContract) {
         let currentAmout = 0;
         let currentPower = 0;
         const stakes = await getUserStakes(TLXStakeContract);
@@ -51,7 +61,7 @@ const Dashboard: React.FC = () => {
 
   const getTLCStakeTransactions = async () => {
     try {
-      if (TLXStakeContract && TLCStakeContract) {
+      if (TLCStakeContract) {
         let currentAmout = 0;
         let currentPower = 0;
         const stakes = await getUserStakes(TLCStakeContract);
@@ -68,12 +78,6 @@ const Dashboard: React.FC = () => {
       }
     } catch (error) {}
   };
-
-  useEffect(() => {
-    getTLXtakeTransactions();
-    getTLCStakeTransactions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TLXStakeContract, TLCStakeContract]);
 
   useEffect(() => {
     let p = TLXPower + TLCPower;
@@ -108,15 +112,14 @@ const Dashboard: React.FC = () => {
           <div className="w-full grid grid-cols-3">
             <div className="text-center text-white text-2xl font-semibold font-poppins">
               You staked{" "}
-              <p className={`text-${powerColor}`}>{totalTLXStaked} TLX</p>
+              <p style={{ color: powerColor }}>{totalTLXStaked} TLX</p>
             </div>
             <div className="flex flex-col justify-center text-center text-white text-2xl font-semibold font-poppins">
-              {/* <BatteryStatus power={power} /> */}
-              Total power <p className={`text-${powerColor}`}>{power}%</p>
+              Total power <p style={{ color: powerColor }}>{power}%</p>
             </div>
             <div className="text-center text-white text-2xl font-semibold font-poppins">
               You staked{" "}
-              <p className={`text-${powerColor}`}>{totalTLCStaked} TLC</p>
+              <p style={{ color: powerColor }}>{totalTLCStaked} TLC</p>
             </div>
           </div>
         </div>

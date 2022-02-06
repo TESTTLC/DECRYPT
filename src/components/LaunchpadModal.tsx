@@ -59,6 +59,8 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   useEffect(() => {
     if (modalIsOpen) {
       document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "visible";
     }
   }, [modalIsOpen]);
 

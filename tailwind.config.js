@@ -1,3 +1,5 @@
+// const colors = require('tailwindcss/colors')
+
 module.exports = {
   mode: 'jit',
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./components/*.{js,ts,jsx,tsx}", "./public/index.html"],
@@ -16,7 +18,10 @@ module.exports = {
           300: "#161B44",
           700: "#080220",
           800: "#06061b"
-        }
+        },
+        "powerRed": "#f43f5e",
+        "powerYellow": "#fcd34d",
+        "powerGreen": "#4ade80"
       },
     },
     fontFamily: {

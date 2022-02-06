@@ -6,6 +6,7 @@ interface Props {
 }
 
 const BatteryStatus: React.FC<Props> = ({ power, powerColor }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [time, setTime] = useState(Date.now());
 
   useEffect(() => {
@@ -14,21 +15,22 @@ const BatteryStatus: React.FC<Props> = ({ power, powerColor }) => {
       clearInterval(interval);
     };
   }, []);
-
   return (
     <div className="flex flex-wrap justify-center">
       <div className="w-48 flex items-center justify-center ">
         <p
-          className={`text-${powerColor} mr-8 text-2xl font-semibold font-poppins`}
+          className="mr-8 text-2xl font-semibold font-poppins"
+          style={{ color: powerColor }}
         >
           {power}%
         </p>
         <div className="shadow w-1/2 rounded border-2 border-gray-400 flex my-1 relative">
           <div className="border-r-8 h-6 rounded-r absolute flex border-gray-400 ml-24 mt-2 z-10"></div>
           <div
-            className={`bg-${powerColor} cursor-default z-40 animate-pulse  text-xs font-bold leading-none flex items-center justify-center m-1 py-4 text-center text-white`}
+            className=" cursor-default z-40 animate-pulse  text-xs font-bold leading-none flex items-center justify-center m-1 py-4 text-center text-white"
             style={{
               width: `${power.toString()}%`,
+              backgroundColor: powerColor,
             }}
           ></div>
           <div className="absolute z-50 left-0 mx-8 mt-2 text-yellow-400 ">
