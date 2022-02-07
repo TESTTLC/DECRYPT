@@ -11,7 +11,6 @@ const providerOptions: IProviderOptions = {
     options: {
       rpc: {
         5177: "https://mainnet-rpc.tlxscan.com/",
-        // chainId: 5177,
       },
     },
   },

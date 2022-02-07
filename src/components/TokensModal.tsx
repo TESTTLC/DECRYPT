@@ -129,7 +129,6 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
         style={customStyles}
         contentLabel="Modal"
         overlayClassName="Overlay"
-        // className="Modal"
         preventScroll={false}
       >
         <div className="z-50 flex flex-1 flex-col items-center h-full w-full relative px-6 pt-2 pb-4">
