@@ -21,8 +21,7 @@ export const LussoTokenContractAddress =
 export const LussoStakeContractAddress =
   "0xe1A6E5f4BcFB9bC39c8f68B2b84BA41ca5681B36"; //new
 
-export const TLCTokenContractAddress =
-  "0xb058f92410181368138279f13948b7ded15b0d4f";
+export const TLCTokenContractAddress = "-";
 export const TLCStakeContractAddress =
   "0xb058f92410181368138279f13948b7ded15b0d4f"; //new
 

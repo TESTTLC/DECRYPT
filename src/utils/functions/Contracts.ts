@@ -174,11 +174,13 @@ export const getTLXBalance = async (tokenContract: any, account: string) => {
   let userBalance = 0;
   try {
     const balance = await tokenContract.actualBalanceOf(account);
+    console.log("balance: ", balance);
 
     userBalance = parseFloat(
       parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
     );
   } catch (error) {
+    console.log("Error: ", error);
     return;
   }
 
