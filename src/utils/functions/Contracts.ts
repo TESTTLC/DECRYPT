@@ -23,10 +23,8 @@ export const approveStakeTokens = async (
     approveResultPromise
       .then(() => {
         return;
-        // console.log("approved");
       })
       .catch((err) => {
-        // console.log("err: ", err);
         errorOnApprove = true;
       });
   } catch (error) {
@@ -50,7 +48,6 @@ export const mobileStake = async (
     });
     stakeResultPromise.then((result) => {});
   } catch (error) {
-    // console.log("Error on stakeTokens: ", error);
     errorOnApprove = true;
   }
   return { errorOnApprove };
@@ -79,21 +76,18 @@ export const webStake = async (
     }
   } catch (error) {
     errorOnApprove = true;
-    // console.log("Error on stake: ", error);
   }
   return { errorOnApprove };
 };
 
 export const unstake = async (
   indexOfStake: number,
-  // account: string,
   stakeContract: Contract
 ) => {
   let unstakingError;
   try {
     await stakeContract.functions.withdrawStake(indexOfStake);
   } catch (error) {
-    // console.log("Error on unstaking: ", error);
     unstakingError = "The stake is still locked";
   }
 
@@ -116,7 +110,6 @@ export const getUserStakes = async (stakeContract: Contract) => {
     userStakes = await stakeContract.getUserStakes();
   } catch (err) {
     return;
-    // console.log("err: ", err);
   }
 
   return userStakes;
@@ -132,7 +125,6 @@ export const getTotalRewards = async (stakeContract: Contract) => {
     ).toFixed(3);
   } catch (err) {
     return;
-    // console.log("err: ", err);
   }
 
   return parseFloat(formatedResult) || 0;
@@ -144,7 +136,6 @@ export const getTotalValueLocked = async (stakeContract: Contract) => {
     stakedAmount = await stakeContract.getStakedAmount();
   } catch (err) {
     return stakedAmount;
-    // console.log("err: ", err);
   }
 
   return parseFloat(ethers.utils.formatEther(stakedAmount.toString()));
@@ -159,7 +150,6 @@ export const getVolume24h = async () => {
     totalVolume = data.data.TLX.quote.USD.volume_24h;
   } catch (err) {
     return;
-    // console.log("Err on get volume");
   }
   return totalVolume;
 };
@@ -190,7 +180,6 @@ export const getTLXBalance = async (tokenContract: any, account: string) => {
     );
   } catch (error) {
     return;
-    // console.log("Error: ", error);
   }
 
   return userBalance;

@@ -12,7 +12,6 @@ import {
   unstake,
   webStake,
 } from "../../../utils/functions/Contracts";
-import { TLXStakeContractAddress } from "../../../utils/globals";
 import {
   ChainsIds,
   StackingDuration,
@@ -28,14 +27,11 @@ import NotFound from "../../NotFound";
 import { coinsTags } from "../../../App";
 import { changeChain } from "../../../utils/functions/MetaMask";
 
-interface Props {
-  // coinTag: "TLX" | "TLC" | "LSO";
-  // match: any;
-}
+interface Props {}
 
 const StakeCoin: React.FC<Props> = () => {
   const { coinTag } = useParams();
-  const { openSidebar, isSidebarOpen, account } = useGlobalContext();
+  const { account } = useGlobalContext();
   const { stakeContract, tokenContract, stakeAddress, provider } = useContracts(
     coinTag ?? "-"
   );

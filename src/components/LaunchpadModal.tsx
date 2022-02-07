@@ -15,13 +15,7 @@ import {
   TLXStakeContractAddress,
 } from "../utils/globals";
 import { launchpadProjects } from "../utils/launchpadProjects";
-import {
-  defaultPowers,
-  LaunchpadProject,
-  Project,
-  StackingDuration,
-  Stake,
-} from "../utils/types";
+import { LaunchpadProject, StackingDuration, Stake } from "../utils/types";
 import GlowingButton from "./GlowingButton";
 import SelectDropdown from "./SelectDropdown";
 

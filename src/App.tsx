@@ -27,7 +27,7 @@ const App = () => {
         <div className="flex flex-col w-full min-h-screen z-10">
           <Header />
           <main
-            className={`flex transition-all duration-500 ${
+            className={` flex transition-all duration-500 ${
               isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
             } xs:justify-center px-5 mb-auto z-20`}
           >

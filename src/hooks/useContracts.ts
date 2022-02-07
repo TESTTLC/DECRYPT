@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TheLuxuryBankStake from "../contracts/TheLuxuryBankStake.json";
 import TheLuxuryBankToken from "../contracts/TheLuxuryBankToken.json";
 import TheLuxuryCoinStake from "../contracts/TheLuxuryCoinStake.json";
@@ -8,7 +8,6 @@ import LuxandiaStake from "../contracts/LuxandiaStake.json";
 import OldTLXToken from "../contracts/OldTLXToken.json";
 
 import { ethers, Contract, utils } from "ethers";
-import { useWeb3React } from "@web3-react/core";
 import { useGlobalContext } from "../utils/context";
 import {
   LussoStakeContractAddress,
@@ -94,6 +93,7 @@ export const useContracts = (coinTag: string) => {
     ) {
       connectToContracts();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider, account, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
 
   return { provider, stakeContract, tokenContract, stakeAddress };
