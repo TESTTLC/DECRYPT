@@ -35,7 +35,7 @@ const DecentralizedExchange: React.FC = () => {
   const { tokenContract } = useContracts("OldTLX");
   const { account, provider } = useGlobalContext();
   const [currentChainId, setCurrentChainId] = useState(
-    window.ethereum.networkVersion
+    window.ethereum?.networkVersion
       ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
       : undefined
   );
@@ -82,9 +82,11 @@ const DecentralizedExchange: React.FC = () => {
       const balance = await getBalance(contract, account);
       setUsdtBalance(balance);
     }
-    setCurrentChainId(
-      ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
-    );
+    if (window.ethereum?.networkVersion) {
+      setCurrentChainId(
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      );
+    }
   };
 
   function handleAmountChange(e: any) {
@@ -97,10 +99,10 @@ const DecentralizedExchange: React.FC = () => {
         setCurrentChainId(chainId);
         window.location.reload();
       });
+      setCurrentChainId(
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      );
     }
-    setCurrentChainId(
-      ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
-    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.ethereum]);
