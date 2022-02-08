@@ -121,7 +121,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
         account!,
         stakeAmount,
         duration,
-        provider
+        coinTag
       );
     }
   };

@@ -7,6 +7,7 @@ import StakeCoin from "./pages/Staking/components/StakeCoin";
 import Launchpad from "./pages/Launchpad";
 import ProjectDetails from "./pages/ProjectDetails";
 import CrossChainBridge from "./pages/CrossChainBridge";
+import DecentralizedExchange from "./pages/DecentralizedExchange";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -38,6 +39,10 @@ const App = () => {
               <Route path="/launchpad" element={<Launchpad />} />
               <Route path="/launchpad/:coinTag" element={<ProjectDetails />} />
               <Route path="/crosschainbridge" element={<CrossChainBridge />} />
+              <Route
+                path="/decentralizedexchange"
+                element={<DecentralizedExchange />}
+              />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
               <Route path="*" element={<NotFound />} />

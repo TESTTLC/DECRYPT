@@ -61,20 +61,27 @@ export const webStake = async (
   account: string,
   amount: number,
   stakingDuration: number,
-  provider?: any
+  coinTag: string
 ) => {
   let errorOnApprove = false;
   try {
     const price = ethers.utils.parseUnits(amount.toString(), "ether");
-
-    const result = await tokenContract.functions.approve(
-      stakeContractAddress,
-      price
-    );
+    let result;
+    if (coinTag !== "TLC") {
+      console.log("here");
+      result = await tokenContract.functions.approve(
+        stakeContractAddress,
+        price
+      );
+    } else {
+      result = await stakeContract.approve(stakeContractAddress, price);
+    }
     if (result) {
       const r = await stakeContract.stakeTokens(price, stakingDuration);
+      console.log("R: ", r);
     }
   } catch (error) {
+    console.log("Error is: ", error);
     errorOnApprove = true;
   }
   return { errorOnApprove };
@@ -108,9 +115,7 @@ export const getUserStakes = async (stakeContract: Contract) => {
   let userStakes = [];
   try {
     userStakes = await stakeContract.getUserStakes();
-  } catch (err) {
-    return;
-  }
+  } catch (err) {}
 
   return userStakes;
 };
@@ -123,9 +128,7 @@ export const getTotalRewards = async (stakeContract: Contract) => {
     formatedResult = parseFloat(
       ethers.utils.formatUnits(totalRewards._hex)
     ).toFixed(3);
-  } catch (err) {
-    return;
-  }
+  } catch (err) {}
 
   return parseFloat(formatedResult) || 0;
 };
@@ -148,9 +151,7 @@ export const getVolume24h = async () => {
       "https://staking-calculatorbackend-cais4.ondigitalocean.app/cryptocurrency/quotes/latest?symbol=TLX&convert=USD";
     const data = await fetch(baseUrl).then((result) => result.json());
     totalVolume = data.data.TLX.quote.USD.volume_24h;
-  } catch (err) {
-    return;
-  }
+  } catch (err) {}
   return totalVolume;
 };
 
@@ -170,18 +171,38 @@ export const renderStakePeriod = (period: any) => {
   }
 };
 
-export const getTLXBalance = async (tokenContract: any, account: string) => {
+export const getActualBalanceOf = async (
+  tokenContract: any,
+  account: string
+) => {
   let userBalance = 0;
   try {
     const balance = await tokenContract.actualBalanceOf(account);
     console.log("balance: ", balance);
 
-    userBalance = parseFloat(
-      parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
-    );
+    // userBalance = parseFloat(
+    //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
+    // );
+    userBalance = parseFloat(ethers.utils.formatUnits(balance, 18));
   } catch (error) {
     console.log("Error: ", error);
-    return;
+  }
+
+  return userBalance;
+};
+
+export const getBalance = async (tokenContract: any, account: string) => {
+  let userBalance = 0;
+  try {
+    const balance = await tokenContract.balanceOf(account);
+    console.log("balance: ", balance);
+
+    // userBalance = parseFloat(
+    //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
+    // );
+    userBalance = parseFloat(ethers.utils.formatUnits(balance, 18));
+  } catch (error) {
+    console.log("Error: ", error);
   }
 
   return userBalance;
