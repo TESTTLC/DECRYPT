@@ -27,6 +27,8 @@ export const localModalTokens: Project[] = [
   },
 ];
 
+const minimumAmount = 10;
+
 const DecentralizedExchange: React.FC = () => {
   const [totalBalance, setTotalBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -106,7 +108,7 @@ const DecentralizedExchange: React.FC = () => {
   // Send USDT
   const send = async () => {
     // @ts-ignore
-    if (provider && account) {
+    if (provider && account && usdtAmountToSwap >= minimumAmount) {
       try {
         const contract = new ethers.Contract(
           USDTContractAddress,
@@ -159,14 +161,11 @@ const DecentralizedExchange: React.FC = () => {
               &nbsp;available on BSC
             </p>
           </div>
-          <p className="font-poppins text-gray-300">
-            Exchange Rate: 1 USDT ≃ 25 TLC
-          </p>
         </div>
         {chainErrorMessage && (
           <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
         )}
-        <div className="relative items-center w-[38rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
+        <div className="relative items-center w-[38rem] xs:w-[22rem] h-[24rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
           <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
             <div className="flex w-1/2 flex-col h-full">
               <p className="text-gray-400 font-medium font-poppins text-sm">
@@ -215,10 +214,21 @@ const DecentralizedExchange: React.FC = () => {
               <p className="font-poppins text-md  text-white ">TLC</p>
             </div>
           </div>
+          <p className="font-poppins text-gray-300 mt-2">
+            Exchange Rate: 1 USDT ≃ 25 TLC
+          </p>
+          <p className="mb-2 font-poppins text-red-400">
+            Please note that there's a minim of {minimumAmount} USDT (BEP20) per
+            swap
+          </p>
           <button
-            onClick={send}
-            className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            disabled={isLoading}
+            onClick={() => {
+              if (usdtAmountToSwap >= minimumAmount) {
+                send();
+              }
+            }}
+            className="mt-2 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            disabled={isLoading || usdtAmountToSwap < minimumAmount}
           >
             {isLoading ? (
               <>
