@@ -114,10 +114,8 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="DECENTRALIZED EXCHANGE"
               subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
-              // onClick={() => navigate("/decentralizedexchange")}
-              onClick={() => {}}
+              onClick={() => navigate("/decentralizedexchange")}
               imageSource={exchangeImage}
-              showTopText
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
