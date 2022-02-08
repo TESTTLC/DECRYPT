@@ -167,7 +167,7 @@ const DecentralizedExchange: React.FC = () => {
         {chainErrorMessage && (
           <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
         )}
-        <div className="relative items-center w-[38rem] xs:w-[22rem] h-[24rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
+        <div className="relative items-center w-[38rem] xs:w-[22rem] h-[25rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
           <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
             <div className="flex w-1/2 flex-col h-full">
               <p className="text-gray-400 font-medium font-poppins text-sm">
@@ -183,10 +183,10 @@ const DecentralizedExchange: React.FC = () => {
             {/* <TokensModal tokens={localModalTokens} type="from" /> */}
             <div className="flex w-1/2 justify-end items-center mt-4">
               <img
-                className="text-white font-poppins w-5 h-5 mr-2 object-cover "
+                className="text-white font-poppins w-4 h-4 mr-2 object-cover "
                 src={tetherImage}
               />
-              <p className="font-poppins text-md  text-white ">USDT</p>
+              <p className="font-poppins text-md text-white">USDT</p>
             </div>
           </div>
           <div className="w-full flex items-center justify-center h-14">
@@ -213,7 +213,7 @@ const DecentralizedExchange: React.FC = () => {
                 className="text-white font-poppins w-6 h-6 mr-2 object-cover "
                 src={tlchainImage}
               />
-              <p className="font-poppins text-md  text-white ">TLC</p>
+              <p className="font-poppins text-md text-white">TLC</p>
             </div>
           </div>
           <p className="font-poppins text-gray-300 mt-2">
