@@ -16,6 +16,8 @@ import { TailSpin } from "react-loader-spinner";
 import { USDTContractAddress } from "src/utils/globals";
 import USDTToken from "src/contracts/USDT.json";
 import { getBalance } from "src/utils/functions/Contracts";
+import tetherImage from "src/assets/images/tether.png";
+import tlchainImage from "src/assets/images/tlc-bridge.png";
 
 export const localModalTokens: Project[] = [
   {
@@ -143,23 +145,28 @@ const DecentralizedExchange: React.FC = () => {
   return (
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col">
-        <div className="w-[44rem] xs:w-[22rem] mt-10 text-sm mb-4">
+        <div className="w-[38rem] xs:w-[22rem] mt-10 text-sm mb-4">
           <p className="font-poppins font-bold text-gray-300 text-3xl">
             Trade Coin In An Instant
           </p>
         </div>
-        <div className="flex">
-          <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
-            {usdtBalance} USDT
-          </p>
-          <p className="text-white font-poppins font-semibold text-lg mb-4">
-            &nbsp;available on BSC
+        <div className="flex justify-between">
+          <div className="flex">
+            <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
+              {usdtBalance} USDT
+            </p>
+            <p className="text-white font-poppins font-semibold text-lg mb-4">
+              &nbsp;available on BSC
+            </p>
+          </div>
+          <p className="font-poppins text-gray-300">
+            Exchange Rate: 1 USDT ≃ 25 TLC
           </p>
         </div>
         {chainErrorMessage && (
           <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
         )}
-        <div className="relative items-center w-[44rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
+        <div className="relative items-center w-[38rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
           <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
             <div className="flex w-1/2 flex-col h-full">
               <p className="text-gray-400 font-medium font-poppins text-sm">
@@ -173,8 +180,13 @@ const DecentralizedExchange: React.FC = () => {
               ></input>
             </div>
             {/* <TokensModal tokens={localModalTokens} type="from" /> */}
-            <p className="font-poppins text-md mt-4 text-white">USDT</p>
-            <p>USDT</p>
+            <div className="flex w-1/2 justify-end items-center mt-4">
+              <img
+                className="text-white font-poppins w-5 h-5 mr-2 object-cover "
+                src={tetherImage}
+              />
+              <p className="font-poppins text-md  text-white ">USDT</p>
+            </div>
           </div>
           <div className="w-full flex items-center justify-center h-14">
             <FaArrowCircleDown
@@ -195,7 +207,13 @@ const DecentralizedExchange: React.FC = () => {
               ></input>
             </div>
             {/* <TokensModal tokens={[]} type="to" /> */}
-            <p className="font-poppins text-md mt-4 text-white">TLC</p>
+            <div className="flex w-1/2 justify-end items-center mt-4">
+              <img
+                className="text-white font-poppins w-6 h-6 mr-2 object-cover "
+                src={tlchainImage}
+              />
+              <p className="font-poppins text-md  text-white ">TLC</p>
+            </div>
           </div>
           <button
             onClick={send}
@@ -214,7 +232,8 @@ const DecentralizedExchange: React.FC = () => {
           </button>
         </div>
       </div>
-      <div className="w-[44rem] xs:w-[22rem] mt-4 text-lg">
+
+      <div className="w-[38rem] xs:w-[22rem] mt-4 text-lg">
         <p className="font-poppins text-gray-300">
           It will take a minute. Please check your wallet to get{" "}
           {usdtAmountToSwap * 25} TLC
