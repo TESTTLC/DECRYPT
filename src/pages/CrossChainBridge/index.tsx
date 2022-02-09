@@ -113,7 +113,8 @@ const CrossChainBridge: React.FC = () => {
               </p>
               <input
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                value={totalBalance}
+                // value={totalBalance}
+                value={0}
                 type="text"
                 disabled
               ></input>
@@ -135,7 +136,8 @@ const CrossChainBridge: React.FC = () => {
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                 type="text"
                 disabled
-                value={totalBalance}
+                // value={totalBalance}
+                value={0}
               ></input>
             </div>
             <TokensModal tokens={[modalTokens[5]]} type="to" />
