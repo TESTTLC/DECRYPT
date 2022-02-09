@@ -27,7 +27,7 @@ export const localModalTokens: Project[] = [
   },
 ];
 
-const minimumAmount = 20;
+const minimumAmount = 5;
 
 const DecentralizedExchange: React.FC = () => {
   const [totalBalance, setTotalBalance] = useState(0);
