@@ -19,7 +19,7 @@ import {
   OldTLXTokenContractAddress,
 } from "../utils/globals";
 
-export const useContracts = (coinTag: string) => {
+export const useContracts = (coinTag: string, currentChainId?: string) => {
   const { provider, account } = useGlobalContext();
 
   const [tokenContract, setTokenContract] = useState<any | undefined>();
@@ -55,7 +55,7 @@ export const useContracts = (coinTag: string) => {
       setTokenAbi(OldTLXToken.abi);
       setStakeAbi(TheLuxuryBankStake.abi);
     }
-  }, [coinTag]);
+  }, [coinTag, currentChainId]);
 
   const connectToContracts = async () => {
     try {

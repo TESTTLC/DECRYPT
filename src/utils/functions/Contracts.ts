@@ -87,6 +87,32 @@ export const webStake = async (
   return { errorOnApprove };
 };
 
+/** Stake for web */
+export const tlcStake = async (
+  stakeContract: Contract,
+  amount: number,
+  stakingDuration: number
+) => {
+  let errorOnApprove = false;
+  try {
+    console.log("Amount is: ", amount);
+    const price = ethers.utils.parseUnits(amount.toString(), "ether");
+    const overrides = { value: price };
+    const r = await stakeContract.stakeTokens(stakingDuration, overrides);
+    console.log("R: ", r);
+    // let result;
+    // const tx = await stakeContract.transfer(stakeContractAddress, price)
+    // result = await stakeContract.approve(stakeContractAddress, price);
+
+    // if (result) {
+    // }
+  } catch (error) {
+    console.log("Error is: ", error);
+    errorOnApprove = true;
+  }
+  return { errorOnApprove };
+};
+
 export const unstake = async (
   indexOfStake: number,
   stakeContract: Contract
@@ -141,7 +167,9 @@ export const getTotalValueLocked = async (stakeContract: Contract) => {
     return stakedAmount;
   }
 
-  return parseFloat(ethers.utils.formatEther(stakedAmount.toString()));
+  return parseFloat(
+    parseFloat(ethers.utils.formatEther(stakedAmount.toString())).toFixed(3)
+  );
 };
 
 export const getVolume24h = async () => {
@@ -183,7 +211,9 @@ export const getActualBalanceOf = async (
     // userBalance = parseFloat(
     //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
     // );
-    userBalance = parseFloat(ethers.utils.formatUnits(balance, 18));
+    userBalance = parseFloat(
+      parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(3)
+    );
   } catch (error) {
     console.log("Error: ", error);
   }

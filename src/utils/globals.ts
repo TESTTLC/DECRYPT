@@ -23,7 +23,7 @@ export const LussoStakeContractAddress =
 export const TLCTokenContractAddress =
   "0xb058f92410181368138279f13948b7ded15b0d4f";
 export const TLCStakeContractAddress =
-  "0x8535A4cd05dDFABcDFe1A430c30aD04F16278cdF";
+  "0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832";
 
 export const USDTContractAddress = "0x55d398326f99059fF775485246999027B3197955";
 
@@ -39,6 +39,8 @@ export const BSCBridgeContractAddress =
 /** Testnet */
 export const OldTLXTokenContractAddress =
   "0xea255909e46a54d54255219468991c69ca0e659d";
+// export const TLCStakeContractAddress =
+//   "0xb4628fFdb9D2E4a13827dfb473B8d6c0419DC2Ad";
 
 export const modalTokens: Project[] = [
   {
