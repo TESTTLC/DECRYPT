@@ -99,7 +99,7 @@ const CrossChainBridge: React.FC = () => {
         </div>
         <div className="flex">
           <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
-            {totalBalance} TLX
+            0 TLX
           </p>
           <p className="text-white font-poppins font-semibold text-lg mb-4">
             &nbsp;available on BSC
