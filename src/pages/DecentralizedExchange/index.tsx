@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { FaArrowCircleDown } from "react-icons/fa";
 import GlowingWrapper from "../../components/GlowingWrapper";
 // import TokensModal from "./components/TokensModal";
-import TokensModal from "../../components/TokensModal";
+// import TokensModal from "../../components/TokensModal";
 
 import { ChainsIds, Project } from "../../utils/types";
 import { changeChain } from "../../utils/functions/MetaMask";
@@ -216,7 +216,7 @@ const DecentralizedExchange: React.FC = () => {
                 type="number"
               ></input>
             </div>
-            <TokensModal tokens={localModalTokens} type="from" />
+            {/* <TokensModal tokens={localModalTokens} type="from" /> */}
             <div className="flex w-1/2 justify-end items-center mt-4">
               <img
                 className="text-white font-poppins w-4 h-4 mr-2 object-cover "
