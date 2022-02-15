@@ -1,13 +1,13 @@
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import { FaArrowCircleDown } from "react-icons/fa";
-import TokensModal from "../../components/TokensModal";
+import TokensModal from "./components/TokensModal";
 import { ChainsIds } from "../../utils/types";
 import { changeChain } from "../../utils/functions/MetaMask";
 import { useContracts } from "../../hooks/useContracts";
 import { useGlobalContext } from "../../utils/context";
 import { modalTokens } from "../../utils/globals";
-import { getTransaction } from "../../api/index";
+import { getTransaction, initialize } from "../../api/index";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { TailSpin } from "react-loader-spinner";
 
@@ -50,7 +50,6 @@ const CrossChainBridge: React.FC = () => {
     } catch (error) {}
   };
 
-  /**
   const initializeSwap = async () => {
     if (account && totalBalance > 0) {
       setIsLoading(true);
@@ -65,7 +64,6 @@ const CrossChainBridge: React.FC = () => {
       setIsLoading(false);
     }
   };
-   */
 
   const getBalance = async () => {
     try {
@@ -136,13 +134,14 @@ const CrossChainBridge: React.FC = () => {
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                 type="text"
                 disabled
-                // value={totalBalance}
-                value={0}
+                value={totalBalance}
+                // value={0}
               ></input>
             </div>
             <TokensModal tokens={[modalTokens[5]]} type="to" />
           </div>
           <button
+            onClick={initializeSwap}
             className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
             disabled={isLoading}
           >
