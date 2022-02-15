@@ -97,7 +97,7 @@ const CrossChainBridge: React.FC = () => {
         </div>
         <div className="flex">
           <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
-            0 TLX
+            {totalBalance} TLX
           </p>
           <p className="text-white font-poppins font-semibold text-lg mb-4">
             &nbsp;available on BSC
@@ -111,8 +111,8 @@ const CrossChainBridge: React.FC = () => {
               </p>
               <input
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                // value={totalBalance}
-                value={0}
+                value={totalBalance}
+                // value={0}
                 type="text"
                 disabled
               ></input>
