@@ -3,14 +3,16 @@ import { ethers } from "ethers";
 import React, { useCallback, useEffect, useState } from "react";
 import { FaArrowCircleDown } from "react-icons/fa";
 import GlowingWrapper from "../../components/GlowingWrapper";
+// import TokensModal from "./components/TokensModal";
 import TokensModal from "../../components/TokensModal";
+
 import { ChainsIds, Project } from "../../utils/types";
 import { changeChain } from "../../utils/functions/MetaMask";
 import { useContracts } from "../../hooks/useContracts";
 
 import { useGlobalContext } from "../../utils/context";
 import OldTLXToken from "../../contracts/OldTLXToken.json";
-import { getTransaction, initialize } from "../../api/index";
+import { claimTLC, getTransaction, initialize } from "../../api/index";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { TailSpin } from "react-loader-spinner";
 import { USDTContractAddress } from "src/utils/globals";
@@ -23,6 +25,11 @@ export const localModalTokens: Project[] = [
   {
     name: "Tether",
     tag: "USDT",
+    image: "",
+  },
+  {
+    name: "The Luxury Token",
+    tag: "TLX",
     image: "",
   },
 ];
@@ -145,6 +152,35 @@ const DecentralizedExchange: React.FC = () => {
       }
     }
   };
+  //  // Send USDT
+  //  const sendTLC = async () => {
+  //   // @ts-ignore
+  //   if (provider && account && usdtAmountToSwap >= minimumAmount) {
+  //     try {
+  //       const contract = new ethers.Contract(
+  //         USDTContractAddress,
+  //         USDTToken.abi,
+  //         provider.getSigner()
+  //       );
+  //       const usdts = ethers.utils.parseUnits(usdtAmountToSwap.toString(), 18);
+  //       const tx = await contract.transfer(
+  //         process.env.REACT_APP_TLC_OWNER_ADDRESS,
+  //         usdts
+  //       );
+
+  //       body: JSON.stringify({
+  //         address: account,
+  //         txhash: tx.hash,
+  //         amount: usdtAmountToSwap.toString(),
+  //       }),
+
+  //       const result = await claimTLC(account, amoun)
+
+  //     } catch (error) {
+  //       console.log("Error is: ", error);
+  //     }
+  //   }
+  // };
 
   return (
     <div className="flex flex-col flex-1 items-center">
@@ -180,7 +216,7 @@ const DecentralizedExchange: React.FC = () => {
                 type="number"
               ></input>
             </div>
-            {/* <TokensModal tokens={localModalTokens} type="from" /> */}
+            <TokensModal tokens={localModalTokens} type="from" />
             <div className="flex w-1/2 justify-end items-center mt-4">
               <img
                 className="text-white font-poppins w-4 h-4 mr-2 object-cover "
@@ -204,7 +240,7 @@ const DecentralizedExchange: React.FC = () => {
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                 type="number"
                 disabled
-                value={usdtAmountToSwap * 25}
+                value={usdtAmountToSwap * 17}
               ></input>
             </div>
             {/* <TokensModal tokens={[]} type="to" /> */}
@@ -217,7 +253,7 @@ const DecentralizedExchange: React.FC = () => {
             </div>
           </div>
           <p className="font-poppins text-gray-300 mt-2">
-            Exchange Rate: 1 USDT ≃ 25 TLC
+            Exchange Rate: 1 USDT ≃ 17 TLC
           </p>
           <p className="mb-2 font-poppins text-red-400">
             Please note that there's a minim of {minimumAmount} USDT (BEP20) per
@@ -248,7 +284,7 @@ const DecentralizedExchange: React.FC = () => {
       <div className="w-[38rem] xs:w-[22rem] mt-4 text-lg">
         <p className="font-poppins text-gray-300">
           It will take a minute. Please check your wallet to get{" "}
-          {usdtAmountToSwap * 25} TLC
+          {usdtAmountToSwap * 17} TLC
         </p>
       </div>
     </div>
