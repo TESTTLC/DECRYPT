@@ -115,45 +115,7 @@ const DecentralizedExchange: React.FC = () => {
   }, [window.ethereum]);
 
   // Send USDT
-  const send = async () => {
-    // @ts-ignore
-    if (provider && account && usdtAmountToSwap >= minimumAmount) {
-      try {
-        const contract = new ethers.Contract(
-          USDTContractAddress,
-          USDTToken.abi,
-          provider.getSigner()
-        );
-        const usdts = ethers.utils.parseUnits(usdtAmountToSwap.toString(), 18);
-        const tx = await contract.transfer(
-          process.env.REACT_APP_TLC_OWNER_ADDRESS,
-          usdts
-        );
-
-        const res = await fetch(
-          `${process.env.REACT_APP_API_BACKEND_EXCHANGE}api/claim`,
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              address: account,
-              txhash: tx.hash,
-              amount: usdtAmountToSwap.toString(),
-            }),
-          }
-        );
-
-        const data = await res.json();
-      } catch (error) {
-        console.log("Error is: ", error);
-      }
-    }
-  };
-  //  // Send USDT
-  //  const sendTLC = async () => {
+  // const send = async () => {
   //   // @ts-ignore
   //   if (provider && account && usdtAmountToSwap >= minimumAmount) {
   //     try {
@@ -168,14 +130,23 @@ const DecentralizedExchange: React.FC = () => {
   //         usdts
   //       );
 
-  //       body: JSON.stringify({
-  //         address: account,
-  //         txhash: tx.hash,
-  //         amount: usdtAmountToSwap.toString(),
-  //       }),
+  //       const res = await fetch(
+  //         `${process.env.REACT_APP_API_BACKEND_EXCHANGE}api/claim`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Accept: "application/json",
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             address: account,
+  //             txhash: tx.hash,
+  //             amount: usdtAmountToSwap.toString(),
+  //           }),
+  //         }
+  //       );
 
-  //       const result = await claimTLC(account, amoun)
-
+  //       const data = await res.json();
   //     } catch (error) {
   //       console.log("Error is: ", error);
   //     }
