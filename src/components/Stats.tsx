@@ -57,7 +57,10 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
 
   const getUserTLXBalance = async () => {
     if (account && coinTag !== "TLC") {
-      const result = await contracts.getTLXBalance(tokenContract, account);
+      const result =
+        coinTag === "LSO"
+          ? await contracts.getBalance(tokenContract, account)
+          : await contracts.getActualBalanceOf(tokenContract, account);
       setBalance(result);
     }
   };
@@ -98,7 +101,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
         className="flex flex-col justify-center items-center"
       >
         <div
-          className="absolute bg-cover h-24 w-32 opacity-30 "
+          className="absolute bg-cover h-24 w-32 opacity-0 "
           // style={{ backgroundImage: `url(${small_logo})` }}
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>
@@ -117,7 +120,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
 
       <div className="flex flex-col justify-center items-center">
         <div
-          className="absolute bg-cover h-32 w-48 opacity-30 "
+          className="absolute bg-cover h-32 w-48 opacity-0 "
           // style={{ backgroundImage: `url(${small_logo})` }}
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>
@@ -130,7 +133,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
       </div>
       <div className="flex flex-col justify-center items-center">
         <div
-          className="absolute bg-cover h-24 w-32 opacity-30 "
+          className="absolute bg-cover h-24 w-32 opacity-0 "
           // style={{ backgroundImage: `url(${small_logo})` }}
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>

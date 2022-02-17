@@ -16,9 +16,6 @@ export const useWalletConnector = () => {
   const { isMobileDevice } = useDeviceInfo();
   const { isMobileSize } = useWindowSize();
 
-  // https://metamask.app.link/dapp/decryption.com
-  // https://metamask.app.link/dapp/localhost:3000
-
   useEffect(() => {
     checkIfWalletConnected();
   }, []);

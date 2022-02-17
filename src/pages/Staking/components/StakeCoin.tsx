@@ -12,7 +12,6 @@ import {
   unstake,
   webStake,
 } from "../../../utils/functions/Contracts";
-import { TLXStakeContractAddress } from "../../../utils/globals";
 import {
   ChainsIds,
   StackingDuration,
@@ -28,14 +27,11 @@ import NotFound from "../../NotFound";
 import { coinsTags } from "../../../App";
 import { changeChain } from "../../../utils/functions/MetaMask";
 
-interface Props {
-  // coinTag: "TLX" | "TLC" | "LSO";
-  // match: any;
-}
+interface Props {}
 
 const StakeCoin: React.FC<Props> = () => {
   const { coinTag } = useParams();
-  const { openSidebar, isSidebarOpen, account } = useGlobalContext();
+  const { account } = useGlobalContext();
   const { stakeContract, tokenContract, stakeAddress, provider } = useContracts(
     coinTag ?? "-"
   );
@@ -47,6 +43,14 @@ const StakeCoin: React.FC<Props> = () => {
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
   const [balance, setBalance] = useState<number>();
   const [totalRewards, setTotalRewards] = useState(0);
+  const [currentChainId, setCurrentChainId] = useState(
+    window.ethereum?.networkVersion
+      ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      : undefined
+  );
+  const [chainErrorMessage, setChainErrorMessage] = useState<
+    string | undefined
+  >(undefined);
 
   const getUserTLCBalance = async () => {
     if (account) {
@@ -56,11 +60,27 @@ const StakeCoin: React.FC<Props> = () => {
   };
   const chainChange = async () => {
     await changeChain(ChainsIds.TLC);
+    if (window.ethereum.networkVersion) {
+      setCurrentChainId(
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      );
+    }
   };
 
   useEffect(() => {
+    console.log("chainId: ", currentChainId);
     chainChange();
   }, []);
+
+  useEffect(() => {
+    if (currentChainId === ChainsIds.TLC) {
+      setChainErrorMessage(undefined);
+      console.log("here1");
+    } else {
+      console.log("here");
+      setChainErrorMessage("Please connect to TLChain");
+    }
+  }, [currentChainId]);
 
   useEffect(() => {
     if (coinTag === "TLC") {
@@ -68,9 +88,25 @@ const StakeCoin: React.FC<Props> = () => {
     }
   }, [account, coinTag]);
 
+  useEffect(() => {
+    if (window.ethereum) {
+      window.ethereum.on("chainChanged", (chainId: any) => {
+        setCurrentChainId(chainId);
+      });
+      setCurrentChainId(
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.ethereum]);
+
   const getUserTLXBalance = async () => {
     if (account) {
-      const result = await contracts.getTLXBalance(tokenContract, account);
+      const result =
+        coinTag === "LSO"
+          ? await contracts.getBalance(tokenContract, account)
+          : await contracts.getActualBalanceOf(tokenContract, account);
+
       setBalance(result);
     }
   };
@@ -113,7 +149,6 @@ const StakeCoin: React.FC<Props> = () => {
         {/* <UserBlock account={account} login={login} logout={logout} onPress={onDismiss} /> */}
       </>
     ) : (
-      // <div className="relative xs:mx-4 mx-10">
       <div className="relative ">
         <div
           className="absolute -inset-0 bg-gradient-to-r
@@ -146,66 +181,82 @@ const StakeCoin: React.FC<Props> = () => {
                   those future rewards.
                 </p>
               </div>
-              <div className="py-5 pr-2 mt-6 flex flex-col">
-                <div className="flex justify-between border-b-2 border-opacity-30 pb-1 ">
-                  <p className="text-xl text-white font-bold">
-                    Stake your {coinTag}
-                  </p>
+              {chainErrorMessage ? (
+                <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
+                  {chainErrorMessage}
+                </p>
+              ) : (
+                <div className="py-5 pr-2 mt-6 flex flex-col">
+                  <div className="flex justify-between border-b-2 border-opacity-30 pb-1">
+                    <p className="text-xl text-white font-bold">
+                      Stake your {coinTag}
+                    </p>
 
-                  <p className="text-xl text-green-500 font-bold">
-                    {" "}
-                    {balance} {coinTag} available
-                  </p>
+                    <p className="text-xl text-green-500 font-bold">
+                      {" "}
+                      {balance} {coinTag} available
+                    </p>
+                  </div>
+
+                  <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
+                    {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
+                    <input
+                      className="text-white h-8 rounded-md px-3 my-2 mr-2 w-64 bg-customBlue-300"
+                      type={"number"}
+                      ref={stakeInputRef}
+                      onChange={(e) => {
+                        setStakeAmount(parseFloat(e.target.value));
+                      }}
+                      placeholder="Value..."
+                    />
+                    <div className="my-2 mr-2 w-64">
+                      <SelectDropdown
+                        text={"Staking duration (months)"}
+                        elements={[1, 3, 6, 12, 36]}
+                        onSelect={(e) => {
+                          // const value = parseInt(e.target.value, 10);
+                          if (parseInt(e.target.value, 10) === 1) {
+                            setDuration(StackingDuration.ONE_MONTH);
+                          } else if (parseInt(e.target.value, 10) === 3) {
+                            setDuration(StackingDuration.THREE_MONTHS);
+                          } else if (parseInt(e.target.value, 10) === 6) {
+                            setDuration(StackingDuration.SIX_MONTHS);
+                          } else if (parseInt(e.target.value, 10) === 12) {
+                            setDuration(StackingDuration.ONE_YEAR);
+                          } else if (parseInt(e.target.value, 10) === 36) {
+                            setDuration(StackingDuration.THREE_YEARS);
+                          }
+                        }}
+                      />
+                    </div>
+
+                    <div className="my-2 mr-2 flex ">
+                      <GlowingButton
+                        text={`Stake ${stakeAmount || 0}`}
+                        onClick={() => {
+                          if (coinTag && coinTag !== "TLC") {
+                            webStake(
+                              tokenContract,
+                              stakeContract!,
+                              stakeAddress,
+                              account!,
+                              stakeAmount,
+                              duration,
+                              coinTag
+                            );
+                          } else if (coinTag && coinTag === "TLC") {
+                            contracts.tlcStake(
+                              stakeContract!,
+                              stakeAmount,
+                              duration
+                            );
+                          }
+                        }}
+                      />
+                    </div>
+                  </span>
                 </div>
-                <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
-                  {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
-                  <input
-                    className="text-white h-8 rounded-md px-3 my-2 mr-2 w-64 bg-customBlue-300"
-                    type={"number"}
-                    ref={stakeInputRef}
-                    onChange={(e) => {
-                      setStakeAmount(parseFloat(e.target.value));
-                    }}
-                    placeholder="Value..."
-                  />
-                  <div className="my-2 mr-2 w-64">
-                    <SelectDropdown
-                      text={"Staking duration (months)"}
-                      elements={[1, 3, 6, 12, 36]}
-                      onSelect={(e) => {
-                        // const value = parseInt(e.target.value, 10);
-                        if (parseInt(e.target.value, 10) === 1) {
-                          setDuration(StackingDuration.ONE_MONTH);
-                        } else if (parseInt(e.target.value, 10) === 3) {
-                          setDuration(StackingDuration.THREE_MONTHS);
-                        } else if (parseInt(e.target.value, 10) === 6) {
-                          setDuration(StackingDuration.SIX_MONTHS);
-                        } else if (parseInt(e.target.value, 10) === 12) {
-                          setDuration(StackingDuration.ONE_YEAR);
-                        } else if (parseInt(e.target.value, 10) === 36) {
-                          setDuration(StackingDuration.THREE_YEARS);
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="my-2 mr-2 flex ">
-                    <GlowingButton
-                      text={`Stake ${stakeAmount || 0}`}
-                      onClick={() => {
-                        webStake(
-                          tokenContract,
-                          stakeContract!,
-                          stakeAddress,
-                          account!,
-                          stakeAmount,
-                          duration,
-                          provider
-                        );
-                      }}
-                    />
-                  </div>
-                </span>
-              </div>
+              )}
             </div>
             {/* <div
               className={`"text-center h-full p-5 flex flex-col justify-center overflow-y-scroll" ${
@@ -265,11 +316,19 @@ const StakeCoin: React.FC<Props> = () => {
         coinTag={coinTag as "TLC" | "TLX" | "LSO"}
         totalRewards={totalRewards}
       />
+
       {!account && (
         <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
           Connect MetaMask wallet to access the staking options
         </p>
       )}
+      <div className="flex items-center justify-center w-full">
+        {chainErrorMessage && (
+          <p className="mb-2 font-poppins text-red-400 text-lg">
+            {chainErrorMessage}
+          </p>
+        )}
+      </div>
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
           {/* here starts 1 */}
@@ -286,10 +345,6 @@ const StakeCoin: React.FC<Props> = () => {
                 bg-gradient-to-b
                 from-green-500 to-indigo-600
                 transform duration-500 hover:scale-110"
-              // hover:bg-gradient-to-r
-              // hover:from-customBlue-300  hover:to-indigo-900 shadow-2xl
-              // from-customBlue-700 via-customBlue-700 to-customBlue-200
-              // hover:from-customBlue-300 hover:via-customBlue-700 hover:to-customBlue-700
             >
               <p className="text-white font-oswald text-lg">Stake {coinTag}</p>
             </button>

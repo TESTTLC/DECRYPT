@@ -25,7 +25,6 @@ const SideBar: React.FC = () => {
       <div
         className="flex h-screen overflow-y-auto flex-col w-60
        px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative bg-transparent sm:bg-customBlue-800 xs:bg-customBlue-800"
-        //  bg-customBlue-800
       >
         <button
           onClick={closeSidebar}

@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { useWindowSize } from "../hooks/useWindowSize";
+import { useWindowSize } from "../../../hooks/useWindowSize";
 import { GoArrowDown } from "react-icons/all";
-import ftmBridgeImage from "../assets/images/ftm-bridge.png";
-import ethBridgeImage from "../assets/images/eth-bridge.png";
-import bscBridgeImage from "../assets/images/bsc-bridge.png";
-import solBridgeImage from "../assets/images/sol-bridge.png";
-import tlcBridgeImage from "../assets/images/tlc-bridge.png";
-import maticBridgeImage from "../assets/images/matic-bridge.png";
-import tlxOldToken from "../assets/images/tlx-token-old.png";
-import tlxNewToken from "../assets/images/tlx-token-new.png";
-import atariToken from "../assets/images/atari-token.png";
-import { Project } from "../utils/types";
+import ftmBridgeImage from "src/assets/images/ftm-bridge.png";
+import ethBridgeImage from "src/assets/images/eth-bridge.png";
+import bscBridgeImage from "src/assets/images/bsc-bridge.png";
+import solBridgeImage from "src/assets/images/sol-bridge.png";
+import tlcBridgeImage from "src/assets/images/tlc-bridge.png";
+import maticBridgeImage from "src/assets/images/matic-bridge.png";
+import tlxOldToken from "src/assets/images/tlx-token-old.png";
+import tlxNewToken from "src/assets/images/tlx-token-new.png";
+import atariToken from "src/assets/images/atari-token.png";
+import { Project } from "../../../utils/types";
 
 Modal.setAppElement("#root");
 

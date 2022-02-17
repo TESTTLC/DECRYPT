@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import LaunchpadModal from "../../../components/LaunchpadModal";
-
-import { launchpadProjects } from "../../../utils/launchpadProjects";
-import { LaunchpadProject, Project } from "../../../utils/types";
+import React from "react";
 
 interface Props {
   coinTag: string;

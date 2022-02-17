@@ -1,25 +1,47 @@
 import { ethers } from "ethers";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useContracts } from "../../hooks/useContracts";
 import {
   determinePowerForStake,
   getUserStakes,
 } from "../../utils/functions/Contracts";
 import { Stake } from "../../utils/types";
+import BatteryStatus from "src/components/BatteryStatus";
 
 const Dashboard: React.FC = () => {
   const { stakeContract: TLXStakeContract } = useContracts("TLX");
   const { stakeContract: TLCStakeContract } = useContracts("TLC");
 
+  const [powerColor, setPowerColor] = useState("red-400");
   const [TLXPower, setTLXPower] = useState(0);
   const [TLCPower, setTLCPower] = useState(0);
   const [totalTLXStaked, setTotalTLXStaked] = useState(0);
   const [totalTLCStaked, setTotalTLCStaked] = useState(0);
   const [power, setPower] = useState(0);
 
+  useEffect(() => {
+    if (power < 20) {
+      setPowerColor("#f43f5e");
+    } else if (power >= 20 && power < 50) {
+      setPowerColor("#fcd34d");
+    } else {
+      setPowerColor("#4ade80");
+    }
+  }, [power]);
+
+  useEffect(() => {
+    getTLXtakeTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TLXStakeContract]);
+
+  useEffect(() => {
+    getTLCStakeTransactions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TLCStakeContract]);
+
   const getTLXtakeTransactions = async () => {
     try {
-      if (TLXStakeContract && TLCStakeContract) {
+      if (TLXStakeContract) {
         let currentAmout = 0;
         let currentPower = 0;
         const stakes = await getUserStakes(TLXStakeContract);
@@ -39,7 +61,7 @@ const Dashboard: React.FC = () => {
 
   const getTLCStakeTransactions = async () => {
     try {
-      if (TLXStakeContract && TLCStakeContract) {
+      if (TLCStakeContract) {
         let currentAmout = 0;
         let currentPower = 0;
         const stakes = await getUserStakes(TLCStakeContract);
@@ -56,12 +78,6 @@ const Dashboard: React.FC = () => {
       }
     } catch (error) {}
   };
-
-  useEffect(() => {
-    getTLXtakeTransactions();
-    getTLCStakeTransactions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TLXStakeContract, TLCStakeContract]);
 
   useEffect(() => {
     let p = TLXPower + TLCPower;
@@ -89,17 +105,22 @@ const Dashboard: React.FC = () => {
             Tokens
           </p>
         </div>
-        <div className="w-full flex justify-center items-center col-start-3 col-span-5 md:col-span-1 sm:col-span-1 xs:col-span-1 h-96 bg-black opacity-70 px-2">
+        <div className="w-full relative flex justify-center items-center col-start-3 col-span-5 md:col-span-1 sm:col-span-1 xs:col-span-1 h-96 bg-black opacity-70 px-2">
+          <div className="absolute right-4 top-4">
+            <BatteryStatus power={power} powerColor={powerColor} />
+          </div>
           <div className="w-full grid grid-cols-3">
-            <p className="text-center text-white text-2xl font-semibold font-poppins">
-              You staked <p className="text-green-500">{totalTLXStaked} TLX</p>
-            </p>
-            <p className="text-center text-white text-2xl font-semibold font-poppins">
-              Total power <p className="text-green-500">{power}%</p>
-            </p>
-            <p className="text-center text-white text-2xl font-semibold font-poppins">
-              You staked <p className="text-green-500">{totalTLCStaked} TLC</p>
-            </p>
+            <div className="text-center text-white text-2xl font-semibold font-poppins">
+              You staked{" "}
+              <p style={{ color: powerColor }}>{totalTLXStaked} TLX</p>
+            </div>
+            <div className="flex flex-col justify-center text-center text-white text-2xl font-semibold font-poppins">
+              Total power <p style={{ color: powerColor }}>{power}%</p>
+            </div>
+            <div className="text-center text-white text-2xl font-semibold font-poppins">
+              You staked{" "}
+              <p style={{ color: powerColor }}>{totalTLCStaked} TLC</p>
+            </div>
           </div>
         </div>
       </div>

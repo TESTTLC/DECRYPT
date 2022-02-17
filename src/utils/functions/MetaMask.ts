@@ -18,6 +18,6 @@ export const changeChain = async (chainId: string) => {
       console.error("Please install MetaMask");
     }
   } catch (error) {
-    console.log("Please install MetaMask");
+    console.log("Please connect to the specified chain");
   }
 };

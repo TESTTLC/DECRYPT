@@ -11,7 +11,6 @@ const providerOptions: IProviderOptions = {
     options: {
       rpc: {
         5177: "https://mainnet-rpc.tlxscan.com/",
-        // chainId: 5177,
       },
     },
   },
@@ -25,7 +24,6 @@ export const useWalletConnector = () => {
     cacheProvider: true, // optional
     providerOptions, // required
     theme: "dark",
-    // network: "https://mainnet-rpc.tlxscan.com/",
   });
 
   const subscribeProvider = async (providerConnection: any) => {
@@ -102,7 +100,6 @@ export const useWalletConnector = () => {
         const connection = await web3Modal.connect();
         const p = new ethers.providers.Web3Provider(connection);
         setProvider(p);
-        // subscribeProvider(p.connection);
         const signer = p.getSigner();
         const userAccountAddress = await signer.getAddress();
         setAccount(userAccountAddress);

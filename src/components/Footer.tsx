@@ -15,15 +15,8 @@ const Footer: React.FC = () => {
     text-center 
     bg-transparent
     text-white bottom-0 mt-20`}
-      // bg-customBlue-700
-      // bg-red-200
     >
       <div className="flex xs:flex-col justify-around items-center ">
-        {/* <img
-          src={small_logo}
-          alt="avatar"
-          className="h-28 w-28 mx-2 object-center object-cover rounded-full"
-        /> */}
         <div className="w-[17rem] flex">
           {/* <div className="flex justify-start mb-2">
             <a
@@ -257,30 +250,12 @@ const Footer: React.FC = () => {
                   Privacy Policy
                 </Link>
               </li>
-              {/* <li>
-                <a
-                  href="https://status.tlxscan.com"
-                  target="_blank"
-                  className="text-white underline"
-                >
-                  The Luxury Bank
-                </a>
-              </li> */}
-
-              {/* <li>
-                <a href="#!" className="text-white">
-                  Link 4
-                </a>
-              </li> */}
             </ul>
           </div>
         </div>
       </div>
 
-      <div
-        className="text-center font-poppins text-xs"
-        // style="background-color: rgba(0, 0, 0, 0.2);"
-      >
+      <div className="text-center font-poppins text-xs">
         © 2022 Copyright: Decryption – Powered by TLChain
       </div>
     </footer>
