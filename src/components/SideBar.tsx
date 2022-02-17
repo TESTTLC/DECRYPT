@@ -1,11 +1,13 @@
 import React from "react";
-import { useGlobalContext } from "../utils/context";
 import { HiTicket, HiX } from "react-icons/hi";
 import { MdSettings } from "react-icons/md";
 
 import { links } from "../utils/routes";
 import { Link, useLocation } from "react-router-dom";
 import small_logo from "../assets/images/logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "src/utils/storeTypes";
+import { closeSidebar } from "src/redux/modules/globals/actions";
 
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -13,7 +15,10 @@ import small_logo from "../assets/images/logo.png";
 ></script>;
 
 const SideBar: React.FC = () => {
-  const { isSidebarOpen, closeSidebar } = useGlobalContext();
+  const dispatch = useDispatch();
+  const isSidebarOpen = useSelector<StoreState, boolean>(
+    (state) => state.globals.isSidebarOpen
+  );
   const location = useLocation();
 
   return (
@@ -27,7 +32,7 @@ const SideBar: React.FC = () => {
        px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative bg-transparent sm:bg-customBlue-800 xs:bg-customBlue-800"
       >
         <button
-          onClick={closeSidebar}
+          onClick={() => dispatch(closeSidebar())}
           className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center active:bg-gray-300 focus:outline-none ml-6 hover:bg-gray-200 hover:text-gray-800"
         >
           <HiX className="w-5 h-5" />
@@ -56,9 +61,9 @@ const SideBar: React.FC = () => {
                     : "hover:bg-gray-600 hover:text-gray-200"
                 }  mt-5 transition-colors duration-200 transform
                  rounded-md font-oswald text-white`}
-                  // text-gray-600`
                 >
                   {imageSource ? (
+                    // eslint-disable-next-line jsx-a11y/alt-text
                     <img src={imageSource} className="w-5 h-5" />
                   ) : (
                     icon
@@ -84,6 +89,7 @@ const SideBar: React.FC = () => {
                    rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
+                    // eslint-disable-next-line jsx-a11y/alt-text
                     <img src={imageSource} className="w-5 h-5" />
                   ) : (
                     icon

@@ -1,11 +1,12 @@
 import React from "react";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../utils/context";
-import small_logo from "../assets/images/logo.png";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { StoreState } from "src/utils/storeTypes";
 
 const Footer: React.FC = () => {
-  const { isSidebarOpen } = useGlobalContext();
+  const isSidebarOpen = useSelector<StoreState, boolean>(
+    (state) => state.globals.isSidebarOpen
+  );
   return (
     <footer
       className={`
@@ -217,6 +218,7 @@ const Footer: React.FC = () => {
                   href="https://tlchain.network/"
                   target="_blank"
                   className="text-white underline"
+                  rel="noreferrer"
                 >
                   TLChain
                 </a>
@@ -226,6 +228,7 @@ const Footer: React.FC = () => {
                   href="https://tlxscan.com"
                   target="_blank"
                   className="text-white underline"
+                  rel="noreferrer"
                 >
                   TLChain Scan
                 </a>
@@ -236,6 +239,7 @@ const Footer: React.FC = () => {
                   href="https://status.tlxscan.com"
                   target="_blank"
                   className="text-white underline"
+                  rel="noreferrer"
                 >
                   Status Network
                 </a>

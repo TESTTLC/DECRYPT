@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-
-import BridgeTLC from "../contracts/BridgeTLC.json";
-
-import { ethers, Contract, utils } from "ethers";
-import { useGlobalContext } from "../utils/context";
-import { BSCBridgeContractAddress } from "../utils/globals";
+import { ethers } from "ethers";
 import Web3 from "web3";
+import { useSelector } from "react-redux";
+import { Web3Provider } from "@ethersproject/providers";
+import { StoreState } from "src/utils/storeTypes";
+import BridgeTLC from "../contracts/BridgeTLC.json";
+import { BSCBridgeContractAddress } from "../utils/globals";
 
 export const useBridgeContracts = (coinTag: string) => {
-  const { provider, account } = useGlobalContext();
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider
+  );
+
   const [bridgeContract, setBridgeContract] = useState<
     ethers.Contract | undefined
   >();
@@ -29,6 +35,7 @@ export const useBridgeContracts = (coinTag: string) => {
 
   useEffect(() => {
     connectToContracts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coinTag]);
 
   const connectToContracts = async () => {
@@ -49,11 +56,11 @@ export const useBridgeContracts = (coinTag: string) => {
   };
 
   useEffect(() => {
-    if (provider && account && !alreadyConnectedToContracts) {
+    if (provider && walletAddress && !alreadyConnectedToContracts) {
       //   connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, account]);
+  }, [provider, walletAddress]);
 
   return { provider, bridgeContract, admin };
 };

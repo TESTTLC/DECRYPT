@@ -1,12 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useWalletConnector } from "../hooks/useWalletConnector";
-import Header from "./Header";
-import Modal from "react-modal";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../utils/context";
+import React, { useCallback, useEffect, useState } from "react";
 import * as contracts from "../utils/functions/Contracts";
 import { useContracts } from "../hooks/useContracts";
 import SNXStatBackground from "../assets/svg/snx-stat-background.svg";
+import { useSelector } from "react-redux";
+import { StoreState } from "src/utils/storeTypes";
 
 interface Props {
   coinTag: "TLX" | "TLC" | "LSO";
@@ -15,15 +12,15 @@ interface Props {
 
 const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const { stakeContract, tokenContract } = useContracts(coinTag);
-  const { account } = useGlobalContext();
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
   const [totalStaked, setTotalStaked] = useState(0);
-  // const [totalRewards, setTotalRewards] = useState<number>();
-  const [userRewards, setUserRewards] = useState<number>();
   const [balance, setBalance] = useState<number>();
 
   const getUserTLCBalance = async () => {
-    if (account) {
-      const TLCBalance = await contracts.getTLCBalance(account);
+    if (walletAddress) {
+      const TLCBalance = await contracts.getTLCBalance(walletAddress);
       setBalance(TLCBalance);
     }
   };
@@ -32,12 +29,8 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
     if (coinTag === "TLC") {
       getUserTLCBalance();
     }
-  }, [account, coinTag]);
-
-  // const getTotalVolume24h = async () => {
-  //   const result = await contracts.getVolume24h();
-  //   setTotalStaked(parseFloat(result.toFixed(2)));
-  // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [walletAddress, coinTag]);
 
   const getTotalStaked = async () => {
     try {
@@ -48,24 +41,17 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
     } catch (error) {}
   };
 
-  // const getTotalRewards = async () => {
-  //   if (stakeContract) {
-  //     const rewards = await contracts.getTotalRewards(stakeContract);
-  //     setTotalRewards(rewards);
-  //   }
-  // };
-
-  const getUserTLXBalance = async () => {
-    if (account && coinTag !== "TLC") {
+  const getUserTLXBalance = useCallback(async () => {
+    if (walletAddress && coinTag !== "TLC") {
       const result =
         coinTag === "LSO"
-          ? await contracts.getBalance(tokenContract, account)
-          : await contracts.getActualBalanceOf(tokenContract, account);
+          ? await contracts.getBalance(tokenContract, walletAddress)
+          : await contracts.getActualBalanceOf(tokenContract, walletAddress);
       setBalance(result);
     }
-  };
+  }, [coinTag, tokenContract, walletAddress]);
 
-  const calculateStakeRewards = async () => {
+  const calculateStakeRewards = useCallback(async () => {
     if (stakeContract) {
       const stakes = await contracts.getUserStakes(stakeContract);
       // const rewards = await contracts.calculateStakeRewards(
@@ -74,74 +60,66 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
       // );
       // setUserRewards(rewards);
     }
-  };
-
-  useEffect(() => {
-    getTotalStaked();
   }, [stakeContract]);
 
   useEffect(() => {
-    // getTotalRewards();
+    getTotalStaked();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stakeContract]);
+
+  useEffect(() => {
     calculateStakeRewards();
     if (stakeContract) {
       contracts.getTotalValueLocked(stakeContract);
     }
-  }, [stakeContract]);
+  }, [calculateStakeRewards, stakeContract]);
 
   useEffect(() => {
     if (tokenContract) {
       getUserTLXBalance();
     }
-  }, [tokenContract]);
+  }, [getUserTLXBalance, tokenContract]);
 
   return (
     <div className="grid grid-cols-3 w-full my-20 justify-center items-center ">
-      <div
-        // src={small_logo}
-        className="flex flex-col justify-center items-center"
-      >
+      <div className="flex flex-col justify-center items-center">
         <div
           className="absolute bg-cover h-24 w-32 opacity-0 "
-          // style={{ backgroundImage: `url(${small_logo})` }}
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>
 
-        {/* <div className="w-10 h-10 bg-[url('../assets/images/small_logo.png')]"></div> */}
         <p className="text-white text-center text-sm font-oswald uppercase">
           Total Value locked
         </p>
         <div>
           <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-            {account ? totalStaked : "-"} {coinTag}
+            {walletAddress ? totalStaked : "-"} {coinTag}
           </p>
-          {/* <p className="text-white">TLX</p> */}
         </div>
       </div>
 
       <div className="flex flex-col justify-center items-center">
         <div
           className="absolute bg-cover h-32 w-48 opacity-0 "
-          // style={{ backgroundImage: `url(${small_logo})` }}
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>
         <p className="text-white text-center text-sm font-oswald uppercase">
           Total Rewards
         </p>
         <p className="text-green-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {account ? totalRewards : "-"} {coinTag}
+          {walletAddress ? totalRewards : "-"} {coinTag}
         </p>
       </div>
       <div className="flex flex-col justify-center items-center">
         <div
           className="absolute bg-cover h-24 w-32 opacity-0 "
-          // style={{ backgroundImage: `url(${small_logo})` }}
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>
         <p className="text-white text-center text-sm font-oswald uppercase">
           Your Balance
         </p>
         <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {account ? balance : "-"} {coinTag}
+          {walletAddress ? balance : "-"} {coinTag}
         </p>
       </div>
     </div>

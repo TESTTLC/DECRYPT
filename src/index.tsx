@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "./index.css";
-import { AppProvider } from "./utils/context";
 import { BrowserRouter } from "react-router-dom";
+import store from "./redux/store";
+import { Provider } from "react-redux";
 
 // replace console.* for disable log on production
 if (process.env.NODE_ENV === "production") {
@@ -15,11 +16,11 @@ if (process.env.NODE_ENV === "production") {
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppProvider>
+    <Provider store={store}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </AppProvider>
+    </Provider>
   </React.StrictMode>,
 
   document.getElementById("root")

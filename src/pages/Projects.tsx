@@ -1,6 +1,4 @@
 import React from "react";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../utils/context";
 
 const Projects: React.FC = () => {
   return (

@@ -3,7 +3,11 @@ import Web3Modal, { IProviderOptions } from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { useWindowSize } from "./useWindowSize";
-import { useGlobalContext } from "../utils/context";
+import { useDispatch, useSelector } from "react-redux";
+import { Web3Provider } from "@ethersproject/providers";
+import { setWalletAddress } from "src/redux/modules/account/actions";
+import { setProvider } from "src/redux/modules/globals/actions";
+import { StoreState } from "src/utils/storeTypes";
 
 const providerOptions: IProviderOptions = {
   walletconnect: {
@@ -17,7 +21,11 @@ const providerOptions: IProviderOptions = {
 };
 
 export const useWalletConnector = () => {
-  const { provider, setProvider, setAccount, account } = useGlobalContext();
+  const dispatch = useDispatch();
+
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
 
   const { isMobileSize } = useWindowSize();
   const web3Modal = new Web3Modal({
@@ -46,7 +54,7 @@ export const useWalletConnector = () => {
         "disconnect",
         (error: { code: number; message: string }) => {
           web3Modal.clearCachedProvider();
-          setAccount(undefined);
+          dispatch(setWalletAddress(undefined));
         }
       );
     }
@@ -57,16 +65,16 @@ export const useWalletConnector = () => {
 
     subscribeProvider(connection);
     const p = new ethers.providers.Web3Provider(connection);
-    setProvider(p);
+    dispatch(setProvider(p));
     const signer = p.getSigner();
     const accountAddress = await signer.getAddress();
-    setAccount(accountAddress);
+    dispatch(setWalletAddress(accountAddress));
     localStorage.setItem("account", accountAddress);
   };
 
   const disconnectWallet = async () => {
     await web3Modal.clearCachedProvider();
-    setAccount(undefined);
+    dispatch(setWalletAddress(undefined));
     console.log("disconnected");
     localStorage.removeItem("account");
   };
@@ -80,8 +88,8 @@ export const useWalletConnector = () => {
         if (ethAccounts && web3Modal.cachedProvider) {
           const connection = await web3Modal.connect();
           const p = new ethers.providers.Web3Provider(connection);
-          setProvider(p);
-          setAccount(ethAccounts[0]);
+          dispatch(setProvider(p));
+          dispatch(setWalletAddress(ethAccounts[0]));
           localStorage.setItem("account", ethAccounts[0]);
           return true;
         }
@@ -99,17 +107,17 @@ export const useWalletConnector = () => {
       if (web3Modal.cachedProvider && localStorageAccount) {
         const connection = await web3Modal.connect();
         const p = new ethers.providers.Web3Provider(connection);
-        setProvider(p);
+        dispatch(setProvider(p));
         const signer = p.getSigner();
         const userAccountAddress = await signer.getAddress();
-        setAccount(userAccountAddress);
+        dispatch(setWalletAddress(userAccountAddress));
       }
     } else {
       const ethEnabled = await enableWindowEthereum();
       if (ethEnabled) {
         const connection = await web3Modal.connect();
         const p = new ethers.providers.Web3Provider(connection);
-        setProvider(p);
+        dispatch(setProvider(p));
       }
     }
   };
@@ -121,7 +129,7 @@ export const useWalletConnector = () => {
   return {
     isMobileSize,
     web3Modal,
-    account,
+    walletAddress,
     connectWallet,
     disconnectWallet,
     cachedProvider: web3Modal.cachedProvider,

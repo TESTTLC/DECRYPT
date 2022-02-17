@@ -7,8 +7,7 @@ import LuxandiaToken from "../contracts/LuxandiaToken.json";
 import LuxandiaStake from "../contracts/LuxandiaStake.json";
 import OldTLXToken from "../contracts/OldTLXToken.json";
 
-import { ethers, Contract, utils } from "ethers";
-import { useGlobalContext } from "../utils/context";
+import { ethers, Contract } from "ethers";
 import {
   LussoStakeContractAddress,
   LussoTokenContractAddress,
@@ -18,16 +17,22 @@ import {
   TLCTokenContractAddress,
   OldTLXTokenContractAddress,
 } from "../utils/globals";
+import { useSelector } from "react-redux";
+import { Web3Provider } from "@ethersproject/providers";
+import { StoreState } from "src/utils/storeTypes";
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
-  const { provider, account } = useGlobalContext();
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider
+  );
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
 
   const [tokenContract, setTokenContract] = useState<any | undefined>();
   const [stakeContract, setStakeContract] = useState<Contract | undefined>();
   const [tokenAddress, setTokenAddress] = useState("");
   const [stakeAddress, setStakeAddress] = useState("");
-  // const [tokenAddress, setTokenAddress] = useState(TLXTokenContractAddress);
-  // const [stakeAddress, setStakeAddress] = useState(TLXStakeContractAddress);
   const [alreadyConnectedToContracts, setAlreadyConnectedToContracts] =
     useState(false);
   const [tokenAbi, setTokenAbi] = useState<any>();
@@ -84,7 +89,7 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
   useEffect(() => {
     if (
       provider &&
-      account &&
+      walletAddress &&
       tokenAbi &&
       stakeAbi &&
       tokenAddress &&
@@ -94,7 +99,7 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, account, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
+  }, [provider, walletAddress, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
 
   return { provider, stakeContract, tokenContract, stakeAddress };
 };

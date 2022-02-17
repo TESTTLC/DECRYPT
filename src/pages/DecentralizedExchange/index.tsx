@@ -2,17 +2,8 @@ import dotenv from "dotenv";
 import { ethers } from "ethers";
 import React, { useCallback, useEffect, useState } from "react";
 import { FaArrowCircleDown } from "react-icons/fa";
-import GlowingWrapper from "../../components/GlowingWrapper";
-// import TokensModal from "./components/TokensModal";
-// import TokensModal from "../../components/TokensModal";
-
 import { ChainsIds, Project } from "../../utils/types";
 import { changeChain } from "../../utils/functions/MetaMask";
-import { useContracts } from "../../hooks/useContracts";
-
-import { useGlobalContext } from "../../utils/context";
-import OldTLXToken from "../../contracts/OldTLXToken.json";
-import { claimTLC, getTransaction, initialize } from "../../api/index";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { TailSpin } from "react-loader-spinner";
 import { USDTContractAddress } from "src/utils/globals";
@@ -20,6 +11,9 @@ import USDTToken from "src/contracts/USDT.json";
 import { getBalance } from "src/utils/functions/Contracts";
 import tetherImage from "src/assets/images/tether.png";
 import tlchainImage from "src/assets/images/tlc-bridge.png";
+import { StoreState } from "src/utils/storeTypes";
+import { Web3Provider } from "@ethersproject/providers";
+import { useSelector } from "react-redux";
 
 export const localModalTokens: Project[] = [
   {
@@ -34,13 +28,17 @@ export const localModalTokens: Project[] = [
   },
 ];
 
-const minimumAmount = 500;
+const minimumAmount = 1;
 
 const DecentralizedExchange: React.FC = () => {
-  const [totalBalance, setTotalBalance] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
-  const { tokenContract } = useContracts("OldTLX");
-  const { account, provider } = useGlobalContext();
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider
+  );
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
   const [currentChainId, setCurrentChainId] = useState(
     window.ethereum?.networkVersion
       ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
@@ -52,9 +50,36 @@ const DecentralizedExchange: React.FC = () => {
   >(undefined);
   const [usdtAmountToSwap, setUsdtAmountToSwap] = useState(0);
 
+  const chainChange = async () => {
+    await changeChain(ChainsIds.BSC);
+  };
+
+  const getUsdtBalance = useCallback(async () => {
+    if (walletAddress && provider && currentChainId) {
+      const contract = new ethers.Contract(
+        USDTContractAddress,
+        USDTToken.abi,
+        provider
+      );
+
+      const balance = await getBalance(contract, walletAddress);
+      setUsdtBalance(balance);
+    }
+    if (window.ethereum?.networkVersion) {
+      setCurrentChainId(
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      );
+    }
+  }, [currentChainId, provider, walletAddress]);
+
+  const handleAmountChange = (e: any) => {
+    setUsdtAmountToSwap(e.target.value);
+  };
+
   useEffect(() => {
     chainChange();
     getUsdtBalance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -64,7 +89,7 @@ const DecentralizedExchange: React.FC = () => {
     } else {
       setChainErrorMessage("Please connect to Binance Smart Chain");
     }
-  }, [currentChainId]);
+  }, [currentChainId, getUsdtBalance]);
 
   useEffect(() => {
     if (currentChainId === ChainsIds.BSC) {
@@ -73,32 +98,7 @@ const DecentralizedExchange: React.FC = () => {
       chainChange();
       getUsdtBalance();
     }
-  }, [account, provider]);
-
-  const chainChange = async () => {
-    await changeChain(ChainsIds.BSC);
-  };
-
-  const getUsdtBalance = async () => {
-    if (account && provider && currentChainId) {
-      const contract = new ethers.Contract(
-        USDTContractAddress,
-        USDTToken.abi,
-        provider
-      );
-      const balance = await getBalance(contract, account);
-      setUsdtBalance(balance);
-    }
-    if (window.ethereum?.networkVersion) {
-      setCurrentChainId(
-        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
-      );
-    }
-  };
-
-  function handleAmountChange(e: any) {
-    setUsdtAmountToSwap(e.target.value);
-  }
+  }, [walletAddress, provider, currentChainId, getUsdtBalance]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -139,7 +139,7 @@ const DecentralizedExchange: React.FC = () => {
   //             "Content-Type": "application/json",
   //           },
   //           body: JSON.stringify({
-  //             address: account,
+  //             address: walletAddress,
   //             txhash: tx.hash,
   //             amount: usdtAmountToSwap.toString(),
   //           }),
@@ -230,10 +230,7 @@ const DecentralizedExchange: React.FC = () => {
             Please note that there's a minim of {minimumAmount} USDT (BEP20) per
             swap
           </p>
-          <button
-            className="mt-2 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            disabled={true}
-          >
+          <button className="mt-2 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
             {isLoading ? (
               <>
                 {" "}

@@ -1,10 +1,11 @@
 import { ethers } from "ethers";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setTotalPower } from "src/redux/modules/account/actions";
+import { StoreState } from "src/utils/storeTypes";
 import { useContracts } from "../hooks/useContracts";
 import { useWindowSize } from "../hooks/useWindowSize";
-import { useGlobalContext } from "../utils/context";
 import {
   determinePowerForStake,
   getUserStakes,
@@ -14,7 +15,6 @@ import {
   TLCStakeContractAddress,
   TLXStakeContractAddress,
 } from "../utils/globals";
-import { launchpadProjects } from "../utils/launchpadProjects";
 import { LaunchpadProject, StackingDuration, Stake } from "../utils/types";
 import GlowingButton from "./GlowingButton";
 import SelectDropdown from "./SelectDropdown";
@@ -29,26 +29,26 @@ interface Props {
 
 const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   const { isMobileSize } = useWindowSize();
+  const dispatch = useDispatch();
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
+  const totalPower = useSelector<StoreState, number>(
+    (state) => state.account.totalPower
+  );
 
-  const { account, setTotalPower } = useGlobalContext();
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
   const [stakingCoin, setStakingCoin] = useState("TLX");
-  const {
-    stakeContract: TLXStakeContract,
-    tokenContract: TLXTokenContract,
-    provider,
-  } = useContracts("TLX");
+  const { stakeContract: TLXStakeContract, tokenContract: TLXTokenContract } =
+    useContracts("TLX");
   const { stakeContract: TLCStakeContract, tokenContract: TLCTokenContract } =
     useContracts("TLC");
-  const navigate = useNavigate();
 
   const [power, setPower] = useState(0);
   const [TLXPower, setTLXPower] = useState(0);
   const [TLCPower, setTLCPower] = useState(0);
-
-  const [totalStakedAmount, setTotalStakedAmount] = useState(0);
 
   useEffect(() => {
     if (modalIsOpen) {
@@ -118,7 +118,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
         tokenContract,
         stakeContract,
         stakeContractAddress,
-        account!,
+        walletAddress!,
         stakeAmount,
         duration,
         coinTag
@@ -132,7 +132,9 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
       p = 100;
     }
     setPower(parseFloat(p.toFixed(4)));
-    setTotalPower(parseFloat(p.toFixed(4)));
+    if (parseFloat(p.toFixed(4)) !== totalPower) {
+      dispatch(setTotalPower(parseFloat(p.toFixed(4))));
+    }
   }, [TLXPower, TLCPower]);
 
   useEffect(() => {
@@ -212,12 +214,12 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                 <span className="flex">
                   Current power:{" "}
                   <p className="text-green-300">
-                    &nbsp; {account ? power + "%" : "-"}
+                    &nbsp; {walletAddress ? power + "%" : "-"}
                   </p>
                 </span>
               </span>
             </div>
-            {account ? (
+            {walletAddress ? (
               <div>
                 <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
                   <input

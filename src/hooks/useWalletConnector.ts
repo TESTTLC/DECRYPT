@@ -1,9 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDeviceInfo } from "./useDeviceInfo";
 import { useWindowSize } from "./useWindowSize";
-
 import { ethers } from "ethers";
-import { useGlobalContext } from "../utils/context";
+import { setWalletAddress } from "src/redux/modules/account/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "src/utils/storeTypes";
+import { Web3Provider } from "@ethersproject/providers";
+import { setProvider } from "src/redux/modules/globals/actions";
 
 declare global {
   interface Window {
@@ -12,7 +15,13 @@ declare global {
 }
 
 export const useWalletConnector = () => {
-  const { provider, setProvider, setAccount, account } = useGlobalContext();
+  const dispatch = useDispatch();
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider
+  );
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
   const { isMobileDevice } = useDeviceInfo();
   const { isMobileSize } = useWindowSize();
 
@@ -21,25 +30,22 @@ export const useWalletConnector = () => {
   }, []);
 
   useEffect(() => {
-    if (account) {
-      // onAddressChanged(account)
+    if (walletAddress) {
+      // onAddressChanged(walletAddress)
     }
-  }, [account]);
+  }, [walletAddress]);
 
   const checkIfWalletConnected = async () => {
-    if (window.ethereum && localStorage.getItem("account")) {
+    if (window.ethereum && localStorage.getItem("walletAddress")) {
       const accounts = await window.ethereum.request({
         method: "eth_accounts",
       });
 
       if (accounts.length) {
-        setAccount(accounts[0]);
+        dispatch(setWalletAddress(accounts[0]));
         const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-        setProvider(web3Provider);
+        dispatch(setProvider(web3Provider));
       }
-      // if (isMobileDevice) {
-      //   await connectWallet();
-      // }
     }
   };
 
@@ -53,24 +59,24 @@ export const useWalletConnector = () => {
       method: "eth_requestAccounts",
     });
 
-    setAccount(accounts[0]);
+    dispatch(setWalletAddress(accounts[0]));
     const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-    setProvider(web3Provider);
-    localStorage.setItem("account", accounts[0]);
+    dispatch(setProvider(web3Provider));
+    localStorage.setItem("walletAddress", accounts[0]);
   };
 
   const disconnectWallet = async () => {
-    if (localStorage.getItem("account")) {
-      localStorage.removeItem("account");
+    if (localStorage.getItem("walletAddress")) {
+      localStorage.removeItem("walletAddress");
     }
-    setAccount(undefined);
-    setProvider(undefined);
+    dispatch(setWalletAddress(undefined));
+    dispatch(setProvider(undefined));
   };
 
   return {
     isMobileDevice,
     isMobileSize,
-    account,
+    walletAddress,
     connectWallet,
     disconnectWallet,
     provider,

@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../../utils/context";
-import BigButton from "../../components/BigButton";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utils/routes";
 // import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";

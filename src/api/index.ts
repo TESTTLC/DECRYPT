@@ -55,3 +55,20 @@ export const updateTransaction = async (
     return;
   }
 };
+
+export const claimTLC = async (
+  walletAddress: string,
+  amount: number,
+  txHash: string
+) => {
+  try {
+    const result = await api.post("/claims/", {
+      walletAddress,
+      amount,
+      txHash,
+    });
+    console.log("Result: ", result);
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};

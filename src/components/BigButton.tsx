@@ -29,16 +29,8 @@ const BigButton: React.FC<Props> = ({
 
         <button
           onClick={onClick}
-          // className="flex flex-col rounded-lg relative xs:w-80 w-72 h-72
           className="flex flex-col rounded-lg relative w-full h-full bg-gradient-to-br
            overflow-hidden bg-gray-700 bg-opacity-70"
-          //  transform duration-500 hover:scale-110
-          // from-green-400 to-blue-600
-          // overflow-hidden"
-          // hover:bg-gradient-to-r
-          // hover:from-customBlue-300  hover:to-indigo-900 shadow-2xl
-          // from-customBlue-700 via-customBlue-700 to-customBlue-200
-          // hover:from-customBlue-300 hover:via-customBlue-700 hover:to-customBlue-700
         >
           {imageSource && (
             <div

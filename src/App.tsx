@@ -12,14 +12,17 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
-import { useGlobalContext } from "./utils/context";
 import Header from "./components/Header";
+import { useSelector } from "react-redux";
+import { StoreState } from "./utils/storeTypes";
 
 export const coinsTags = ["TLX", "TLC", "LSO"];
 
 const App = () => {
-  const { isSidebarOpen } = useGlobalContext();
-
+  const isSidebarOpen = useSelector<StoreState, boolean>(
+    (state) => state.globals.isSidebarOpen
+  );
+  console.log("isSidebarOpen: ", isSidebarOpen);
   return (
     <>
       <div className="bg-image"></div>

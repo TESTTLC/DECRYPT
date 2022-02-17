@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../../../utils/context";
 import GlowingButton from "../../../components/GlowingButton";
 import SelectDropdown from "../../../components/SelectDropdown";
 
@@ -26,13 +25,18 @@ import { useParams } from "react-router-dom";
 import NotFound from "../../NotFound";
 import { coinsTags } from "../../../App";
 import { changeChain } from "../../../utils/functions/MetaMask";
+import { StoreState } from "src/utils/storeTypes";
+import { useSelector } from "react-redux";
 
 interface Props {}
 
 const StakeCoin: React.FC<Props> = () => {
   const { coinTag } = useParams();
-  const { account } = useGlobalContext();
-  const { stakeContract, tokenContract, stakeAddress, provider } = useContracts(
+
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress
+  );
+  const { stakeContract, tokenContract, stakeAddress } = useContracts(
     coinTag ?? "-"
   );
 
@@ -53,8 +57,8 @@ const StakeCoin: React.FC<Props> = () => {
   >(undefined);
 
   const getUserTLCBalance = async () => {
-    if (account) {
-      const TLCBalance = await contracts.getTLCBalance(account);
+    if (walletAddress) {
+      const TLCBalance = await contracts.getTLCBalance(walletAddress);
       setBalance(TLCBalance);
     }
   };
@@ -86,7 +90,7 @@ const StakeCoin: React.FC<Props> = () => {
     if (coinTag === "TLC") {
       getUserTLCBalance();
     }
-  }, [account, coinTag]);
+  }, [walletAddress, coinTag]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -101,11 +105,11 @@ const StakeCoin: React.FC<Props> = () => {
   }, [window.ethereum]);
 
   const getUserTLXBalance = async () => {
-    if (account) {
+    if (walletAddress) {
       const result =
         coinTag === "LSO"
-          ? await contracts.getBalance(tokenContract, account)
-          : await contracts.getActualBalanceOf(tokenContract, account);
+          ? await contracts.getBalance(tokenContract, walletAddress)
+          : await contracts.getActualBalanceOf(tokenContract, walletAddress);
 
       setBalance(result);
     }
@@ -143,10 +147,10 @@ const StakeCoin: React.FC<Props> = () => {
   }, [stakeContract]);
 
   const renderTable = () => {
-    return !account ? (
+    return !walletAddress ? (
       <>
         {/* <p>Connect to your wallet to have access</p> */}
-        {/* <UserBlock account={account} login={login} logout={logout} onPress={onDismiss} /> */}
+        {/* <UserBlock walletAddress={walletAddress} login={login} logout={logout} onPress={onDismiss} /> */}
       </>
     ) : (
       <div className="relative ">
@@ -239,7 +243,7 @@ const StakeCoin: React.FC<Props> = () => {
                               tokenContract,
                               stakeContract!,
                               stakeAddress,
-                              account!,
+                              walletAddress!,
                               stakeAmount,
                               duration,
                               coinTag
@@ -317,7 +321,7 @@ const StakeCoin: React.FC<Props> = () => {
         totalRewards={totalRewards}
       />
 
-      {!account && (
+      {!walletAddress && (
         <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
           Connect MetaMask wallet to access the staking options
         </p>
