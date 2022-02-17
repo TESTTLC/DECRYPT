@@ -260,13 +260,8 @@ const DecentralizedExchange: React.FC = () => {
             swap
           </p>
           <button
-            onClick={() => {
-              if (usdtAmountToSwap >= minimumAmount) {
-                send();
-              }
-            }}
             className="mt-2 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            disabled={isLoading || usdtAmountToSwap < minimumAmount}
+            disabled={true}
           >
             {isLoading ? (
               <>
