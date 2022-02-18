@@ -1,26 +1,28 @@
-import SideBar from "./components/SideBar";
-import OpenSideBarButton from "./components/OpenSideBarButton";
-import Footer from "./components/Footer";
-import Home from "./pages/Home";
-import Staking from "./pages/Staking";
-import StakeCoin from "./pages/Staking/components/StakeCoin";
-import Launchpad from "./pages/Launchpad";
-import ProjectDetails from "./pages/ProjectDetails";
-import CrossChainBridge from "./pages/CrossChainBridge";
-import DecentralizedExchange from "./pages/DecentralizedExchange";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
-import NotFound from "./pages/NotFound";
-import Dashboard from "./pages/Dashboard";
-import { Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
-import { useSelector } from "react-redux";
-import { StoreState } from "./utils/storeTypes";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-export const coinsTags = ["TLX", "TLC", "LSO"];
+import SideBar from './components/SideBar';
+import OpenSideBarButton from './components/OpenSideBarButton';
+import Footer from './components/Footer';
+import Home from './pages/Home';
+import Staking from './pages/Staking';
+import StakeCoin from './pages/Staking/components/StakeCoin';
+import Launchpad from './pages/Launchpad';
+import ProjectDetails from './pages/ProjectDetails';
+import CrossChainBridge from './pages/CrossChainBridge';
+import DecentralizedExchange from './pages/DecentralizedExchange';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import NotFound from './pages/NotFound';
+import Dashboard from './pages/Dashboard';
+import Header from './components/Header';
+import { StoreState } from './utils/storeTypes';
+
+export const coinsTags = ['TLX', 'TLC', 'LSO'];
 
 const App = () => {
   const isSidebarOpen = useSelector<StoreState, boolean>(
-    (state) => state.globals.isSidebarOpen
+    (state) => state.globals.isSidebarOpen,
   );
   return (
     <>
@@ -31,7 +33,7 @@ const App = () => {
           <Header />
           <main
             className={` flex transition-all duration-500 ${
-              isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
+              isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''
             } xs:justify-center px-5 mb-auto z-20`}
           >
             <Routes>

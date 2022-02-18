@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import axios from "axios";
+import dotenv from 'dotenv';
+import axios from 'axios';
 
 dotenv.config();
 // axios.defaults.baseURL = "";
@@ -19,7 +19,7 @@ export const getTransaction = async (walletAddress: string) => {
 
 export const initialize = async (walletAddress: string) => {
   try {
-    const result = await api.post("/transactions/initialize", {
+    const result = await api.post('/transactions/initialize', {
       walletAddress,
     });
 
@@ -31,7 +31,7 @@ export const initialize = async (walletAddress: string) => {
 
 export const mintNewTokens = async (walletAddress: string) => {
   try {
-    const result = await api.post("/transactions/mint", {
+    const result = await api.post('/transactions/mint', {
       walletAddress,
     });
     return result.data.status;
@@ -43,10 +43,10 @@ export const mintNewTokens = async (walletAddress: string) => {
 
 export const updateTransaction = async (
   walletAddress: string,
-  burnStatus: "idle" | "started" | "success" | "failed"
+  burnStatus: 'idle' | 'started' | 'success' | 'failed',
 ) => {
   try {
-    const result = await api.post("/transactions/update", {
+    const result = await api.post('/transactions/update', {
       walletAddress,
       burnStatus,
     });
@@ -59,16 +59,16 @@ export const updateTransaction = async (
 export const claimTLC = async (
   walletAddress: string,
   amount: number,
-  txHash: string
+  txHash: string,
 ) => {
   try {
-    const result = await api.post("/claims/", {
+    const result = await api.post('/claims/', {
       walletAddress,
       amount,
       txHash,
     });
-    console.log("Result: ", result);
+    console.log('Result: ', result);
   } catch (error) {
-    console.log("Error: ", error);
+    console.log('Error: ', error);
   }
 };

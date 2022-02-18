@@ -1,29 +1,30 @@
-import { ethers } from "ethers";
-import React, { useCallback, useEffect, useState } from "react";
-import { FaArrowCircleDown } from "react-icons/fa";
-import { ChainsIds, Project } from "../../utils/types";
-import { changeChain } from "../../utils/functions/MetaMask";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { TailSpin } from "react-loader-spinner";
-import { USDTContractAddress } from "src/utils/globals";
-import USDTToken from "src/contracts/USDT.json";
-import { getBalance } from "src/utils/functions/Contracts";
-import tetherImage from "src/assets/images/tether.png";
-import tlchainImage from "src/assets/images/tlc-bridge.png";
-import { StoreState } from "src/utils/storeTypes";
-import { Web3Provider } from "@ethersproject/providers";
-import { useSelector } from "react-redux";
+import { ethers } from 'ethers';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FaArrowCircleDown } from 'react-icons/fa';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { TailSpin } from 'react-loader-spinner';
+import { USDTContractAddress } from 'src/utils/globals';
+import USDTToken from 'src/contracts/USDT.json';
+import { getBalance } from 'src/utils/functions/Contracts';
+import tetherImage from 'src/assets/images/tether.png';
+import tlchainImage from 'src/assets/images/tlc-bridge.png';
+import { StoreState } from 'src/utils/storeTypes';
+import { Web3Provider } from '@ethersproject/providers';
+import { useSelector } from 'react-redux';
+
+import { changeChain } from '../../utils/functions/MetaMask';
+import { ChainsIds, Project } from '../../utils/types';
 
 export const localModalTokens: Project[] = [
   {
-    name: "Tether",
-    tag: "USDT",
-    image: "",
+    name: 'Tether',
+    tag: 'USDT',
+    image: '',
   },
   {
-    name: "The Luxury Token",
-    tag: "TLX",
-    image: "",
+    name: 'The Luxury Token',
+    tag: 'TLX',
+    image: '',
   },
 ];
 
@@ -33,15 +34,15 @@ const DecentralizedExchange: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const provider = useSelector<StoreState, Web3Provider | undefined>(
-    (state) => state.globals.provider
+    (state) => state.globals.provider,
   );
   const walletAddress = useSelector<StoreState, string | undefined>(
-    (state) => state.account.walletAddress
+    (state) => state.account.walletAddress,
   );
   const [currentChainId, setCurrentChainId] = useState(
     window.ethereum?.networkVersion
       ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
-      : undefined
+      : undefined,
   );
   const [usdtBalance, setUsdtBalance] = useState(0);
   const [chainErrorMessage, setChainErrorMessage] = useState<
@@ -58,7 +59,7 @@ const DecentralizedExchange: React.FC = () => {
       const contract = new ethers.Contract(
         USDTContractAddress,
         USDTToken.abi,
-        provider
+        provider,
       );
 
       const balance = await getBalance(contract, walletAddress);
@@ -66,11 +67,12 @@ const DecentralizedExchange: React.FC = () => {
     }
     if (window.ethereum?.networkVersion) {
       setCurrentChainId(
-        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
       );
     }
   }, [currentChainId, provider, walletAddress]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
     setUsdtAmountToSwap(e.target.value);
   };
@@ -86,7 +88,7 @@ const DecentralizedExchange: React.FC = () => {
     if (currentChainId === ChainsIds.BSC) {
       setChainErrorMessage(undefined);
     } else {
-      setChainErrorMessage("Please connect to Binance Smart Chain");
+      setChainErrorMessage('Please connect to Binance Smart Chain');
     }
   }, [currentChainId, getUsdtBalance]);
 
@@ -101,12 +103,12 @@ const DecentralizedExchange: React.FC = () => {
 
   useEffect(() => {
     if (window.ethereum) {
-      window.ethereum.on("chainChanged", (chainId: any) => {
+      window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
         window.location.reload();
       });
       setCurrentChainId(
-        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
       );
     }
 
@@ -234,12 +236,12 @@ const DecentralizedExchange: React.FC = () => {
           <button className="mt-2 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
             {isLoading ? (
               <>
-                {" "}
+                {' '}
                 Exchange in progress &nbsp;
                 <TailSpin color="#fff" height={18} width={18} />
               </>
             ) : (
-              "Exchange"
+              'Exchange'
             )}
           </button>
         </div>
@@ -247,7 +249,7 @@ const DecentralizedExchange: React.FC = () => {
 
       <div className="w-[38rem] xs:w-[22rem] mt-4 text-lg">
         <p className="font-poppins text-gray-300">
-          It will take a minute. Please check your wallet to get{" "}
+          It will take a minute. Please check your wallet to get{' '}
           {usdtAmountToSwap * 17} TLC
         </p>
       </div>

@@ -1,15 +1,17 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { routes } from "../../utils/routes";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { routes } from '../../utils/routes';
 // import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
 // import TheLuxuryBank from "../../assets/images/the_luxury.png";
 // import ICICB from "../../assets/images/ICICB.png";
-import TheLuxuryCoin from "../../assets/images/TLC.jpg";
-import TheLuxuryBank from "../../assets/images/TLX.jpg";
-import LSO from "../../assets/images/LSO.jpg";
-import ICICB from "../../assets/images/ATARI.jpg";
-import GlowingWrapper from "../../components/GlowingWrapper";
-import Item from "./components/Item";
+import TheLuxuryCoin from '../../assets/images/TLC.jpg';
+import TheLuxuryBank from '../../assets/images/TLX.jpg';
+import LSO from '../../assets/images/LSO.jpg';
+import ICICB from '../../assets/images/ATARI.jpg';
+import GlowingWrapper from '../../components/GlowingWrapper';
+
+import Item from './components/Item';
 
 const Stake: React.FC = () => {
   const navigate = useNavigate();
@@ -67,7 +69,9 @@ const Stake: React.FC = () => {
               coinTag="ATARI Token"
               title="ATARI Token"
               subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
-              onClick={() => {}}
+              onClick={() => {
+                return;
+              }}
               // imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"
               imageSource={ICICB}
               showTopText

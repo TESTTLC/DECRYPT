@@ -1,8 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { createLogger } from "redux-logger";
-import thunk from "redux-thunk";
+import { configureStore } from '@reduxjs/toolkit';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 
-import rootReducer from "./rootReducer";
+import rootReducer from './rootReducer';
 
 const logger = createLogger({
   collapsed: true,

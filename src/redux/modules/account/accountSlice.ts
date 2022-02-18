@@ -1,20 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { AccountState } from "src/utils/storeTypes";
-import { setTotalPower, setWalletAddress } from "./actions";
+import { createSlice } from '@reduxjs/toolkit';
+import { AccountState } from 'src/utils/storeTypes';
+
+import { setTotalPower, setWalletAddress } from './actions';
 // import {isErrorPayload} from '@utils/typeGuards';
 // import {ApiStatus, ProfileState} from 'types/store';
 
 const initialState: AccountState = {
   id: 0,
-  firstName: "",
-  lastName: "",
+  firstName: '',
+  lastName: '',
   walletAddress: undefined,
   totalPower: 0,
-  email: "",
+  email: '',
 };
 
 const accountSlice = createSlice({
-  name: "account",
+  name: 'account',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

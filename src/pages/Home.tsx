@@ -1,15 +1,16 @@
-import React, { useRef } from "react";
-import BigButton from "../components/BigButton";
-import { Link, useNavigate } from "react-router-dom";
-import { routes } from "../utils/routes";
-import stakingImage from "../assets/images/Staking.jpg";
-import launchpadImage from "../assets/images/Launchpad.jpg";
-import createTokenImage from "../assets/images/Create-Your-Own-Token.jpg";
-import crossChainBridgeImage from "../assets/images/Cross-Chain-Bridge.jpg";
-import exchangeImage from "../assets/images/Decentralized-Exchange.jpg";
-import nftMarketplaceImage from "../assets/images/NFT-Marketplace.jpg";
-import metaverseImage from "../assets/images/Metaverse.jpg";
-import lendingAndBorrowingImage from "../assets/images/Lending-And-Borrowing.jpg";
+import React, { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import BigButton from '../components/BigButton';
+import { routes } from '../utils/routes';
+import stakingImage from '../assets/images/Staking.jpg';
+import launchpadImage from '../assets/images/Launchpad.jpg';
+import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
+import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
+import exchangeImage from '../assets/images/Decentralized-Exchange.jpg';
+import nftMarketplaceImage from '../assets/images/NFT-Marketplace.jpg';
+import metaverseImage from '../assets/images/Metaverse.jpg';
+import lendingAndBorrowingImage from '../assets/images/Lending-And-Borrowing.jpg';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="STAKING"
               subtitle="Research Platform for Proof of Stake assets."
-              onClick={() => navigate("/staking")}
+              onClick={() => navigate('/staking')}
               imageSource={stakingImage}
             />
           </div>
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="LAUNCHPAD"
               subtitle="Raise funds, build a community, deliver technology."
-              onClick={() => navigate("/launchpad")}
+              onClick={() => navigate('/launchpad')}
               imageSource={launchpadImage}
             />
           </div>
@@ -61,7 +62,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="CROSS CHAIN BRIDGE"
               subtitle="DeFi Innovations created for traders and retail users."
-              onClick={() => navigate("/crosschainbridge")}
+              onClick={() => navigate('/crosschainbridge')}
               imageSource={crossChainBridgeImage}
             />
           </div>
@@ -77,7 +78,6 @@ const Home: React.FC = () => {
               }}
               imageSource={nftMarketplaceImage}
             />
-            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
             <a
               ref={nftMarketplaceRef}
               className="z-0 h-0 w-0 hidden"
@@ -98,7 +98,6 @@ const Home: React.FC = () => {
               }}
               imageSource={metaverseImage}
             />
-            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
             <a
               ref={metaverseRef}
               className="z-0 h-0 w-0 hidden"
@@ -113,7 +112,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="DECENTRALIZED EXCHANGE"
               subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
-              onClick={() => navigate("/decentralizedexchange")}
+              onClick={() => navigate('/decentralizedexchange')}
               imageSource={exchangeImage}
             />
           </div>
@@ -124,7 +123,9 @@ const Home: React.FC = () => {
               title="CREATE YOUR TOKEN"
               subtitle="It’s Time to Build. Mint Your Own Digital Token."
               // onClick={() => navigate("/createtoken")}
-              onClick={() => {}}
+              onClick={() => {
+                return;
+              }}
               imageSource={createTokenImage}
               showTopText
             />
@@ -137,7 +138,9 @@ const Home: React.FC = () => {
               title="LENDING & BORROWING"
               subtitle="Use your liquidity to increase your profit."
               // onClick={() => navigate("/lendingandborrowing")}
-              onClick={() => {}}
+              onClick={() => {
+                return;
+              }}
               imageSource={lendingAndBorrowingImage}
               showTopText
             />

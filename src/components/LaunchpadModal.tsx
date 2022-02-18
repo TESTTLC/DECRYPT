@@ -1,25 +1,27 @@
-import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
-import { useDispatch, useSelector } from "react-redux";
-import { setTotalPower } from "src/redux/modules/account/actions";
-import { StoreState } from "src/utils/storeTypes";
-import { useContracts } from "../hooks/useContracts";
-import { useWindowSize } from "../hooks/useWindowSize";
+import { ethers } from 'ethers';
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTotalPower } from 'src/redux/modules/account/actions';
+import { StoreState } from 'src/utils/storeTypes';
+
+import { useContracts } from '../hooks/useContracts';
+import { useWindowSize } from '../hooks/useWindowSize';
 import {
   determinePowerForStake,
   getUserStakes,
   webStake,
-} from "../utils/functions/Contracts";
+} from '../utils/functions/Contracts';
 import {
   TLCStakeContractAddress,
   TLXStakeContractAddress,
-} from "../utils/globals";
-import { LaunchpadProject, StackingDuration, Stake } from "../utils/types";
-import GlowingButton from "./GlowingButton";
-import SelectDropdown from "./SelectDropdown";
+} from '../utils/globals';
+import { LaunchpadProject, StackingDuration, Stake } from '../utils/types';
 
-Modal.setAppElement("#root");
+import SelectDropdown from './SelectDropdown';
+import GlowingButton from './GlowingButton';
+
+Modal.setAppElement('#root');
 
 interface Props {
   index: number;
@@ -27,24 +29,24 @@ interface Props {
   projectItem: LaunchpadProject;
 }
 
-const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
+const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
   const { isMobileSize } = useWindowSize();
   const dispatch = useDispatch();
   const walletAddress = useSelector<StoreState, string | undefined>(
-    (state) => state.account.walletAddress
+    (state) => state.account.walletAddress,
   );
   const totalPower = useSelector<StoreState, number>(
-    (state) => state.account.totalPower
+    (state) => state.account.totalPower,
   );
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [stakingCoin, setStakingCoin] = useState("TLX");
+  const [stakingCoin, setStakingCoin] = useState('TLX');
   const { stakeContract: TLXStakeContract, tokenContract: TLXTokenContract } =
-    useContracts("TLX");
+    useContracts('TLX');
   const { stakeContract: TLCStakeContract, tokenContract: TLCTokenContract } =
-    useContracts("TLC");
+    useContracts('TLC');
 
   const [power, setPower] = useState(0);
   const [TLXPower, setTLXPower] = useState(0);
@@ -52,55 +54,55 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
 
   useEffect(() => {
     if (modalIsOpen) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "visible";
+      document.body.style.overflow = 'visible';
     }
   }, [modalIsOpen]);
 
   const customStyles = {
     content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
+      top: '50%',
+      left: '50%',
+      right: 'auto',
       // bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
       // backgroundColor: "#080220",
-      backgroundColor: "#080220",
+      backgroundColor: '#080220',
       opacity: 1,
       backgroundOpacity: 1,
       borderWidth: 0,
       padding: 0,
       zIndex: 999,
-      minHeight: isMobileSize ? "100%" : "32rem",
-      flex: "flex-grow",
+      minHeight: isMobileSize ? '100%' : '32rem',
+      flex: 'flex-grow',
     },
   };
 
-  const getStakes = async (powerCoin: "TLX" | "TLC") => {
+  const getStakes = async (powerCoin: 'TLX' | 'TLC') => {
     // let currentAmout = 0;
     let currentPower = 0;
     let usedStakeContract;
-    if (powerCoin === "TLX" && TLXStakeContract) {
+    if (powerCoin === 'TLX' && TLXStakeContract) {
       usedStakeContract = TLXStakeContract;
-    } else if (powerCoin === "TLC" && TLCStakeContract) {
+    } else if (powerCoin === 'TLC' && TLCStakeContract) {
       usedStakeContract = TLCStakeContract;
     }
     if (usedStakeContract) {
       const stakes = (await getUserStakes(usedStakeContract)) || [];
-      stakes.forEach((stake: Stake, index: number) => {
+      stakes.forEach((stake: Stake) => {
         // currentAmout += parseFloat(ethers.utils.formatEther(stake.amount));
         currentPower += determinePowerForStake(
           parseFloat(ethers.utils.formatEther(stake.amount)),
           stake.period.toNumber(),
-          powerCoin
+          powerCoin,
         );
       });
 
-      if (powerCoin === "TLX") {
+      if (powerCoin === 'TLX') {
         setTLXPower(currentPower);
-      } else if (powerCoin === "TLC") {
+      } else if (powerCoin === 'TLC') {
         setTLCPower(currentPower);
       }
     }
@@ -108,20 +110,20 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
 
   const stakeTokens = () => {
     const tokenContract =
-      stakingCoin === "TLX" ? TLXTokenContract : TLCTokenContract;
+      stakingCoin === 'TLX' ? TLXTokenContract : TLCTokenContract;
     const stakeContract =
-      stakingCoin === "TLX" ? TLXStakeContract : TLCStakeContract;
+      stakingCoin === 'TLX' ? TLXStakeContract : TLCStakeContract;
     const stakeContractAddress =
-      stakingCoin === "TLX" ? TLXStakeContractAddress : TLCStakeContractAddress;
-    if (stakeContract) {
+      stakingCoin === 'TLX' ? TLXStakeContractAddress : TLCStakeContractAddress;
+    if (stakeContract && walletAddress) {
       webStake(
         tokenContract,
         stakeContract,
         stakeContractAddress,
-        walletAddress!,
+        walletAddress,
         stakeAmount,
         duration,
-        coinTag
+        coinTag,
       );
     }
   };
@@ -135,19 +137,20 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     if (parseFloat(p.toFixed(4)) !== totalPower) {
       dispatch(setTotalPower(parseFloat(p.toFixed(4))));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TLXPower, TLCPower]);
 
   useEffect(() => {
     if (TLXPower === 0) {
-      getStakes("TLX");
+      getStakes('TLX');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TLXStakeContract]);
 
   useEffect(() => {
     if (TLCPower === 0) {
-      getStakes("TLC");
+      getStakes('TLC');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TLCStakeContract]);
@@ -163,13 +166,13 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   return (
     <div>
       <button
-        onClick={coinTag === "default" ? undefined : openModal}
+        onClick={coinTag === 'default' ? undefined : openModal}
         type="button"
         className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
       >
-        {coinTag === "default"
-          ? "Coming Soon"
-          : "This IDO requires KYC verification"}
+        {coinTag === 'default'
+          ? 'Coming Soon'
+          : 'This IDO requires KYC verification'}
       </button>
       <Modal
         isOpen={modalIsOpen}
@@ -213,9 +216,9 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
               </div>
               <span className=" text-white text-lg font-poppins font-semibold leading-5">
                 <span className="flex">
-                  Current power:{" "}
+                  Current power:{' '}
                   <p className="text-green-300">
-                    &nbsp; {walletAddress ? power + "%" : "-"}
+                    &nbsp; {walletAddress ? power + '%' : '-'}
                   </p>
                 </span>
               </span>
@@ -225,7 +228,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                 <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row justify-start">
                   <input
                     className="text-white h-8 rounded-md px-3 my-2 mr-2 w-40 bg-customBlue-300"
-                    type={"number"}
+                    type={'number'}
                     // ref={stakeInputRef}
                     onChange={(e) => {
                       setStakeAmount(parseFloat(e.target.value));
@@ -234,7 +237,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                   />
                   <div className="my-2 mr-2 w-60">
                     <SelectDropdown
-                      text={"Staking duration (months)"}
+                      text={'Staking duration (months)'}
                       elements={[1, 3, 6, 12, 36]}
                       onSelect={(e) => {
                         if (parseInt(e.target.value, 10) === 1) {
@@ -253,13 +256,13 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
                   </div>
                   <div className="my-2 mr-2 w-40">
                     <SelectDropdown
-                      text={"Staking coin"}
-                      elements={["TLX", "TLC"]}
+                      text={'Staking coin'}
+                      elements={['TLX', 'TLC']}
                       onSelect={(e) => {
-                        if (e.target.value === "TLC") {
-                          setStakingCoin("TLC");
+                        if (e.target.value === 'TLC') {
+                          setStakingCoin('TLC');
                         } else {
-                          setStakingCoin("TLX");
+                          setStakingCoin('TLX');
                         }
                       }}
                     />

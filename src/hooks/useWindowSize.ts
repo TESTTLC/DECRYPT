@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useWindowSize = () => {
   const [width, setWidth] = useState<number>(window.innerWidth);
@@ -7,13 +7,13 @@ export const useWindowSize = () => {
     setWidth(window.innerWidth);
   };
   useEffect(() => {
-    window.addEventListener("resize", handleWindowSizeChange);
+    window.addEventListener('resize', handleWindowSizeChange);
     return () => {
-      window.removeEventListener("resize", handleWindowSizeChange);
+      window.removeEventListener('resize', handleWindowSizeChange);
     };
   }, []);
 
-  let isMobileSize: boolean = width <= 768;
+  const isMobileSize: boolean = width <= 768;
 
   return { isMobileSize };
 };

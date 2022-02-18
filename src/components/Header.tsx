@@ -1,10 +1,11 @@
-import React from "react";
-import { useWalletConnector } from "../hooks/useWalletConnector";
-import small_logo from "../assets/images/logo.png";
-import { routes } from "../utils/routes";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { StoreState } from "src/utils/storeTypes";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+
+import { useWalletConnector } from '../hooks/useWalletConnector';
+import SMALL_LOGO from '../assets/images/logo.png';
+import { routes } from '../utils/routes';
 
 interface LoginButtonProps {
   connectWallet: () => void;
@@ -12,7 +13,7 @@ interface LoginButtonProps {
   walletAddress?: string;
   isMobileDevice: boolean;
 }
-const metamaskAppDeepLink = "https://metamask.app.link/dapp/decryption.com";
+const metamaskAppDeepLink = 'https://metamask.app.link/dapp/decryption.com';
 // "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app";
 // const metamaskAppDeepLink = "https://metamask.app.link/dapp/192.168.1.2:3000";
 
@@ -36,12 +37,12 @@ const LoginButton: React.FC<LoginButtonProps> = ({
               {walletAddress
                 ? `Disconnect ${walletAddress.slice(
                     0,
-                    4
+                    4,
                   )}...${walletAddress.slice(
                     walletAddress.length - 4,
-                    walletAddress.length
+                    walletAddress.length,
                   )}`
-                : "Connect wallet"}{" "}
+                : 'Connect wallet'}{' '}
             </span>
           </button>
         </a>
@@ -56,12 +57,12 @@ const LoginButton: React.FC<LoginButtonProps> = ({
             {walletAddress
               ? `Disconnect ${walletAddress.slice(
                   0,
-                  4
+                  4,
                 )}...${walletAddress.slice(
                   walletAddress.length - 4,
-                  walletAddress.length
+                  walletAddress.length,
                 )}`
-              : "Connect wallet"}{" "}
+              : 'Connect wallet'}{' '}
           </span>
         </button>
       );
@@ -76,9 +77,9 @@ const LoginButton: React.FC<LoginButtonProps> = ({
           {walletAddress
             ? `Disconnect ${walletAddress.slice(0, 4)}...${walletAddress.slice(
                 walletAddress.length - 4,
-                walletAddress.length
+                walletAddress.length,
               )}`
-            : "Connect wallet"}{" "}
+            : 'Connect wallet'}{' '}
         </span>
       </button>
     );
@@ -94,7 +95,7 @@ const Header: React.FC = () => {
     isMobileDevice,
   } = useWalletConnector();
   const isSidebarOpen = useSelector<StoreState, boolean>(
-    (state) => state.globals.isSidebarOpen
+    (state) => state.globals.isSidebarOpen,
   );
 
   return (
@@ -104,7 +105,7 @@ const Header: React.FC = () => {
     >
       <div
         className={`flex transition-all duration-500 ${
-          isSidebarOpen ? "ml-60 xs:ml-0 sm:ml-0" : "ml-20 xs:ml-0 sm:ml-0"
+          isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         } mb-2`}
       >
         <div className="items-start justify-center xs:w-96">
@@ -114,7 +115,7 @@ const Header: React.FC = () => {
               <span className="xs:ml-10 pl-2 mr-2 xs:pl-2 flex items-right text-center">
                 {!isMobileSize ? (
                   <img
-                    src={small_logo}
+                    src={SMALL_LOGO}
                     alt="TLX logo"
                     className="w-4 h-4 mr-2"
                     style={{ width: 20, height: 20 }}
@@ -138,7 +139,7 @@ const Header: React.FC = () => {
       </div>
       <div
         className={`flex items-center transition-all duration-500 ${
-          isSidebarOpen ? "ml-60 xs:ml-0 sm:ml-0" : "ml-20 xs:ml-0 sm:ml-0"
+          isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
         <Link

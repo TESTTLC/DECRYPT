@@ -1,8 +1,10 @@
-import React from "react";
-import ProjectItem from "./components/ProjectItem";
-import ProjectElement from "./components/ProjectElement";
-import GlowingWrapper from "../../components/GlowingWrapper";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import GlowingWrapper from '../../components/GlowingWrapper';
+
+import ProjectItem from './components/ProjectItem';
+import ProjectElement from './components/ProjectElement';
 
 const Launchpad: React.FC = () => {
   const navigate = useNavigate();
@@ -20,22 +22,22 @@ const Launchpad: React.FC = () => {
         Upcoming Projects
       </p>
       <div className="grid gap-4 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1">
-        <div className="flex" onClick={() => navigate("/launchpad/LSO")}>
-          <ProjectElement coinTag={"LSO"} showHoverAnimation />
+        <div className="flex" onClick={() => navigate('/launchpad/LSO')}>
+          <ProjectElement coinTag={'LSO'} showHoverAnimation />
         </div>
         <div className="flex">
           <GlowingWrapper>
-            <ProjectItem coinTag={"default"} />
+            <ProjectItem coinTag={'default'} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper>
-            <ProjectItem coinTag={"default"} />
+            <ProjectItem coinTag={'default'} />
           </GlowingWrapper>
         </div>
         <div className="flex">
           <GlowingWrapper customStyles="">
-            <ProjectItem coinTag={"default"} />
+            <ProjectItem coinTag={'default'} />
           </GlowingWrapper>
         </div>
       </div>

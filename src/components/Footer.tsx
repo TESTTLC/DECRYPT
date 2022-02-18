@@ -1,17 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { StoreState } from "src/utils/storeTypes";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
 
 const Footer: React.FC = () => {
   const isSidebarOpen = useSelector<StoreState, boolean>(
-    (state) => state.globals.isSidebarOpen
+    (state) => state.globals.isSidebarOpen,
   );
   return (
     <footer
       className={`
         border-t-2 border-opacity-20 border-blue-600 transition-all duration-500 ${
-          isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
+          isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''
         } xs:justify-center items-center px-5 pt-2
     text-center 
     bg-transparent

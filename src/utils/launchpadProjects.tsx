@@ -1,39 +1,40 @@
-import Default from "../assets/images/Default.png";
-import LuxandiaPng from "../assets/images/Luxandia.png";
-import { LaunchpadProject } from "./types";
+import Default from '../assets/images/Default.png';
+import LuxandiaPng from '../assets/images/Luxandia.png';
+
+import { LaunchpadProject } from './types';
 
 export const launchpadProjects = {
   DEFAULT: {
     id: 0,
-    title: "Coming Soon",
-    coinTag: "X",
+    title: 'Coming Soon',
+    coinTag: 'X',
     description:
-      "Empower the most innovative crypto projects across all blockchains with Decryption.",
-    about: "",
+      'Empower the most innovative crypto projects across all blockchains with Decryption.',
+    about: '',
     imageSource: Default,
-    website: "",
+    website: '',
   } as LaunchpadProject,
   TLX: {
     id: 1,
-    title: "The Luxury Bank",
-    coinTag: "TLX",
+    title: 'The Luxury Bank',
+    coinTag: 'TLX',
     description:
-      "The decentralized cryptocurrency that was created to become the token of reference for the luxury industry.",
+      'The decentralized cryptocurrency that was created to become the token of reference for the luxury industry.',
     about:
-      "Our goal is to have The Luxury (TLX) used as widely as possible across the interactive luxury industry, allowing developers and publishers new options for the exploitation of their products, integration of smart contracts, protection of in-metaverse assets and so much more.",
+      'Our goal is to have The Luxury (TLX) used as widely as possible across the interactive luxury industry, allowing developers and publishers new options for the exploitation of their products, integration of smart contracts, protection of in-metaverse assets and so much more.',
     imageSource: Default,
-    website: "",
+    website: '',
   } as LaunchpadProject,
 
   LSO: {
     id: 2,
-    title: "Luxandia - Metaverse",
-    coinTag: "LSO",
+    title: 'Luxandia - Metaverse',
+    coinTag: 'LSO',
     description:
-      "Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built.",
-    about: "",
+      'Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built.',
+    about: '',
     imageSource: LuxandiaPng,
-    website: "luxandia.com",
+    website: 'luxandia.com',
     moreDetails: (
       <>
         Metaverse is more than just a movie concept. Users will have access to
@@ -53,12 +54,12 @@ export const launchpadProjects = {
 
   TLC: {
     id: 2,
-    title: "The Luxury Coin",
-    coinTag: "TLC",
+    title: 'The Luxury Coin',
+    coinTag: 'TLC',
     description:
-      "Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built.",
-    about: "",
+      'Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built.',
+    about: '',
     imageSource: Default,
-    website: "",
+    website: '',
   } as LaunchpadProject,
 };

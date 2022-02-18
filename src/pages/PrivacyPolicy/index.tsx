@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const PrivacyPolicy: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const PrivacyPolicy: React.FC = () => {
         your information in accordance with this Privacy Policy. Please do not
         access or use our Service if you do not consent to the collection and
         use of your information as outlined in this Privacy Policy. This Privacy
-        Policy has been created with the help of{" "}
+        Policy has been created with the help of{' '}
         <a
           target="_blank"
           href="https://cookie-script.com/privacy-policy-generator"
@@ -45,7 +45,7 @@ const PrivacyPolicy: React.FC = () => {
       <p>
         When using our Service, you will be prompted to provide us with personal
         information used to contact or identify you. https://decryption.com
-        collects the following information:{" "}
+        collects the following information:{' '}
       </p>
 
       <ul>
@@ -68,7 +68,7 @@ const PrivacyPolicy: React.FC = () => {
       <h4 className="text-lg font-bold">How We Collect Information</h4>
       <p>
         https://decryption.com collects and receives information from you in the
-        following manner:{" "}
+        following manner:{' '}
       </p>
       <ul>
         <li>
@@ -83,13 +83,13 @@ const PrivacyPolicy: React.FC = () => {
         required to provide you the services. Your information may be retained
         for longer periods for reporting or record- keeping in accordance with
         applicable laws. Information which does not identify you personally may
-        be stored indefinitely.{" "}
+        be stored indefinitely.{' '}
       </p>
       <br />
       <h4 className="text-lg font-bold">How We Use Your Information</h4>
       <p>
         https://decryption.com may use your information for the following
-        purposes:{" "}
+        purposes:{' '}
       </p>
       <ul>
         <li>
@@ -130,7 +130,7 @@ const PrivacyPolicy: React.FC = () => {
       <h4 className="text-lg font-bold">How We Share Your Information</h4>
       <p>
         Decryption will share your information, when applicable, in the
-        following situations:{" "}
+        following situations:{' '}
       </p>
       <ul>
         <li>
@@ -162,7 +162,7 @@ const PrivacyPolicy: React.FC = () => {
         efficiently and perform certain functions. Cookies that are required for
         the website to operate properly are allowed to be set without your
         permission. All other cookies need to be approved before they can be set
-        in the browser.{" "}
+        in the browser.{' '}
       </p>
       <ul>
         <li>
@@ -196,7 +196,7 @@ const PrivacyPolicy: React.FC = () => {
 
       <div>
         <p data-cookiereport="true">
-          You can change your consent to cookie usage below.{" "}
+          You can change your consent to cookie usage below.{' '}
         </p>
         <script
           type="text/javascript"
@@ -213,13 +213,13 @@ const PrivacyPolicy: React.FC = () => {
         utilizes a range of security measures to prevent the misuse, loss, or
         alteration of the information you have given us. However, because we
         cannot guarantee the security of the information you provide us, you
-        must access our service at your own risk.{" "}
+        must access our service at your own risk.{' '}
       </p>
       <p>
         Decryption is not responsible for the performance of websites operated
         by third parties or your interactions with them. When you leave this
         website, we recommend you review the privacy practices of other websites
-        you interact with and determine the adequacy of those practices.{" "}
+        you interact with and determine the adequacy of those practices.{' '}
       </p>
       <br />
       <h4 className="text-lg font-bold">Contact Us</h4>
@@ -232,7 +232,7 @@ const PrivacyPolicy: React.FC = () => {
       <p>
         For any queries or concerns you have related to the processing of your
         information, you may contact our Privacy Officer at Viorela Iordan,
-        contact@decryption.com.{" "}
+        contact@decryption.com.{' '}
       </p>
     </div>
   );

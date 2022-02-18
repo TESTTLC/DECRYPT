@@ -1,19 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
-import * as contracts from "../utils/functions/Contracts";
-import { useContracts } from "../hooks/useContracts";
-import SNXStatBackground from "../assets/svg/snx-stat-background.svg";
-import { useSelector } from "react-redux";
-import { StoreState } from "src/utils/storeTypes";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+
+import * as contracts from '../utils/functions/Contracts';
+import { useContracts } from '../hooks/useContracts';
+import SNXStatBackground from '../assets/svg/snx-stat-background.svg';
 
 interface Props {
-  coinTag: "TLX" | "TLC" | "LSO";
+  coinTag: 'TLX' | 'TLC' | 'LSO';
   totalRewards: number;
 }
 
 const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const { stakeContract, tokenContract } = useContracts(coinTag);
   const walletAddress = useSelector<StoreState, string | undefined>(
-    (state) => state.account.walletAddress
+    (state) => state.account.walletAddress,
   );
   const [totalStaked, setTotalStaked] = useState(0);
   const [balance, setBalance] = useState<number>();
@@ -26,7 +27,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   };
 
   useEffect(() => {
-    if (coinTag === "TLC") {
+    if (coinTag === 'TLC') {
       getUserTLCBalance();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,16 +36,16 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const getTotalStaked = async () => {
     try {
       if (stakeContract) {
-        const totalStaked = await contracts.getTotalValueLocked(stakeContract);
-        setTotalStaked(totalStaked);
+        const total = await contracts.getTotalValueLocked(stakeContract);
+        setTotalStaked(total);
       }
     } catch (error) {}
   };
 
   const getUserTLXBalance = useCallback(async () => {
-    if (walletAddress && coinTag !== "TLC") {
+    if (walletAddress && coinTag !== 'TLC') {
       const result =
-        coinTag === "LSO"
+        coinTag === 'LSO'
           ? await contracts.getBalance(tokenContract, walletAddress)
           : await contracts.getActualBalanceOf(tokenContract, walletAddress);
       setBalance(result);
@@ -93,7 +94,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
         </p>
         <div>
           <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-            {walletAddress ? totalStaked : "-"} {coinTag}
+            {walletAddress ? totalStaked : '-'} {coinTag}
           </p>
         </div>
       </div>
@@ -107,7 +108,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
           Total Rewards
         </p>
         <p className="text-green-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {walletAddress ? totalRewards : "-"} {coinTag}
+          {walletAddress ? totalRewards : '-'} {coinTag}
         </p>
       </div>
       <div className="flex flex-col justify-center items-center">
@@ -119,7 +120,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
           Your Balance
         </p>
         <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
-          {walletAddress ? balance : "-"} {coinTag}
+          {walletAddress ? balance : '-'} {coinTag}
         </p>
       </div>
     </div>

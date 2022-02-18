@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   title: string;
@@ -17,7 +17,6 @@ const BigButton: React.FC<Props> = ({
   onClick,
   imageSource,
   showTopText,
-  showPageTitle,
   imageContainerStyle,
   imageStyle,
 }) => {
@@ -35,14 +34,14 @@ const BigButton: React.FC<Props> = ({
           {imageSource && (
             <div
               className={`relative w-full ${
-                imageContainerStyle ? imageContainerStyle : "h-1/2"
+                imageContainerStyle ? imageContainerStyle : 'h-1/2'
               }`}
             >
               <img
                 alt={`${imageSource}`}
                 src={imageSource}
                 className={`h-full w-full aspect-w-1 object-cover ${
-                  imageStyle ? imageStyle : ""
+                  imageStyle ? imageStyle : ''
                 }`}
               />
               {showTopText && (

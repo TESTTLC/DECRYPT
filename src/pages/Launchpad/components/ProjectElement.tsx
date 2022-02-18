@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Countdown from "react-countdown";
-import SocialMediaIcons from "src/components/SocialMediaIcons";
+import React, { useEffect, useState } from 'react';
+import Countdown from 'react-countdown';
+import SocialMediaIcons from 'src/components/SocialMediaIcons';
 
-import LaunchpadModal from "../../../components/LaunchpadModal";
-import { launchpadProjects } from "../../../utils/launchpadProjects";
-import { LaunchpadProject } from "../../../utils/types";
+import LaunchpadModal from '../../../components/LaunchpadModal';
+import { launchpadProjects } from '../../../utils/launchpadProjects';
+import { LaunchpadProject } from '../../../utils/types';
 
 interface Props {
   coinTag: string;
@@ -18,17 +18,17 @@ const ProjectElement: React.FC<Props> = ({
   showHoverAnimation,
 }) => {
   const [project, setProject] = useState<LaunchpadProject>(
-    launchpadProjects.TLX
+    launchpadProjects.TLX,
   );
 
   useEffect(() => {
-    if (coinTag === "TLX") {
+    if (coinTag === 'TLX') {
       setProject(launchpadProjects.TLX);
-    } else if (coinTag === "TLC") {
+    } else if (coinTag === 'TLC') {
       setProject(launchpadProjects.TLC);
-    } else if (coinTag === "LSO") {
+    } else if (coinTag === 'LSO') {
       setProject(launchpadProjects.LSO);
-    } else if (coinTag === "default") {
+    } else if (coinTag === 'default') {
       setProject(launchpadProjects.DEFAULT);
     }
   }, [coinTag]);
@@ -38,7 +38,6 @@ const ProjectElement: React.FC<Props> = ({
     days,
     hours,
     minutes,
-    seconds,
     completed,
   }: {
     days: number;
@@ -49,9 +48,9 @@ const ProjectElement: React.FC<Props> = ({
   }) => {
     return !completed ? (
       <p className="text-gray-200 text-sm mb-2">
-        Registration opens in {days} {days === 1 ? "Day" : "Days"}, {hours}{" "}
-        {hours === 1 ? "Hour" : "Hours"}, {minutes}{" "}
-        {minutes === 1 ? "Minute" : "Minutes"}
+        Registration opens in {days} {days === 1 ? 'Day' : 'Days'}, {hours}{' '}
+        {hours === 1 ? 'Hour' : 'Hours'}, {minutes}{' '}
+        {minutes === 1 ? 'Minute' : 'Minutes'}
       </p>
     ) : (
       <p className="text-gray-200 text-sm mb-2">Registration started</p>
@@ -63,7 +62,7 @@ const ProjectElement: React.FC<Props> = ({
       className={`flex flex-grow flex-col w-full h-128 bg-black bg-opacity-50 relative rounded-md
       ${
         showHoverAnimation
-          ? "transform duration-100 hover:scale-[1.04]"
+          ? 'transform duration-100 hover:scale-[1.04]'
           : undefined
       }`}
     >
@@ -78,7 +77,7 @@ const ProjectElement: React.FC<Props> = ({
             hideGoogle
             hideInstagram
             hideLinkedIn
-            customStyles={"my-1"}
+            customStyles={'my-1'}
           />
         </div>
         <img

@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
 export enum StackingDuration {
   ONE_MONTH = 0,
@@ -11,6 +11,7 @@ export enum StackingDuration {
 export interface Stake {
   since: string;
   amount: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   period: any;
 }
 
@@ -35,9 +36,9 @@ export type Project = {
 };
 
 export enum ChainsIds {
-  BSC = "0x38",
-  BSC_TESTNET = "0x61", //97
-  TLC = "0x1439",
+  BSC = '0x38',
+  BSC_TESTNET = '0x61', //97
+  TLC = '0x1439',
 }
 
 export const defaultPowers = {

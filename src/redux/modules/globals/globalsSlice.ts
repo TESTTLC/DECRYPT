@@ -1,7 +1,7 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { GlobalState } from "src/utils/storeTypes";
-import { closeSidebar, openSidebar, setProvider } from "./actions";
+import { createSlice } from '@reduxjs/toolkit';
+import { GlobalState } from 'src/utils/storeTypes';
+
+import { closeSidebar, openSidebar, setProvider } from './actions';
 
 const initialState: GlobalState = {
   isSidebarOpen: true,
@@ -9,7 +9,7 @@ const initialState: GlobalState = {
 };
 
 const globalsSlice = createSlice({
-  name: "globals",
+  name: 'globals',
   initialState,
   reducers: {},
   extraReducers: (builder) => {

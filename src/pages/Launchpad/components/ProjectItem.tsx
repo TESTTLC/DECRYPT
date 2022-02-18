@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import LaunchpadModal from "../../../components/LaunchpadModal";
+import React, { useEffect, useState } from 'react';
 
-import { launchpadProjects } from "../../../utils/launchpadProjects";
-import { LaunchpadProject, Project } from "../../../utils/types";
+import LaunchpadModal from '../../../components/LaunchpadModal';
+import { launchpadProjects } from '../../../utils/launchpadProjects';
+import { LaunchpadProject } from '../../../utils/types';
 
 interface Props {
   coinTag: string;
@@ -11,17 +10,17 @@ interface Props {
 
 const ProjectItem: React.FC<Props> = ({ coinTag }) => {
   const [projectItem, setProjectItem] = useState<LaunchpadProject>(
-    launchpadProjects.TLX
+    launchpadProjects.TLX,
   );
 
   useEffect(() => {
-    if (coinTag === "TLX") {
+    if (coinTag === 'TLX') {
       setProjectItem(launchpadProjects.TLX);
-    } else if (coinTag === "TLC") {
+    } else if (coinTag === 'TLC') {
       setProjectItem(launchpadProjects.TLC);
-    } else if (coinTag === "LSO") {
+    } else if (coinTag === 'LSO') {
       setProjectItem(launchpadProjects.LSO);
-    } else if (coinTag === "default") {
+    } else if (coinTag === 'default') {
       setProjectItem(launchpadProjects.DEFAULT);
     }
   }, [coinTag]);

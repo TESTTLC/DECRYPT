@@ -1,22 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /** Functions from TLX Contracts */
-import { ethers, Contract } from "ethers";
-import { defaultPowers } from "../types";
+import { ethers, Contract } from 'ethers';
+
+import { defaultPowers } from '../types';
 
 /** This function will call the tokenContract.methods.approve is done */
 export const approveStakeTokens = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tokenContract: any,
   stakeContractAddress: string,
   account: string,
-  amount: number
+  amount: number,
 ) => {
   let errorOnApprove = false;
   try {
-    const price = ethers.utils.parseUnits(amount.toString(), "ether");
-    const approveResultPromise = new Promise((resolve, reject) => {
+    const price = ethers.utils.parseUnits(amount.toString(), 'ether');
+    const approveResultPromise = new Promise((resolve) => {
       resolve(
         tokenContract.methods
           .approve(stakeContractAddress, price)
-          .send({ from: account })
+          .send({ from: account }),
       );
     });
 
@@ -26,6 +29,7 @@ export const approveStakeTokens = async (
       })
       .catch((err) => {
         errorOnApprove = true;
+        console.log('Error on approveStake: ', err);
       });
   } catch (error) {
     errorOnApprove = true;
@@ -38,15 +42,17 @@ export const approveStakeTokens = async (
 export const mobileStake = async (
   stakeContract: Contract,
   amount: number,
-  stakingDuration: number
+  stakingDuration: number,
 ) => {
   let errorOnApprove = false;
   try {
-    const price = ethers.utils.parseUnits(amount.toString(), "ether");
-    const stakeResultPromise = new Promise((resolve, reject) => {
+    const price = ethers.utils.parseUnits(amount.toString(), 'ether');
+    const stakeResultPromise = new Promise((resolve) => {
       resolve(stakeContract.functions.stakeTokens(price, stakingDuration));
     });
-    stakeResultPromise.then((result) => {});
+    stakeResultPromise.then((result) => {
+      return result;
+    });
   } catch (error) {
     errorOnApprove = true;
   }
@@ -61,25 +67,25 @@ export const webStake = async (
   account: string,
   amount: number,
   stakingDuration: number,
-  coinTag: string
+  coinTag: string,
 ) => {
   let errorOnApprove = false;
   try {
-    const price = ethers.utils.parseUnits(amount.toString(), "ether");
+    const price = ethers.utils.parseUnits(amount.toString(), 'ether');
     let result;
-    if (coinTag !== "TLC") {
+    if (coinTag !== 'TLC') {
       result = await tokenContract.functions.approve(
         stakeContractAddress,
-        price
+        price,
       );
     } else {
       result = await stakeContract.approve(stakeContractAddress, price);
     }
     if (result) {
-      const r = await stakeContract.stakeTokens(price, stakingDuration);
+      await stakeContract.stakeTokens(price, stakingDuration);
     }
   } catch (error) {
-    console.log("Error is: ", error);
+    console.log('Error is: ', error);
     errorOnApprove = true;
   }
   return { errorOnApprove };
@@ -89,11 +95,11 @@ export const webStake = async (
 export const tlcStake = async (
   stakeContract: Contract,
   amount: number,
-  stakingDuration: number
+  stakingDuration: number,
 ) => {
   let errorOnApprove = false;
   try {
-    const price = ethers.utils.parseUnits(amount.toString(), "ether");
+    const price = ethers.utils.parseUnits(amount.toString(), 'ether');
     const overrides = { value: price };
     await stakeContract.stakeTokens(stakingDuration, overrides);
     // let result;
@@ -103,7 +109,7 @@ export const tlcStake = async (
     // if (result) {
     // }
   } catch (error) {
-    console.log("Error is: ", error);
+    console.log('Error is: ', error);
     errorOnApprove = true;
   }
   return { errorOnApprove };
@@ -111,13 +117,13 @@ export const tlcStake = async (
 
 export const unstake = async (
   indexOfStake: number,
-  stakeContract: Contract
+  stakeContract: Contract,
 ) => {
   let unstakingError;
   try {
     await stakeContract.functions.withdrawStake(indexOfStake);
   } catch (error) {
-    unstakingError = "The stake is still locked";
+    unstakingError = 'The stake is still locked';
   }
 
   return unstakingError;
@@ -143,12 +149,12 @@ export const getUserStakes = async (stakeContract: Contract) => {
 };
 
 export const getTotalRewards = async (stakeContract: Contract) => {
-  let formatedResult = "-";
+  let formatedResult = '-';
   let totalRewards;
   try {
     totalRewards = await stakeContract.getTotalRewards();
     formatedResult = parseFloat(
-      ethers.utils.formatUnits(totalRewards._hex)
+      ethers.utils.formatUnits(totalRewards._hex),
     ).toFixed(3);
   } catch (err) {}
 
@@ -164,7 +170,7 @@ export const getTotalValueLocked = async (stakeContract: Contract) => {
   }
 
   return parseFloat(
-    parseFloat(ethers.utils.formatEther(stakedAmount.toString())).toFixed(3)
+    parseFloat(ethers.utils.formatEther(stakedAmount.toString())).toFixed(3),
   );
 };
 
@@ -172,7 +178,7 @@ export const getVolume24h = async () => {
   let totalVolume = 0.0;
   try {
     const baseUrl =
-      "https://staking-calculatorbackend-cais4.ondigitalocean.app/cryptocurrency/quotes/latest?symbol=TLX&convert=USD";
+      'https://staking-calculatorbackend-cais4.ondigitalocean.app/cryptocurrency/quotes/latest?symbol=TLX&convert=USD';
     const data = await fetch(baseUrl).then((result) => result.json());
     totalVolume = data.data.TLX.quote.USD.volume_24h;
   } catch (err) {}
@@ -181,23 +187,23 @@ export const getVolume24h = async () => {
 
 export const renderStakePeriod = (period: any) => {
   if (period === 0) {
-    return "1 month";
+    return '1 month';
   } else if (period === 1) {
-    return "3 months";
+    return '3 months';
   } else if (period === 2) {
-    return "6 months";
+    return '6 months';
   } else if (period === 3) {
-    return "12 months";
+    return '12 months';
   } else if (period === 4) {
-    return "36 months";
+    return '36 months';
   } else {
-    return "- months";
+    return '- months';
   }
 };
 
 export const getActualBalanceOf = async (
   tokenContract: any,
-  account: string
+  account: string,
 ) => {
   let userBalance = 0;
   try {
@@ -207,10 +213,10 @@ export const getActualBalanceOf = async (
     //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
     // );
     userBalance = parseFloat(
-      parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(3)
+      parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(3),
     );
   } catch (error) {
-    console.log("Error: ", error);
+    console.log('Error: ', error);
   }
 
   return userBalance;
@@ -226,7 +232,7 @@ export const getBalance = async (tokenContract: any, account: string) => {
     // );
     userBalance = parseFloat(ethers.utils.formatUnits(balance, 18));
   } catch (error) {
-    console.log("Error: ", error);
+    console.log('Error: ', error);
   }
 
   return userBalance;
@@ -234,7 +240,7 @@ export const getBalance = async (tokenContract: any, account: string) => {
 
 export const getTLCBalance = async (account: string) => {
   const api = `https://tlxscan.com/api?module=account&action=balance&address=${account}`;
-  let balance = "0";
+  let balance = '0';
   await fetch(api)
     .then((response) => response.json())
     .then((response) => {
@@ -247,7 +253,7 @@ export const getTLCBalance = async (account: string) => {
 export const determinePowerForStake = (
   amount: number,
   period: number,
-  powerCoin: "TLX" | "TLC"
+  powerCoin: 'TLX' | 'TLC',
 ): number => {
   let currentStakePower = 0;
   currentStakePower = defaultPowers[powerCoin][period] * amount;
