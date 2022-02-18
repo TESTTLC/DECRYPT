@@ -104,7 +104,7 @@ const ProjectElement: React.FC<Props> = ({
           </div>
           <div className="flex justify-between items-center font-poppins mt-1">
             <p className="text-gray-200">Starts</p>
-            <p className="text-green-400 text-md">Feb 7, 11:00am UTC</p>
+            <p className="text-green-400 text-md">Feb 25, 11:00am UTC</p>
           </div>
 
           <div className="flex flex-col font-poppins mt-3">
