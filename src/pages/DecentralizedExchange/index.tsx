@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import { ethers } from "ethers";
 import React, { useCallback, useEffect, useState } from "react";
 import { FaArrowCircleDown } from "react-icons/fa";
@@ -192,6 +191,7 @@ const DecentralizedExchange: React.FC = () => {
               <img
                 className="text-white font-poppins w-4 h-4 mr-2 object-cover "
                 src={tetherImage}
+                alt="Tether-Logo"
               />
               <p className="font-poppins text-md text-white">USDT</p>
             </div>
@@ -219,6 +219,7 @@ const DecentralizedExchange: React.FC = () => {
               <img
                 className="text-white font-poppins w-6 h-6 mr-2 object-cover "
                 src={tlchainImage}
+                alt="TLChain-Logo"
               />
               <p className="font-poppins text-md text-white">TLC</p>
             </div>

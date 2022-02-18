@@ -53,7 +53,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
 
   const calculateStakeRewards = useCallback(async () => {
     if (stakeContract) {
-      const stakes = await contracts.getUserStakes(stakeContract);
+      // const stakes = await contracts.getUserStakes(stakeContract);
       // const rewards = await contracts.calculateStakeRewards(
       //   stakeContract,
       //   stakes

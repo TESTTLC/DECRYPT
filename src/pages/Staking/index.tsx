@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { routes } from "../../utils/routes";
 // import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
@@ -9,44 +9,10 @@ import TheLuxuryBank from "../../assets/images/TLX.jpg";
 import LSO from "../../assets/images/LSO.jpg";
 import ICICB from "../../assets/images/ATARI.jpg";
 import GlowingWrapper from "../../components/GlowingWrapper";
-import ProjectItem from "../Launchpad/components/ProjectItem";
 import Item from "./components/Item";
 
-const options = { method: "GET" };
-
-interface Asset {
-  image_preview_url: string;
-}
-
 const Stake: React.FC = () => {
-  const imagesRef = useRef<null | HTMLDivElement>(null);
-  const [assets, setAssets] = useState<Asset[]>([]);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate();
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const retreiveAssets = async () => {
-    fetch(
-      "https://api.opensea.io/api/v1/assets?owner=0xf56345338cb4cddaf915ebef3bfde63e70fe3053",
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setAssets(response.assets.reverse());
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    // retreiveAssets();
-  }, []);
 
   return (
     <div className="w-full flex flex-col justify-center">

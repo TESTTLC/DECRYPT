@@ -22,6 +22,7 @@ const PrivacyPolicy: React.FC = () => {
         <a
           target="_blank"
           href="https://cookie-script.com/privacy-policy-generator"
+          rel="noreferrer"
         >
           CookieScript Privacy Policy Generator
         </a>

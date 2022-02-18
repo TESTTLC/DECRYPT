@@ -97,6 +97,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
             <img
               className="text-white font-poppins w-6 h-6 mr-2 object-cover"
               src={imageUsedToken}
+              alt="The Luxury Coin Token"
             />
             <p className="text-white font-poppins">
               {type === "from" ? selectedToken : "TLX"}
@@ -117,6 +118,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
           <img
             className="text-white font-poppins w-7 h-7 mr-1 object-cover"
             src={imageUsed}
+            alt="The Luxury Coin"
           />
           <p className="text-white font-poppins">{selectedChain}</p>{" "}
           <GoArrowDown className="h-4 w-4 ml-2 mb-1" color="white" />
@@ -149,7 +151,11 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
                   } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
                   onClick={() => setSelectedChain(token.tag)}
                 >
-                  <img src={token.image} className="w-10 h-10" />
+                  <img
+                    src={token.image}
+                    className="w-10 h-10"
+                    alt={`${token.name}`}
+                  />
                   <p className="text-xl font-semibold">
                     {token.tag} ({token.name})
                   </p>

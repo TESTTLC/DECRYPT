@@ -4,9 +4,6 @@ import bscBridgeImage from "../assets/images/bsc-bridge.png";
 import solBridgeImage from "../assets/images/sol-bridge.png";
 import tlcBridgeImage from "../assets/images/tlc-bridge.png";
 import maticBridgeImage from "../assets/images/matic-bridge.png";
-import tlxOldToken from "../assets/images/tlx-token-old.png";
-import tlxNewToken from "../assets/images/tlx-token-new.png";
-import atariToken from "../assets/images/atari-token.png";
 import { Project } from "./types";
 
 // /** Mainnet */

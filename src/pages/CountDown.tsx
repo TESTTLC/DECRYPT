@@ -2,8 +2,6 @@ import React from "react";
 import Countdown from "react-countdown";
 import TimerBoxComp from "../components/TimberBoxComp";
 import logo from "../assets/images/logo.png";
-import banner from "../assets/images/banner.jpg";
-import blockchain from "../assets/images/blockchain.jpg";
 import { useWindowSize } from "../hooks/useWindowSize";
 import Home from "./Home";
 const CountDown: React.FC = () => {
@@ -43,7 +41,6 @@ const CountDown: React.FC = () => {
           <div
             className=""
             style={{
-              //   backgroundImage: "url(" + blockchain + ")",
               backgroundPosition: "top",
               backgroundRepeat: "no-repeat",
             }}

@@ -27,6 +27,7 @@ export const useWalletConnector = () => {
 
   useEffect(() => {
     checkIfWalletConnected();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

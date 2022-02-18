@@ -28,7 +28,6 @@ const Home: React.FC = () => {
             key={routes.launchpad.title}
             to={{ pathname: routes.launchpad.url }}
             type="button"
-            // className="flex h-8 mx-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
           >
             <span className="text-white font-bold text-md underline">
               View all upcoming projects &rarr;

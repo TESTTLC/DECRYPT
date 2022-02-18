@@ -79,7 +79,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
   };
 
   const getStakes = async (powerCoin: "TLX" | "TLC") => {
-    let currentAmout = 0;
+    // let currentAmout = 0;
     let currentPower = 0;
     let usedStakeContract;
     if (powerCoin === "TLX" && TLXStakeContract) {
@@ -90,7 +90,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     if (usedStakeContract) {
       const stakes = (await getUserStakes(usedStakeContract)) || [];
       stakes.forEach((stake: Stake, index: number) => {
-        currentAmout += parseFloat(ethers.utils.formatEther(stake.amount));
+        // currentAmout += parseFloat(ethers.utils.formatEther(stake.amount));
         currentPower += determinePowerForStake(
           parseFloat(ethers.utils.formatEther(stake.amount)),
           stake.period.toNumber(),
@@ -135,6 +135,7 @@ const LaunchpadModal: React.FC<Props> = ({ index, coinTag, projectItem }) => {
     if (parseFloat(p.toFixed(4)) !== totalPower) {
       dispatch(setTotalPower(parseFloat(p.toFixed(4))));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TLXPower, TLCPower]);
 
   useEffect(() => {

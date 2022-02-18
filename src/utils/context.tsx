@@ -8,18 +8,6 @@ import { ethers } from "ethers";
 import { useWindowSize } from "../hooks/useWindowSize";
 import { JsonRpcProvider, Web3Provider } from "@ethersproject/providers";
 
-// const AppContext = createContext({
-//   isSidebarOpen: true,
-//   openSidebar: () => {},
-//   closeSidebar: () => {},
-//   provider: new ethers.providers.JsonRpcProvider(
-//     "https://bsc-dataseed1.defibit.io/"
-//   ),
-//   setProvider: (value: ethers.providers.Web3Provider) => {},
-//   account?: '',
-//   setAccount: (value: string) => {},
-// });
-
 interface IAppContext {
   isSidebarOpen: boolean;
   openSidebar: () => void;

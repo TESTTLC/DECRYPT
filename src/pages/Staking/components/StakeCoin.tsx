@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import GlowingButton from "../../../components/GlowingButton";
 import SelectDropdown from "../../../components/SelectDropdown";
 
@@ -56,12 +56,12 @@ const StakeCoin: React.FC<Props> = () => {
     string | undefined
   >(undefined);
 
-  const getUserTLCBalance = async () => {
+  const getUserTLCBalance = useCallback(async () => {
     if (walletAddress) {
       const TLCBalance = await contracts.getTLCBalance(walletAddress);
       setBalance(TLCBalance);
     }
-  };
+  }, [walletAddress]);
   const chainChange = async () => {
     await changeChain(ChainsIds.TLC);
     if (window.ethereum.networkVersion) {
@@ -72,8 +72,8 @@ const StakeCoin: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    console.log("chainId: ", currentChainId);
     chainChange();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const StakeCoin: React.FC<Props> = () => {
     if (coinTag === "TLC") {
       getUserTLCBalance();
     }
-  }, [walletAddress, coinTag]);
+  }, [walletAddress, coinTag, getUserTLCBalance]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -104,7 +104,7 @@ const StakeCoin: React.FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.ethereum]);
 
-  const getUserTLXBalance = async () => {
+  const getUserTLXBalance = useCallback(async () => {
     if (walletAddress) {
       const result =
         coinTag === "LSO"
@@ -113,9 +113,9 @@ const StakeCoin: React.FC<Props> = () => {
 
       setBalance(result);
     }
-  };
+  }, [coinTag, tokenContract, walletAddress]);
 
-  const getStakeTransactions = async () => {
+  const getStakeTransactions = useCallback(async () => {
     try {
       if (stakeContract) {
         const stakes = await getUserStakes(stakeContract);
@@ -132,19 +132,19 @@ const StakeCoin: React.FC<Props> = () => {
         }
       }
     } catch (error) {}
-  };
+  }, [coinTag, stakeContract]);
 
   useEffect(() => {
     if (tokenContract && coinTag !== "TLC") {
       getUserTLXBalance();
     }
-  }, [tokenContract]);
+  }, [coinTag, getUserTLXBalance, tokenContract]);
 
   useEffect(() => {
     if (stakeContract) {
       getStakeTransactions();
     }
-  }, [stakeContract]);
+  }, [getStakeTransactions, stakeContract]);
 
   const renderTable = () => {
     return !walletAddress ? (
@@ -169,6 +169,7 @@ const StakeCoin: React.FC<Props> = () => {
                border-2 border-indigo-900
               "
               src={tlx_logo_2}
+              alt="TLX-Logo"
             />
           </div>
           <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 w-full h-full -mt-4">
