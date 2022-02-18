@@ -68,7 +68,6 @@ export const webStake = async (
     const price = ethers.utils.parseUnits(amount.toString(), "ether");
     let result;
     if (coinTag !== "TLC") {
-      console.log("here");
       result = await tokenContract.functions.approve(
         stakeContractAddress,
         price
@@ -78,7 +77,6 @@ export const webStake = async (
     }
     if (result) {
       const r = await stakeContract.stakeTokens(price, stakingDuration);
-      console.log("R: ", r);
     }
   } catch (error) {
     console.log("Error is: ", error);
@@ -95,11 +93,9 @@ export const tlcStake = async (
 ) => {
   let errorOnApprove = false;
   try {
-    console.log("Amount is: ", amount);
     const price = ethers.utils.parseUnits(amount.toString(), "ether");
     const overrides = { value: price };
-    const r = await stakeContract.stakeTokens(stakingDuration, overrides);
-    console.log("R: ", r);
+    await stakeContract.stakeTokens(stakingDuration, overrides);
     // let result;
     // const tx = await stakeContract.transfer(stakeContractAddress, price)
     // result = await stakeContract.approve(stakeContractAddress, price);
@@ -206,7 +202,6 @@ export const getActualBalanceOf = async (
   let userBalance = 0;
   try {
     const balance = await tokenContract.actualBalanceOf(account);
-    console.log("balance: ", balance);
 
     // userBalance = parseFloat(
     //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
@@ -225,7 +220,6 @@ export const getBalance = async (tokenContract: any, account: string) => {
   let userBalance = 0;
   try {
     const balance = await tokenContract.balanceOf(account);
-    console.log("balance: ", balance);
 
     // userBalance = parseFloat(
     //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)

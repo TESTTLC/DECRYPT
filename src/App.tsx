@@ -22,7 +22,6 @@ const App = () => {
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen
   );
-  console.log("isSidebarOpen: ", isSidebarOpen);
   return (
     <>
       <div className="bg-image"></div>

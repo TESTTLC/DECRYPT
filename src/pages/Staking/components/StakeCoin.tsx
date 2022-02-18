@@ -79,9 +79,7 @@ const StakeCoin: React.FC<Props> = () => {
   useEffect(() => {
     if (currentChainId === ChainsIds.TLC) {
       setChainErrorMessage(undefined);
-      console.log("here1");
     } else {
-      console.log("here");
       setChainErrorMessage("Please connect to TLChain");
     }
   }, [currentChainId]);

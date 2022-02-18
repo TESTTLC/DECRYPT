@@ -2,7 +2,6 @@ import React from "react";
 import { FaBars } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { openSidebar } from "src/redux/modules/globals/actions";
-import store from "src/redux/store";
 import { StoreState } from "src/utils/storeTypes";
 
 const OpenSideBarButton: React.FC = () => {
@@ -15,8 +14,6 @@ const OpenSideBarButton: React.FC = () => {
     <button
       onClick={() => {
         dispatch(openSidebar());
-        console.log("isSidebarOpen: ", isSidebarOpen);
-        console.log("store: ", store);
       }}
       className={`${
         isSidebarOpen ? "-translate-x-20" : "translate-x-0 "
