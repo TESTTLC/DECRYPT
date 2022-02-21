@@ -1,11 +1,13 @@
-import React from "react";
-import { useGlobalContext } from "../utils/context";
-import { HiTicket, HiX } from "react-icons/hi";
-import { MdSettings } from "react-icons/md";
+import React from 'react';
+import { HiTicket, HiX } from 'react-icons/hi';
+import { MdSettings } from 'react-icons/md';
+import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+import { closeSidebar } from 'src/redux/modules/globals/actions';
 
-import { links } from "../utils/routes";
-import { Link, useLocation } from "react-router-dom";
-import small_logo from "../assets/images/logo.png";
+import SMALL_LOGO from '../assets/images/logo.png';
+import { links } from '../utils/routes';
 
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -13,13 +15,16 @@ import small_logo from "../assets/images/logo.png";
 ></script>;
 
 const SideBar: React.FC = () => {
-  const { isSidebarOpen, closeSidebar } = useGlobalContext();
+  const dispatch = useDispatch();
+  const isSidebarOpen = useSelector<StoreState, boolean>(
+    (state) => state.globals.isSidebarOpen,
+  );
   const location = useLocation();
 
   return (
     <div
       className={`transition-all  duration-500  fixed top-0 ${
-        isSidebarOpen ? "left-0" : "-left-60"
+        isSidebarOpen ? 'left-0' : '-left-60'
       } z-index-20 fixed z-50 h-screen`}
     >
       <div
@@ -27,13 +32,13 @@ const SideBar: React.FC = () => {
        px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative bg-transparent sm:bg-customBlue-800 xs:bg-customBlue-800"
       >
         <button
-          onClick={closeSidebar}
+          onClick={() => dispatch(closeSidebar())}
           className="absolute top-1 right-1 text-white w-8 h-8 rounded-full flex items-center justify-center active:bg-gray-300 focus:outline-none ml-6 hover:bg-gray-200 hover:text-gray-800"
         >
           <HiX className="w-5 h-5" />
         </button>
         <h2 className="text-3xl font-semibold text-white">
-          TLChain{" "}
+          TLChain{' '}
           <span className="text-green-400 ml-1 drop-shadow-2xl shadow-white">
             DeFi
           </span>
@@ -41,22 +46,21 @@ const SideBar: React.FC = () => {
 
         <div className="flex flex-col mt-6  justify-between flex-1">
           <nav className="text">
-            {links.map((link, index) => {
+            {links.map((link) => {
               const { id, url, text, icon, imageSource } = link;
-              return id === 6 || id === 7 ? (
+              return url.startsWith('https') ? (
                 <a
                   key={`${id}/${url}`}
                   href={url}
-                  target={"_blank"}
+                  target={'_blank'}
                   rel="noreferrer"
                   className={`
                 capitalize flex items-center px-2 py-2 ${
                   location.pathname === link.url
-                    ? ""
-                    : "hover:bg-gray-600 hover:text-gray-200"
+                    ? ''
+                    : 'hover:bg-gray-600 hover:text-gray-200'
                 }  mt-5 transition-colors duration-200 transform
                  rounded-md font-oswald text-white`}
-                  // text-gray-600`
                 >
                   {imageSource ? (
                     <img src={imageSource} className="w-5 h-5" />
@@ -65,7 +69,7 @@ const SideBar: React.FC = () => {
                   )}
                   <span
                     className={`mx-4 font-medium ${
-                      location.pathname === link.url ? "text-green-500" : ""
+                      location.pathname === link.url ? 'text-green-500' : ''
                     }`}
                   >
                     {text.toUpperCase()}
@@ -78,8 +82,8 @@ const SideBar: React.FC = () => {
                   className={`
                   capitalize flex items-center px-2 py-2 ${
                     location.pathname === link.url
-                      ? ""
-                      : "hover:bg-gray-600 hover:text-gray-200"
+                      ? ''
+                      : 'hover:bg-gray-600 hover:text-gray-200'
                   }  mt-5 transition-colors duration-200 transform
                    rounded-md font-oswald text-white`}
                 >
@@ -90,7 +94,7 @@ const SideBar: React.FC = () => {
                   )}
                   <span
                     className={`mx-4 font-medium ${
-                      location.pathname === link.url ? "text-green-500" : ""
+                      location.pathname === link.url ? 'text-green-500' : ''
                     }`}
                   >
                     {text.toUpperCase()}
@@ -120,7 +124,7 @@ const SideBar: React.FC = () => {
           </nav>
           <div className="flex items-center mt-5">
             <img
-              src={small_logo}
+              src={SMALL_LOGO}
               alt="avatar"
               className="h-6 w-6 mx-2 object-center object-cover rounded-full"
             />

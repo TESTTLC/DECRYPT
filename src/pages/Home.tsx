@@ -1,21 +1,28 @@
-import React, { useRef } from "react";
-import BigButton from "../components/BigButton";
-import { Link, useNavigate } from "react-router-dom";
-import { routes } from "../utils/routes";
-import stakingImage from "../assets/images/Staking.jpg";
-import launchpadImage from "../assets/images/Launchpad.jpg";
-import createTokenImage from "../assets/images/Create-Your-Own-Token.jpg";
-import crossChainBridgeImage from "../assets/images/Cross-Chain-Bridge.jpg";
-import exchangeImage from "../assets/images/Decentralized-Exchange.jpg";
-import nftMarketplaceImage from "../assets/images/NFT-Marketplace.jpg";
-import metaverseImage from "../assets/images/Metaverse.jpg";
-import lendingAndBorrowingImage from "../assets/images/Lending-And-Borrowing.jpg";
+import React, { useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import BigButton from '../components/BigButton';
+import { routes } from '../utils/routes';
+// import launchpadImage from '../assets/images/Launchpad.jpg';
+// import stakingImage from '../assets/images/Staking.jpg';
+// import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
+// import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
+// import exchangeImage from '../assets/images/Decentralized-Exchange.jpg';
+import stakingImage from '../assets/images/staking_1.png';
+import createTokenImage from '../assets/images/create_token_1.jpg';
+import crossChainBridgeImage from '../assets/images/cross_chain_bridge_1.png';
+import exchangeImage from '../assets/images/exchange_1.png';
+import nftMarketplaceImage from '../assets/images/nft_1.png';
+import metaverseImage from '../assets/images/metaverse_1.jpg';
+import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.jpg';
+import launchpadImage from '../assets/images/launchpad_1.png';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const nftMarketplaceRef = useRef<HTMLAnchorElement>(null);
   const metaverseRef = useRef<HTMLAnchorElement>(null);
+  const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <div className="w-full flex flex-col justify-center">
@@ -28,7 +35,6 @@ const Home: React.FC = () => {
             key={routes.launchpad.title}
             to={{ pathname: routes.launchpad.url }}
             type="button"
-            // className="flex h-8 mx-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
           >
             <span className="text-white font-bold text-md underline">
               View all upcoming projects &rarr;
@@ -42,7 +48,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="STAKING"
               subtitle="Research Platform for Proof of Stake assets."
-              onClick={() => navigate("/staking")}
+              onClick={() => navigate('/staking')}
               imageSource={stakingImage}
             />
           </div>
@@ -52,7 +58,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="LAUNCHPAD"
               subtitle="Raise funds, build a community, deliver technology."
-              onClick={() => navigate("/launchpad")}
+              onClick={() => navigate('/launchpad')}
               imageSource={launchpadImage}
             />
           </div>
@@ -62,7 +68,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="CROSS CHAIN BRIDGE"
               subtitle="DeFi Innovations created for traders and retail users."
-              onClick={() => navigate("/crosschainbridge")}
+              onClick={() => navigate('/crosschainbridge')}
               imageSource={crossChainBridgeImage}
             />
           </div>
@@ -78,7 +84,6 @@ const Home: React.FC = () => {
               }}
               imageSource={nftMarketplaceImage}
             />
-            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
             <a
               ref={nftMarketplaceRef}
               className="z-0 h-0 w-0 hidden"
@@ -99,7 +104,6 @@ const Home: React.FC = () => {
               }}
               imageSource={metaverseImage}
             />
-            {/* eslint-disable-next-line jsx-a11y/anchor-has-content */}
             <a
               ref={metaverseRef}
               className="z-0 h-0 w-0 hidden"
@@ -114,7 +118,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="DECENTRALIZED EXCHANGE"
               subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
-              onClick={() => navigate("/decentralizedexchange")}
+              onClick={() => navigate('/dex')}
               imageSource={exchangeImage}
             />
           </div>
@@ -124,13 +128,19 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="CREATE YOUR TOKEN"
               subtitle="It’s Time to Build. Mint Your Own Digital Token."
-              // onClick={() => navigate("/createtoken")}
-              onClick={() => {}}
+              onClick={() => {
+                createYourTokenRef.current?.click();
+              }}
               imageSource={createTokenImage}
-              showTopText
+            />
+            <a
+              ref={createYourTokenRef}
+              className="z-0 h-0 w-0 hidden"
+              href="https://factory.decryption.com"
+              target="_blank"
+              rel="noreferrer"
             />
           </div>
-
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
               imageContainerStyle="h-3/5"
@@ -138,7 +148,9 @@ const Home: React.FC = () => {
               title="LENDING & BORROWING"
               subtitle="Use your liquidity to increase your profit."
               // onClick={() => navigate("/lendingandborrowing")}
-              onClick={() => {}}
+              onClick={() => {
+                return;
+              }}
               imageSource={lendingAndBorrowingImage}
               showTopText
             />

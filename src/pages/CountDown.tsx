@@ -1,11 +1,11 @@
-import React from "react";
-import Countdown from "react-countdown";
-import TimerBoxComp from "../components/TimberBoxComp";
-import logo from "../assets/images/logo.png";
-import banner from "../assets/images/banner.jpg";
-import blockchain from "../assets/images/blockchain.jpg";
-import { useWindowSize } from "../hooks/useWindowSize";
-import Home from "./Home";
+import React from 'react';
+import Countdown from 'react-countdown';
+
+import TimerBoxComp from '../components/TimberBoxComp';
+import logo from '../assets/images/logo.png';
+import { useWindowSize } from '../hooks/useWindowSize';
+
+import Home from './Home';
 const CountDown: React.FC = () => {
   const { isMobileSize } = useWindowSize();
 
@@ -35,17 +35,16 @@ const CountDown: React.FC = () => {
         <div
           className=""
           style={{
-            backgroundPosition: "bottom",
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
+            backgroundPosition: 'bottom',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
           }}
         >
           <div
             className=""
             style={{
-              //   backgroundImage: "url(" + blockchain + ")",
-              backgroundPosition: "top",
-              backgroundRepeat: "no-repeat",
+              backgroundPosition: 'top',
+              backgroundRepeat: 'no-repeat',
             }}
           >
             <div className="py-8 flex flex-col justify-between">

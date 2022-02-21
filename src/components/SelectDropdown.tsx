@@ -1,12 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useWalletConnector } from "../hooks/useWalletConnector";
-import Header from "./Header";
-import Modal from "react-modal";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../utils/context";
+import React, { useState } from 'react';
 
 interface Props {
   text: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   elements: any[];
   onSelect: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -32,7 +28,7 @@ const InputDropdown: React.FC<Props> = ({ text, elements, onSelect }) => {
         }}
         className={`
         ${
-          itemIndex === 0 ? "text-gray-400" : "text-white"
+          itemIndex === 0 ? 'text-gray-400' : 'text-white'
         } bg-customBlue-300 borde border-gray-300 rounded-md h-8 px-4 
         hover:border-gray-400 focus:outline-none appearance-none w-full`}
       >

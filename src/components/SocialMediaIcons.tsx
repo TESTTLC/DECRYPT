@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   hideFacebook?: boolean;
@@ -27,7 +27,7 @@ const SocialMediaIcons: React.FC<Props> = ({
     <div className={`flex ${customStyles}`}>
       {hideFacebook ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="https://www.facebook.com/Luxandia/"
           type="button"
@@ -52,7 +52,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideDiscord ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="https://discord.gg/tlchain"
           type="button"
@@ -72,7 +72,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideTwitter ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="https://twitter.com/Luxandia1"
           type="button"
@@ -97,7 +97,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideGoogle ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="#!"
           type="button"
@@ -122,7 +122,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideInstagram ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="#!"
           type="button"
@@ -147,7 +147,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideLinkedIn ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="#!"
           type="button"
@@ -172,7 +172,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideGitHub ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="#!"
           type="button"
@@ -197,7 +197,7 @@ const SocialMediaIcons: React.FC<Props> = ({
       )}
       {hideMedium ? null : (
         <a
-          target={"_blank"}
+          target={'_blank'}
           rel="noreferrer"
           href="#!"
           type="button"

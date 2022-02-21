@@ -1,16 +1,17 @@
-import React from "react";
-import { FaBars } from "react-icons/fa";
-import { useGlobalContext } from "../utils/context";
-import small_logo from "../assets/images/logo.png";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
 
 const Footer: React.FC = () => {
-  const { isSidebarOpen } = useGlobalContext();
+  const isSidebarOpen = useSelector<StoreState, boolean>(
+    (state) => state.globals.isSidebarOpen,
+  );
   return (
     <footer
       className={`
         border-t-2 border-opacity-20 border-blue-600 transition-all duration-500 ${
-          isSidebarOpen ? "xs:ml-0 sm:ml-0 ml-60" : ""
+          isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''
         } xs:justify-center items-center px-5 pt-2
     text-center 
     bg-transparent
@@ -217,6 +218,7 @@ const Footer: React.FC = () => {
                   href="https://tlchain.network/"
                   target="_blank"
                   className="text-white underline"
+                  rel="noreferrer"
                 >
                   TLChain
                 </a>
@@ -226,6 +228,7 @@ const Footer: React.FC = () => {
                   href="https://tlxscan.com"
                   target="_blank"
                   className="text-white underline"
+                  rel="noreferrer"
                 >
                   TLChain Scan
                 </a>
@@ -236,6 +239,7 @@ const Footer: React.FC = () => {
                   href="https://status.tlxscan.com"
                   target="_blank"
                   className="text-white underline"
+                  rel="noreferrer"
                 >
                   Status Network
                 </a>
@@ -243,11 +247,20 @@ const Footer: React.FC = () => {
 
               <li>
                 <Link
-                  to="privacyPolicy"
+                  to="privacypolicy"
                   type="button"
                   className="text-white underline"
                 >
                   Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="termsofuse"
+                  type="button"
+                  className="text-white underline"
+                >
+                  Terms of use
                 </Link>
               </li>
             </ul>

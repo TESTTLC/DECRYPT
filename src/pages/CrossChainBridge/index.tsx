@@ -1,22 +1,28 @@
-import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
-import { FaArrowCircleDown } from "react-icons/fa";
-import TokensModal from "./components/TokensModal";
-import { ChainsIds } from "../../utils/types";
-import { changeChain } from "../../utils/functions/MetaMask";
-import { useContracts } from "../../hooks/useContracts";
-import { useGlobalContext } from "../../utils/context";
-import { modalTokens } from "../../utils/globals";
-import { getTransaction, initialize } from "../../api/index";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
-import { TailSpin } from "react-loader-spinner";
+import { ethers } from 'ethers';
+import React, { useEffect, useState } from 'react';
+import { FaArrowCircleDown } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+import { TailSpin } from 'react-loader-spinner';
+import { StoreState } from 'src/utils/storeTypes';
+
+import { ChainsIds } from '../../utils/types';
+import { changeChain } from '../../utils/functions/MetaMask';
+import { useContracts } from '../../hooks/useContracts';
+import { modalTokens } from '../../utils/globals';
+import { getTransaction, initialize } from '../../api/index';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
+import TokensModal from './components/TokensModal';
 
 const CrossChainBridge: React.FC = () => {
   const [totalBalance, setTotalBalance] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const { tokenContract } = useContracts("OldTLX");
-  const { account } = useGlobalContext();
-  const [currentChainId, setCurrentChainId] = useState();
+  const { tokenContract } = useContracts('OldTLX');
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress,
+  );
+
+  const [currentChainId, setCurrentChainId] = useState<string>();
 
   useEffect(() => {
     chainChange();
@@ -24,7 +30,7 @@ const CrossChainBridge: React.FC = () => {
 
   useEffect(() => {
     if (window.ethereum) {
-      window.ethereum.on("chainChanged", (chainId: any) => {
+      window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
       });
     }
@@ -32,11 +38,11 @@ const CrossChainBridge: React.FC = () => {
   }, [window.ethereum]);
 
   useEffect(() => {
-    if (tokenContract && account) {
+    if (tokenContract && walletAddress) {
       getBalance();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenContract, account, currentChainId]);
+  }, [tokenContract, walletAddress, currentChainId]);
 
   const chainChange = async () => {
     try {
@@ -44,16 +50,17 @@ const CrossChainBridge: React.FC = () => {
     } catch (error) {}
   };
 
-  const getFreezedCount = async () => {
-    try {
-      const count = await tokenContract.freezingCount(account);
-    } catch (error) {}
-  };
+  // const getFreezedCount = async () => {
+  //   try {
+  //     const count = await tokenContract.freezingCount(walletAddress);
+
+  //   } catch (error) {}
+  // };
 
   const initializeSwap = async () => {
-    if (account && totalBalance > 0) {
+    if (walletAddress && totalBalance > 0) {
       setIsLoading(true);
-      const transaction = await initialize(account);
+      const transaction = await initialize(walletAddress);
       if (transaction) {
         const available =
           transaction.totalAmount - transaction.totalMintedAmount;
@@ -67,21 +74,21 @@ const CrossChainBridge: React.FC = () => {
 
   const getBalance = async () => {
     try {
-      const transaction = await getTransaction(account!);
+      const transaction = await getTransaction(walletAddress ?? '');
       if (transaction && transaction.totalAmount) {
         const available =
           transaction.totalAmount - transaction.totalMintedAmount;
 
         setTotalBalance(parseFloat(available.toFixed(3)));
       } else {
-        const result = await tokenContract.balanceOf(account);
+        const result = await tokenContract.balanceOf(walletAddress);
         if (result) {
           const available = parseFloat(ethers.utils.formatEther(result));
           setTotalBalance(parseFloat(available.toFixed(3)));
         }
       }
     } catch (error) {
-      console.log("Err: ", error);
+      console.log('Err: ', error);
     }
   };
 
@@ -147,12 +154,12 @@ const CrossChainBridge: React.FC = () => {
           >
             {isLoading ? (
               <>
-                {" "}
+                {' '}
                 Swapping in progress &nbsp;
                 <TailSpin color="#fff" height={18} width={18} />
               </>
             ) : (
-              "Swap"
+              'Swap'
             )}
           </button>
         </div>

@@ -1,40 +1,48 @@
-import React, { useRef } from "react";
-import { useWalletConnector } from "../hooks/useWalletConnector";
-import { useGlobalContext } from "../utils/context";
-import small_logo from "../assets/images/logo.png";
-import GlowingButton from "./GlowingButton";
-import { routes } from "../utils/routes";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+
+import { useWalletConnector } from '../hooks/useWalletConnector';
+import SMALL_LOGO from '../assets/images/logo.png';
+import { routes } from '../utils/routes';
 
 interface LoginButtonProps {
   connectWallet: () => void;
   disconnectWallet: () => void;
-  account?: string;
+  walletAddress?: string;
   isMobileDevice: boolean;
 }
-const metamaskAppDeepLink = "https://metamask.app.link/dapp/decryption.com";
+const metamaskAppDeepLink = 'https://metamask.app.link/dapp/decryption.com';
 // "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app";
 // const metamaskAppDeepLink = "https://metamask.app.link/dapp/192.168.1.2:3000";
 
 const LoginButton: React.FC<LoginButtonProps> = ({
   isMobileDevice,
-  account,
+  walletAddress,
   connectWallet,
   disconnectWallet,
 }) => {
   if (isMobileDevice) {
     if (!window.ethereum) {
       return (
-        <a href={metamaskAppDeepLink} target="_blank" className="rounded-md">
+        <a
+          href={metamaskAppDeepLink}
+          target="_blank"
+          className="rounded-md"
+          rel="noreferrer"
+        >
           <button className="group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
-            {/* Connect to MetaMask */}
             <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
-              {account
-                ? `Disconnect ${account.slice(0, 4)}...${account.slice(
-                    account.length - 4,
-                    account.length
+              {walletAddress
+                ? `Disconnect ${walletAddress.slice(
+                    0,
+                    4,
+                  )}...${walletAddress.slice(
+                    walletAddress.length - 4,
+                    walletAddress.length,
                   )}`
-                : "Connect wallet"}{" "}
+                : 'Connect wallet'}{' '}
             </span>
           </button>
         </a>
@@ -42,17 +50,19 @@ const LoginButton: React.FC<LoginButtonProps> = ({
     } else {
       return (
         <button
-          onClick={account ? disconnectWallet : connectWallet}
+          onClick={walletAddress ? disconnectWallet : connectWallet}
           className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
         >
-          {/* Connect to MetaMask */}
           <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
-            {account
-              ? `Disconnect ${account.slice(0, 4)}...${account.slice(
-                  account.length - 4,
-                  account.length
+            {walletAddress
+              ? `Disconnect ${walletAddress.slice(
+                  0,
+                  4,
+                )}...${walletAddress.slice(
+                  walletAddress.length - 4,
+                  walletAddress.length,
                 )}`
-              : "Connect wallet"}{" "}
+              : 'Connect wallet'}{' '}
           </span>
         </button>
       );
@@ -60,17 +70,16 @@ const LoginButton: React.FC<LoginButtonProps> = ({
   } else {
     return (
       <button
-        onClick={account ? disconnectWallet : connectWallet}
-        // className="h-10 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-3xl"
+        onClick={walletAddress ? disconnectWallet : connectWallet}
         className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
       >
         <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
-          {account
-            ? `Disconnect ${account.slice(0, 4)}...${account.slice(
-                account.length - 4,
-                account.length
+          {walletAddress
+            ? `Disconnect ${walletAddress.slice(0, 4)}...${walletAddress.slice(
+                walletAddress.length - 4,
+                walletAddress.length,
               )}`
-            : "Connect wallet"}{" "}
+            : 'Connect wallet'}{' '}
         </span>
       </button>
     );
@@ -79,23 +88,24 @@ const LoginButton: React.FC<LoginButtonProps> = ({
 
 const Header: React.FC = () => {
   const {
-    account,
+    walletAddress,
     connectWallet,
     disconnectWallet,
     isMobileSize,
     isMobileDevice,
   } = useWalletConnector();
-  const { isSidebarOpen } = useGlobalContext();
+  const isSidebarOpen = useSelector<StoreState, boolean>(
+    (state) => state.globals.isSidebarOpen,
+  );
 
   return (
     <div
       className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5
     bg-transparent"
     >
-      {/* //  bg-customBlue-800 */}
       <div
         className={`flex transition-all duration-500 ${
-          isSidebarOpen ? "ml-60 xs:ml-0 sm:ml-0" : "ml-20 xs:ml-0 sm:ml-0"
+          isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         } mb-2`}
       >
         <div className="items-start justify-center xs:w-96">
@@ -105,7 +115,7 @@ const Header: React.FC = () => {
               <span className="xs:ml-10 pl-2 mr-2 xs:pl-2 flex items-right text-center">
                 {!isMobileSize ? (
                   <img
-                    src={small_logo}
+                    src={SMALL_LOGO}
                     alt="TLX logo"
                     className="w-4 h-4 mr-2"
                     style={{ width: 20, height: 20 }}
@@ -119,6 +129,7 @@ const Header: React.FC = () => {
                 href="https://tlchain.network/"
                 target="_blank"
                 className="text-center xs:ml-4 pl-4 pr-2 mr-2 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200"
+                rel="noreferrer"
               >
                 See what's new on our website &rarr;
               </a>
@@ -128,7 +139,7 @@ const Header: React.FC = () => {
       </div>
       <div
         className={`flex items-center transition-all duration-500 ${
-          isSidebarOpen ? "ml-60 xs:ml-0 sm:ml-0" : "ml-20 xs:ml-0 sm:ml-0"
+          isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
         <Link
@@ -144,7 +155,7 @@ const Header: React.FC = () => {
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
             <LoginButton
-              account={account}
+              walletAddress={walletAddress}
               connectWallet={connectWallet}
               disconnectWallet={disconnectWallet}
               isMobileDevice={isMobileDevice}

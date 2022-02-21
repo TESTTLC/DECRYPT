@@ -1,21 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
+import Web3 from 'web3';
+import { useSelector } from 'react-redux';
+import { Web3Provider } from '@ethersproject/providers';
+import { StoreState } from 'src/utils/storeTypes';
 
-import BridgeTLC from "../contracts/BridgeTLC.json";
-
-import { ethers, Contract, utils } from "ethers";
-import { useGlobalContext } from "../utils/context";
-import { BSCBridgeContractAddress } from "../utils/globals";
-import Web3 from "web3";
+import BridgeTLC from '../contracts/BridgeTLC.json';
+import { BSCBridgeContractAddress } from '../utils/globals';
 
 export const useBridgeContracts = (coinTag: string) => {
-  const { provider, account } = useGlobalContext();
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress,
+  );
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider,
+  );
+
   const [bridgeContract, setBridgeContract] = useState<
     ethers.Contract | undefined
   >();
-  const [admin, setAdmin] = useState("");
-  const web3TLC = new Web3("https://data-seed-prebsc-1-s1.binance.org:8545/");
+  const [admin, setAdmin] = useState('');
+  const web3TLC = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/');
   const { address: adminW } = web3TLC.eth.accounts.wallet.add(
-    process.env.REACT_APP_W_KEY || ""
+    process.env.REACT_APP_W_KEY || '',
   );
 
   useEffect(() => {
@@ -29,6 +36,7 @@ export const useBridgeContracts = (coinTag: string) => {
 
   useEffect(() => {
     connectToContracts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coinTag]);
 
   const connectToContracts = async () => {
@@ -37,23 +45,23 @@ export const useBridgeContracts = (coinTag: string) => {
         const contractB = new ethers.Contract(
           BSCBridgeContractAddress,
           BridgeTLC.abi,
-          provider.getSigner()
+          provider.getSigner(),
         );
 
         setBridgeContract(contractB);
         setAlreadyConnectedToContracts(true);
       }
     } catch (error) {
-      console.log("Error on connectToContracts: ", error);
+      console.log('Error on connectToContracts: ', error);
     }
   };
 
   useEffect(() => {
-    if (provider && account && !alreadyConnectedToContracts) {
+    if (provider && walletAddress && !alreadyConnectedToContracts) {
       //   connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, account]);
+  }, [provider, walletAddress]);
 
   return { provider, bridgeContract, admin };
 };

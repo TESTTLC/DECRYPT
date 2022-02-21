@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
-import TheLuxuryBankStake from "../contracts/TheLuxuryBankStake.json";
-import TheLuxuryBankToken from "../contracts/TheLuxuryBankToken.json";
-import TheLuxuryCoinStake from "../contracts/TheLuxuryCoinStake.json";
-import TheLuxuryCoinToken from "../contracts/TheLuxuryCoinToken.json";
-import LuxandiaToken from "../contracts/LuxandiaToken.json";
-import LuxandiaStake from "../contracts/LuxandiaStake.json";
-import OldTLXToken from "../contracts/OldTLXToken.json";
+import { useEffect, useState } from 'react';
+import { ethers, Contract } from 'ethers';
+import { useSelector } from 'react-redux';
+import { Web3Provider } from '@ethersproject/providers';
+import { StoreState } from 'src/utils/storeTypes';
 
-import { ethers, Contract, utils } from "ethers";
-import { useGlobalContext } from "../utils/context";
+import TheLuxuryBankStake from '../contracts/TheLuxuryBankStake.json';
+import TheLuxuryBankToken from '../contracts/TheLuxuryBankToken.json';
+import TheLuxuryCoinStake from '../contracts/TheLuxuryCoinStake.json';
+import TheLuxuryCoinToken from '../contracts/TheLuxuryCoinToken.json';
+import LuxandiaToken from '../contracts/LuxandiaToken.json';
+import LuxandiaStake from '../contracts/LuxandiaStake.json';
+import OldTLXToken from '../contracts/OldTLXToken.json';
 import {
   LussoStakeContractAddress,
   LussoTokenContractAddress,
@@ -17,39 +19,45 @@ import {
   TLCStakeContractAddress,
   TLCTokenContractAddress,
   OldTLXTokenContractAddress,
-} from "../utils/globals";
+} from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
-  const { provider, account } = useGlobalContext();
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider,
+  );
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress,
+  );
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [tokenContract, setTokenContract] = useState<any | undefined>();
   const [stakeContract, setStakeContract] = useState<Contract | undefined>();
-  const [tokenAddress, setTokenAddress] = useState("");
-  const [stakeAddress, setStakeAddress] = useState("");
-  // const [tokenAddress, setTokenAddress] = useState(TLXTokenContractAddress);
-  // const [stakeAddress, setStakeAddress] = useState(TLXStakeContractAddress);
+  const [tokenAddress, setTokenAddress] = useState('');
+  const [stakeAddress, setStakeAddress] = useState('');
   const [alreadyConnectedToContracts, setAlreadyConnectedToContracts] =
     useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [tokenAbi, setTokenAbi] = useState<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [stakeAbi, setStakeAbi] = useState<any>();
 
   useEffect(() => {
-    if (coinTag === "TLX") {
+    if (coinTag === 'TLX') {
       setTokenAddress(TLXTokenContractAddress);
       setStakeAddress(TLXStakeContractAddress);
       setTokenAbi(TheLuxuryBankToken.abi);
       setStakeAbi(TheLuxuryBankStake.abi);
-    } else if (coinTag === "LSO") {
+    } else if (coinTag === 'LSO') {
       setTokenAddress(LussoTokenContractAddress);
       setStakeAddress(LussoStakeContractAddress);
       setTokenAbi(LuxandiaToken.abi);
       setStakeAbi(LuxandiaStake.abi);
-    } else if (coinTag === "TLC") {
+    } else if (coinTag === 'TLC') {
       setTokenAddress(TLCTokenContractAddress);
       setStakeAddress(TLCStakeContractAddress);
       setTokenAbi(TheLuxuryCoinToken.abi);
       setStakeAbi(TheLuxuryCoinStake.abi);
-    } else if (coinTag === "OldTLX") {
+    } else if (coinTag === 'OldTLX') {
       setTokenAddress(OldTLXTokenContractAddress);
       setStakeAddress(TLXStakeContractAddress);
       setTokenAbi(OldTLXToken.abi);
@@ -63,13 +71,13 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
         const contractT = new ethers.Contract(
           tokenAddress,
           tokenAbi,
-          provider.getSigner()
+          provider.getSigner(),
         );
 
         const contractS = new ethers.Contract(
           stakeAddress,
           stakeAbi,
-          provider.getSigner()
+          provider.getSigner(),
         );
 
         setTokenContract(contractT);
@@ -77,14 +85,14 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
         setAlreadyConnectedToContracts(true);
       }
     } catch (error) {
-      console.log("Error on connectToContracts: ", error);
+      console.log('Error on connectToContracts: ', error);
     }
   };
 
   useEffect(() => {
     if (
       provider &&
-      account &&
+      walletAddress &&
       tokenAbi &&
       stakeAbi &&
       tokenAddress &&
@@ -94,7 +102,7 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [provider, account, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
+  }, [provider, walletAddress, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
 
   return { provider, stakeContract, tokenContract, stakeAddress };
 };

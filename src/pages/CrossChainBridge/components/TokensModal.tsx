@@ -1,73 +1,74 @@
-import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
-import { useWindowSize } from "../../../hooks/useWindowSize";
-import { GoArrowDown } from "react-icons/all";
-import ftmBridgeImage from "src/assets/images/ftm-bridge.png";
-import ethBridgeImage from "src/assets/images/eth-bridge.png";
-import bscBridgeImage from "src/assets/images/bsc-bridge.png";
-import solBridgeImage from "src/assets/images/sol-bridge.png";
-import tlcBridgeImage from "src/assets/images/tlc-bridge.png";
-import maticBridgeImage from "src/assets/images/matic-bridge.png";
-import tlxOldToken from "src/assets/images/tlx-token-old.png";
-import tlxNewToken from "src/assets/images/tlx-token-new.png";
-import atariToken from "src/assets/images/atari-token.png";
-import { Project } from "../../../utils/types";
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import { GoArrowDown } from 'react-icons/all';
+import ftmBridgeImage from 'src/assets/images/ftm-bridge.png';
+import ethBridgeImage from 'src/assets/images/eth-bridge.png';
+import bscBridgeImage from 'src/assets/images/bsc-bridge.png';
+import solBridgeImage from 'src/assets/images/sol-bridge.png';
+import tlcBridgeImage from 'src/assets/images/tlc-bridge.png';
+import maticBridgeImage from 'src/assets/images/matic-bridge.png';
+import tlxOldToken from 'src/assets/images/tlx-token-old.png';
+import tlxNewToken from 'src/assets/images/tlx-token-new.png';
+import atariToken from 'src/assets/images/atari-token.png';
 
-Modal.setAppElement("#root");
+import { useWindowSize } from '../../../hooks/useWindowSize';
+import { Project } from '../../../utils/types';
+
+Modal.setAppElement('#root');
 
 interface Props {
   index?: number;
   tokens: Project[];
-  type: "from" | "to";
+  type: 'from' | 'to';
 }
 
 const TokensModal: React.FC<Props> = ({ tokens, type }) => {
   const { isMobileSize } = useWindowSize();
   const [selectedChain, setSelectedChain] = useState(tokens[0].tag);
-  const [imageUsed, setImageUsed] = useState("");
-  const [imageUsedToken, setImageUsedToken] = useState("");
-  const [selectedToken, setSelectedToken] = useState("TLX");
+  const [imageUsed, setImageUsed] = useState('');
+  const [imageUsedToken, setImageUsedToken] = useState('');
+  const [selectedToken, setSelectedToken] = useState('TLX');
 
   const customStyles = {
     content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
+      top: '50%',
+      left: '50%',
+      right: 'auto',
       // bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
       // backgroundColor: "#080220",
-      backgroundColor: "#080220",
+      backgroundColor: '#080220',
       opacity: 1,
       backgroundOpacity: 1,
       borderWidth: 0,
       padding: 0,
       zIndex: 999,
-      minHeight: "25rem",
-      width: isMobileSize ? "20rem" : "25rem",
+      minHeight: '25rem',
+      width: isMobileSize ? '20rem' : '25rem',
     },
   };
 
   useEffect(() => {
-    if (selectedChain === "BSC") {
+    if (selectedChain === 'BSC') {
       setImageUsed(bscBridgeImage);
-    } else if (selectedChain === "ETH") {
+    } else if (selectedChain === 'ETH') {
       setImageUsed(ethBridgeImage);
-    } else if (selectedChain === "FTM") {
+    } else if (selectedChain === 'FTM') {
       setImageUsed(ftmBridgeImage);
-    } else if (selectedChain === "MATIC") {
+    } else if (selectedChain === 'MATIC') {
       setImageUsed(maticBridgeImage);
-    } else if (selectedChain === "SOL") {
+    } else if (selectedChain === 'SOL') {
       setImageUsed(solBridgeImage);
-    } else if (selectedChain === "TLC") {
+    } else if (selectedChain === 'TLC') {
       setImageUsed(tlcBridgeImage);
     }
 
-    if (selectedToken === "TLX" && type === "from") {
+    if (selectedToken === 'TLX' && type === 'from') {
       setImageUsedToken(tlxOldToken);
-    } else if (selectedToken === "TLX" && type === "to") {
+    } else if (selectedToken === 'TLX' && type === 'to') {
       setImageUsedToken(tlxNewToken);
-    } else if (selectedToken === "ATRI") {
+    } else if (selectedToken === 'ATRI') {
       setImageUsedToken(atariToken);
     }
   }, [selectedChain, selectedToken, type]);
@@ -88,8 +89,8 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
         <div className="flex items-center">
           <button
             onClick={() => {
-              if (type === "from") {
-                setSelectedToken(selectedToken === "TLX" ? "ATRI" : "TLX");
+              if (type === 'from') {
+                setSelectedToken(selectedToken === 'TLX' ? 'ATRI' : 'TLX');
               }
             }}
             className="flex text-white font-poppins items-center justify-center"
@@ -99,10 +100,10 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
               src={imageUsedToken}
             />
             <p className="text-white font-poppins">
-              {type === "from" ? selectedToken : "TLX"}
+              {type === 'from' ? selectedToken : 'TLX'}
             </p>
 
-            {type === "from" ? (
+            {type === 'from' ? (
               <GoArrowDown className="h-4 w-4 ml-2 mt-1" color="white" />
             ) : null}
           </button>
@@ -118,7 +119,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
             className="text-white font-poppins w-7 h-7 mr-1 object-cover"
             src={imageUsed}
           />
-          <p className="text-white font-poppins">{selectedChain}</p>{" "}
+          <p className="text-white font-poppins">{selectedChain}</p>{' '}
           <GoArrowDown className="h-4 w-4 ml-2 mb-1" color="white" />
         </button>
       </div>
@@ -145,7 +146,7 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
                   className={` w-full flex ${
                     index === 0 || index === tokens.length
                       ? undefined
-                      : "border-t-2"
+                      : 'border-t-2'
                   } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
                   onClick={() => setSelectedChain(token.tag)}
                 >

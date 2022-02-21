@@ -1,54 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../../utils/context";
-import BigButton from "../../components/BigButton";
-import { Link, useNavigate } from "react-router-dom";
-import { routes } from "../../utils/routes";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { routes } from '../../utils/routes';
 // import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
 // import TheLuxuryBank from "../../assets/images/the_luxury.png";
 // import ICICB from "../../assets/images/ICICB.png";
-import TheLuxuryCoin from "../../assets/images/TLC.jpg";
-import TheLuxuryBank from "../../assets/images/TLX.jpg";
-import LSO from "../../assets/images/LSO.jpg";
-import ICICB from "../../assets/images/ATARI.jpg";
-import GlowingWrapper from "../../components/GlowingWrapper";
-import ProjectItem from "../Launchpad/components/ProjectItem";
-import Item from "./components/Item";
+import TheLuxuryCoin from '../../assets/images/TLC.jpg';
+import TheLuxuryBank from '../../assets/images/TLX.jpg';
+import LSO from '../../assets/images/LSO.jpg';
+import ICICB from '../../assets/images/ATARI.jpg';
+import GlowingWrapper from '../../components/GlowingWrapper';
 
-const options = { method: "GET" };
-
-interface Asset {
-  image_preview_url: string;
-}
+import Item from './components/Item';
 
 const Stake: React.FC = () => {
-  const imagesRef = useRef<null | HTMLDivElement>(null);
-  const [assets, setAssets] = useState<Asset[]>([]);
-  const [modalIsOpen, setIsOpen] = React.useState(false);
   const navigate = useNavigate();
-
-  function openModal() {
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const retreiveAssets = async () => {
-    fetch(
-      "https://api.opensea.io/api/v1/assets?owner=0xf56345338cb4cddaf915ebef3bfde63e70fe3053",
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => {
-        setAssets(response.assets.reverse());
-      })
-      .catch((err) => console.error(err));
-  };
-
-  useEffect(() => {
-    // retreiveAssets();
-  }, []);
 
   return (
     <div className="w-full flex flex-col justify-center">
@@ -103,7 +69,9 @@ const Stake: React.FC = () => {
               coinTag="ATARI Token"
               title="ATARI Token"
               subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
-              onClick={() => {}}
+              onClick={() => {
+                return;
+              }}
               // imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"
               imageSource={ICICB}
               showTopText
