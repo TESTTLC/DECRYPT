@@ -47,7 +47,9 @@ const Farms: React.FC<Props> = () => {
       <div className="flex flex-col">
         <div className="flex xs:flex-col justify-between">
           <span className="flex-[0.4] text-lg font-bold mb-2">LP Farms</span>
-          <Categories />
+          <div className="flex-[0.6]">
+            <Categories />
+          </div>
         </div>
         <div className="grid grid-cols-5 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center  w-full bg-black bg-opacity-75 px-4 py-2 rounded-md">
           <div className="flex grid-col justify-center items-center space-x-3">

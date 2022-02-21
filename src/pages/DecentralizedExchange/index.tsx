@@ -143,11 +143,11 @@ const DecentralizedExchange: React.FC = () => {
           <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
         )}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 md:space-y-8 sm:space-y-8 xs:space-y-8">
-        <div className="mx-4">
+      <div className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 md:space-y-8 sm:space-y-8 xs:space-y-8 gap-x-8">
+        <div className="">
           <SwapSections />
         </div>
-        <div className="mx-4">
+        <div className="">
           <LiquiditySections />
         </div>
       </div>
