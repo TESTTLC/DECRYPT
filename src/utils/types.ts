@@ -33,6 +33,7 @@ export type Project = {
   name: string;
   tag: string;
   image: string;
+  iconBackground?: string;
 };
 
 export enum ChainsIds {

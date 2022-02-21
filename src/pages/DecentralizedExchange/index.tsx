@@ -11,9 +11,14 @@ import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';
+import { useWalletConnector } from 'src/hooks/useWalletConnector';
 
 import { changeChain } from '../../utils/functions/MetaMask';
 import { ChainsIds, Project } from '../../utils/types';
+
+import SwapSections from './components/SwapSections';
+import LiquiditySections from './components/LiquiditySections';
+import Farms from './components/Farms';
 
 export const localModalTokens: Project[] = [
   {
@@ -28,11 +33,12 @@ export const localModalTokens: Project[] = [
   },
 ];
 
-const minimumAmount = 1;
+// const minimumAmount = 1;
 
 const DecentralizedExchange: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [isLoading, setIsLoading] = useState(false);
+  const [sectionIndex, setSectionIndex] = useState(0);
+  const { connectWallet } = useWalletConnector();
+
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
   );
@@ -88,7 +94,7 @@ const DecentralizedExchange: React.FC = () => {
     if (currentChainId === ChainsIds.BSC) {
       setChainErrorMessage(undefined);
     } else {
-      setChainErrorMessage('Please connect to Binance Smart Chain');
+      // setChainErrorMessage('Please connect to Binance Smart Chain');
     }
   }, [currentChainId, getUsdtBalance]);
 
@@ -115,143 +121,50 @@ const DecentralizedExchange: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [window.ethereum]);
 
-  // Send USDT
-  // const send = async () => {
-  //   // @ts-ignore
-  //   if (provider && account && usdtAmountToSwap >= minimumAmount) {
-  //     try {
-  //       const contract = new ethers.Contract(
-  //         USDTContractAddress,
-  //         USDTToken.abi,
-  //         provider.getSigner()
-  //       );
-  //       const usdts = ethers.utils.parseUnits(usdtAmountToSwap.toString(), 18);
-  //       const tx = await contract.transfer(
-  //         process.env.REACT_APP_TLC_OWNER_ADDRESS,
-  //         usdts
-  //       );
-
-  //       const res = await fetch(
-  //         `${process.env.REACT_APP_API_BACKEND_EXCHANGE}api/claim`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             Accept: "application/json",
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             address: walletAddress,
-  //             txhash: tx.hash,
-  //             amount: usdtAmountToSwap.toString(),
-  //           }),
-  //         }
-  //       );
-
-  //       const data = await res.json();
-  //     } catch (error) {
-  //       console.log("Error is: ", error);
-  //     }
-  //   }
-  // };
-
   return (
     <div className="flex flex-col flex-1 items-center">
-      <div className="flex flex-col">
-        <div className="w-[38rem] xs:w-[22rem] mt-10 text-sm mb-4">
-          <p className="font-poppins font-bold text-gray-300 text-3xl">
-            Trade Coin In An Instant
-          </p>
-        </div>
+      <div className="flex flex-col items-center justify-center">
         <div className="flex justify-between">
-          <div className="flex">
-            <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
-              {usdtBalance} USDT
+          <div className="flex flex-col items-center justify-center">
+            <p className="font-poppins font-bold text-gray-300 text-3xl mb-4">
+              Trade Coin In An Instant
             </p>
-            <p className="text-white font-poppins font-semibold text-lg mb-4">
-              &nbsp;available on BSC
-            </p>
+            <div className="flex ">
+              {/* <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
+                {usdtBalance} USDT
+              </p> */}
+              {/* <p className="text-white font-poppins font-semibold text-lg mb-4">
+                &nbsp;available on BSC
+              </p> */}
+            </div>
           </div>
         </div>
         {chainErrorMessage && (
           <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
         )}
-        <div className="relative items-center w-[38rem] xs:w-[22rem] h-[25rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
-          <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
-            <div className="flex w-1/2 flex-col h-full">
-              <p className="text-gray-400 font-medium font-poppins text-sm">
-                From
-              </p>
-              <input
-                className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                onChange={handleAmountChange}
-                value={usdtAmountToSwap}
-                type="number"
-              ></input>
-            </div>
-            {/* <TokensModal tokens={localModalTokens} type="from" /> */}
-            <div className="flex w-1/2 justify-end items-center mt-4">
-              <img
-                className="text-white font-poppins w-4 h-4 mr-2 object-cover "
-                src={tetherImage}
-                alt="Tether-Logo"
-              />
-              <p className="font-poppins text-md text-white">USDT</p>
-            </div>
-          </div>
-          <div className="w-full flex items-center justify-center h-14">
-            <FaArrowCircleDown
-              className="h-6 w-6 bg-transparent self-center "
-              color="gray"
-            />
-          </div>
-          <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
-            <div className="flex w-1/2 flex-col h-full">
-              <p className="text-gray-400 font-medium font-poppins text-sm">
-                To
-              </p>
-              <input
-                className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                type="number"
-                disabled
-                value={usdtAmountToSwap * 17}
-              ></input>
-            </div>
-            {/* <TokensModal tokens={[]} type="to" /> */}
-            <div className="flex w-1/2 justify-end items-center mt-4">
-              <img
-                className="text-white font-poppins w-6 h-6 mr-2 object-cover "
-                src={tlchainImage}
-                alt="TLChain-Logo"
-              />
-              <p className="font-poppins text-md text-white">TLC</p>
-            </div>
-          </div>
-          <p className="font-poppins text-gray-300 mt-2">
-            Exchange Rate: 1 USDT ≃ 17 TLC
-          </p>
-          <p className="mb-2 font-poppins text-red-400">
-            Please note that there's a minim of {minimumAmount} USDT (BEP20) per
-            swap
-          </p>
-          <button className="mt-2 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
-            {isLoading ? (
-              <>
-                {' '}
-                Exchange in progress &nbsp;
-                <TailSpin color="#fff" height={18} width={18} />
-              </>
-            ) : (
-              'Exchange'
-            )}
-          </button>
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 md:space-y-8 sm:space-y-8 xs:space-y-8">
+        <div className="mx-4">
+          <SwapSections />
+        </div>
+        <div className="mx-4">
+          <LiquiditySections />
         </div>
       </div>
-
-      <div className="w-[38rem] xs:w-[22rem] mt-4 text-lg">
-        <p className="font-poppins text-gray-300">
-          It will take a minute. Please check your wallet to get{' '}
-          {usdtAmountToSwap * 17} TLC
-        </p>
+      <div className="relative flex items-center justify-between w-[34rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-center my-8">
+        <div className="flex flex-col items-center justify-center text-sm">
+          <span>Total Value Locked on Farms</span>
+          <span>1.434.241</span>
+        </div>
+        <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
+        <div className="flex flex-col items-center justify-center text-sm">
+          <span>1 TLC = $0.0625</span>
+          <span>Market Cap: $1.240.062</span>
+          <span>Est. Weekly Rewards: $25.254</span>
+        </div>
+      </div>
+      <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-sm">
+        <Farms />
       </div>
     </div>
   );

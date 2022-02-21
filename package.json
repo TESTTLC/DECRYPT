@@ -25,6 +25,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "ethereum-types": "^3.6.0",
     "ethers": "^5.5.2",
+    "prettier": "^2.5.1",
     "react": "^16.8",
     "react-countdown": "^2.3.2",
     "react-dom": "^17.0.2",
@@ -46,7 +47,7 @@
   "scripts": {
     "start": "craco start",
     "devHTTPS": "TAILWIND_MODE=watch HTTPS=true SSL_CRT_FILE=./.cert/cert.pem SSL_KEY_FILE=./.cert/key.pem craco start",
-    "dev": "TAILWIND_MODE=watch craco start",
+    "dev": "FAST_REFRESH=false TAILWIND_MODE=watch craco start",
     "check-types": "tsc",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "build": "craco build",
@@ -79,6 +80,7 @@
     "autoprefixer": "^9.8.8",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "postcss": "^7.0.39",
+    "react-error-overlay": "^6.0.9",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
     "ts-node": "^10.4.0"
   },
@@ -93,5 +95,9 @@
         ]
       }
     }
+  },
+  "resolutions": {
+    "//": "See https://github.com/facebook/create-react-app/issues/11773",
+    "react-error-overlay": "6.0.9"
   }
 }

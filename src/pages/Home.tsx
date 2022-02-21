@@ -3,20 +3,26 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import BigButton from '../components/BigButton';
 import { routes } from '../utils/routes';
-import stakingImage from '../assets/images/Staking.jpg';
-import launchpadImage from '../assets/images/Launchpad.jpg';
-import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
-import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
-import exchangeImage from '../assets/images/Decentralized-Exchange.jpg';
-import nftMarketplaceImage from '../assets/images/NFT-Marketplace.jpg';
-import metaverseImage from '../assets/images/Metaverse.jpg';
-import lendingAndBorrowingImage from '../assets/images/Lending-And-Borrowing.jpg';
+// import launchpadImage from '../assets/images/Launchpad.jpg';
+// import stakingImage from '../assets/images/Staking.jpg';
+// import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
+// import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
+// import exchangeImage from '../assets/images/Decentralized-Exchange.jpg';
+import stakingImage from '../assets/images/staking_1.png';
+import createTokenImage from '../assets/images/create_token_1.jpg';
+import crossChainBridgeImage from '../assets/images/cross_chain_bridge_1.png';
+import exchangeImage from '../assets/images/exchange_1.png';
+import nftMarketplaceImage from '../assets/images/nft_1.png';
+import metaverseImage from '../assets/images/metaverse_1.jpg';
+import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.jpg';
+import launchpadImage from '../assets/images/launchpad_1.png';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
 
   const nftMarketplaceRef = useRef<HTMLAnchorElement>(null);
   const metaverseRef = useRef<HTMLAnchorElement>(null);
+  const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
   return (
     <div className="w-full flex flex-col justify-center">
@@ -112,7 +118,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="DECENTRALIZED EXCHANGE"
               subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
-              onClick={() => navigate('/decentralizedexchange')}
+              onClick={() => navigate('/dex')}
               imageSource={exchangeImage}
             />
           </div>
@@ -122,15 +128,19 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="CREATE YOUR TOKEN"
               subtitle="It’s Time to Build. Mint Your Own Digital Token."
-              // onClick={() => navigate("/createtoken")}
               onClick={() => {
-                return;
+                createYourTokenRef.current?.click();
               }}
               imageSource={createTokenImage}
-              showTopText
+            />
+            <a
+              ref={createYourTokenRef}
+              className="z-0 h-0 w-0 hidden"
+              href="https://factory.decryption.com"
+              target="_blank"
+              rel="noreferrer"
             />
           </div>
-
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
               imageContainerStyle="h-3/5"

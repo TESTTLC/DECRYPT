@@ -48,7 +48,7 @@ const SideBar: React.FC = () => {
           <nav className="text">
             {links.map((link) => {
               const { id, url, text, icon, imageSource } = link;
-              return id === 6 || id === 7 ? (
+              return url.startsWith('https') ? (
                 <a
                   key={`${id}/${url}`}
                   href={url}

@@ -247,11 +247,20 @@ const Footer: React.FC = () => {
 
               <li>
                 <Link
-                  to="privacyPolicy"
+                  to="privacypolicy"
                   type="button"
                   className="text-white underline"
                 >
                   Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="termsofuse"
+                  type="button"
+                  className="text-white underline"
+                >
+                  Terms of use
                 </Link>
               </li>
             </ul>

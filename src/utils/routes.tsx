@@ -48,7 +48,7 @@ export const links = [
   },
   {
     id: 4,
-    url: '/decentralizedexchange',
+    url: '/dex',
     text: 'decentralized exchange',
     icon: <FaUniversalAccess className="w-5 h-5" />,
     // imageSource: exchangeImage,
@@ -56,7 +56,7 @@ export const links = [
   },
   {
     id: 5,
-    url: '/createtoken',
+    url: 'https://factory.decryption.com',
     text: 'create your token',
     icon: <FaCreativeCommons className="w-5 h-5" />,
     // imageSource: createTokenImage,

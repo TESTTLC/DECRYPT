@@ -13,6 +13,7 @@ import ProjectDetails from './pages/ProjectDetails';
 import CrossChainBridge from './pages/CrossChainBridge';
 import DecentralizedExchange from './pages/DecentralizedExchange';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfUse from './pages/TermsOfUse';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import Header from './components/Header';
@@ -27,7 +28,7 @@ const App = () => {
   return (
     <>
       <div className="bg-image"></div>
-      <div className="z-10 flex flex-col">
+      <div className="z-10 flex flex-col font-poppins text-white">
         <SideBar />
         <div className="flex flex-col w-full min-h-screen z-10">
           <Header />
@@ -43,12 +44,10 @@ const App = () => {
               <Route path="/launchpad" element={<Launchpad />} />
               <Route path="/launchpad/:coinTag" element={<ProjectDetails />} />
               <Route path="/crosschainbridge" element={<CrossChainBridge />} />
-              <Route
-                path="/decentralizedexchange"
-                element={<DecentralizedExchange />}
-              />
+              <Route path="/dex" element={<DecentralizedExchange />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+              <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+              <Route path="/termsofuse" element={<TermsOfUse />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

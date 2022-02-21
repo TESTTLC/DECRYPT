@@ -108,3 +108,112 @@
   "ignorePatterns": "./src/assets/images"
   
 }
+
+
+// {
+//   "plugins": [
+//     "import",
+//     "@typescript-eslint",
+//     "react",
+//     "prettier",
+//     "jest",
+//     "react-hooks"
+//   ],
+//   "settings": {
+//     "react": {
+//       "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+//     },
+//     "import/resolver": {
+//       "node": {
+//         "extensions": [
+//           ".js",
+//           ".jsx",
+//           ".ts",
+//           ".tsx",
+//           ".d.ts",
+//           ".android.js",
+//           ".android.jsx",
+//           ".android.ts",
+//           ".android.tsx",
+//           ".ios.js",
+//           ".ios.jsx",
+//           ".ios.ts",
+//           ".ios.tsx",
+//           ".web.js",
+//           ".web.jsx",
+//           ".web.ts",
+//           ".web.tsx"
+//         ]
+//       }
+//     }
+//   },
+//   "extends": [
+//     "plugin:@typescript-eslint/recommended",
+//     "prettier",
+//     "plugin:prettier/recommended"
+//   ],
+//   "parser": "@typescript-eslint/parser",
+//   "parserOptions": {
+//     "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
+//     "ecmaFeatures": {
+//       "jsx": true
+//     },
+//     "sourceType": "module",
+//     "project": "./tsconfig.json"
+//   },
+//   "rules": {
+//     // "import/no-unresolved": "warn",
+//     "prettier/prettier": [
+//       "warn",
+//       {
+//         "singleQuote": true,
+//         "trailingComma": "all",
+//         //"arrowParens": "avoid",
+//         "endOfLine": "auto"
+//       }
+//     ],
+//     "no-use-before-define": "off",
+//     // "@typescript-eslint/no-use-before-define": ["warn"],
+//     "react/jsx-no-undef": "warn",
+//     "react/jsx-props-no-spreading": "warn",
+//     "@typescript-eslint/no-use-before-define": "warn",
+//     "react/style-prop-object": "warn",
+//     "react/prop-types": "warn",
+//     "no-shadow": "off",
+//     "@typescript-eslint/no-shadow": ["warn"],
+//     // "max-len": ["warn", 120],
+//     "@typescript-eslint/ban-ts-comment": "warn",
+//     "@typescript-eslint/no-explicit-any": "warn",
+//     // "@typescript-eslint/explicit-module-boundary-types": "warn",
+//     "react/jsx-filename-extension": [
+//       "warn",
+//       { "extensions": [".tsx", ".js", "jsx"] }
+//     ],
+
+//     "import/no-extraneous-dependencies": "warn",
+//     "import/order": ["warn", { "newlines-between": "always" }],
+//     "import/no-duplicates": "warn",
+//     "import/no-useless-path-segments": "warn",
+//     "import/no-cycle": "warn",
+//     "import/namespace": "warn",
+//     "import/default": "warn",
+//     "import/no-named-as-default-member": "warn",
+//     "import/no-named-as-default": "warn",
+//     "import/no-unused-modules": "warn",
+//     "import/no-deprecated": "warn",
+//     "import/no-anonymous-default-export": "warn",
+//     "react-hooks/rules-of-hooks": "warn",
+//     "react-hooks/exhaustive-deps": [
+//       "warn",
+//       { "additionalHooks": "(useMemoOne)" }
+//     ],
+//     "jest/no-identical-title": "warn",
+//     "jest/valid-expect": "warn",
+//     "camelcase": "warn",
+//     "prefer-destructuring": "warn",
+//     "no-nested-ternary": "warn",
+//     "no-param-reassign": 0
+//   },
+//   "ignorePatterns": "./src/assets/images"
+  
+// }
