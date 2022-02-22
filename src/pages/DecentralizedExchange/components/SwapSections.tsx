@@ -73,7 +73,7 @@ export const toModalTokes: Project[] = [
   },
 ];
 
-const minimumAmount = 1;
+const minimumAmount = 100;
 const tlcValue = 0.16; // USDT
 
 interface Props {
