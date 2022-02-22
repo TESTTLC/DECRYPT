@@ -2,15 +2,21 @@ import React, { useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
-import tetherImage from 'src/assets/images/tether.png';
 import tlchainImage from 'src/assets/images/tlc-bridge.png';
-import { Project } from 'src/utils/types';
+import { ChainsIds, Project } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
+import usdtLogo from 'src/assets/images/tether.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlxLogo from 'src/assets/images/TLX-logo.png';
 import atriLogo from 'src/assets/images/ATRI-logo.png';
 import { AiFillLock } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+import { ethers } from 'ethers';
+import { Web3Provider } from '@ethersproject/providers';
+import { USDTContractAddress } from 'src/utils/globals';
+import USDTToken from 'src/contracts/USDT.json';
 
 import SwapTokensModal from './SwapTokensModal';
 import Categories from './Categories';
@@ -18,7 +24,15 @@ import Categories from './Categories';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fromModalTokens: any[] = [
   {
-    name: 'USDC',
+    name: 'Tether',
+    tag: 'USDT',
+    image: usdtLogo,
+    iconBackground: '',
+    percentage1: 19,
+    percentage2: 179,
+  },
+  {
+    name: 'USD Coin',
     tag: 'USDC',
     image: usdcLogo,
     iconBackground: '',
@@ -26,7 +40,7 @@ export const fromModalTokens: any[] = [
     percentage2: 179,
   },
   {
-    name: 'LSO',
+    name: 'Luxandia',
     tag: 'LSO',
     image: lsoLogo,
     iconBackground: 'white',
@@ -34,7 +48,7 @@ export const fromModalTokens: any[] = [
     percentage2: 120,
   },
   {
-    name: 'TLX',
+    name: 'The Luxury',
     tag: 'TLX',
     image: tlxLogo,
     iconBackground: '',
@@ -42,7 +56,7 @@ export const fromModalTokens: any[] = [
     percentage2: 170,
   },
   {
-    name: 'ATRI',
+    name: 'Atari Token',
     tag: 'ATRI',
     image: atriLogo,
     iconBackground: '',
@@ -59,12 +73,26 @@ export const toModalTokes: Project[] = [
   },
 ];
 
-const SwapSections: React.FC = () => {
+const minimumAmount = 1;
+const tlcValue = 0.16; // USDT
+
+interface Props {
+  currentChainId: string;
+}
+const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [fromToken, setFromToken] = useState(fromModalTokens[0].tag);
+  const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
   const [toToken, setToToken] = useState(toModalTokes[0].tag);
+  // const [amountToSwap, setamountToSwap] = useState(0);
+
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider,
+  );
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress,
+  );
 
   const onFromTokenChange = (token: string) => {
     setFromToken(token);
@@ -76,7 +104,60 @@ const SwapSections: React.FC = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
-    setAmountToSwap(e.target.value);
+    setAmountToSwap(parseFloat(e.target.value));
+    console.log('e: ', e.target.value);
+  };
+
+  // Send USDT
+  const send = async () => {
+    console.log('amountToSwap: ', amountToSwap);
+    console.log('minimumAmount: ', minimumAmount);
+    console.log('provider: ', provider);
+    console.log('walletAddress: ', walletAddress);
+    console.log('fromToken: ', fromToken);
+    if (
+      provider &&
+      walletAddress &&
+      amountToSwap >= minimumAmount &&
+      fromToken === 'USDT' &&
+      currentChainId === ChainsIds.BSC
+    ) {
+      console.log('Sending: ', amountToSwap, +' ' + fromToken);
+      try {
+        const contract = new ethers.Contract(
+          USDTContractAddress,
+          USDTToken.abi,
+          provider.getSigner(),
+        );
+        const usdts = ethers.utils.parseUnits(amountToSwap.toString(), 18);
+        const tx = await contract.transfer(
+          process.env.REACT_APP_TLC_OWNER_ADDRESS,
+          usdts,
+        );
+
+        const res = await fetch(
+          `${process.env.REACT_APP_API_BACKEND_EXCHANGE}api/claim`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              address: walletAddress,
+              txhash: tx.hash,
+              amount: amountToSwap.toString(),
+            }),
+          },
+        );
+        setIsLoading(false);
+
+        const data = await res.json();
+      } catch (error) {
+        console.log('Error is: ', error);
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -148,7 +229,7 @@ const SwapSections: React.FC = () => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={amountToSwap * 17}
+                  value={amountToSwap / tlcValue}
                 ></input>
               </div>
               {/* <SwapTokensModal tokens={[]} type="to" /> */}
@@ -162,10 +243,10 @@ const SwapSections: React.FC = () => {
               </div>
             </div>
             <div className="h-14 mt-2">
-              {fromToken === 'USDC' ? (
+              {fromToken === 'USDC' || fromToken === 'USDT' ? (
                 <>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
-                    Exchange Rate: 1 USDC ≃ 16 TLC
+                    Exchange Rate: 1 {fromToken} ≃ {1 / tlcValue} TLC
                   </p>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Slippage 1%
@@ -173,7 +254,25 @@ const SwapSections: React.FC = () => {
                 </>
               ) : null}
             </div>
-            <button className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
+            <button
+              className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+              onClick={() => {
+                if (
+                  amountToSwap >= minimumAmount &&
+                  fromToken === 'USDT' &&
+                  currentChainId === ChainsIds.BSC
+                ) {
+                  setIsLoading(true);
+                  console.log('here');
+                  send();
+                }
+              }}
+              disabled={
+                isLoading ||
+                amountToSwap < minimumAmount ||
+                fromToken !== 'USDT'
+              }
+            >
               {isLoading ? (
                 <>
                   {' '}
