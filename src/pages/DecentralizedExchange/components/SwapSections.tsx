@@ -252,7 +252,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Slippage 1%
                   </p>
-                  <p className="mb-2 font-poppins text-red-400 text-xs h-4">
+                  <p className="mb-2 font-poppins text-red-400 text-xs h-4 ">
                     Please note that there's a minim of {minimumAmount} USDT
                     (BEP20) per swap
                   </p>
@@ -260,7 +260,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
               ) : null}
             </div>
             <button
-              className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+              className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
               onClick={() => {
                 if (
                   amountToSwap >= minimumAmount &&

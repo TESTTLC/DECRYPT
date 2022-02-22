@@ -12,6 +12,7 @@ import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';
 import { useWalletConnector } from 'src/hooks/useWalletConnector';
+import { useNavigate } from 'react-router-dom';
 
 import { changeChain } from '../../utils/functions/MetaMask';
 import { ChainsIds, Project } from '../../utils/types';
@@ -36,6 +37,7 @@ export const localModalTokens: Project[] = [
 const DecentralizedExchange: React.FC = () => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const { connectWallet } = useWalletConnector();
+  const navigate = useNavigate();
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
@@ -120,22 +122,22 @@ const DecentralizedExchange: React.FC = () => {
       <div className="flex flex-col items-center justify-center">
         <div className="flex justify-between">
           <div className="flex flex-col items-center justify-center">
-            <p className="font-poppins font-bold text-gray-300 text-3xl mb-4">
+            <p className="font-bold text-gray-300 text-3xl mb-4">
               Trade Coin In An Instant
             </p>
 
             <div className="flex">
-              <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
+              <p className="text-green-400 font-semibold text-lg mb-4">
                 {usdtBalance} USDT
               </p>
-              <p className="text-white font-poppins font-semibold text-lg mb-4">
+              <p className="text-white font-semibold text-lg mb-4">
                 &nbsp;available on BSC
               </p>
             </div>
           </div>
         </div>
         {chainErrorMessage && (
-          <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
+          <p className="mb-2 text-red-400">{chainErrorMessage}</p>
         )}
       </div>
 
@@ -152,10 +154,17 @@ const DecentralizedExchange: React.FC = () => {
         with a price of $0.16/TLC - 6.25 $TLC/1 USDT. The swap module will
         remain open until 23 Feb at 10.30 UTC.
       </p>
-      <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-center my-4">
+
+      <button
+        className="flex w-30 h-8 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+        onClick={() => navigate('/dexdisclaimer')}
+      >
+        See Exchange Disclaimer
+      </button>
+      <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-4 rounded-lg bg-black bg-opacity-60 text-white text-center my-4">
         <div className="flex flex-col items-center justify-center text-sm">
           <span>Total Value Locked on Farms</span>
-          <span>1.434.241</span>
+          <span>$1.434.241</span>
         </div>
         <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
         <div className="flex flex-col items-center justify-center text-sm">
@@ -165,7 +174,7 @@ const DecentralizedExchange: React.FC = () => {
         </div>
       </div>
 
-      <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-sm">
+      <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 text-white text-sm">
         <Farms />
       </div>
     </div>
