@@ -74,6 +74,7 @@ export const toModalTokes: Project[] = [
 ];
 
 const minimumAmount = 1;
+const tlcValue = 0.16; // USDT
 
 interface Props {
   currentChainId: string;
@@ -228,7 +229,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={amountToSwap * 16}
+                  value={amountToSwap / tlcValue}
                 ></input>
               </div>
               {/* <SwapTokensModal tokens={[]} type="to" /> */}
@@ -245,7 +246,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
               {fromToken === 'USDC' || fromToken === 'USDT' ? (
                 <>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
-                    Exchange Rate: 1 {fromToken} ≃ 16 TLC
+                    Exchange Rate: 1 {fromToken} ≃ {1 / tlcValue} TLC
                   </p>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Slippage 1%
