@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { AiFillLock } from 'react-icons/ai';
 
 import SideBar from './components/SideBar';
 import OpenSideBarButton from './components/OpenSideBarButton';
@@ -14,6 +15,7 @@ import CrossChainBridge from './pages/CrossChainBridge';
 import DecentralizedExchange from './pages/DecentralizedExchange';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfUse from './pages/TermsOfUse';
+import DexDisclaimer from './pages/DexDisclaimer';
 import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import Header from './components/Header';
@@ -29,6 +31,13 @@ const App = () => {
     <>
       <div className="bg-image"></div>
       <div className="z-10 flex flex-col font-poppins text-white">
+        <div className="z-50 flex items-center justify-center space-x-1 text-xs w-full h-8 bg-black bg-opacity-60 drop-shadow-xl shadow-lg">
+          <AiFillLock size={14} color={'#34d399'} />
+          <p>
+            Scam/Phishing verification:{' '}
+            <span className="text-green-400">https://</span>decryption.com
+          </p>
+        </div>
         <SideBar />
         <div className="flex flex-col w-full min-h-screen z-10">
           <Header />
@@ -48,6 +57,8 @@ const App = () => {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/privacypolicy" element={<PrivacyPolicy />} />
               <Route path="/termsofuse" element={<TermsOfUse />} />
+              <Route path="/dexdisclaimer" element={<DexDisclaimer />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
