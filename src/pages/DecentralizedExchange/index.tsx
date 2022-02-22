@@ -33,8 +33,6 @@ export const localModalTokens: Project[] = [
   },
 ];
 
-// const minimumAmount = 1;
-
 const DecentralizedExchange: React.FC = () => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const { connectWallet } = useWalletConnector();
@@ -54,7 +52,6 @@ const DecentralizedExchange: React.FC = () => {
   const [chainErrorMessage, setChainErrorMessage] = useState<
     string | undefined
   >(undefined);
-  const [usdtAmountToSwap, setUsdtAmountToSwap] = useState(0);
 
   const chainChange = async () => {
     await changeChain(ChainsIds.BSC);
@@ -79,9 +76,6 @@ const DecentralizedExchange: React.FC = () => {
   }, [currentChainId, provider, walletAddress]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleAmountChange = (e: any) => {
-    setUsdtAmountToSwap(e.target.value);
-  };
 
   useEffect(() => {
     chainChange();
@@ -94,7 +88,7 @@ const DecentralizedExchange: React.FC = () => {
     if (currentChainId === ChainsIds.BSC) {
       setChainErrorMessage(undefined);
     } else {
-      // setChainErrorMessage('Please connect to Binance Smart Chain');
+      setChainErrorMessage('Please connect to Binance Smart Chain');
     }
   }, [currentChainId, getUsdtBalance]);
 
@@ -129,13 +123,30 @@ const DecentralizedExchange: React.FC = () => {
             <p className="font-poppins font-bold text-gray-300 text-3xl mb-4">
               Trade Coin In An Instant
             </p>
+            <p className="text-xs items-center justify-between w-[33rem] xs:w-[22rem] text-center">
+              You will have an opportunity to purchase $TLC on Feb 22 at 22 PM
+              UTC with a price of $0.16 / TLC - 6.25 $TLC/1 USDT. The swap
+              module will remain open until 23 Feb at 10.30 UTC.
+            </p>
+            <div className="relative flex items-center justify-between w-[34rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-center my-4">
+              <div className="flex flex-col items-center justify-center text-sm">
+                <span>Total Value Locked on Farms</span>
+                <span>1.434.241</span>
+              </div>
+              <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
+              <div className="flex flex-col items-center justify-center text-sm">
+                <span>1 TLC = $0.0625</span>
+                <span>Market Cap: $1.240.062</span>
+                <span>Est. Weekly Rewards: $25.254</span>
+              </div>
+            </div>
             <div className="flex ">
-              {/* <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
+              <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
                 {usdtBalance} USDT
-              </p> */}
-              {/* <p className="text-white font-poppins font-semibold text-lg mb-4">
+              </p>
+              <p className="text-white font-poppins font-semibold text-lg mb-4">
                 &nbsp;available on BSC
-              </p> */}
+              </p>
             </div>
           </div>
         </div>
@@ -143,26 +154,15 @@ const DecentralizedExchange: React.FC = () => {
           <p className="mb-2 font-poppins text-red-400">{chainErrorMessage}</p>
         )}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 md:space-y-8 sm:space-y-8 xs:space-y-8 gap-x-8">
+      <div className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 md:space-y-8 sm:space-y-8 xs:space-y-8 gap-x-8 mb-8">
         <div className="">
-          <SwapSections />
+          <SwapSections currentChainId={currentChainId ?? ''} />
         </div>
         <div className="">
           <LiquiditySections />
         </div>
       </div>
-      <div className="relative flex items-center justify-between w-[34rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-center my-8">
-        <div className="flex flex-col items-center justify-center text-sm">
-          <span>Total Value Locked on Farms</span>
-          <span>1.434.241</span>
-        </div>
-        <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
-        <div className="flex flex-col items-center justify-center text-sm">
-          <span>1 TLC = $0.0625</span>
-          <span>Market Cap: $1.240.062</span>
-          <span>Est. Weekly Rewards: $25.254</span>
-        </div>
-      </div>
+
       <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-sm">
         <Farms />
       </div>
