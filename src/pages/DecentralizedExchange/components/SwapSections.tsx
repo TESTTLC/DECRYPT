@@ -251,6 +251,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Slippage 1%
                   </p>
+                  <p className="mb-2 font-poppins text-red-400 text-xs h-4">
+                    Please note that there's a minim of {minimumAmount} USDT
+                    (BEP20) per swap
+                  </p>
                 </>
               ) : null}
             </div>

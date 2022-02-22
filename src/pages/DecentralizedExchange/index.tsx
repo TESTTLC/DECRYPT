@@ -123,12 +123,12 @@ const DecentralizedExchange: React.FC = () => {
             <p className="font-poppins font-bold text-gray-300 text-3xl mb-4">
               Trade Coin In An Instant
             </p>
-            <p className="text-xs items-center justify-between w-[33rem] xs:w-[22rem] text-center">
+            <p className="text-xs items-center justify-between w-[37rem] xs:w-[22rem] text-center">
               You will have an opportunity to purchase $TLC on Feb 22 at 22 PM
-              UTC with a price of $0.16 / TLC - 6.25 $TLC/1 USDT. The swap
-              module will remain open until 23 Feb at 10.30 UTC.
+              UTC with a price of $0.16/TLC - 6.25 $TLC/1 USDT. The swap module
+              will remain open until 23 Feb at 10.30 UTC.
             </p>
-            <div className="relative flex items-center justify-between w-[34rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-center my-4">
+            <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 font-poppins text-white text-center my-4">
               <div className="flex flex-col items-center justify-center text-sm">
                 <span>Total Value Locked on Farms</span>
                 <span>1.434.241</span>
@@ -140,7 +140,7 @@ const DecentralizedExchange: React.FC = () => {
                 <span>Est. Weekly Rewards: $25.254</span>
               </div>
             </div>
-            <div className="flex ">
+            <div className="flex">
               <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
                 {usdtBalance} USDT
               </p>
