@@ -96,6 +96,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   const onFromTokenChange = (token: string) => {
     setFromToken(token);
+    console.log('Token: ', token);
   };
 
   const onToTokenChange = (token: string) => {
@@ -243,7 +244,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
               </div>
             </div>
             <div className="h-14 mt-2">
-              {fromToken === 'USDC' || fromToken === 'USDT' ? (
+              {fromToken === 'USDT' ? (
                 <>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Exchange Rate: 1 {fromToken} ≃ {1 / tlcValue} TLC
