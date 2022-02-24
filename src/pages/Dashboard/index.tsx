@@ -273,9 +273,14 @@ const Dashboard: React.FC = () => {
             <span className="text-sm w-full text-center">
               A single registration is required for access to the Decryption
               Launchpad. TLX or TLC must be staked in order to utilize
-              Decryption Power. If you do not have one or two assets staked,
-              click here to purchase TLC, stake your coins, and return to
-              Launchpad
+              Decryption Power. If you do not have one or two assets staked,{' '}
+              <span
+                className="underline text-green-500 cursor-pointer"
+                onClick={() => navigate('/dex')}
+              >
+                click here
+              </span>{' '}
+              to purchase TLC, stake your coins, and return to Launchpad.
             </span>
             {alreadyJoined && (
               <span className="text-md w-full text-center text-green-500 mt-4">
