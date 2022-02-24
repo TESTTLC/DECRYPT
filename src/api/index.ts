@@ -72,3 +72,26 @@ export const claimTLC = async (
     console.log('Error: ', error);
   }
 };
+
+export const joinLaunchpadApi = async (
+  walletAddress: string,
+  tlxStake: number,
+  tlcStake: number,
+  totalPower: number,
+) => {
+  const launchpadApi = axios.create({
+    baseURL: process.env.REACT_APP_JOIN_LAUNCHPAD_API,
+  });
+  console.log('launchpadApi: ', process.env.REACT_APP_JOIN_LAUNCHPAD_API);
+  try {
+    const result = await launchpadApi.post('/', {
+      walletAddress,
+      tlxStake,
+      tlcStake,
+      totalPower,
+    });
+    console.log('Result: ', result);
+  } catch (error) {
+    console.log('Error: ', error);
+  }
+};

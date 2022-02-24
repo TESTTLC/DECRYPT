@@ -70,7 +70,7 @@
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": ["error"],
     // "max-len": ["error", 120],
-    "@typescript-eslint/ban-ts-comment": 2,
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": 2,
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "react/jsx-filename-extension": [
@@ -102,7 +102,7 @@
     "jest/valid-expect": 2,
     "camelcase": 2,
     "prefer-destructuring": 2,
-    "no-nested-ternary": 2,
+    "no-nested-ternary": "warn",
     "no-param-reassign": 0
   },
   "ignorePatterns": "./src/assets/images"

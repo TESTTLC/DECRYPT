@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTotalPower } from 'src/redux/modules/account/actions';
 import { StoreState } from 'src/utils/storeTypes';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { useContracts } from '../hooks/useContracts';
 import { useWindowSize } from '../hooks/useWindowSize';
@@ -32,6 +33,7 @@ interface Props {
 const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
   const { isMobileSize } = useWindowSize();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
@@ -166,13 +168,24 @@ const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
   return (
     <div>
       <button
-        onClick={coinTag === 'default' ? undefined : openModal}
+        // onClick={coinTag === 'default' ? undefined : openModal}
+        onClick={
+          coinTag === 'default'
+            ? undefined
+            : () =>
+                navigate('/dashboard', { state: { comingFromLaunchpad: true } })
+        }
         type="button"
         className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
       >
-        {coinTag === 'default'
+        {/* {coinTag === 'default'
           ? 'Coming Soon'
-          : 'This IDO requires KYC verification'}
+          : totalPower < 1
+          ? 'You need at least 1% power'
+          : 'Go to Dashboard'}
+           */}
+
+        {coinTag === 'default' ? 'Coming Soon' : 'Join the Launchpad'}
       </button>
       <Modal
         isOpen={modalIsOpen}
