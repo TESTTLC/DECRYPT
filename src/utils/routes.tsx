@@ -64,8 +64,8 @@ export const links = [
   },
   {
     id: 6,
-    // url: "/nftmarketplace",
-    url: 'https://theluxury.gallery',
+    url: '/nftmarketplace',
+    // url: 'https://theluxury.gallery',
     text: 'nft marketplace',
     icon: <FaImages className="w-5 h-5" />,
     // imageSource: nftMarketplaceImage,
