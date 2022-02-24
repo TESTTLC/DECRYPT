@@ -222,7 +222,7 @@ const Dashboard: React.FC = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.ethereum.networkVersion]);
+  }, [window.ethereum?.networkVersion]);
 
   return (
     <div className="px-2 w-full flex flex-col justify-center">
