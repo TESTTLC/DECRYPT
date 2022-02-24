@@ -78,19 +78,19 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="NFT MARKETPLACE"
               subtitle="Create, Buy, Sell NFTs."
-              // onClick={() => navigate("/nftmarketplace")}
-              onClick={() => {
-                nftMarketplaceRef.current?.click();
-              }}
+              onClick={() => navigate('/nftmarketplace')}
+              // onClick={() => {
+              //   nftMarketplaceRef.current?.click();
+              // }}
               imageSource={nftMarketplaceImage}
             />
-            <a
+            {/* <a
               ref={nftMarketplaceRef}
               className="z-0 h-0 w-0 hidden"
               href="https://theluxury.gallery"
               target="_blank"
               rel="noreferrer"
-            />
+            /> */}
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton

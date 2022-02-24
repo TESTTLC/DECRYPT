@@ -2,8 +2,8 @@ import React from 'react';
 
 interface Props {
   title: string;
-  subtitle: string;
-  onClick: () => void;
+  subtitle?: string;
+  onClick?: () => void;
   imageSource?: string;
   showTopText?: boolean;
   showPageTitle?: boolean;
