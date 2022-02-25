@@ -45,6 +45,9 @@ const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
   const [stakeAmount, setStakeAmount] = useState(0);
   const [duration, setDuration] = useState(0);
   const [stakingCoin, setStakingCoin] = useState('TLX');
+  const [TLCPowerLoaded, setTLCPowerLoaded] = useState(false);
+  const [TLXPowerLoaded, setTLXPowerLoaded] = useState(false);
+
   const { stakeContract: TLXStakeContract, tokenContract: TLXTokenContract } =
     useContracts('TLX');
   const { stakeContract: TLCStakeContract, tokenContract: TLCTokenContract } =
@@ -104,8 +107,10 @@ const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
 
       if (powerCoin === 'TLX') {
         setTLXPower(currentPower);
+        setTLXPowerLoaded(true);
       } else if (powerCoin === 'TLC') {
         setTLCPower(currentPower);
+        setTLCPowerLoaded(true);
       }
     }
   };
@@ -136,12 +141,20 @@ const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
       p = 100;
     }
     setPower(parseFloat(p.toFixed(4)));
-    if (parseFloat(p.toFixed(4)) !== totalPower) {
+    if (
+      parseFloat(p.toFixed(4)) !== totalPower &&
+      TLCPowerLoaded &&
+      TLXPowerLoaded
+    ) {
       dispatch(setTotalPower(parseFloat(p.toFixed(4))));
     }
 
+    return () => {
+      setTLXPowerLoaded(false);
+      setTLCPowerLoaded(false);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TLXPower, TLCPower]);
+  }, [TLXPower, TLCPower, TLCPowerLoaded, TLXPowerLoaded]);
 
   useEffect(() => {
     if (TLXPower === 0) {

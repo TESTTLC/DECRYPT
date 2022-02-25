@@ -166,7 +166,7 @@ const StakeCoin: React.FC = () => {
     }
   }, [getStakeTransactions, stakeContract]);
 
-  const renderTable = () => {
+  function Table() {
     return !walletAddress ? (
       <>
         {/* <p>Connect to your wallet to have access</p> */}
@@ -212,7 +212,7 @@ const StakeCoin: React.FC = () => {
                 <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
                   {chainErrorMessage}
                 </p>
-              ) : !isRegisteredInLSOLaunchpad ? (
+              ) : !isRegisteredInLSOLaunchpad && coinTag === 'LSO' ? (
                 <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
                   You must be registered to Launchpad with at least 1% power
                 </p>
@@ -363,6 +363,14 @@ const StakeCoin: React.FC = () => {
         </div>
       </div>
     );
+  }
+
+  const unfreezeCurrent = async () => {
+    try {
+      console.log('here');
+      const result = await tokenContract.releaseOnce();
+      console.log('Result: ', result);
+    } catch (error) {}
   };
 
   return coinsTags.includes(coinTag ?? '') ? (
@@ -422,8 +430,18 @@ const StakeCoin: React.FC = () => {
           </div>
         </div>
       </div>
+      {coinTag === 'TLX' && walletAddress && (
+        <div className="flex w-full items-center justify-center mt-4">
+          <button
+            className="flex h-10 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            onClick={unfreezeCurrent}
+          >
+            Unfreeze TLX
+          </button>
+        </div>
+      )}
 
-      {renderTable()}
+      <Table />
     </div>
   ) : (
     <NotFound />
