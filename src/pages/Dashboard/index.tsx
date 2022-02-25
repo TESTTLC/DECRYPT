@@ -155,7 +155,6 @@ const Dashboard: React.FC = () => {
           },
         );
 
-        console.log('her2');
         const result = await res.json();
         console.log('result: ', result);
         if (result.walletAddress && result.totalPower) {

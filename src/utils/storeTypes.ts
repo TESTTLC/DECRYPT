@@ -9,13 +9,17 @@ interface BaseUser {
   totalPower: number;
   email?: string;
 }
+export type AccountState = BaseUser;
 
 export interface GlobalState {
   provider?: Web3Provider;
   isSidebarOpen: boolean;
 }
 
-export type AccountState = BaseUser;
+export interface LaunchpadState {
+  isRegisteredInLSOLaunchpad: boolean;
+}
+
 export type AppDispatch = ThunkDispatch<StoreState, unknown, AnyAction>;
 
 export type ThunkApi = {
@@ -26,10 +30,20 @@ export type ThunkApi = {
 export type StoreState = {
   account: AccountState;
   globals: GlobalState;
+  launchpad: LaunchpadState;
 };
 
 export enum ApiStatus {
   Done = 'DONE',
   Loading = 'LOADING',
   Error = 'ERROR',
+}
+
+export type ResponseType = 'success' | 'error';
+
+export interface SerializedError {
+  name?: string;
+  message?: string;
+  stack?: string;
+  code?: string;
 }
