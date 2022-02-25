@@ -82,8 +82,8 @@ export const links = [
   },
   {
     id: 8,
-    url: '/lendingandborrowing',
-    text: 'lending & borrowing',
+    url: '/tokenization',
+    text: 'Asset Tokenization',
     icon: <FaMoneyBillWave className="w-5 h-5" />,
     // imageSource: lendingAndBorrowingImage,
     imageSource: undefined,

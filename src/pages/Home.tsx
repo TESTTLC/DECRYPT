@@ -145,14 +145,13 @@ const Home: React.FC = () => {
             <BigButton
               imageContainerStyle="h-3/5"
               imageStyle="object-top"
-              title="LENDING & BORROWING"
-              subtitle="Use your liquidity to increase your profit."
+              title="FUTURE PROJECTS"
+              subtitle="Become a modern investor! Learn more about the ecosystem and the benefits of tokenization."
               // onClick={() => navigate("/lendingandborrowing")}
               onClick={() => {
                 return;
               }}
               imageSource={lendingAndBorrowingImage}
-              showTopText
             />
           </div>
         </div>
