@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ethers } from 'ethers';
 import { useParams } from 'react-router-dom';
 import { StoreState } from 'src/utils/storeTypes';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import GlowingButton from '../../../components/GlowingButton';
 import SelectDropdown from '../../../components/SelectDropdown';
@@ -33,10 +33,16 @@ const StakeCoin: React.FC = () => {
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
+  const isRegisteredInLSOLaunchpad = useSelector<
+    StoreState,
+    boolean | undefined
+  >((state) => state.launchpad.isRegisteredInLSOLaunchpad);
+  console.log('isRegisteredInLSOLaunchpad: ', isRegisteredInLSOLaunchpad);
   const { stakeContract, tokenContract, stakeAddress } = useContracts(
     coinTag ?? '-',
   );
 
+  const dispatch = useDispatch();
   const { isMobileSize } = useWindowSize();
   const [duration, setDuration] = useState(0);
   const [stakeAmount, setStakeAmount] = useState(0);
@@ -70,6 +76,9 @@ const StakeCoin: React.FC = () => {
 
   useEffect(() => {
     chainChange();
+    // if (coinTag === 'LSO' && walletAddress) {
+    //   dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,7 +94,10 @@ const StakeCoin: React.FC = () => {
     if (coinTag === 'TLC') {
       getUserTLCBalance();
     }
-  }, [walletAddress, coinTag, getUserTLCBalance]);
+    // if (coinTag === 'LSO' && walletAddress) {
+    //   dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
+    // }
+  }, [walletAddress, coinTag, getUserTLCBalance, dispatch]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -154,6 +166,7 @@ const StakeCoin: React.FC = () => {
              from-green-400 to-blue-600
           rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"
         ></div>
+
         <div
           className="relative w-full py-4 px-8 bg-white rounded-lg my-20 bg-gradient-to-b from-customBlue-700 via-customBlue-700 to-customBlue-200
               "
@@ -172,6 +185,10 @@ const StakeCoin: React.FC = () => {
               <div className="xs: mt-4">
                 <p className="text-white font-bold text-xl">
                   Earn Passive Income With The Luxury
+                  {
+                    isRegisteredInLSOLaunchpad ? 'asdads' : '111'
+                    //<p>dada</p>
+                  }
                 </p>
                 <p className="text-gray-400 mt-4">
                   Staking is a great way to maximize your holdings in staking
@@ -234,7 +251,12 @@ const StakeCoin: React.FC = () => {
                       <GlowingButton
                         text={`Stake ${stakeAmount || 0}`}
                         onClick={() => {
-                          if (coinTag && coinTag !== 'TLC' && stakeContract) {
+                          if (
+                            coinTag &&
+                            coinTag !== 'TLC' &&
+                            coinTag !== 'LSO' &&
+                            stakeContract
+                          ) {
                             webStake(
                               tokenContract,
                               stakeContract,
@@ -253,6 +275,21 @@ const StakeCoin: React.FC = () => {
                               stakeContract,
                               stakeAmount,
                               duration,
+                            );
+                          } else if (
+                            coinTag &&
+                            coinTag === 'LSO' &&
+                            stakeContract &&
+                            isRegisteredInLSOLaunchpad
+                          ) {
+                            webStake(
+                              tokenContract,
+                              stakeContract,
+                              stakeAddress,
+                              walletAddress,
+                              stakeAmount,
+                              duration,
+                              coinTag,
                             );
                           }
                         }}
