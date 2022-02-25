@@ -2,19 +2,19 @@ import React, { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import BigButton from 'src/components/BigButton';
 import { routes } from 'src/utils/routes';
-// import launchpadImage from '../assets/images/Launchpad.jpg';
+// import domainImage from '../assets/images/Launchpad.jpg';
 // import stakingImage from '../assets/images/Staking.jpg';
 // import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
 // import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
-// import exchangeImage from '../assets/images/Decentralized-Exchange.jpg';
-import stakingImage from 'src/assets/images/staking_1.png';
-import createTokenImage from 'src/assets/images/create_token_1.jpg';
-import crossChainBridgeImage from 'src/assets/images/cross_chain_bridge_1.png';
-import exchangeImage from 'src/assets/images/exchange_1.png';
-import nftMarketplaceImage from 'src/assets/images/nft_1.png';
-import metaverseImage from 'src/assets/images/metaverse_1.jpg';
-import lendingAndBorrowingImage from 'src/assets/images/lending_and_borrowing_1.jpg';
-import launchpadImage from 'src/assets/images/launchpad_1.png';
+// import tradingImage from '../assets/images/Decentralized-Exchange.jpg';
+import collectiblesImage from 'src/assets/images/collectibles.png';
+import utilityImage from 'src/assets/images/utility.png';
+import musicImage from 'src/assets/images/music.png';
+import tradingImage from 'src/assets/images/trade.png';
+import photographyImage from 'src/assets/images/photography.png';
+import sportsImage from 'src/assets/images/sports.png';
+import worldsImage from 'src/assets/images/worlds.png';
+import domainImage from 'src/assets/images/domain.png';
 
 const NFTMarketplace: React.FC = () => {
   const navigate = useNavigate();
@@ -42,76 +42,76 @@ const NFTMarketplace: React.FC = () => {
         <div className="grid gap-8 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 mt-4 justify-center items-center">
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Collectibles"
               // subtitle="Research Platform for Proof of Stake assets."
-              imageSource={stakingImage}
+              imageSource={collectiblesImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Domain Names"
               // subtitle="Raise funds, build a community, deliver technology."
-              imageSource={launchpadImage}
+              imageSource={domainImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Music"
               // subtitle="DeFi Innovations created for traders and retail users."
-              imageSource={crossChainBridgeImage}
+              imageSource={musicImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Photography"
               // subtitle="Create, Buy, Sell NFTs."
 
-              imageSource={nftMarketplaceImage}
+              imageSource={photographyImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Sports"
               // subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
 
-              imageSource={metaverseImage}
+              imageSource={sportsImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Trading Cards"
               // subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
-              imageSource={exchangeImage}
+              imageSource={tradingImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Utility"
               // subtitle="It’s Time to Build. Mint Your Own Digital Token."
-              imageSource={createTokenImage}
+              imageSource={utilityImage}
             />
           </div>
           <div className="flex w-full h-72 justify-center items-center mb-6">
             <BigButton
-              imageContainerStyle="h-3/5"
+              imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Virtual Words"
               // subtitle="Use your liquidity to increase your profit."
-              imageSource={lendingAndBorrowingImage}
+              imageSource={worldsImage}
             />
           </div>
         </div>

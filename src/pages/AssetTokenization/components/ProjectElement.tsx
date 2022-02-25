@@ -5,7 +5,7 @@ import SocialMediaIcons from 'src/components/SocialMediaIcons';
 
 import LaunchpadModal from '../../../components/LaunchpadModal';
 import { assetTokenizationProjects } from '../../../utils/assetTokenizationProjects';
-import { LaunchpadProject } from '../../../utils/types';
+import { AssetTokenizationProject } from '../../../utils/types';
 
 interface Props {
   coinTag: string;
@@ -18,7 +18,7 @@ const ProjectElement: React.FC<Props> = ({
   showStakingButton,
   showHoverAnimation,
 }) => {
-  const [project, setProject] = useState<LaunchpadProject>(
+  const [project, setProject] = useState<AssetTokenizationProject>(
     assetTokenizationProjects.CVL,
   );
 
@@ -118,7 +118,7 @@ const ProjectElement: React.FC<Props> = ({
           {showStakingButton ? (
             <LaunchpadModal
               index={project.id}
-              coinTag={coinTag}
+              coinTag={'default'}
               projectItem={project}
             />
           ) : null}
