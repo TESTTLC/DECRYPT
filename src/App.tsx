@@ -22,6 +22,7 @@ import Header from './components/Header';
 import { StoreState } from './utils/storeTypes';
 import KYC from './pages/KYC';
 import NFTMarketplace from './pages/NFTMarketplace';
+import AssetTokenization from './pages/AssetTokenization';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO'];
 
@@ -63,6 +64,7 @@ const App = () => {
               <Route path="/dexdisclaimer" element={<DexDisclaimer />} />
               <Route path="/kyc" element={<KYC />} />
               <Route path="/nftmarketplace" element={<NFTMarketplace />} />
+              <Route path="/tokenization" element={<AssetTokenization />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
