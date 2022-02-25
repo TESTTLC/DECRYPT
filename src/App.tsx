@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
 
 import SideBar from './components/SideBar';
@@ -22,27 +22,13 @@ import Header from './components/Header';
 import { StoreState } from './utils/storeTypes';
 import KYC from './pages/KYC';
 import NFTMarketplace from './pages/NFTMarketplace';
-import { useCachedResources } from './hooks/useCachedResources';
-import { getLSOLaunchpadRegistrationThunk } from './redux/modules/launchpad/actions';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO'];
 
 const App = () => {
-  const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
   );
-  const walletAddress = useSelector<StoreState, string | undefined>(
-    (state) => state.account.walletAddress,
-  );
-  // useCachedResources();
-
-  useEffect(() => {
-    if (walletAddress) {
-      dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [walletAddress]);
 
   return (
     <>

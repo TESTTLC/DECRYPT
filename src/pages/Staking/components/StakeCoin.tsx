@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { useParams } from 'react-router-dom';
 import { StoreState } from 'src/utils/storeTypes';
 import { useDispatch, useSelector } from 'react-redux';
+import { getLSOLaunchpadRegistration } from 'src/api/launchpad';
 
 import GlowingButton from '../../../components/GlowingButton';
 import SelectDropdown from '../../../components/SelectDropdown';
@@ -33,15 +34,13 @@ const StakeCoin: React.FC = () => {
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
-  const isRegisteredInLSOLaunchpad = useSelector<
-    StoreState,
-    boolean | undefined
-  >((state) => state.launchpad.isRegisteredInLSOLaunchpad);
-  console.log('isRegisteredInLSOLaunchpad: ', isRegisteredInLSOLaunchpad);
+
   const { stakeContract, tokenContract, stakeAddress } = useContracts(
     coinTag ?? '-',
   );
 
+  const [isRegisteredInLSOLaunchpad, setIsRegisteredInLSOLaunchpad] =
+    useState(false);
   const dispatch = useDispatch();
   const { isMobileSize } = useWindowSize();
   const [duration, setDuration] = useState(0);
@@ -74,11 +73,18 @@ const StakeCoin: React.FC = () => {
     }
   };
 
+  const getLaunchpadRegistration = useCallback(async () => {
+    if (coinTag === 'LSO' && walletAddress) {
+      const isRegisteredInLaunchpad = await getLSOLaunchpadRegistration(
+        walletAddress,
+      );
+      setIsRegisteredInLSOLaunchpad(isRegisteredInLaunchpad);
+    }
+  }, [coinTag, walletAddress]);
+
   useEffect(() => {
     chainChange();
-    // if (coinTag === 'LSO' && walletAddress) {
-    //   dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
-    // }
+    getLaunchpadRegistration();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -94,10 +100,17 @@ const StakeCoin: React.FC = () => {
     if (coinTag === 'TLC') {
       getUserTLCBalance();
     }
+    getLaunchpadRegistration();
     // if (coinTag === 'LSO' && walletAddress) {
     //   dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
     // }
-  }, [walletAddress, coinTag, getUserTLCBalance, dispatch]);
+  }, [
+    walletAddress,
+    coinTag,
+    getUserTLCBalance,
+    dispatch,
+    getLaunchpadRegistration,
+  ]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -185,10 +198,6 @@ const StakeCoin: React.FC = () => {
               <div className="xs: mt-4">
                 <p className="text-white font-bold text-xl">
                   Earn Passive Income With The Luxury
-                  {
-                    isRegisteredInLSOLaunchpad ? 'asdads' : '111'
-                    //<p>dada</p>
-                  }
                 </p>
                 <p className="text-gray-400 mt-4">
                   Staking is a great way to maximize your holdings in staking
@@ -198,9 +207,14 @@ const StakeCoin: React.FC = () => {
                   those future rewards.
                 </p>
               </div>
+              {/* eslint-disable-next-line no-nested-ternary */}
               {chainErrorMessage ? (
                 <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
                   {chainErrorMessage}
+                </p>
+              ) : !isRegisteredInLSOLaunchpad ? (
+                <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
+                  You must be registered to Launchpad with at least 1% power
                 </p>
               ) : (
                 <div className="py-5 pr-2 mt-6 flex flex-col">
