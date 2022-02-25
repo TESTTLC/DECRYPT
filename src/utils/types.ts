@@ -25,6 +25,17 @@ export interface LaunchpadProject {
   moreDetails: ReactElement;
   website: string;
 }
+
+export interface AssetTokenizationProject {
+  id: number;
+  title: string;
+  coinTag: string;
+  description: string;
+  about: string;
+  imageSource: string;
+  moreDetails: ReactElement;
+  website: string;
+}
 export enum CoinTags {}
 
 export type Project = {
