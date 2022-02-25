@@ -167,7 +167,7 @@ const StakeCoin: React.FC = () => {
     }
   }, [getStakeTransactions, stakeContract]);
 
-  function Table() {
+  const renderTable = () => {
     return !walletAddress ? (
       <>
         {/* <p>Connect to your wallet to have access</p> */}
@@ -213,11 +213,11 @@ const StakeCoin: React.FC = () => {
                 <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
                   {chainErrorMessage}
                 </p>
-              ) : !isRegisteredInLSOLaunchpad && coinTag === 'LSO' ? (
-                <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
-                  You must be registered to Launchpad with at least 1% power
-                </p>
               ) : (
+                // ) : !isRegisteredInLSOLaunchpad && coinTag === 'LSO' ? (
+                //   <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
+                //     You must be registered to Launchpad with at least 1% power
+                //   </p>
                 <div className="py-5 pr-2 mt-6 flex flex-col">
                   <div className="flex justify-between border-b-2 border-opacity-30 pb-1">
                     <p className="text-xl text-white font-bold">
@@ -240,6 +240,8 @@ const StakeCoin: React.FC = () => {
                         setStakeAmount(parseFloat(e.target.value));
                       }}
                       placeholder="Value..."
+                      value={stakeAmount}
+                      key={'inputKey'}
                     />
                     <div className="my-2 mr-2 w-64">
                       <SelectDropdown
@@ -359,7 +361,7 @@ const StakeCoin: React.FC = () => {
         </div>
       </div>
     );
-  }
+  };
 
   const unfreezeCurrent = async () => {
     try {
@@ -439,7 +441,7 @@ const StakeCoin: React.FC = () => {
         </div>
       )}
 
-      <Table />
+      {renderTable()}
     </div>
   ) : (
     <NotFound />
