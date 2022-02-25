@@ -10,7 +10,8 @@ import Home from './pages/Home';
 import Staking from './pages/Staking';
 import StakeCoin from './pages/Staking/components/StakeCoin';
 import Launchpad from './pages/Launchpad';
-import ProjectDetails from './pages/ProjectDetails';
+import LaunchpadProjectDetails from './pages/LaunchpadProjectDetails';
+import TokenizationProjectDetails from './pages/TokenizationProjectDetails';
 import CrossChainBridge from './pages/CrossChainBridge';
 import DecentralizedExchange from './pages/DecentralizedExchange';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -55,7 +56,10 @@ const App = () => {
               <Route path="/staking" element={<Staking />} />
               <Route path="/staking/:coinTag" element={<StakeCoin />} />
               <Route path="/launchpad" element={<Launchpad />} />
-              <Route path="/launchpad/:coinTag" element={<ProjectDetails />} />
+              <Route
+                path="/launchpad/:coinTag"
+                element={<LaunchpadProjectDetails />}
+              />
               <Route path="/crosschainbridge" element={<CrossChainBridge />} />
               <Route path="/dex" element={<DecentralizedExchange />} />
               <Route path="/dashboard" element={<Dashboard />} />
@@ -65,6 +69,10 @@ const App = () => {
               <Route path="/kyc" element={<KYC />} />
               <Route path="/nftmarketplace" element={<NFTMarketplace />} />
               <Route path="/tokenization" element={<AssetTokenization />} />
+              <Route
+                path="/tokenization/:coinTag"
+                element={<TokenizationProjectDetails />}
+              />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

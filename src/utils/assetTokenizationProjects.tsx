@@ -37,17 +37,11 @@ export const assetTokenizationProjects = {
     website: 'luxandia.com',
     moreDetails: (
       <>
-        Metaverse is more than just a movie concept. Users will have access to
-        all the digital experiences they might encounter, replicating many of
-        the actions they would find in the real world, such as shopping for
-        clothes, buying property, and creating their own spaces.
+        The first ten hectares of land have been purchased and we are currently
+        negotiating to purchase another fifty hectares in the same area. We
+        intend to build 100 houses with various facilities.
         <br />
         <br />
-        Metaverse, unlike a virtual ecosystem in a game, involves the management
-        of financial data and transactions that run the economy and simulate
-        what a user would encounter in the real world. Without this, users are
-        likely to miss out on the truly immersive experience that the Metaverse
-        has to offer.
       </>
     ),
   } as AssetTokenizationProject,

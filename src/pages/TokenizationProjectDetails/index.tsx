@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { launchpadProjects } from 'src/utils/launchpadProjects';
-import { LaunchpadProject } from 'src/utils/types';
+import { assetTokenizationProjects } from 'src/utils/assetTokenizationProjects';
+import { AssetTokenizationProject } from 'src/utils/types';
 
-import ProjectElement from '../Launchpad/components/ProjectElement';
+import ProjectElement from '../AssetTokenization/components/ProjectElement';
 
-const ProjectDetails: React.FC = () => {
+const TokenizationProjectDetails: React.FC = () => {
   const { coinTag } = useParams();
-  const [project, setProject] = useState<LaunchpadProject>();
+  const [project, setProject] = useState<AssetTokenizationProject>();
   useEffect(() => {
-    if (coinTag === 'TLX') {
-      setProject(launchpadProjects.TLX);
-    } else if (coinTag === 'TLC') {
-      setProject(launchpadProjects.TLC);
-    } else if (coinTag === 'LSO') {
-      setProject(launchpadProjects.LSO);
+    if (coinTag === 'CVL') {
+      setProject(assetTokenizationProjects.CVL);
     } else if (coinTag === 'default') {
-      setProject(launchpadProjects.DEFAULT);
+      setProject(assetTokenizationProjects.DEFAULT);
     }
   }, [coinTag]);
 
@@ -51,38 +47,22 @@ const ProjectDetails: React.FC = () => {
           </p>
           <div className="mt-10">
             <p className="uppercase font-oswald text-2xl text-white">
-              Pool Details
+              Syndicate Details
             </p>
             <div className="w-full mt-4">
               <div className="w-3/5 xl:w-4/5 lg:w-full md:w-full sm:w-full xs:w-full">
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">Start/End:</p>
-                  <p className="text-green-400 text-md">
-                    25 Feb 11am UTC - 7pm UTC
-                  </p>
+                  <p className="text-green-400 text-md">1 March - 1May</p>
                 </div>
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">Registration:</p>
-                  <p className="text-green-400 text-md">
-                    23 Feb 11am UTC - 24 Feb 8pm UTC
-                  </p>
+                  <p className="text-green-400 text-md">1 March - 5 March</p>
                 </div>
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">FCFS Opens:</p>
-                  <p className="text-green-400 text-md">25 Feb 6:40pm UTC</p>
+                  <p className="text-green-400 text-md">5 - 10 March</p>
                 </div>
-                <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
-                  <p className="text-gray-200">Swap Rate:</p>
-                  <p className="text-green-400 text-md">
-                    1 LSO = $0.07 | 15 LSO per 1 USDT
-                  </p>
-                </div>
-              </div>
-              <div className="mb-2 flex justify-start items-center space-x-5 font-poppins mt-1">
-                <p className="text-gray-200">Base Allocation:</p>
-                <p className="text-gray-300 text-md">
-                  Distribution is calculated based on power and number of users
-                </p>
               </div>
             </div>
           </div>
@@ -92,19 +72,17 @@ const ProjectDetails: React.FC = () => {
               <div className="w-3/5 xl:w-4/5 lg:w-4/5 md:w-4/5 sm:w-full xs:w-full">
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">Token:</p>
-                  <p className="text-green-400 text-md">Lusso (LSO)</p>
+                  <p className="text-green-400 text-md">
+                    Luxandia Crypto Village (CVL)
+                  </p>
                 </div>
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">Total Supply:</p>
-                  <p className="text-green-400 text-md">1,000,000,000</p>
+                  <p className="text-green-400 text-md">10,000,000</p>
                 </div>
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">Initial Supply:</p>
-                  <p className="text-green-400 text-md">100,000,000 LSO</p>
-                </div>
-                <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
-                  <p className="text-gray-200">Market Cap:</p>
-                  <p className="text-green-400 text-md">$7,000,000</p>
+                  <p className="text-green-400 text-md">10,000,000</p>
                 </div>
               </div>
             </div>
@@ -117,15 +95,7 @@ const ProjectDetails: React.FC = () => {
               <div className="w-3/5 xl:w-4/5 lg:w-4/5 md:w-4/5 sm:w-full xs:w-full">
                 <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                   <p className="text-gray-200">Distribution:</p>
-                  <p className="text-green-400 text-md">
-                    Claimed on Decryption
-                  </p>
-                </div>
-                <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
-                  <p className="text-gray-200">Vesting:</p>
-                  <p className="text-green-400 text-md">
-                    10% TGE, then 6 Months linear
-                  </p>
+                  <p className="text-green-400 text-md">2 May</p>
                 </div>
               </div>
             </div>
@@ -136,4 +106,4 @@ const ProjectDetails: React.FC = () => {
   ) : null;
 };
 
-export default ProjectDetails;
+export default TokenizationProjectDetails;

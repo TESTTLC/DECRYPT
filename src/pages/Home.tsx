@@ -147,10 +147,7 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="FUTURE PROJECTS"
               subtitle="Become a modern investor! Learn more about the ecosystem and the benefits of tokenization."
-              // onClick={() => navigate("/lendingandborrowing")}
-              onClick={() => {
-                return;
-              }}
+              onClick={() => navigate('/tokenization')}
               imageSource={lendingAndBorrowingImage}
             />
           </div>
