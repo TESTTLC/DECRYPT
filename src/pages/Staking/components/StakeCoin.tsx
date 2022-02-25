@@ -49,6 +49,7 @@ const StakeCoin: React.FC = () => {
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
   const [balance, setBalance] = useState<number>();
   const [totalRewards, setTotalRewards] = useState(0);
+  const [isUnfreezing, setIsUnfreezing] = useState(false);
   const [currentChainId, setCurrentChainId] = useState(
     window.ethereum?.networkVersion
       ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
@@ -313,11 +314,6 @@ const StakeCoin: React.FC = () => {
                 </div>
               )}
             </div>
-            {/* <div
-              className={`"text-center h-full p-5 flex flex-col justify-center overflow-y-scroll" ${
-                !isMobileSize ? "border-l-2" : ""
-              }`}
-            > */}
             <div
               className={`"text-center h-80 p-5 flex flex-col justify-center" overflow-y-scroll ${
                 !isMobileSize ? 'border-l-2' : ''
@@ -367,10 +363,15 @@ const StakeCoin: React.FC = () => {
 
   const unfreezeCurrent = async () => {
     try {
-      console.log('here');
-      const result = await tokenContract.releaseOnce();
-      console.log('Result: ', result);
-    } catch (error) {}
+      if (!isUnfreezing) {
+        setIsUnfreezing(true);
+        const result = await tokenContract.releaseOnce();
+
+        setIsUnfreezing(false);
+      }
+    } catch (error) {
+      setIsUnfreezing(false);
+    }
   };
 
   return coinsTags.includes(coinTag ?? '') ? (
@@ -402,7 +403,6 @@ const StakeCoin: React.FC = () => {
                 stakeInputRef.current?.scrollIntoView({
                   behavior: 'smooth',
                 });
-                // stakeInputRef.current?.focus();
               }}
               className="rounded-lg relative xs:w-80 w-60 h-60
                 bg-gradient-to-b
@@ -412,9 +412,7 @@ const StakeCoin: React.FC = () => {
               <p className="text-white font-oswald text-lg">Stake {coinTag}</p>
             </button>
           </div>
-          {/* here ends 1 */}
 
-          {/* here starts 1 */}
           <div className="relative xs:w-80 w-60 h-60">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600blur-sm rounded-lg opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
             <button
