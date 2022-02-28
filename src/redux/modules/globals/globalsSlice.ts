@@ -4,7 +4,8 @@ import { GlobalState } from 'src/utils/storeTypes';
 import { closeSidebar, openSidebar, setProvider } from './actions';
 
 const initialState: GlobalState = {
-  isSidebarOpen: true,
+  isSidebarOpen:
+    'ontouchstart' in window || 'onmsgesturechange' in window ? false : true,
   provider: undefined,
 };
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
+import { ChainsIds } from 'src/utils/types';
+import MetamaskIcon from 'src/assets/svg/MetamaskIcon';
 
 import { useWalletConnector } from '../hooks/useWalletConnector';
 import SMALL_LOGO from '../assets/images/logo.png';
@@ -32,8 +34,8 @@ const LoginButton: React.FC<LoginButtonProps> = ({
           className="rounded-md"
           rel="noreferrer"
         >
-          <button className="group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
-            <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
+          <button className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
+            <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
               {walletAddress
                 ? `Disconnect ${walletAddress.slice(
                     0,
@@ -53,7 +55,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
           onClick={walletAddress ? disconnectWallet : connectWallet}
           className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
         >
-          <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
+          <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
             {walletAddress
               ? `Disconnect ${walletAddress.slice(
                   0,
@@ -73,7 +75,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
         onClick={walletAddress ? disconnectWallet : connectWallet}
         className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
       >
-        <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200">
+        <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
           {walletAddress
             ? `Disconnect ${walletAddress.slice(0, 4)}...${walletAddress.slice(
                 walletAddress.length - 4,
@@ -84,6 +86,27 @@ const LoginButton: React.FC<LoginButtonProps> = ({
       </button>
     );
   }
+};
+
+const addNetwork = () => {
+  const params = [
+    {
+      chainId: ChainsIds.TLC,
+      chainName: 'TLChain Mainnet',
+      nativeCurrency: {
+        name: 'The Luxury Coin',
+        symbol: 'TLC',
+        decimals: 18,
+      },
+      rpcUrls: ['https://mainnet-rpc.tlxscan.com/'],
+      blockExplorerUrls: ['https://tlxscan.com/'],
+    },
+  ];
+
+  window.ethereum
+    .request({ method: 'wallet_addEthereumChain', params })
+    .then(() => console.log('Success'))
+    .catch((error: Error) => console.log('Error', error.message));
 };
 
 const Header: React.FC = () => {
@@ -100,8 +123,8 @@ const Header: React.FC = () => {
 
   return (
     <div
-      className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5
-    bg-transparent"
+      className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5 xs:px-0 sm:px-0
+    bg-transparent "
     >
       <div
         className={`flex transition-all duration-500 ${
@@ -150,6 +173,16 @@ const Header: React.FC = () => {
         >
           <span className="text-center font-poppins text-sm">Dashboard</span>
         </Link>
+
+        {window.ethereum && (
+          <button
+            className="flex h-8 mx-2 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+            onClick={addNetwork}
+          >
+            <MetamaskIcon width={20} height={17} />
+            <span className="leading-[12px]">Add TLC Network</span>
+          </button>
+        )}
 
         <div className="items-center justify-center mx-2">
           <div className="relative">

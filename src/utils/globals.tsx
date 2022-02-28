@@ -72,3 +72,40 @@ export const modalTokens: Project[] = [
     image: tlcBridgeImage,
   },
 ];
+
+export const stakingRewards = {
+  TLX: {
+    one_month: '15.34% APY for - 1 months',
+    three_months: '21.25% APY - 3 months ',
+    six_months: '29.68% APY - 6 months ',
+    one_year: '40.56% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
+  },
+  LSO: {
+    one_month: '12.19% APY - 1 months ',
+    three_months: '17.32% APY - 3 months ',
+    six_months: '19.27% APY - 6 months ',
+    one_year: '51.25% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
+  },
+  TLC: {
+    one_month: '11.25% APY - 1 months ',
+    three_months: '15.56% APY - 3 months ',
+    six_months: '18.80% APY - 6 months ',
+    one_year: '19.26% APY - 12 months ',
+    three_years: '19.26% APY - 36 months ',
+  },
+  DEFAULT: {
+    one_month: '',
+    three_months: '',
+    six_months: '',
+    one_year: '',
+    three_years: '',
+  },
+};
+
+export const prices = {
+  TLC: '0.16',
+  LSO: '0.07',
+  TLX: 'Listing starts with $50',
+};

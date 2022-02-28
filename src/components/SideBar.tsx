@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { closeSidebar } from 'src/redux/modules/globals/actions';
+import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
 
 import SMALL_LOGO from '../assets/images/logo.png';
 import { links } from '../utils/routes';
@@ -15,6 +16,7 @@ import { links } from '../utils/routes';
 ></script>;
 
 const SideBar: React.FC = () => {
+  const { isMobileDevice } = useDeviceInfo();
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
@@ -77,6 +79,9 @@ const SideBar: React.FC = () => {
                 </a>
               ) : (
                 <Link
+                  onClick={
+                    isMobileDevice ? () => dispatch(closeSidebar()) : undefined
+                  }
                   key={`${id}/${url}`}
                   to={{ pathname: url }}
                   className={`
@@ -104,21 +109,21 @@ const SideBar: React.FC = () => {
             })}
             <hr className="my-6" />
             <a
-              href="#!"
+              href="https://discord.gg/6nrsDk29WH"
+              target={'_blank'}
               className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
               <HiTicket className="w-5 h-5" />
-              <span className="mx-4 font-medium font-oswald uppercase">
-                Ticket
-              </span>
+              <a className="mx-4 font-medium font-oswald uppercase">Tickets</a>
             </a>
             <a
-              href="#!"
+              href="https://discord.gg/tlchain"
+              target={'_blank'}
               className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
               <MdSettings className="w-5 h-5" />
               <span className="mx-4 font-medium font-oswald uppercase">
-                Settings
+                Community
               </span>
             </a>
           </nav>

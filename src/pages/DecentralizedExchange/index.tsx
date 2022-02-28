@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
-import { USDTContractAddress } from 'src/utils/globals';
+import { prices, USDTContractAddress } from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
 import { getBalance } from 'src/utils/functions/Contracts';
 import tetherImage from 'src/assets/images/tether.png';
@@ -150,9 +150,9 @@ const DecentralizedExchange: React.FC = () => {
         </div>
       </div>
       <p className="text-xs items-center justify-between w-[37rem] xs:w-[22rem] text-center">
-        You will have an opportunity to purchase $TLC on Feb 22 at 22 PM UTC
+        You will have an opportunity to purchase $TLC from Feb 22 at 22 PM UTC
         with a price of $0.16/TLC - 6.25 $TLC/1 USDT. The swap module will
-        remain open until 23 Feb at 10.30 UTC.
+        remain open until 04 March at 10.30 UTC.
       </p>
 
       <button
@@ -163,14 +163,14 @@ const DecentralizedExchange: React.FC = () => {
       </button>
       <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-4 rounded-lg bg-black bg-opacity-60 text-white text-center my-4">
         <div className="flex flex-col items-center justify-center text-sm">
-          <span>Total Value Locked on Farms</span>
-          <span>$1.434.241</span>
+          <span>Total Value Locked on Staking</span>
+          <span>$12,945,870</span>
         </div>
         <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
         <div className="flex flex-col items-center justify-center text-sm">
-          <span>1 TLC = $0.0625</span>
-          <span>Market Cap: $1.240.062</span>
-          <span>Est. Weekly Rewards: $25.254</span>
+          <span>1 TLC = ${prices.TLC}</span>
+          <span>TLX price = {prices.TLX}</span>
+          <span>Est. Weekly Rewards: $1,165,128</span>
         </div>
       </div>
 

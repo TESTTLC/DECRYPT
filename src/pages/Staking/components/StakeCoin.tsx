@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { StoreState } from 'src/utils/storeTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLSOLaunchpadRegistration } from 'src/api/launchpad';
+import { stakingRewards } from 'src/utils/globals';
 
 import GlowingButton from '../../../components/GlowingButton';
 import SelectDropdown from '../../../components/SelectDropdown';
@@ -21,7 +22,10 @@ import {
   Stake,
   stakeRewards,
 } from '../../../utils/types';
-import TLX_LOGO_2 from '../../../assets/images/small_logo_2.png';
+// import TLX_LOGO_2 from '../../../assets/images/small_logo_2.png';
+import lso_1x from '../../../assets/images/lso_1x.png';
+import tlc_1x from '../../../assets/images/tlc_1x.png';
+import tlx_1x from '../../../assets/images/tlx_1x.png';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import * as contracts from '../../../utils/functions/Contracts';
 import NotFound from '../../NotFound';
@@ -29,15 +33,13 @@ import { coinsTags } from '../../../App';
 import { changeChain } from '../../../utils/functions/MetaMask';
 
 const StakeCoin: React.FC = () => {
-  const { coinTag } = useParams();
+  const { coinTag = 'TLX' } = useParams();
 
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
 
-  const { stakeContract, tokenContract, stakeAddress } = useContracts(
-    coinTag ?? '-',
-  );
+  const { stakeContract, tokenContract, stakeAddress } = useContracts(coinTag);
 
   const [isRegisteredInLSOLaunchpad, setIsRegisteredInLSOLaunchpad] =
     useState(false);
@@ -181,16 +183,16 @@ const StakeCoin: React.FC = () => {
           rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"
         ></div>
 
-        <div
-          className="relative w-full py-4 px-8 bg-white rounded-lg my-20 bg-gradient-to-b from-customBlue-700 via-customBlue-700 to-customBlue-200
-              "
-        >
+        <div className="relative  w-full py-4 px-8 bg-white rounded-lg my-20 bg-gradient-to-b from-customBlue-700 via-customBlue-700 to-customBlue-200">
           <div className="flex justify-center md:justify-end -mt-16">
             <img
               className="w-20 h-20 object-cover rounded-full z-30 
                border-2 border-indigo-900
               "
-              src={TLX_LOGO_2}
+              src={
+                // eslint-disable-next-line no-nested-ternary
+                coinTag === 'LSO' ? lso_1x : coinTag === 'TLC' ? tlc_1x : tlx_1x
+              }
               alt="TLX-Logo"
             />
           </div>
@@ -200,13 +202,46 @@ const StakeCoin: React.FC = () => {
                 <p className="text-white font-bold text-xl">
                   Earn Passive Income With The Luxury
                 </p>
-                <p className="text-gray-400 mt-4">
+                <p className="text-gray-400 mt-2">
                   Staking is a great way to maximize your holdings in staking
                   tokens that would otherwise be sitting in your wallet. Once
                   you have staked your assets you can earn staking rewards on
                   top of your holdings and grow them further by compounding
                   those future rewards.
                 </p>
+                {coinTag && coinTag !== 'default' && (
+                  <>
+                    <p className="text-white font-bold text-xl mt-6 mb-2">
+                      Staking Rewards - {coinTag}
+                    </p>
+                    <p className="text-gray-400">
+                      {
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
+                          .one_month
+                      }
+                      <br />
+                      {
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
+                          .three_months
+                      }
+                      <br />
+                      {
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
+                          .six_months
+                      }
+                      <br />
+                      {
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
+                          .one_year
+                      }
+                      <br />
+                      {
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
+                          .three_years
+                      }
+                    </p>
+                  </>
+                )}
               </div>
               {/* eslint-disable-next-line no-nested-ternary */}
               {chainErrorMessage ? (
@@ -218,7 +253,7 @@ const StakeCoin: React.FC = () => {
                   You must be registered to Launchpad with at least 1% power
                 </p>
               ) : (
-                <div className="py-5 pr-2 mt-6 flex flex-col">
+                <div className="py-5 pr-2 mt-2 flex flex-col">
                   <div className="flex justify-between border-b-2 border-opacity-30 pb-1">
                     <p className="text-xl text-white font-bold">
                       Stake your {coinTag}
@@ -318,7 +353,7 @@ const StakeCoin: React.FC = () => {
               )}
             </div>
             <div
-              className={`"text-center h-80 p-5 flex flex-col justify-center" overflow-y-scroll ${
+              className={`"text-center flex h-full p-5 flex flex-col justify-center" overflow-y-scroll ${
                 !isMobileSize ? 'border-l-2' : ''
               }`}
             >
@@ -398,7 +433,6 @@ const StakeCoin: React.FC = () => {
       </div>
       <div className="flex justify-center">
         <div className="mt-6 grid gap-10 xs:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 md:grid-cols-2  ">
-          {/* here starts 1 */}
           <div className="relative xs:w-80 w-60 h-60">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
             <button
