@@ -105,7 +105,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
           style={{ backgroundImage: `url(${SNXStatBackground})` }}
         ></div>
         <p className="text-white text-center text-sm font-oswald uppercase">
-          Total Rewards
+          Your Total Rewards
         </p>
         <p className="text-green-500 font-bold text-lg drop-shadow-2xl shadow-white">
           {walletAddress ? totalRewards : '-'} {coinTag}

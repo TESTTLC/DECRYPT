@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { routes } from '../../utils/routes';
 // import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
 // import TheLuxuryBank from "../../assets/images/the_luxury.png";
 // import ICICB from "../../assets/images/ICICB.png";
@@ -9,7 +8,12 @@ import TheLuxuryCoin from '../../assets/images/TLC.jpg';
 import TheLuxuryBank from '../../assets/images/TLX.jpg';
 import LSO from '../../assets/images/LSO.jpg';
 import ICICB from '../../assets/images/ATARI.jpg';
+// import TheLuxuryCoin from '../../assets/images/staking_tlc.png';
+// import TheLuxuryBank from '../../assets/images/staking_tlx.png';
+// import LSO from '../../assets/images/staking_lso.png';
+// import ICICB from '../../assets/images/staking_atari.png';
 import GlowingWrapper from '../../components/GlowingWrapper';
+import { routes } from '../../utils/routes';
 
 import Item from './components/Item';
 
