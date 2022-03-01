@@ -93,7 +93,7 @@ export const stakingRewards = {
     three_months: '15.56% APY - 3 months ',
     six_months: '18.80% APY - 6 months ',
     one_year: '19.26% APY - 12 months ',
-    three_years: '19.26% APY - 36 months ',
+    three_years: '63.58% APY - 36 months ',
   },
   DEFAULT: {
     one_month: '',
