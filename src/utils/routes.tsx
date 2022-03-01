@@ -14,79 +14,107 @@ import {
   FaStackExchange,
 } from 'react-icons/fa';
 
+import homeIcon from '../assets/images/Home.png';
+import stakingIcon from '../assets/images/Staking.png';
+import launchpadIcon from '../assets/images/Launchpad.png';
+import nftMarketplaceIcon from '../assets/images/NFT-Marketplace.png';
+import dexIcon from '../assets/images/Decentralized-Exchange.png';
+import assetTokenizationIcon from '../assets/images/Asset-Tokenization.png';
+import ccbIcon from '../assets/images/Cross-Chain-Bridge.png';
+import createTokenIcon from '../assets/images/Token-Factory.png';
+import metaverseIcon from '../assets/images/Metaverse.png';
+
 export const links = [
   {
     id: 0,
     url: '/',
     text: 'home',
-    icon: <FaHome className="w-5 h-5" />,
-    imageSource: undefined,
+    // icon: <FaHome className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
+    imageSource: homeIcon,
   },
   {
     id: 1,
     url: '/staking',
     text: 'staking',
-    icon: <FaStackExchange className="w-5 h-5" />,
+    // icon: <FaStackExchange className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: stakingImage,
-    imageSource: undefined,
+    imageSource: stakingIcon,
   },
   {
     id: 2,
     url: '/launchpad',
     text: 'launchpad',
-    icon: <FaGamepad className="w-5 h-5" />,
+    // icon: <FaGamepad className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: launchpadImage,
-    imageSource: undefined,
+    imageSource: launchpadIcon,
   },
   {
     id: 3,
     url: '/crosschainbridge',
     text: 'cross chain bridge',
-    icon: <FaExternalLinkAlt className="w-5 h-5" />,
+    // icon: <FaExternalLinkAlt className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: crossChainBridgeImage,
-    imageSource: undefined,
+    imageSource: ccbIcon,
   },
   {
     id: 4,
     url: '/dex',
     text: 'decentralized exchange',
-    icon: <FaUniversalAccess className="w-5 h-5" />,
+    // icon: <FaUniversalAccess className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: exchangeImage,
-    imageSource: undefined,
+    imageSource: dexIcon,
   },
   {
     id: 5,
     url: 'https://factory.decryption.com',
     text: 'create your token',
-    icon: <FaCreativeCommons className="w-5 h-5" />,
+    // icon: <FaCreativeCommons className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: createTokenImage,
-    imageSource: undefined,
+    imageSource: createTokenIcon,
   },
   {
     id: 6,
     url: '/nftmarketplace',
     // url: 'https://theluxury.gallery',
     text: 'nft marketplace',
-    icon: <FaImages className="w-5 h-5" />,
+    // icon: <FaImages className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: nftMarketplaceImage,
-    imageSource: undefined,
+    imageSource: nftMarketplaceIcon,
   },
   {
     id: 7,
     // url: "/metaverse",
     url: 'https://luxandia.com',
     text: 'metaverse',
-    icon: <FaUniversalAccess className="w-5 h-5" />,
+    // icon: <FaUniversalAccess className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: metaverseImage,
-    imageSource: undefined,
+    imageSource: metaverseIcon,
   },
   {
     id: 8,
     url: '/tokenization',
     text: 'Asset Tokenization',
-    icon: <FaMoneyBillWave className="w-5 h-5" />,
+    // icon: <FaMoneyBillWave className="w-5 h-5" />,
+    // icon: <img className="w-5 "/>
+    icon: '',
     // imageSource: lendingAndBorrowingImage,
-    imageSource: undefined,
+    imageSource: assetTokenizationIcon,
   },
 ];
 

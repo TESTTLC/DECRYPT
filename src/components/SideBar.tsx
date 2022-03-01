@@ -8,6 +8,8 @@ import { closeSidebar } from 'src/redux/modules/globals/actions';
 import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
 
 import SMALL_LOGO from '../assets/images/logo.png';
+import ticketsIcon from '../assets/images/Tickets.png';
+import communityIcon from '../assets/images/Community.png';
 import { links } from '../utils/routes';
 
 <script
@@ -46,7 +48,7 @@ const SideBar: React.FC = () => {
           </span>
         </h2>
 
-        <div className="flex flex-col mt-6  justify-between flex-1">
+        <div className="flex flex-col mt-6 justify-between flex-1">
           <nav className="text">
             {links.map((link) => {
               const { id, url, text, icon, imageSource } = link;
@@ -56,7 +58,7 @@ const SideBar: React.FC = () => {
                   href={url}
                   target={'_blank'}
                   rel="noreferrer"
-                  className={`
+                  className={`h-10
                 capitalize flex items-center px-2 py-2 ${
                   location.pathname === link.url
                     ? ''
@@ -65,7 +67,7 @@ const SideBar: React.FC = () => {
                  rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
-                    <img src={imageSource} className="w-5 h-5" />
+                    <img src={imageSource} className="w-10 h-10" />
                   ) : (
                     icon
                   )}
@@ -84,7 +86,7 @@ const SideBar: React.FC = () => {
                   }
                   key={`${id}/${url}`}
                   to={{ pathname: url }}
-                  className={`
+                  className={`h-10
                   capitalize flex items-center px-2 py-2 ${
                     location.pathname === link.url
                       ? ''
@@ -93,7 +95,7 @@ const SideBar: React.FC = () => {
                    rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
-                    <img src={imageSource} className="w-5 h-5" />
+                    <img src={imageSource} className="w-10 h-10" />
                   ) : (
                     icon
                   )}
@@ -111,17 +113,19 @@ const SideBar: React.FC = () => {
             <a
               href="https://discord.gg/6nrsDk29WH"
               target={'_blank'}
-              className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
+              className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
-              <HiTicket className="w-5 h-5" />
+              <img src={ticketsIcon} className="w-10 h-10" />
+
               <a className="mx-4 font-medium font-oswald uppercase">Tickets</a>
             </a>
             <a
               href="https://discord.gg/tlchain"
               target={'_blank'}
-              className="flex items-center px-4 py-2 mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
+              className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
-              <MdSettings className="w-5 h-5" />
+              <img src={communityIcon} className="w-10 h-10" />
+
               <span className="mx-4 font-medium font-oswald uppercase">
                 Community
               </span>
@@ -134,7 +138,7 @@ const SideBar: React.FC = () => {
               className="h-6 w-6 mx-2 object-center object-cover rounded-full"
             />
             <h4 className="font-medium text-sm font-poppins text-gray-300 hover:underline cursor-pointer">
-              <a href="#!">The Luxury Bank</a>
+              <a href="#!">TLChain Network</a>
             </h4>
           </div>
         </div>
