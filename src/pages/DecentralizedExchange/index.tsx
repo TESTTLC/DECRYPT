@@ -1,13 +1,9 @@
 import { ethers } from 'ethers';
 import React, { useCallback, useEffect, useState } from 'react';
-import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { TailSpin } from 'react-loader-spinner';
 import { prices, USDTContractAddress } from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
 import { getBalance } from 'src/utils/functions/Contracts';
-import tetherImage from 'src/assets/images/tether.png';
-import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';

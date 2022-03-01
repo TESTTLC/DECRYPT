@@ -22,7 +22,6 @@ import {
   Stake,
   stakeRewards,
 } from '../../../utils/types';
-// import TLX_LOGO_2 from '../../../assets/images/small_logo_2.png';
 import lso_1x from '../../../assets/images/lso_1x.png';
 import tlc_1x from '../../../assets/images/tlc_1x.png';
 import tlx_1x from '../../../assets/images/tlx_1x.png';
@@ -266,15 +265,12 @@ const StakeCoin: React.FC = () => {
                   </div>
 
                   <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
-                    {/* <p className="text-lg font-bold text-white ">30 TLX</p> */}
                     <input
                       className="text-white h-8 rounded-md px-3 my-2 mr-2 w-64 bg-customBlue-300"
                       type={'number'}
                       ref={stakeInputRef}
                       onChange={(e) => {
                         setStakeAmount(parseFloat(e.target.value));
-                        // console.log;
-                        // setStakeAmount(parseFloat(e.target.value));
                       }}
                       placeholder="Value..."
                       value={stakeAmount}
@@ -284,7 +280,6 @@ const StakeCoin: React.FC = () => {
                         text={'Staking duration (months)'}
                         elements={[1, 3, 6, 12, 36]}
                         onSelect={(e) => {
-                          // const value = parseInt(e.target.value, 10);
                           if (parseInt(e.target.value, 10) === 1) {
                             setDuration(StackingDuration.ONE_MONTH);
                           } else if (parseInt(e.target.value, 10) === 3) {

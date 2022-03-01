@@ -1,23 +1,20 @@
 /* eslint-disable camelcase */
 //@ts-ignore
 import WebSDK from '@verifai/websdk-react';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { RiContactsBookLine } from 'react-icons/ri';
 
-const apiKey = '3d640837f60927fea171573fefff84d8fa4da0bc';
 const url = 'https://websdk.verifai.com/v1/auth/token';
 
 const KYC: React.FC = () => {
-  const [show, setShow] = useState(true);
-  const [otpToken, setOtpToken] = useState<string>();
-  const data = {
+  const data = useRef({
     document_type_whitelist: ['P', 'I'],
     handover_base_url: 'https://decryption.com/kyc/?s=',
     locale: 'en_US',
-  };
+  }).current;
 
-  const getFetchResult = async () => {
-    const res = await fetch(url, {
+  const getFetchResult = useCallback(async () => {
+    await fetch(url, {
       method: 'POST',
       headers: {
         Authorization: `Bearer 3d640837f60927fea171573fefff84d8fa4da0bc`,
@@ -25,18 +22,12 @@ const KYC: React.FC = () => {
       },
       body: JSON.stringify({ ...data }),
     });
-
-    console.log('result: ', await res.json());
-  };
+  }, [data]);
 
   useEffect(() => {
     getFetchResult();
-  }, []);
+  }, [getFetchResult]);
 
-  const verify = new WebSDK();
-  console.log('a: ', verify);
-
-  console.log('WebSDK: ', WebSDK);
   return (
     <div className="flex h-screen w-full">
       <WebSDK

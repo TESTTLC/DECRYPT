@@ -3,11 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import BigButton from '../components/BigButton';
 import { routes } from '../utils/routes';
-// import launchpadImage from '../assets/images/Launchpad.jpg';
-// import stakingImage from '../assets/images/Staking.jpg';
-// import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
-// import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
-// import exchangeImage from '../assets/images/Decentralized-Exchange.jpg';
 import stakingImage from '../assets/images/staking_1.png';
 import createTokenImage from '../assets/images/create_token_1.jpg';
 import crossChainBridgeImage from '../assets/images/cross_chain_bridge_1.png';
@@ -20,7 +15,6 @@ import launchpadImage from '../assets/images/launchpad_1.png';
 const Home: React.FC = () => {
   const navigate = useNavigate();
 
-  const nftMarketplaceRef = useRef<HTMLAnchorElement>(null);
   const metaverseRef = useRef<HTMLAnchorElement>(null);
   const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
@@ -98,7 +92,6 @@ const Home: React.FC = () => {
               imageStyle="object-top"
               title="METAVERSE"
               subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
-              // onClick={() => navigate("/metaverse")}
               onClick={() => {
                 metaverseRef.current?.click();
               }}

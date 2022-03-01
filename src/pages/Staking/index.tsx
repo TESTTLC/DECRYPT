@@ -4,14 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 // import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
 // import TheLuxuryBank from "../../assets/images/the_luxury.png";
 // import ICICB from "../../assets/images/ICICB.png";
-import TheLuxuryCoin from '../../assets/images/TLC.jpg';
-import TheLuxuryBank from '../../assets/images/TLX.jpg';
-import LSO from '../../assets/images/LSO.jpg';
-import ICICB from '../../assets/images/ATARI.jpg';
-// import TheLuxuryCoin from '../../assets/images/staking_tlc.png';
-// import TheLuxuryBank from '../../assets/images/staking_tlx.png';
-// import LSO from '../../assets/images/staking_lso.png';
-// import ICICB from '../../assets/images/staking_atari.png';
+// import TheLuxuryCoin from '../../assets/images/TLC.jpg';
+// import TheLuxuryBank from '../../assets/images/TLX.jpg';
+// import LSO from '../../assets/images/LSO.jpg';
+// import ICICB from '../../assets/images/ATARI.jpg';
+import TheLuxuryCoin from '../../assets/images/staking_tlc.png';
+import TheLuxuryBank from '../../assets/images/staking_tlx.png';
+import LSO from '../../assets/images/staking_lso.png';
+import ICICB from '../../assets/images/staking_atari.png';
 import GlowingWrapper from '../../components/GlowingWrapper';
 import { routes } from '../../utils/routes';
 
@@ -54,7 +54,6 @@ const Stake: React.FC = () => {
               title="LUXANDIA"
               subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
               onClick={() => navigate(`/staking/LSO`)}
-              // imageSource="https://forsite.ro/crx//local/images/staking-Luxandia.png"
               imageSource={LSO}
             />
           </GlowingWrapper>
@@ -76,7 +75,6 @@ const Stake: React.FC = () => {
               onClick={() => {
                 return;
               }}
-              // imageSource="https://forsite.ro/crx//local/images/staking-icicb.png"
               imageSource={ICICB}
               showTopText
             />
