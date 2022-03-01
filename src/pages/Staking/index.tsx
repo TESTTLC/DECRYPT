@@ -1,13 +1,6 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-// import TheLuxuryCoin from "../../assets/images/TheLuxuryCoin.png";
-// import TheLuxuryBank from "../../assets/images/the_luxury.png";
-// import ICICB from "../../assets/images/ICICB.png";
-// import TheLuxuryCoin from '../../assets/images/TLC.jpg';
-// import TheLuxuryBank from '../../assets/images/TLX.jpg';
-// import LSO from '../../assets/images/LSO.jpg';
-// import ICICB from '../../assets/images/ATARI.jpg';
 import TheLuxuryCoin from '../../assets/images/staking_tlc.png';
 import TheLuxuryBank from '../../assets/images/staking_tlx.png';
 import LSO from '../../assets/images/staking_lso.png';
@@ -38,47 +31,47 @@ const Stake: React.FC = () => {
           </Link>
         </div>
         <div className="mt-8 grid gap-8 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 justify-center items-center ">
-          <GlowingWrapper>
-            <Item
-              coinTag="TLC"
-              title="TLChain"
-              subtitle="$TLC is the native, energy-efficient cryptocurrency of TLChain that powers the full DeFi, GameFi and Metaverse ecosystem."
-              onClick={() => navigate(`/staking/TLC`)}
-              imageSource={TheLuxuryCoin}
-            />
-          </GlowingWrapper>
+          {/* <GlowingWrapper> */}
+          <Item
+            coinTag="TLC"
+            title="TLChain"
+            subtitle="$TLC is the native, energy-efficient cryptocurrency of TLChain that powers the full DeFi, GameFi and Metaverse ecosystem."
+            onClick={() => navigate(`/staking/TLC`)}
+            imageSource={TheLuxuryCoin}
+          />
+          {/* </GlowingWrapper> */}
 
-          <GlowingWrapper>
-            <Item
-              coinTag="LSO"
-              title="LUXANDIA"
-              subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
-              onClick={() => navigate(`/staking/LSO`)}
-              imageSource={LSO}
-            />
-          </GlowingWrapper>
+          {/* <GlowingWrapper> */}
+          <Item
+            coinTag="LSO"
+            title="LUXANDIA"
+            subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
+            onClick={() => navigate(`/staking/LSO`)}
+            imageSource={LSO}
+          />
+          {/* </GlowingWrapper> */}
 
-          <GlowingWrapper>
-            <Item
-              coinTag="TLX"
-              title="THE LUXURY"
-              subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
-              onClick={() => navigate(`/staking/TLX`)}
-              imageSource={TheLuxuryBank}
-            />
-          </GlowingWrapper>
-          <GlowingWrapper>
-            <Item
-              coinTag="ATARI Token"
-              title="ATARI Token"
-              subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
-              onClick={() => {
-                return;
-              }}
-              imageSource={ICICB}
-              showTopText
-            />
-          </GlowingWrapper>
+          {/* <GlowingWrapper> */}
+          <Item
+            coinTag="TLX"
+            title="THE LUXURY"
+            subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
+            onClick={() => navigate(`/staking/TLX`)}
+            imageSource={TheLuxuryBank}
+          />
+          {/* </GlowingWrapper> */}
+          {/* <GlowingWrapper> */}
+          <Item
+            coinTag="ATARI Token"
+            title="ATARI Token"
+            subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
+            onClick={() => {
+              return;
+            }}
+            imageSource={ICICB}
+            showTopText
+          />
+          {/* </GlowingWrapper> */}
         </div>
       </div>
     </div>

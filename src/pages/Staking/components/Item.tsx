@@ -18,11 +18,11 @@ const Item: React.FC<Props> = ({
   showTopText,
 }) => {
   return (
-    <div className="flex flex-grow flex-col w-full h-96 bg-gray-300 relative rounded-md overflow-hidden">
+    <div className="flex flex-grow flex-col w-full h-96 bg-black bg-opacity-50 relative rounded-md overflow-hidden">
       <img
         src={imageSource}
         alt={title}
-        className="h-full aspect-w-1 object-cover object-center"
+        className="h-full aspect-w-1 object-contain object-top pt-4"
       ></img>
       {showTopText && (
         <div className="w-full absolute py-1 top-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
