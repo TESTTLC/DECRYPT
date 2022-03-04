@@ -15,6 +15,10 @@ export interface GlobalState {
   isSidebarOpen: boolean;
 }
 
+export interface LaunchpadState {
+  isRegisteredInLSOLaunchpad: boolean;
+}
+
 export type AccountState = BaseUser;
 export type AppDispatch = ThunkDispatch<StoreState, unknown, AnyAction>;
 
