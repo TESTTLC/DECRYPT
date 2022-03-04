@@ -27,6 +27,7 @@ const LoginButton: React.FC<LoginButtonProps> = ({
 }) => {
   if (isMobileDevice) {
     if (!window.ethereum) {
+      console.log('here');
       return (
         <a
           href={metamaskAppDeepLink}

@@ -9,6 +9,10 @@ interface Props {
   showPageTitle?: boolean;
   imageContainerStyle?: string;
   imageStyle?: string;
+  titleStyle?: string;
+  subtitleStyle?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  svgComponent?: any;
 }
 
 const BigButton: React.FC<Props> = ({
@@ -19,19 +23,22 @@ const BigButton: React.FC<Props> = ({
   showTopText,
   imageContainerStyle,
   imageStyle,
+  svgComponent,
+  titleStyle,
+  subtitleStyle,
 }) => {
   return (
-    <div className="h-full w-full transform duration-500 hover:scale-110">
+    <div className="h-full w-full transform duration-500 hover:scale-105">
       {/* <div className="relative xs:w-80 w-72 h-72"> */}
       <div className="relative w-full h-full">
-        <div className="\ hover:scale-110 absolute -inset-1 bg-gradient-to-r from-green-400 to-blue-600  rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+        <div className="hover:scale-110 absolute -inset-0.5 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt" />
 
         <button
           onClick={onClick}
           className="flex flex-col rounded-lg relative w-full h-full bg-gradient-to-br
            overflow-hidden bg-gray-700 bg-opacity-70"
         >
-          {imageSource && (
+          {/* {svgComponent && (
             <div
               className={`relative w-full ${
                 imageContainerStyle ? imageContainerStyle : 'h-1/2'
@@ -44,6 +51,38 @@ const BigButton: React.FC<Props> = ({
                   imageStyle ? imageStyle : ''
                 }`}
               />
+              <div
+                className={`h-full w-full aspect-w-1 object-cover ${
+                  imageStyle ? imageStyle : ''
+                }`}
+              >
+                {svgComponent}
+              </div>
+              {showTopText && (
+                <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
+                  <p className="font-poppins text-md font-semibold">
+                    Coming Soon
+                  </p>
+                </div>
+              )}
+            </div>
+          )} */}
+
+          {imageSource && (
+            <div
+              className={`relative w-full ${
+                imageContainerStyle ? imageContainerStyle : 'h-1/2'
+              }`}
+            >
+              <picture>
+                <img
+                  alt={`${imageSource}`}
+                  src={imageSource}
+                  className={`h-full w-full aspect-w-1 object-cover ${
+                    imageStyle ? imageStyle : ''
+                  }`}
+                />
+              </picture>
               {showTopText && (
                 <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
                   <p className="font-poppins text-md font-semibold">
@@ -53,9 +92,15 @@ const BigButton: React.FC<Props> = ({
               )}
             </div>
           )}
-          <div className="mx-5 mt-2 flex flex-col items-start">
-            <p className="text-white font-oswald text-2xl text-left">{title}</p>
-            <p className="font-poppins text-white text-left text-sm mt-3 leading-tight font-light">
+          <div className="mx-5 mt-1 flex flex-col items-start">
+            <p
+              className={`text-white font-oswald text-left text-2xl ${titleStyle}`}
+            >
+              {title}
+            </p>
+            <p
+              className={`font-poppins text-white text-left mt-1 leading-tight font-light ${subtitleStyle}`}
+            >
               {subtitle}
             </p>
           </div>

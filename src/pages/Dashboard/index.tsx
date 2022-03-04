@@ -59,14 +59,12 @@ const Dashboard: React.FC = () => {
   }, [power]);
 
   useEffect(() => {
-    getTLXtakeTransactions();
+    if (TLXStakeContract && TLCStakeContract) {
+      getTLXtakeTransactions();
+      getTLCStakeTransactions();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TLXStakeContract]);
-
-  useEffect(() => {
-    getTLCStakeTransactions();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TLCStakeContract]);
+  }, [TLCStakeContract, TLXStakeContract]);
 
   const getTLXtakeTransactions = async () => {
     try {

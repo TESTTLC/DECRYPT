@@ -7,14 +7,14 @@ import { routes } from 'src/utils/routes';
 // import createTokenImage from '../assets/images/Create-Your-Own-Token.jpg';
 // import crossChainBridgeImage from '../assets/images/Cross-Chain-Bridge.jpg';
 // import tradingImage from '../assets/images/Decentralized-Exchange.jpg';
-import collectiblesImage from 'src/assets/images/collectibles.png';
-import utilityImage from 'src/assets/images/utility.png';
-import musicImage from 'src/assets/images/music.png';
-import tradingImage from 'src/assets/images/trade.png';
-import photographyImage from 'src/assets/images/photography.png';
-import sportsImage from 'src/assets/images/sports.png';
-import worldsImage from 'src/assets/images/worlds.png';
-import domainImage from 'src/assets/images/domain.png';
+import collectiblesImage from 'src/assets/images/collectibles.webp';
+import utilityImage from 'src/assets/images/utility.webp';
+import musicImage from 'src/assets/images/music.webp';
+import tradingImage from 'src/assets/images/trade.webp';
+import photographyImage from 'src/assets/images/photography.webp';
+import sportsImage from 'src/assets/images/sports.webp';
+import worldsImage from 'src/assets/images/worlds.webp';
+import domainImage from 'src/assets/images/domain.webp';
 
 const NFTMarketplace: React.FC = () => {
   const navigate = useNavigate();

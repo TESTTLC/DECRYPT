@@ -39,7 +39,7 @@ body {
 
 .bg-image {
   background-image: url('./assets/images/blockchain2.jpeg');
-  filter: blur(30px);
+  filter: blur(25px);
   /* position: absolute; */
   position: fixed;
   height: 100%;
