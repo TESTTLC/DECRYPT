@@ -169,7 +169,6 @@ const Header: React.FC = () => {
         <Link
           key={routes.dashboard.title}
           to={{ pathname: routes.dashboard.url }}
-          type="button"
           className="flex h-8 mx-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
         >
           <span className="text-center font-poppins text-sm">Dashboard</span>

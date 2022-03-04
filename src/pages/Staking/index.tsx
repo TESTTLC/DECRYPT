@@ -23,7 +23,6 @@ const Stake: React.FC = () => {
           <Link
             key={routes.launchpad.title}
             to={{ pathname: routes.launchpad.url }}
-            type="button"
           >
             <span className="text-white font-bold text-md mb-4 underline">
               View all upcoming projects &rarr;

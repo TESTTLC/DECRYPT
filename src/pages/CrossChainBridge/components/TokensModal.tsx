@@ -111,7 +111,6 @@ const TokensModal: React.FC<Props> = ({ tokens, type }) => {
         </div>
         <button
           onClick={openModal}
-          type="button"
           // className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
           className="flex h-full justify-end items-center "
         >

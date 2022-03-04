@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
           {/* <div className="flex justify-start mb-2">
             <a
               href="#!"
-              type="button"
+              
               className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 mr-1"
             >
               <svg
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
 
             <a
               href="#!"
-              type="button"
+              
               className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
             >
               <svg
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
 
             <a
               href="#!"
-              type="button"
+              
               className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
             >
               <svg
@@ -88,7 +88,7 @@ const Footer: React.FC = () => {
 
             <a
               href="#!"
-              type="button"
+              
               className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
             >
               <svg
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
 
             <a
               href="#!"
-              type="button"
+              
               className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
             >
               <svg
@@ -132,7 +132,7 @@ const Footer: React.FC = () => {
 
             <a
               href="#!"
-              type="button"
+              
               className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 ml-1"
             >
               <svg
@@ -246,20 +246,12 @@ const Footer: React.FC = () => {
               </li>
 
               <li>
-                <Link
-                  to="privacypolicy"
-                  type="button"
-                  className="text-white underline"
-                >
+                <Link to="privacypolicy" className="text-white underline">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link
-                  to="termsofuse"
-                  type="button"
-                  className="text-white underline"
-                >
+                <Link to="termsofuse" className="text-white underline">
                   Terms of use
                 </Link>
               </li>

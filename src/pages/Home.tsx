@@ -42,7 +42,7 @@ const Home: React.FC = () => {
           {/* <Link
               key={routes.launchpad.title}
               to={{ pathname: routes.launchpad.url }}
-              type="button"
+              
             >
               <span className="text-white font-bold text-md underline">
                 View all upcoming projects &rarr;

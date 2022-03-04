@@ -188,7 +188,6 @@ const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
             : () =>
                 navigate('/dashboard', { state: { comingFromLaunchpad: true } })
         }
-        type="button"
         className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
       >
         {/* {coinTag === 'default'

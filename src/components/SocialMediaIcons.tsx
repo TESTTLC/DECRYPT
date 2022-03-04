@@ -30,7 +30,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="https://www.facebook.com/Luxandia/"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 mr-1"
         >
           <svg
@@ -55,7 +54,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="https://discord.gg/tlchain"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 "
         >
           <svg
@@ -75,7 +73,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="https://twitter.com/Luxandia1"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
         >
           <svg
@@ -100,7 +97,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="#!"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
         >
           <svg
@@ -125,7 +121,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="#!"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
         >
           <svg
@@ -150,7 +145,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="#!"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
         >
           <svg
@@ -175,7 +169,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="#!"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 ml-1"
         >
           <svg
@@ -200,7 +193,6 @@ const SocialMediaIcons: React.FC<Props> = ({
           target={'_blank'}
           rel="noreferrer"
           href="#!"
-          type="button"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1"
         >
           {/* <svg

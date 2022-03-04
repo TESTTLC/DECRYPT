@@ -37,7 +37,6 @@ const Item: React.FC<Props> = ({
         <p className="font-poppins font-medium">{subtitle}</p>
         <button
           onClick={onClick}
-          type="button"
           className="w-full mt-2 font-poppins bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl text-white bg-white hover:bg-gray-100 font-medium rounded-lg text-sm px-4 py-2 text-center mr-2 mb-2"
         >
           Stake {coinTag}
