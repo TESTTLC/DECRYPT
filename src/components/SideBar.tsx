@@ -138,7 +138,7 @@ const SideBar: React.FC = () => {
               className="h-6 w-6 mx-2 object-center object-cover rounded-full"
             />
             <h4 className="font-medium text-sm font-poppins text-gray-300 hover:underline cursor-pointer">
-              <a href="#!">TLChain Network</a>
+              <a href="https://tlchain.network">TLChain Network</a>
             </h4>
           </div>
         </div>
