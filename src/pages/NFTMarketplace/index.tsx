@@ -45,6 +45,7 @@ const NFTMarketplace: React.FC = () => {
               imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Collectibles"
+              titleStyle="text-3xl"
               // subtitle="Research Platform for Proof of Stake assets."
               imageSource={collectiblesImage}
             />
@@ -54,6 +55,7 @@ const NFTMarketplace: React.FC = () => {
               imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Domain Names"
+              titleStyle="text-3xl"
               // subtitle="Raise funds, build a community, deliver technology."
               imageSource={domainImage}
             />
@@ -63,6 +65,7 @@ const NFTMarketplace: React.FC = () => {
               imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Music"
+              titleStyle="text-3xl"
               // subtitle="DeFi Innovations created for traders and retail users."
               imageSource={musicImage}
             />
@@ -73,7 +76,7 @@ const NFTMarketplace: React.FC = () => {
               imageStyle="object-top"
               title="Photography"
               // subtitle="Create, Buy, Sell NFTs."
-
+              titleStyle="text-3xl"
               imageSource={photographyImage}
             />
           </div>
@@ -83,7 +86,7 @@ const NFTMarketplace: React.FC = () => {
               imageStyle="object-top"
               title="Sports"
               // subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
-
+              titleStyle="text-3xl"
               imageSource={sportsImage}
             />
           </div>
@@ -92,6 +95,7 @@ const NFTMarketplace: React.FC = () => {
               imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Trading Cards"
+              titleStyle="text-3xl"
               // subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
               imageSource={tradingImage}
             />
@@ -101,6 +105,7 @@ const NFTMarketplace: React.FC = () => {
               imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Utility"
+              titleStyle="text-3xl"
               // subtitle="It’s Time to Build. Mint Your Own Digital Token."
               imageSource={utilityImage}
             />
@@ -110,6 +115,7 @@ const NFTMarketplace: React.FC = () => {
               imageContainerStyle="h-3/4"
               imageStyle="object-top"
               title="Virtual Words"
+              titleStyle="text-3xl"
               // subtitle="Use your liquidity to increase your profit."
               imageSource={worldsImage}
             />

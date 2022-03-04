@@ -92,10 +92,8 @@ const BigButton: React.FC<Props> = ({
               )}
             </div>
           )}
-          <div className="mx-5 mt-1 flex flex-col items-start">
-            <p
-              className={`text-white font-oswald text-left text-2xl ${titleStyle}`}
-            >
+          <div className="mx-2 mt-1 flex flex-col items-start">
+            <p className={`text-white font-oswald text-left ${titleStyle}`}>
               {title}
             </p>
             <p

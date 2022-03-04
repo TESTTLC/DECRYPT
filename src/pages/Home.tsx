@@ -59,7 +59,7 @@ const Home: React.FC = () => {
                 subtitle="Research Platform for Proof of Stake assets."
                 onClick={() => navigate('/staking')}
                 imageSource={stakingImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
             </div>
@@ -71,7 +71,7 @@ const Home: React.FC = () => {
                 subtitle="Raise funds, build a community, deliver technology."
                 onClick={() => navigate('/launchpad')}
                 imageSource={launchpadImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
             </div>
@@ -83,7 +83,7 @@ const Home: React.FC = () => {
                 subtitle="DeFi Innovations created for traders and retail users."
                 onClick={() => navigate('/crosschainbridge')}
                 imageSource={crossChainBridgeImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
             </div>
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
                 //   nftMarketplaceRef.current?.click();
                 // }}
                 imageSource={nftMarketplaceImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
               {/* <a
@@ -119,7 +119,7 @@ const Home: React.FC = () => {
                   metaverseRef.current?.click();
                 }}
                 imageSource={metaverseImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
               <a
@@ -138,7 +138,7 @@ const Home: React.FC = () => {
                 subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
                 onClick={() => navigate('/dex')}
                 imageSource={exchangeImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
             </div>
@@ -152,7 +152,7 @@ const Home: React.FC = () => {
                   createYourTokenRef.current?.click();
                 }}
                 imageSource={createTokenImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
                 svgComponent={<CreateToken />}
               />
@@ -169,10 +169,10 @@ const Home: React.FC = () => {
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
                 title="FUTURE PROJECTS"
-                subtitle="Become a modern investor! Learn more about the ecosystem and the benefits of tokenization."
+                subtitle="Become a modern investor and learn more about the ecosystem & benefits of tokenization."
                 onClick={() => navigate('/tokenization')}
                 imageSource={lendingAndBorrowingImage}
-                titleStyle={'text-xl'}
+                titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
               />
             </div>
