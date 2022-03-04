@@ -181,27 +181,31 @@ const Home: React.FC = () => {
             Extended Ecosystem
           </p>
           <div className="grid grid-cols-2 items-center w-full gap-x-4 mt-2">
-            <div className="flex flex-col xs:col-span-1 sm:col-span-1 md:col-span-1 justify-center items-center bg-black bg-opacity-70 rounded-md min-h-[18rem] text-center px-2">
-              <p className="mt-2 text-xl">Decryption Blockchain Incubator</p>
-              <p className="font-semibold mt-2 text-3xl">
+            <div className="flex flex-col xs:justify-between xs:col-span-1 sm:col-span-1 md:col-span-1 justify-center items-center bg-black bg-opacity-70 rounded-md min-h-[18rem] text-center p-2">
+              <p className="mt-2 text-xl sm:text-lg xs:text-sm">
+                Decryption Blockchain Incubator
+              </p>
+              <p className="font-semibold mt-2 text-3xl sm:text-xl xs:text-xl xs:leading-[1.25rem] xs:flex-[0.25]">
                 1000+ SQM A+ Office Building
               </p>
               <p className="font-semibold mb-6 text-xs bg-gradient-to-r from-gray-700 to-gray-800 py-1 px-2 rounded-lg">
                 IT Support | Legal | Financial | Marketing | Media Studio
               </p>
-              <button className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm">
+              <button className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm xs:text-xs xs:leading-[1rem]">
                 Registration Opens Soon
               </button>
             </div>
-            <div className="flex flex-col xs:col-span-1 sm:col-span-1 md:col-span-1 justify-center items-center bg-black bg-opacity-70 rounded-md min-h-[18rem] text-center px-2">
-              <p className="mt-2 text-xl">Decryption Venture Capital</p>
-              <p className="font-semibold mt-2 text-3xl">
+            <div className="flex flex-col xs:justify-between xs:col-span-1 sm:col-span-1 md:col-span-1 justify-center items-center bg-black bg-opacity-70 rounded-md min-h-[18rem] text-center p-2">
+              <p className="mt-2 text-xl sm:text-lg xs:text-sm">
+                Decryption Venture Capital
+              </p>
+              <p className="font-semibold mt-2 text-3xl sm:text-xl xs:text-xl xs:leading-[1.25rem] xs:flex-[0.25]">
                 $100,000,000 Funds Available
               </p>
               <p className="font-semibold mb-6 text-xs bg-gradient-to-r from-gray-700 to-gray-800 py-1 px-2 rounded-lg">
                 Global exposure to over 20+ Family Offices partners
               </p>
-              <button className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm">
+              <button className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm xs:text-xs xs:leading-[1rem]">
                 Registration Opens Soon
               </button>
             </div>
