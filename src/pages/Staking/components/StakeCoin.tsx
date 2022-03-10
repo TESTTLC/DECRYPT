@@ -398,7 +398,9 @@ const StakeCoin: React.FC = () => {
     try {
       if (!isUnfreezing) {
         setIsUnfreezing(true);
+        console.log('here ');
         const result = await tokenContract.releaseOnce();
+        console.log('Res: ', result);
 
         setIsUnfreezing(false);
       }
@@ -460,13 +462,13 @@ const StakeCoin: React.FC = () => {
           </div>
         </div>
       </div>
-      {coinTag === 'TLX' && walletAddress && (
+      {(coinTag === 'TLX' || coinTag === 'LSO') && walletAddress && (
         <div className="flex w-full items-center justify-center mt-4">
           <button
             className="flex h-10 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
             onClick={unfreezeCurrent}
           >
-            Unfreeze TLX
+            Unfreeze {coinTag}
           </button>
         </div>
       )}
