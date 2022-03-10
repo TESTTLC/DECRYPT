@@ -17,6 +17,8 @@ export const LussoTokenContractAddress =
   '0xD62052Cea41E22fb2B97835b53f41190Fe219001';
 export const LussoStakeContractAddress =
   '0xe1A6E5f4BcFB9bC39c8f68B2b84BA41ca5681B36';
+export const LussoFreezeContractAddress =
+  '0x92542Ad9eb7bd1da030E45962Bc492D7BEC265cc';
 
 export const TLCTokenContractAddress =
   '0xb058f92410181368138279f13948b7ded15b0d4f';

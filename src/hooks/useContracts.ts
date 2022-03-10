@@ -10,6 +10,7 @@ import TheLuxuryCoinStake from '../contracts/TheLuxuryCoinStake.json';
 import TheLuxuryCoinToken from '../contracts/TheLuxuryCoinToken.json';
 import LuxandiaToken from '../contracts/LuxandiaToken.json';
 import LuxandiaStake from '../contracts/LuxandiaStake.json';
+import LuxandiaFreeze from '../contracts/LuxandiaFreeze.json';
 import OldTLXToken from '../contracts/OldTLXToken.json';
 import {
   LussoStakeContractAddress,
@@ -19,6 +20,7 @@ import {
   TLCStakeContractAddress,
   TLCTokenContractAddress,
   OldTLXTokenContractAddress,
+  LussoFreezeContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -32,14 +34,20 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [tokenContract, setTokenContract] = useState<any | undefined>();
   const [stakeContract, setStakeContract] = useState<Contract | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [freezeContract, setFreezeContract] = useState<any | undefined>();
+
   const [tokenAddress, setTokenAddress] = useState('');
   const [stakeAddress, setStakeAddress] = useState('');
+  const [freezeAddress, setFreezeAddress] = useState('');
   const [alreadyConnectedToContracts, setAlreadyConnectedToContracts] =
     useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [tokenAbi, setTokenAbi] = useState<any>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [stakeAbi, setStakeAbi] = useState<any>();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [freezeAbi, setFreezeAbi] = useState<any>();
 
   useEffect(() => {
     if (coinTag === 'TLX') {
@@ -50,8 +58,10 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
     } else if (coinTag === 'LSO') {
       setTokenAddress(LussoTokenContractAddress);
       setStakeAddress(LussoStakeContractAddress);
+      setFreezeAddress(LussoFreezeContractAddress);
       setTokenAbi(LuxandiaToken.abi);
       setStakeAbi(LuxandiaStake.abi);
+      setFreezeAbi(LuxandiaFreeze.abi);
     } else if (coinTag === 'TLC') {
       setTokenAddress(TLCTokenContractAddress);
       setStakeAddress(TLCStakeContractAddress);
@@ -80,8 +90,15 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
           provider.getSigner(),
         );
 
+        const contractF = new ethers.Contract(
+          freezeAddress,
+          freezeAbi,
+          provider.getSigner(),
+        );
+
         setTokenContract(contractT);
         setStakeContract(contractS);
+        setFreezeContract(contractF);
         setAlreadyConnectedToContracts(true);
       }
     } catch (error) {
@@ -104,5 +121,12 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provider, walletAddress, tokenAbi, stakeAbi, tokenAddress, stakeAddress]);
 
-  return { provider, stakeContract, tokenContract, stakeAddress };
+  return {
+    provider,
+    stakeContract,
+    tokenContract,
+    stakeAddress,
+    freezeContract,
+    freezeAddress,
+  };
 };

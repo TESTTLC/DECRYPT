@@ -38,7 +38,8 @@ const StakeCoin: React.FC = () => {
     (state) => state.account.walletAddress,
   );
 
-  const { stakeContract, tokenContract, stakeAddress } = useContracts(coinTag);
+  const { stakeContract, tokenContract, stakeAddress, freezeContract } =
+    useContracts(coinTag);
 
   const [isRegisteredInLSOLaunchpad, setIsRegisteredInLSOLaunchpad] =
     useState(false);
@@ -398,7 +399,21 @@ const StakeCoin: React.FC = () => {
     try {
       if (!isUnfreezing) {
         setIsUnfreezing(true);
-        const result = await tokenContract.releaseOnce();
+        if (coinTag === 'LSO') {
+          const freezes = await freezeContract.getUserFreezed();
+          let indexToUnfreeze = 0;
+
+          for (const [index, freeze] of freezes.entries()) {
+            if (parseFloat(ethers.utils.formatEther(freeze.amount)) > 0) {
+              indexToUnfreeze = index;
+              break;
+            }
+          }
+
+          const result = await freezeContract.withdrawFreeze(indexToUnfreeze);
+        } else {
+          const result = await tokenContract.releaseOnce();
+        }
 
         setIsUnfreezing(false);
       }
