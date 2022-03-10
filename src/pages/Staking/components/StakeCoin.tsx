@@ -398,9 +398,7 @@ const StakeCoin: React.FC = () => {
     try {
       if (!isUnfreezing) {
         setIsUnfreezing(true);
-        console.log('here ');
         const result = await tokenContract.releaseOnce();
-        console.log('Res: ', result);
 
         setIsUnfreezing(false);
       }
