@@ -4,14 +4,6 @@ import {
   FaLinkedin,
   FaTwitter,
   FaSketch,
-  FaHome,
-  FaGamepad,
-  FaExternalLinkAlt,
-  FaMoneyBillWave,
-  FaUniversalAccess,
-  FaImages,
-  FaCreativeCommons,
-  FaStackExchange,
 } from 'react-icons/fa';
 
 import homeIcon from '../assets/images/Home.png';
@@ -133,6 +125,11 @@ export const routes = {
     id: 3,
     url: '/staking/:coin',
     title: 'Stake',
+  },
+  nftMarketplace: {
+    id: 4,
+    url: '/nftmarketplace',
+    title: 'NFT Marketplace',
   },
 };
 

@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { LaunchpadState, ThunkApi } from 'src/utils/storeTypes';
+import { createSlice } from '@reduxjs/toolkit';
+import { LaunchpadState } from 'src/utils/storeTypes';
 
 import { getLSOLaunchpadRegistrationThunk } from './actions';
 

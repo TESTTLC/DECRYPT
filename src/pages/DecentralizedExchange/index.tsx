@@ -7,7 +7,6 @@ import { getBalance } from 'src/utils/functions/Contracts';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';
-import { useWalletConnector } from 'src/hooks/useWalletConnector';
 import { useNavigate } from 'react-router-dom';
 
 import { changeChain } from '../../utils/functions/MetaMask';
@@ -31,8 +30,6 @@ export const localModalTokens: Project[] = [
 ];
 
 const DecentralizedExchange: React.FC = () => {
-  const [sectionIndex, setSectionIndex] = useState(0);
-  const { connectWallet } = useWalletConnector();
   const navigate = useNavigate();
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(

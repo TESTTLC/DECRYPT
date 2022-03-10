@@ -348,7 +348,7 @@ const StakeCoin: React.FC = () => {
               )}
             </div>
             <div
-              className={`"text-center flex h-full p-5 flex flex-col justify-center" overflow-y-scroll ${
+              className={`"text-center flex h-full p-5 flex-col justify-center" overflow-y-scroll ${
                 !isMobileSize ? 'border-l-2' : ''
               }`}
             >
@@ -398,7 +398,7 @@ const StakeCoin: React.FC = () => {
     try {
       if (!isUnfreezing) {
         setIsUnfreezing(true);
-        const result = await tokenContract.releaseOnce();
+        await tokenContract.releaseOnce();
 
         setIsUnfreezing(false);
       }

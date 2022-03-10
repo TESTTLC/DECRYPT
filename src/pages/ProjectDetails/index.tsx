@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import GlowingWrapper from "src/components/GlowingWrapper";
-import { launchpadProjects } from "src/utils/launchpadProjects";
-import { LaunchpadProject } from "src/utils/types";
-import ProjectElement from "../Launchpad/components/ProjectElement";
-import blockchainImage from "src/assets/images/blockchain2.jpeg";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { launchpadProjects } from 'src/utils/launchpadProjects';
+import { LaunchpadProject } from 'src/utils/types';
+
+import ProjectElement from '../Launchpad/components/ProjectElement';
 
 const ProjectDetails: React.FC = () => {
   const { coinTag } = useParams();
   const [project, setProject] = useState<LaunchpadProject>();
   useEffect(() => {
-    if (coinTag === "TLX") {
+    if (coinTag === 'TLX') {
       setProject(launchpadProjects.TLX);
-    } else if (coinTag === "TLC") {
+    } else if (coinTag === 'TLC') {
       setProject(launchpadProjects.TLC);
-    } else if (coinTag === "LSO") {
+    } else if (coinTag === 'LSO') {
       setProject(launchpadProjects.LSO);
-    } else if (coinTag === "default") {
+    } else if (coinTag === 'default') {
       setProject(launchpadProjects.DEFAULT);
     }
   }, [coinTag]);
@@ -26,6 +25,7 @@ const ProjectDetails: React.FC = () => {
     <div className="py-4 w-full grid gap-y-4 gap-x-4 md:gap-x-0 sm:gap-x-0 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 grid-cols-7 justify-center ">
       <div className="flex flex-col h-128 col-span-2 lg:col-span-3 xs:col-span-7">
         {/* <GlowingWrapper customStyles=""> */}
+        {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
         <ProjectElement coinTag={coinTag!} showStakingButton />
         {/* </GlowingWrapper> */}
       </div>
@@ -43,7 +43,7 @@ const ProjectDetails: React.FC = () => {
           </div>
           <a
             href={`https://${project.website}`}
-            target={"_blank"}
+            target={'_blank'}
             className="text-center text-white flex w-full justify-center font-poppins hover:cursor-pointer"
             rel="noreferrer"
           >

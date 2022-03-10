@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
 
@@ -24,6 +24,8 @@ import { StoreState } from './utils/storeTypes';
 import KYC from './pages/KYC';
 import NFTMarketplace from './pages/NFTMarketplace';
 import AssetTokenization from './pages/AssetTokenization';
+import NFTMarketplaceSidebar from './components/NFTMarketplaceSidebar';
+import { routes } from './utils/routes';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO'];
 
@@ -31,6 +33,9 @@ const App = () => {
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
   );
+
+  const location = useLocation();
+  console.log('location: ', location);
 
   return (
     <>
@@ -43,9 +48,15 @@ const App = () => {
             <span className="text-green-400">https://</span>decryption.com
           </p>
         </div>
-        <SideBar />
+        {/* <SideBar /> */}
+        {location.pathname === routes.nftMarketplace.url ? (
+          <NFTMarketplaceSidebar />
+        ) : (
+          <SideBar />
+        )}
+
         <div className="flex flex-col w-full min-h-screen z-10">
-          <Header />
+          {location.pathname !== routes.nftMarketplace.url && <Header />}
           <main
             className={` flex transition-all duration-500 ${
               isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''

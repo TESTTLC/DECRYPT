@@ -1,6 +1,5 @@
 import React from 'react';
-import { HiTicket, HiX } from 'react-icons/hi';
-import { MdSettings } from 'react-icons/md';
+import { HiX } from 'react-icons/hi';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';

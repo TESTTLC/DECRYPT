@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTotalPower } from 'src/redux/modules/account/actions';
 import { StoreState } from 'src/utils/storeTypes';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useContracts } from '../hooks/useContracts';
 import { useWindowSize } from '../hooks/useWindowSize';
@@ -170,9 +170,9 @@ const LaunchpadModal: React.FC<Props> = ({ coinTag, projectItem }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [TLCStakeContract]);
 
-  function openModal() {
-    setIsOpen(true);
-  }
+  // function openModal() {
+  //   setIsOpen(true);
+  // }
 
   function closeModal() {
     setIsOpen(false);
