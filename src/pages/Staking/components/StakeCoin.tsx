@@ -304,7 +304,8 @@ const StakeCoin: React.FC = () => {
                             coinTag &&
                             coinTag !== 'TLC' &&
                             coinTag !== 'LSO' &&
-                            stakeContract
+                            stakeContract &&
+                            stakeAmount > 0
                           ) {
                             webStake(
                               tokenContract,
@@ -318,7 +319,8 @@ const StakeCoin: React.FC = () => {
                           } else if (
                             coinTag &&
                             coinTag === 'TLC' &&
-                            stakeContract
+                            stakeContract &&
+                            stakeAmount > 0
                           ) {
                             contracts.tlcStake(
                               stakeContract,
@@ -329,7 +331,8 @@ const StakeCoin: React.FC = () => {
                             coinTag &&
                             coinTag === 'LSO' &&
                             stakeContract &&
-                            isRegisteredInLSOLaunchpad
+                            isRegisteredInLSOLaunchpad &&
+                            stakeAmount > 0
                           ) {
                             webStake(
                               tokenContract,
@@ -358,30 +361,34 @@ const StakeCoin: React.FC = () => {
                   const d = new Date(parseInt(stake.since, 10) * 1000)
                     .toDateString()
                     .slice(4);
+                  const amountStaked = ethers.utils.formatEther(stake.amount);
+                  console.log('userStakes: ', userStakes);
 
-                  return (
-                    <div key={`${stake.amount}/${index}`}>
-                      <div className="flex justify-around xs:items-center xs:flex-col sm:items-center sm:flex-col my-2">
-                        <p className="text-gray-400">
-                          You staked{' '}
-                          <b className="text-white">
-                            {stake.amount / 10 ** 18} {coinTag}{' '}
-                          </b>{' '}
-                          on {d} for
-                          {' ' +
-                            renderStakePeriod(stake.period.toNumber())}{' '}
-                        </p>
-                        {stakeContract ? (
-                          <GlowingButton
-                            text={`Unstake ${
-                              stake.amount / 10 ** 18
-                            } ${coinTag}`}
-                            onClick={() => unstake(index, stakeContract)}
-                          />
-                        ) : null}
+                  if (parseFloat(amountStaked) > 0) {
+                    return (
+                      <div key={`${stake.amount}/${index}`}>
+                        <div className="flex justify-around xs:items-center xs:flex-col sm:items-center sm:flex-col my-2">
+                          <p className="text-gray-400">
+                            You staked{' '}
+                            <b className="text-white">
+                              {amountStaked} {coinTag}{' '}
+                            </b>{' '}
+                            on {d} for
+                            {' ' +
+                              renderStakePeriod(stake.period.toNumber())}{' '}
+                          </p>
+                          {stakeContract ? (
+                            <GlowingButton
+                              text={`Unstake ${
+                                stake.amount / 10 ** 18
+                              } ${coinTag}`}
+                              onClick={() => unstake(2, stakeContract)}
+                            />
+                          ) : null}
+                        </div>
                       </div>
-                    </div>
-                  );
+                    );
+                  }
                 })
               ) : (
                 <p className="text-white font-poppins">
