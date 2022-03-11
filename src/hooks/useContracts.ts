@@ -90,15 +90,18 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
           provider.getSigner(),
         );
 
-        const contractF = new ethers.Contract(
-          freezeAddress,
-          freezeAbi,
-          provider.getSigner(),
-        );
+        if (coinTag === 'LSO') {
+          const contractF = new ethers.Contract(
+            freezeAddress,
+            freezeAbi,
+            provider.getSigner(),
+          );
+
+          setFreezeContract(contractF);
+        }
 
         setTokenContract(contractT);
         setStakeContract(contractS);
-        setFreezeContract(contractF);
         setAlreadyConnectedToContracts(true);
       }
     } catch (error) {
