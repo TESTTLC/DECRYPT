@@ -580,7 +580,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex">
+      <div className="flex space-x-12 mt-4">
         <div className="h-60">
           <p className="font-bold text-2xl">Good morning, Leonard!</p>
           <p className="text-gray-500 text-[0.65rem] mb-4">
@@ -607,6 +607,36 @@ const Dashboard: React.FC = () => {
             <div className="h-[0.1rem] w-full bg-gray-700 my-4"></div>
             <div className="flex">
               <div className="w-2 h-2 rounded-full bg-indigo-700" />
+              <p>Communication Platforms</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="h-60">
+          <p className="text-xl">Market Analysis TLC</p>
+
+          <div className="bg-customBlue-800 rounded-lg py-4 mt-2">
+            <div className="px-8">
+              <p>Today</p>
+              <p className="text-gray-500 text-xs">Market trend</p>
+              <div className="flex space-x-2 text-lg">
+                <p className="text-pink-500">68,5%</p>
+                <p className="text-[#5EFF5A] bg-green-900 rounded-r-full px-4">
+                  12%
+                </p>
+              </div>
+              <p className="text-gray-500 text-[0.55rem] mt-2">
+                Results provided by the BERT AND GPT3 programs.
+              </p>
+              <p className="text-gray-500 text-[0.55rem]">
+                There results are worthless, do not act on them.
+              </p>
+            </div>
+            <MarketTrendResults />
+            <div className="h-[0.1rem] w-full bg-gray-700 my-4"></div>
+            <div className="flex">
+              <div className="w-2 h-2 rounded-full bg-indigo-700" />
+              <p>Communication Platforms</p>
             </div>
           </div>
         </div>

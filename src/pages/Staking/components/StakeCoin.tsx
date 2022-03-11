@@ -38,7 +38,8 @@ const StakeCoin: React.FC = () => {
     (state) => state.account.walletAddress,
   );
 
-  const { stakeContract, tokenContract, stakeAddress } = useContracts(coinTag);
+  const { stakeContract, tokenContract, stakeAddress, freezeContract } =
+    useContracts(coinTag);
 
   const [isRegisteredInLSOLaunchpad, setIsRegisteredInLSOLaunchpad] =
     useState(false);
@@ -398,7 +399,21 @@ const StakeCoin: React.FC = () => {
     try {
       if (!isUnfreezing) {
         setIsUnfreezing(true);
-        await tokenContract.releaseOnce();
+        if (coinTag === 'LSO') {
+          const freezes = await freezeContract.getUserFreezed();
+          let indexToUnfreeze = 0;
+
+          for (const [index, freeze] of freezes.entries()) {
+            if (parseFloat(ethers.utils.formatEther(freeze.amount)) > 0) {
+              indexToUnfreeze = index;
+              break;
+            }
+          }
+
+          const result = await freezeContract.withdrawFreeze(indexToUnfreeze);
+        } else {
+          const result = await tokenContract.releaseOnce();
+        }
 
         setIsUnfreezing(false);
       }
@@ -460,13 +475,13 @@ const StakeCoin: React.FC = () => {
           </div>
         </div>
       </div>
-      {coinTag === 'TLX' && walletAddress && (
+      {(coinTag === 'TLX' || coinTag === 'LSO') && walletAddress && (
         <div className="flex w-full items-center justify-center mt-4">
           <button
             className="flex h-10 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
             onClick={unfreezeCurrent}
           >
-            Unfreeze TLX
+            Unfreeze {coinTag}
           </button>
         </div>
       )}
