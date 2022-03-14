@@ -22,6 +22,7 @@ import Dashboard from './pages/Dashboard';
 import Header from './components/Header';
 import { StoreState } from './utils/storeTypes';
 import KYC from './pages/KYC';
+import DHS from './pages/DHS';
 import NFTMarketplace from './pages/NFTMarketplace';
 import AssetTokenization from './pages/AssetTokenization';
 import NFTMarketplaceSidebar from './components/NFTMarketplaceSidebar';
@@ -85,6 +86,7 @@ const App = () => {
                 path="/tokenization/:coinTag"
                 element={<TokenizationProjectDetails />}
               />
+              <Route path="/dhs" element={<DHS />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
