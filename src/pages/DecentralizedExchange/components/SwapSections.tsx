@@ -84,7 +84,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
-  const [toToken, setToToken] = useState(toModalTokes[0].tag);
+  // const [toToken, setToToken] = useState(toModalTokes[0].tag);
   // const [amountToSwap, setamountToSwap] = useState(0);
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(
@@ -99,9 +99,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     console.log('Token: ', token);
   };
 
-  const onToTokenChange = (token: string) => {
-    setToToken(token);
-  };
+  // const onToTokenChange = (token: string) => {
+  //   setToToken(token);
+  // };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
@@ -153,7 +153,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         );
         setIsLoading(false);
 
-        const data = await res.json();
+        await res.json();
       } catch (error) {
         console.log('Error is: ', error);
         setIsLoading(false);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { GoArrowDown } from 'react-icons/all';
 
@@ -15,8 +15,6 @@ interface Props {
 
 const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
   const { isMobileSize } = useWindowSize();
-  const [imageUsed, setImageUsed] = useState('');
-  const [imageUsedToken, setImageUsedToken] = useState('');
   const [selectedToken, setSelectedToken] = useState(tokens[0]);
 
   const customStyles = {

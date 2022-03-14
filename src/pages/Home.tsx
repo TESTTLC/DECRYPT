@@ -1,13 +1,6 @@
 import React, { useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import {
-  FaPaypal,
-  FaWallet,
-  FaBell,
-  FaUser,
-  FaTicketAlt,
-  FaFile,
-} from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { FaWallet, FaUser, FaTicketAlt } from 'react-icons/fa';
 import { IoRocketSharp } from 'react-icons/io5';
 import { ImRocket } from 'react-icons/im';
 import { BiDevices } from 'react-icons/bi';
@@ -15,7 +8,6 @@ import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 
 import BigButton from '../components/BigButton';
-import { routes } from '../utils/routes';
 import stakingImage from '../assets/images/staking_1.webp';
 import createTokenImage from '../assets/images/create_token_1.webp';
 import launchpadImage from '../assets/images/launchpad_1.webp';
@@ -24,7 +16,6 @@ import exchangeImage from '../assets/images/exchange_1.webp';
 import nftMarketplaceImage from '../assets/images/nft_1.webp';
 import metaverseImage from '../assets/images/metaverse_1.webp';
 import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.webp';
-import CreateToken from '../assets/svg/CreateToken';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -154,7 +145,6 @@ const Home: React.FC = () => {
                 imageSource={createTokenImage}
                 titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
-                svgComponent={<CreateToken />}
               />
               <a
                 ref={createYourTokenRef}

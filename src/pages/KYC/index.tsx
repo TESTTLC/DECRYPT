@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
 //@ts-ignore
 import WebSDK from '@verifai/websdk-react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { RiContactsBookLine } from 'react-icons/ri';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 const url = 'https://websdk.verifai.com/v1/auth/token';
 
@@ -34,19 +33,19 @@ const KYC: React.FC = () => {
         // For the token look at: https://docs.verifai.com/web-sdk
         token="12414"
         onStart={() => {
-          console.log('!23');
+          console.log('Done WebSDK');
         }}
         // you can manipulate the show prop to show and hide the modal.
         show={true}
         onSuccess={(sessionID: string) => {
-          console.log('111');
+          console.log('sessionID: ', sessionID);
           // set show prop to false, to close the modal
           // setShow(false);
           // Here you can get the Verifai Result
           // And clear the temporal storage
         }}
         onCanceled={(sessionID: string) => {
-          console.log('222');
+          console.log('sessionID: ', sessionID);
           // set show prop to false, to close the modal
           // setShow(false);
           // Here your customer canceled the Verifai flow

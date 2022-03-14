@@ -10,8 +10,6 @@ export const getLSOLaunchpadRegistration = async (walletAddress: string) => {
       },
     );
 
-    console.log('asdddd');
-
     const result = await res.json();
     if (result.walletAddress && result.totalPower && result.totalPower >= 1) {
       return true;

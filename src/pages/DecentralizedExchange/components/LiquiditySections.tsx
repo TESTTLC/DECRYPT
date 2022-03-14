@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
-import tetherImage from 'src/assets/images/tether.png';
 import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { Project } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
@@ -67,6 +66,7 @@ const LiquiditySections: React.FC = () => {
   const [toToken, setToToken] = useState(toModalTokes[0].tag);
 
   const onFromTokenChange = (token: string) => {
+    console.log('fromToken: ', fromToken);
     setFromToken(token);
   };
 

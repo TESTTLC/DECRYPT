@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageWebP from 'react-image-webp';
 
 interface Props {
   title: string;
@@ -12,7 +13,6 @@ interface Props {
   titleStyle?: string;
   subtitleStyle?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  svgComponent?: any;
 }
 
 const BigButton: React.FC<Props> = ({
@@ -23,7 +23,6 @@ const BigButton: React.FC<Props> = ({
   showTopText,
   imageContainerStyle,
   imageStyle,
-  svgComponent,
   titleStyle,
   subtitleStyle,
 }) => {
@@ -38,36 +37,6 @@ const BigButton: React.FC<Props> = ({
           className="flex flex-col rounded-lg relative w-full h-full bg-gradient-to-br
            overflow-hidden bg-gray-700 bg-opacity-70"
         >
-          {/* {svgComponent && (
-            <div
-              className={`relative w-full ${
-                imageContainerStyle ? imageContainerStyle : 'h-1/2'
-              }`}
-            >
-              <img
-                alt={`${imageSource}`}
-                src={imageSource}
-                className={`h-full w-full aspect-w-1 object-cover ${
-                  imageStyle ? imageStyle : ''
-                }`}
-              />
-              <div
-                className={`h-full w-full aspect-w-1 object-cover ${
-                  imageStyle ? imageStyle : ''
-                }`}
-              >
-                {svgComponent}
-              </div>
-              {showTopText && (
-                <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
-                  <p className="font-poppins text-md font-semibold">
-                    Coming Soon
-                  </p>
-                </div>
-              )}
-            </div>
-          )} */}
-
           {imageSource && (
             <div
               className={`relative w-full ${
@@ -75,13 +44,17 @@ const BigButton: React.FC<Props> = ({
               }`}
             >
               <picture>
-                <img
+                <ImageWebP
                   alt={`${imageSource}`}
-                  src={imageSource}
+                  // src={imageSource}
+                  webp={imageSource}
                   className={`h-full w-full aspect-w-1 object-cover ${
                     imageStyle ? imageStyle : ''
                   }`}
                 />
+                {/* <source srcSet={imageSource} type="image/webp" /> */}
+
+                {/* <img alt={`${imageSource}`} src={imageSource} /> */}
               </picture>
               {showTopText && (
                 <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">

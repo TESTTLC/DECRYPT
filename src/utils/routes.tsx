@@ -4,14 +4,6 @@ import {
   FaLinkedin,
   FaTwitter,
   FaSketch,
-  FaHome,
-  FaGamepad,
-  FaExternalLinkAlt,
-  FaMoneyBillWave,
-  FaUniversalAccess,
-  FaImages,
-  FaCreativeCommons,
-  FaStackExchange,
 } from 'react-icons/fa';
 
 import homeIcon from '../assets/images/Home.png';
@@ -29,92 +21,77 @@ export const links = [
     id: 0,
     url: '/',
     text: 'home',
-    // icon: <FaHome className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
     icon: '',
     imageSource: homeIcon,
+    category: 'BASIC',
   },
   {
     id: 1,
     url: '/staking',
     text: 'staking',
-    // icon: <FaStackExchange className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
     icon: '',
-    // imageSource: stakingImage,
     imageSource: stakingIcon,
+    category: 'BASIC',
   },
   {
     id: 2,
     url: '/launchpad',
     text: 'launchpad',
-    // icon: <FaGamepad className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
     icon: '',
-    // imageSource: launchpadImage,
     imageSource: launchpadIcon,
+    category: 'BASIC',
   },
   {
     id: 3,
-    url: '/crosschainbridge',
-    text: 'cross chain bridge',
-    // icon: <FaExternalLinkAlt className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
+    url: 'https://luxandia.com',
+    text: 'metaverse',
+
     icon: '',
-    // imageSource: crossChainBridgeImage,
-    imageSource: ccbIcon,
+    imageSource: metaverseIcon,
+    category: 'BASIC',
   },
   {
     id: 4,
-    url: '/dex',
-    text: 'decentralized exchange',
-    // icon: <FaUniversalAccess className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
+    url: '/nftmarketplace',
+    text: 'nft marketplace',
     icon: '',
-    // imageSource: exchangeImage,
-    imageSource: dexIcon,
+    imageSource: nftMarketplaceIcon,
+    category: 'BASIC',
   },
   {
     id: 5,
-    url: 'https://factory.decryption.com',
-    text: 'create your token',
-    // icon: <FaCreativeCommons className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
+    url: '/crosschainbridge',
+    text: 'cross chain bridge',
     icon: '',
-    // imageSource: createTokenImage,
-    imageSource: createTokenIcon,
+    imageSource: ccbIcon,
+    category: 'BASIC',
   },
+
   {
     id: 6,
-    url: '/nftmarketplace',
-    // url: 'https://theluxury.gallery',
-    text: 'nft marketplace',
-    // icon: <FaImages className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
+    url: 'https://factory.decryption.com',
+    text: 'create your token',
     icon: '',
-    // imageSource: nftMarketplaceImage,
-    imageSource: nftMarketplaceIcon,
+    imageSource: createTokenIcon,
+    category: 'FINANCE',
   },
+
   {
     id: 7,
-    // url: "/metaverse",
-    url: 'https://luxandia.com',
-    text: 'metaverse',
-    // icon: <FaUniversalAccess className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
+    url: '/dex',
+    text: 'decentralized exchange',
     icon: '',
-    // imageSource: metaverseImage,
-    imageSource: metaverseIcon,
+    imageSource: dexIcon,
+    category: 'FINANCE',
   },
+
   {
     id: 8,
     url: '/tokenization',
     text: 'Asset Tokenization',
-    // icon: <FaMoneyBillWave className="w-5 h-5" />,
-    // icon: <img className="w-5 "/>
     icon: '',
-    // imageSource: lendingAndBorrowingImage,
     imageSource: assetTokenizationIcon,
+    category: 'FINANCE',
   },
 ];
 
@@ -133,6 +110,11 @@ export const routes = {
     id: 3,
     url: '/staking/:coin',
     title: 'Stake',
+  },
+  nftMarketplace: {
+    id: 4,
+    url: '/nftmarketplace',
+    title: 'NFT Marketplace',
   },
 };
 

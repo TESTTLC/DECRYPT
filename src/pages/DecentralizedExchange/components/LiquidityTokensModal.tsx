@@ -15,8 +15,8 @@ interface Props {
 
 const LiquidityTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
   const { isMobileSize } = useWindowSize();
-  const [imageUsed, setImageUsed] = useState('');
-  const [imageUsedToken, setImageUsedToken] = useState('');
+  // const [imageUsed, setImageUsed] = useState('');
+  // const [imageUsedToken, setImageUsedToken] = useState('');
   const [selectedToken, setSelectedToken] = useState(tokens[0]);
 
   const customStyles = {
