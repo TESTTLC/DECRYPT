@@ -3,35 +3,18 @@ import { ethers } from 'ethers';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { joinLaunchpadApi } from 'src/api';
 import BatteryStatus from 'src/components/BatteryStatus';
 import { StoreState } from 'src/utils/storeTypes';
 import dotenv from 'dotenv';
 import { changeChain } from 'src/utils/functions/MetaMask';
-import EarningsIcon from 'src/assets/svg/Earnings';
-import StakedFileIcon from 'src/assets/svg/StakedFile';
-import TimeIcon from 'src/assets/svg/Time';
-import RankIcon from 'src/assets/svg/Rank';
-import LoanIcon from 'src/assets/svg/Loan';
-import DebtIcon from 'src/assets/svg/Debt';
-import OfferIcon from 'src/assets/svg/Offer';
-import EyeIcon from 'src/assets/svg/Eye';
-import WalletPng from 'src/assets/images/wallet.png';
-import communityBond from 'src/assets/images/community-bond-bg.png';
-import communityBond2 from 'src/assets/images/community-bond-bg-2.png';
-import communityBond3 from 'src/assets/images/community-bond-bg-3.png';
-import Switch from 'react-switch';
-import { AiFillStar } from 'react-icons/ai';
 
 import { useContracts } from '../../hooks/useContracts';
-import { ChainsIds, Stake } from '../../utils/types';
 import {
   determinePowerForStake,
   getUserStakes,
 } from '../../utils/functions/Contracts';
-
-import CryptoCityComponent from './components/CryptoCityComponent';
-import AnalysisComponent from './components/AnalysisComponent';
-import DailyInfoComponent from './components/DailyInfoComponent';
+import { ChainsIds, Stake } from '../../utils/types';
 
 dotenv.config();
 
@@ -46,7 +29,6 @@ const Dashboard: React.FC = () => {
   const [showLaunchpadRegistration, setShowLaunchpadRegistration] =
     useState(false);
 
-  const [switchChecked, setSwitchChecked] = useState(true);
   const [powerColor, setPowerColor] = useState('red-400');
   const [TLXPower, setTLXPower] = useState(0);
   const [TLCPower, setTLCPower] = useState(0);
@@ -240,264 +222,100 @@ const Dashboard: React.FC = () => {
   }, [window.ethereum?.networkVersion]);
 
   return (
-    <div className="w-full mt-2">
-      <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 grid-cols-2 bg-black bg-opacity-70 w-full items-center justify-between px-4 py-1 rounded-xl">
-        <div className="flex col-span-1 h-full items-center space-x-8">
-          <p>Universe</p>
-          <div className="h-1/3 w-[0.1rem] bg-gray-500 rounded-md"></div>
-          <div className="flex space-x-4">
-            <img src={WalletPng} className="h-10 w-10" />
-            <div className="">
-              <p className="text-sm font-bold text-gray-500">Total Value</p>
-              <p className="text-lg font-medium">$62,786</p>
-            </div>
+    <div className="px-2 w-full flex flex-col justify-center">
+      <p className="text-white font-bold text-2xl mb-4">Dashboard</p>
+      <div className="flex flex-col items-center w-full">
+        {chainErrorMessage && (
+          <p className="mb-2 text-red-400 text-lg">{chainErrorMessage}</p>
+        )}
+
+        <div className="w-full grid gap-y-4 2xl:gap-x-8 xl:gap-x-8 lg:gap-x-8 grid-cols-7 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1">
+          <div className="flex w-full col-span-2 flex-col h-96 bg-black opacity-70 justify-center items-center">
+            <p className="text-white font-poppins font-bold text-2xl mb-4">
+              1 Project
+            </p>
+            <p className="text-white font-poppins font-bold text-2xl mb-4">
+              {totalTLCStaked > 0 && totalTLXStaked > 0
+                ? '2'
+                : totalTLXStaked > 0 || totalTLCStaked > 0
+                ? '1'
+                : '0'}{' '}
+              Tokens
+            </p>
           </div>
-          <div className="flex items-center space-x-4">
-            <EarningsIcon />
-            <div className="">
-              <p className="text-sm font-bold text-gray-500">Earnings</p>
-              <p className="text-lg font-medium">$8,500</p>
+
+          <div className="w-full relative flex justify-center items-center col-start-3 col-span-5 md:col-span-1 sm:col-span-1 xs:col-span-1 h-96 bg-black opacity-70 px-2">
+            <div className="absolute right-4 top-4">
+              <BatteryStatus power={power} powerColor={powerColor} />
             </div>
-          </div>
-        </div>
-        <div className="flex col-span-1 space-x-16 h-full items-center">
-          <div className="flex items-center space-x-4">
-            <StakedFileIcon />
-            <div className="">
-              <p className="text-sm font-bold text-gray-500">$TLX Staked</p>
-              <p className="text-lg font-medium">237</p>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-            <StakedFileIcon />
-            <div className="">
-              <p className="text-sm font-bold text-gray-500">$TLC Staked</p>
-              <p className="text-lg font-medium">18,239</p>
+            <div className="w-full grid grid-cols-3">
+              <div className="text-center text-white text-2xl font-semibold font-poppins">
+                You staked{' '}
+                <p style={{ color: powerColor }}>{totalTLXStaked} TLX</p>
+              </div>
+              <div className="flex flex-col justify-center text-center text-white text-2xl font-semibold font-poppins">
+                Total power <p style={{ color: powerColor }}>{power}%</p>
+              </div>
+              <div className="text-center text-white text-2xl font-semibold font-poppins">
+                You staked{' '}
+                <p style={{ color: powerColor }}>{totalTLCStaked} TLC</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 mt-3 gap-x-4 gap-y-4">
-        <div className="col-span-3 xs:col-span-1 sm:col-span-1 md:col-span-1 px-2 flex flex-col justify-center ">
-          <div className="grid grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-2 justify-between gap-x-6 gap-y-4">
-            <DailyInfoComponent />
-            <AnalysisComponent coinTag={'TLC'} />
-            <AnalysisComponent coinTag={'TLX'} />
-          </div>
-          <div className="grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-x-16 gap-y-6 bg-black bg-opacity-70 mt-4 rounded-xl justify-between py-4 px-6">
-            <CryptoCityComponent />
-          </div>
-        </div>
-        <div className="col-span-1 xs:col-span-1 sm:col-span-1 flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-xl">
-          <div className="flex flex-col space-y-3 bg-[#171726] shadow-innerWhite rounded-xl py-4 pl-4">
-            <div className="flex justify-between items-center ">
-              <p>Personal Account Status</p>
-
-              <span className="flex items-center justify-between px-2 py-1 bg-yellow-900 bg-opacity-75 text-powerYellow rounded-l-lg">
-                5 stars <AiFillStar size={25} color="yellow" />
+      {showLaunchpadRegistration && currentChainId === ChainsIds.TLC && (
+        <div className="w-full flex flex-col items-center justify-center mt-4">
+          <div className="relative self-center flex flex-col items-center justify-center w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-4 rounded-lg bg-black bg-opacity-60 text-white text-center my-1">
+            <span className="text-sm w-full text-center">
+              A single registration is required for access to the Decryption
+              Launchpad. TLX or TLC must be staked in order to utilize
+              Decryption Power. If you do not have one or two assets staked,{' '}
+              <span
+                className="underline text-green-500 cursor-pointer"
+                onClick={() => navigate('/dex')}
+              >
+                click here
+              </span>{' '}
+              to purchase TLC, stake your coins, and return to Launchpad.
+            </span>
+            {alreadyJoined && (
+              <span className="text-md w-full text-center text-green-500 mt-4">
+                You joined the launchpad with {launchpadRegistrationPower}%
+                power
               </span>
-            </div>
-            <div className="flex items-center">
-              <div className="flex flex-[0.6] items-center ">
-                <div className="bg-gradient-to-r from-blue-500 to-green-500 p-1 rounded-lg">
-                  <TimeIcon />
-                </div>
-                <div className="">
-                  <p className="text-xs text-gray-500">Times</p>
-                  <p>1 year</p>
-                </div>
-              </div>
-              <div className="flex flex-[0.4] items-center ">
-                <div className="bg-gradient-to-r from-purple-600 to-pink-500 p-1 rounded-lg">
-                  <RankIcon />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Rank</p>
-                  <p>A</p>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center">
-              <div className="flex flex-[0.6] items-center ">
-                <div className="bg-gradient-to-r from-yellow-600 to-yellow-400 p-1 rounded-lg">
-                  <LoanIcon />
-                </div>
-                <div className="">
-                  <p className="text-xs text-gray-500">Transactions</p>
-                  <p>204</p>
-                </div>
-              </div>
-              <div className="flex flex-[0.4] items-center ">
-                <div className="bg-gradient-to-r from-purple-500 to-purple-800 p-1 rounded-lg">
-                  <DebtIcon />
-                </div>
-                <div>
-                  <p className="text-xs text-gray-500">Bad Reports</p>
-                  <p>0</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col relative items-center mt-6">
-            <div className="flex relative flex-col w-full h-36 bg-[#171726] shadow-innerWhite rounded-xl pl-4 z-30">
-              <img
-                src={communityBond}
-                className="absolute bottom-0 right-0 z-0"
-              />
-              <p className="absolute -top-4 bg-[#171726] px-2 py-1 rounded-xl drop-shadow-lg shadow-lg text-xs">
-                Community Bond
-              </p>
-              <div className="flex justify-between items-center z-30">
-                <div>
-                  <div className="flex space-x-2 mt-4 items-center">
-                    <OfferIcon />
-                    <p>Offer</p>
-                  </div>
-                  <div className="flex space-x-2">
-                    <p>$LSO 10000</p>
-                    <p>+</p>
-                    <p className="text-sm text-[#5EFF5A]">1000</p>
-                  </div>
-                </div>
-                <div className="px-2 py-1 text-[#5EFF5A] bg-green-800 bg-opacity-75 rounded-l-lg">
-                  Interest 10%
-                </div>
-                {/* <span className="px-2 py-1 bg-yellow-900 bg-opacity-75 text-powerYellow rounded-l-lg">
-                  5 stars
-                </span> */}
-              </div>
-              <div className="pr-4 z-30">
-                <div className="w-full bg-green-600 bg-opacity-30 rounded-full h-2.5 dark:bg-gray-700 mt-4">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-green-500 h-2.5 rounded-full"
-                    style={{ width: '80%' }}
-                  ></div>
-                  <div className="flex justify-between items-center mt-2 text-sm">
-                    <p>1 month left</p>
-                    <p>15/04/2022</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="flex absolute top-4 w-3/4 flex-col h-36 bg-gradient-to-r from-purple-600 to-pink-400 shadow-innerWhite rounded-xl pl-4 z-20 drop-shadow-lg">
-              <img src={communityBond2} className="absolute bottom-0 left-0 " />
-            </div>
-            <div className="flex absolute top-8 w-1/2 flex-col h-36 bg-gradient-to-r from-blue-500 to-green-500 shadow-innerWhite rounded-xl pl-4 z-10 drop-shadow-lg">
-              <img
-                src={communityBond3}
-                className="absolute bottom-0 right-0 "
-              />
-            </div>
-          </div>
-          <button className="bg-[#52FEFD] rounded-lg py-2 text-black mt-10">
-            Let's make an investment
-          </button>
-          <div className="flex relative flex-col w-full h-40 bg-[#171726] shadow-innerWhite rounded-xl pl-4 pt-2 z-30 mt-4">
-            <div className="flex justify-between items-center ">
-              <div>
-                <div className="flex space-x-2 mt-4">
-                  <p>$LSO 10000</p>
-                  <p>+</p>
-                  <p className="text-sm text-[#5EFF5A]">1000</p>
-                </div>
-              </div>
-              <div className="px-2 py-1 text-[#5EFF5A] bg-green-800 bg-opacity-75 rounded-l-lg">
-                Interest 10%
-              </div>
-              {/* <span className="px-2 py-1 bg-yellow-900 bg-opacity-75 text-powerYellow rounded-l-lg">
-                  5 stars
-                </span> */}
-            </div>
-            <div className="flex space-x-8 mt-2 items-center">
-              <div className="flex flex-col items-center justify-center">
-                <div className="flex  space-x-1">
-                  <OfferIcon />
-                  <p className="text-sm text-gray-400">Offer</p>
-                </div>
-                <p className="text-xs">LUSSO</p>
-              </div>
-              <div className="flex flex-col  justify-center">
-                <div className="flex  space-x-1">
-                  <OfferIcon />
-                  <p className="text-sm text-gray-400">Reward</p>
-                </div>
-                <p className="text-xs">$1000/week</p>
-              </div>
-              <div className="flex flex-col  justify-center">
-                <div className="flex  space-x-1">
-                  <OfferIcon />
-                  <p className="text-sm text-gray-400">Term Bond</p>
-                </div>
-                <p className="text-xs">3 months</p>
-              </div>
-            </div>
-            <div className="pr-4 z-30">
-              <div className="w-full bg-green-600 bg-opacity-30 rounded-full h-2.5 dark:bg-gray-700 mt-4">
-                <div
-                  className="bg-gradient-to-r from-blue-500 to-green-500 h-2.5 rounded-full"
-                  style={{ width: '80%' }}
-                ></div>
-                <div className="flex justify-between items-center mt-2 text-sm">
-                  <p>1 month left</p>
-                  <p>15/04/2022</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className=" flex flex-col relative items-center mt-6">
-            <div className="flex relative flex-col w-full h-36 bg-gradient-to-r from-blue-500 to-green-500 shadow-innerWhite rounded-xl pl-4 z-30 overflow-hidden">
-              <img
-                src={communityBond3}
-                className="absolute top-0 right-0 z-10"
-              />
+            )}
 
-              <div className="flex justify-between items-center ">
-                <div className="w-full mt-2">
-                  <div className="flex w-full items-center justify-between">
-                    <p>@username</p>
-                    <div>
-                      <Switch
-                        className="mr-2"
-                        checked={switchChecked}
-                        onChange={() => setSwitchChecked(!switchChecked)}
-                        // onChange={this.handleChange}
-                        // checked={this.state.checked}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex w-full mt-1 items-center justify-between text-lg pr-4">
-                    <p>$62,786</p>
-                    <EyeIcon />
-                  </div>
-                  <div className="flex w-full justify-between items-center z-30 pr-2 mt-4 text-sm">
-                    <button className="flex flex-[0.45] space-x-2 justify-center items-center bg-black rounded-lg px-2 py-2">
-                      <p>Top up</p>
-                      {/* <LoanIcon /> */}
-                    </button>
-                    <button className="flex flex-[0.45] space-x-2 justify-center items-center bg-black rounded-lg px-2 py-2 z-30">
-                      <p>Withdraw</p>
-                      {/* <LoanIcon /> */}
-                    </button>
-                  </div>
-                </div>
-
-                {/* <span className="px-2 py-1 bg-yellow-900 bg-opacity-75 text-powerYellow rounded-l-lg">
-                  5 stars
-                </span> */}
+            <div className="relative self-center flex items-center justify-center w-full min-h-20 px-2 xs:px-2 sm:px-4 py-4 text-center my-1">
+              <div className="flex flex-col items-center justify-center text-sm flex-[0.5]">
+                {/* <span>$1.434.241</span> */}
+                <button
+                  className="flex w-full h-10 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                  onClick={() => navigate('/staking')}
+                >
+                  Stake
+                </button>
               </div>
-            </div>
-            <div className="flex absolute top-4 w-3/4 flex-col h-36 bg-gradient-to-r from-purple-600 to-pink-400 shadow-innerWhite rounded-xl pl-4 z-20 drop-shadow-lg">
-              <img src={communityBond2} className="absolute bottom-0 left-0" />
-            </div>
-            <div className="flex absolute top-8 w-1/2 flex-col h-36 bg-gradient-to-r from-blue-500 to-green-500 shadow-innerWhite rounded-xl pl-4 z-10 drop-shadow-lg">
-              <img
-                src={communityBond3}
-                className="absolute bottom-0 right-0 "
-              />
+              {!alreadyJoined && (
+                <>
+                  <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
+                  <div className="flex flex-col items-center justify-center text-sm flex-[0.5]">
+                    <button
+                      className="flex  w-full h-10 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                      onClick={joinLaunchpad}
+                    >
+                      Join the Launchpad
+                    </button>
+                    {/* <span>1 TLC = $0.0625</span>
+              <span>Market Cap: $1.240.062</span>
+              <span>Est. Weekly Rewards: $25.254</span> */}
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
