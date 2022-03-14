@@ -49,14 +49,15 @@ const App = () => {
           </p>
         </div>
         {/* <SideBar /> */}
-        {location.pathname === routes.nftMarketplace.url ? (
+        {/* {location.pathname === routes.nftMarketplace.url ? (
           <NFTMarketplaceSidebar />
-        ) : (
-          <SideBar />
-        )}
+        ) : ( */}
+        <SideBar />
+        {/* )} */}
 
         <div className="flex flex-col w-full min-h-screen z-10">
-          {location.pathname !== routes.nftMarketplace.url && <Header />}
+          {location.pathname !== routes.nftMarketplace.url &&
+            location.pathname !== routes.dashboard.url && <Header />}
           <main
             className={` flex transition-all duration-500 ${
               isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''

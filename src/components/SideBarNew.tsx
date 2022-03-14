@@ -1,6 +1,5 @@
 import React from 'react';
-import { HiTicket, HiX } from 'react-icons/hi';
-import { MdSettings } from 'react-icons/md';
+import { HiX } from 'react-icons/hi';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
@@ -28,11 +27,11 @@ const SideBar: React.FC = () => {
   return (
     <div
       className={`transition-all  duration-500  fixed top-0 ${
-        isSidebarOpen ? 'left-0' : '-left-60'
+        isSidebarOpen ? 'left-0' : '-left-64'
       } z-index-20 fixed z-50 h-screen`}
     >
       <div
-        className="flex h-screen overflow-y-auto flex-col w-60
+        className="flex h-screen overflow-y-auto flex-col w-64
        px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative bg-transparent sm:bg-customBlue-800 xs:bg-customBlue-800"
       >
         <button
@@ -59,15 +58,15 @@ const SideBar: React.FC = () => {
                   target={'_blank'}
                   rel="noreferrer"
                   className={`h-10
-                capitalize flex items-center px-2 py-2 ${
+                capitalize flex items-center py-2 ${
                   location.pathname === link.url
                     ? ''
                     : 'hover:bg-gray-600 hover:text-gray-200'
-                }  mt-5 transition-colors duration-200 transform
+                }  mt-2 transition-colors duration-200 transform
                  rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
-                    <img src={imageSource} className="w-10 h-10" />
+                    <img src={imageSource} className="w-8 h-8" />
                   ) : (
                     icon
                   )}
@@ -86,21 +85,21 @@ const SideBar: React.FC = () => {
                   }
                   key={`${id}/${url}`}
                   to={{ pathname: url }}
-                  className={`h-10
-                  capitalize flex items-center px-2 py-2 ${
+                  className={`h-8
+                  capitalize flex items-center py-2 ${
                     location.pathname === link.url
                       ? ''
                       : 'hover:bg-gray-600 hover:text-gray-200'
-                  }  mt-5 transition-colors duration-200 transform
+                  }  mt-2 transition-colors duration-200 transform
                    rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
-                    <img src={imageSource} className="w-10 h-10" />
+                    <img src={imageSource} className="w-8 h-8" />
                   ) : (
                     icon
                   )}
                   <span
-                    className={`mx-4 font-medium ${
+                    className={`mx-4 font-medium text-md ${
                       location.pathname === link.url ? 'text-green-500' : ''
                     }`}
                   >
@@ -115,16 +114,18 @@ const SideBar: React.FC = () => {
               target={'_blank'}
               className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
-              <img src={ticketsIcon} className="w-10 h-10" />
+              <img src={ticketsIcon} className="w-8 h-8" />
 
-              <a className="mx-4 font-medium font-oswald uppercase">Tickets</a>
+              <a className="mx-4 font-medium text-md font-oswald uppercase">
+                Tickets
+              </a>
             </a>
             <a
               href="https://discord.gg/tlchain"
               target={'_blank'}
               className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
-              <img src={communityIcon} className="w-10 h-10" />
+              <img src={communityIcon} className="w-8 h-8" />
 
               <span className="mx-4 font-medium font-oswald uppercase">
                 Community

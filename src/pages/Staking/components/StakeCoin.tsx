@@ -382,7 +382,7 @@ const StakeCoin: React.FC = () => {
                               text={`Unstake ${
                                 stake.amount / 10 ** 18
                               } ${coinTag}`}
-                              onClick={() => unstake(2, stakeContract)}
+                              onClick={() => unstake(index, stakeContract)}
                             />
                           ) : null}
                         </div>

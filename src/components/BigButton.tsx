@@ -52,6 +52,9 @@ const BigButton: React.FC<Props> = ({
                     imageStyle ? imageStyle : ''
                   }`}
                 />
+                {/* <source srcSet={imageSource} type="image/webp" /> */}
+
+                {/* <img alt={`${imageSource}`} src={imageSource} /> */}
               </picture>
               {showTopText && (
                 <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">

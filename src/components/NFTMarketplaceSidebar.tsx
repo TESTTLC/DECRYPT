@@ -47,14 +47,14 @@ const NFTMarketplaceSidebar: React.FC = () => {
         </div>
 
         {/* First Sidebar Element */}
-        <div className="flex w-full space-x-4 justify-center items-center bg-customBlue-300 p-4 rounded-lg">
+        <div className="flex w-full space-x-4 justify-center items-center bg-black bg-opacity-70 p-4 rounded-lg">
           <button className="w-6 h-6 bg-blue-400 rounded-lg">+</button>
           <p>Create NFT</p>
         </div>
         {/* End First Sidebar Element */}
 
         {/* Second Sidebar Element */}
-        <div className="flex flex-col w-full bg-customBlue-300 p-4 rounded-lg">
+        <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg">
           <p className="uppercase text-blue-500 text-sm">Market Place</p>
           <div className="flex">
             <p>icon</p>
@@ -72,7 +72,7 @@ const NFTMarketplaceSidebar: React.FC = () => {
         {/* End Second Sidebar Element */}
 
         {/* Third Sidebar Element */}
-        <div className="flex flex-col w-full bg-customBlue-300 p-4 rounded-lg">
+        <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg">
           <p className="uppercase text-blue-500 text-sm">Filter</p>
           <div className="text-gray-400">
             <div className="flex">
