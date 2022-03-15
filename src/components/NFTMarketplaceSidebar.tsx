@@ -6,7 +6,7 @@ import { StoreState } from 'src/utils/storeTypes';
 import { closeSidebar } from 'src/redux/modules/globals/actions';
 import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
 import DecryptionLogo from 'src/assets/svg/DecryptionLogo';
-import nftMarketplaceImage from 'src/assets/images/nft_1.webp';
+import nftMarketplaceImage from 'src/assets/images/nft_1.png';
 
 import SMALL_LOGO from '../assets/images/logo.png';
 import ticketsIcon from '../assets/images/Tickets.png';
