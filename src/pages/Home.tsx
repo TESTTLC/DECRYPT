@@ -8,6 +8,14 @@ import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 
 import BigButton from '../components/BigButton';
+// import stakingImage from '../assets/images/staking_1.png';
+// import createTokenImage from '../assets/images/create_token_1.jpeg';
+// import launchpadImage from '../assets/images/launchpad_1.png';
+// import crossChainBridgeImage from '../assets/images/cross_chain_bridge_1.png';
+// import exchangeImage from '../assets/images/exchange_1.png';
+// import nftMarketplaceImage from '../assets/images/nft_1.png';
+// import metaverseImage from '../assets/images/metaverse_1.jpeg';
+// import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.jpeg';
 import stakingImage from '../assets/images/staking_1.webp';
 import createTokenImage from '../assets/images/create_token_1.webp';
 import launchpadImage from '../assets/images/launchpad_1.webp';
