@@ -44,17 +44,23 @@ const BigButton: React.FC<Props> = ({
               }`}
             >
               <picture>
-                {/* <ImageWebP
+                <ImageWebP
                   alt={`${imageSource}`}
-                  // src={imageSource}
+                  src={imageSource}
                   webp={imageSource}
                   className={`h-full w-full aspect-w-1 object-cover ${
                     imageStyle ? imageStyle : ''
                   }`}
-                /> */}
-                <source srcSet={imageSource} type="image/webp" />
+                />
+                {/* <source srcSet={`${imageSource}.webp`} type="image/webp" /> */}
 
-                <img alt={`${imageSource}`} src={imageSource} />
+                {/* <img
+                  alt={`${imageSource}.png`}
+                  src={imageSource}
+                  className={`h-full w-full aspect-w-1 object-cover ${
+                    imageStyle ? imageStyle : ''
+                  }`}
+                /> */}
               </picture>
               {showTopText && (
                 <div className="absolute w-full py-1 bottom-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
