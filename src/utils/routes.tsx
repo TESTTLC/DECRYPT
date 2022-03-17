@@ -16,6 +16,7 @@ import ccbIcon from '../assets/images/Cross-Chain-Bridge.png';
 import createTokenIcon from '../assets/images/Token-Factory.png';
 import metaverseIcon from '../assets/images/Metaverse.png';
 
+//Sidebar
 export const links = [
   {
     id: 0,
@@ -106,15 +107,30 @@ export const routes = {
     url: '/launchpad',
     title: 'Launchpad',
   },
-  stakeCoin: {
+  staking: {
     id: 3,
+    url: '/staking',
+    title: 'Staking',
+  },
+  stakeCoin: {
+    id: 4,
     url: '/staking/:coin',
     title: 'Stake',
   },
   nftMarketplace: {
-    id: 4,
+    id: 5,
     url: '/nftmarketplace',
     title: 'NFT Marketplace',
+  },
+  nftMarketplaceStats: {
+    id: 6,
+    url: '/nftmarketplace/stats',
+    title: 'NFT Marketplace Routes',
+  },
+  nftMarketplaceCategories: {
+    id: 6,
+    url: '/nftmarketplace/categories',
+    title: 'NFT Marketplace Routes',
   },
 };
 

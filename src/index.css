@@ -40,10 +40,12 @@ body {
 .bg-image {
   background-image: url('./assets/images/blockchain2.jpeg');
   filter: blur(25px);
+  right: 0;
   /* position: absolute; */
   position: fixed;
   height: 100%;
-  width: 100%;
+  width: 105%;
+  /* transform: scale(1.5); */
 }
 
 .Overlay {

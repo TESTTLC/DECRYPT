@@ -1,17 +1,20 @@
 import React from 'react';
 import { HiX } from 'react-icons/hi';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { closeSidebar } from 'src/redux/modules/globals/actions';
 import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
 import DecryptionLogo from 'src/assets/svg/DecryptionLogo';
 import nftMarketplaceImage from 'src/assets/images/nft_1.png';
-
-import SMALL_LOGO from '../assets/images/logo.png';
-import ticketsIcon from '../assets/images/Tickets.png';
-import communityIcon from '../assets/images/Community.png';
-import { links } from '../utils/routes';
+import MenuIcon from 'src/assets/svg/MenuIcon';
+import VerticalLineChartIcon from 'src/assets/svg/VerticalLineChart';
+import PaperIcon from 'src/assets/svg/Paper';
+import UsersIcon from 'src/assets/svg/Users';
+import DotsCirleIcon from 'src/assets/svg/DotsCirle';
+import BagIcon from 'src/assets/svg/Bag';
+import DiscountIcon from 'src/assets/svg/Discount';
+import { routes } from 'src/utils/routes';
 
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -20,11 +23,13 @@ import { links } from '../utils/routes';
 
 const NFTMarketplaceSidebar: React.FC = () => {
   const { isMobileDevice } = useDeviceInfo();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
   );
   const location = useLocation();
+  console.log('Location: ', location);
 
   return (
     <div
@@ -33,7 +38,7 @@ const NFTMarketplaceSidebar: React.FC = () => {
       } z-index-20 fixed z-50 h-screen`}
     >
       <div
-        className="flex space-y-6 h-screen overflow-y-auto flex-col w-60
+        className="flex space-y-4 h-screen overflow-y-auto flex-col w-60
        px-2 py-8 border-r border-opacity-20 border-blue-600 min-h-screen relative bg-transparent sm:bg-customBlue-800 xs:bg-customBlue-800"
       >
         <button
@@ -54,52 +59,74 @@ const NFTMarketplaceSidebar: React.FC = () => {
         {/* End First Sidebar Element */}
 
         {/* Second Sidebar Element */}
-        <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg">
-          <p className="uppercase text-blue-500 text-sm">Market Place</p>
-          <div className="flex">
-            <p>icon</p>
+        <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg space-y-2 text-gray-400">
+          <p className="uppercase text-blue-500 text-sm ml-2">Market Place</p>
+          <button
+            className={`flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem] ${
+              location.pathname === routes.nftMarketplace.url
+                ? 'text-green-500'
+                : 'underline'
+            }`}
+            onClick={() => navigate('/nftmarketplace')}
+          >
+            <MenuIcon />
             <p>Marketplace</p>
-          </div>
-          <div className="flex">
-            <p>icon</p>
+          </button>
+          <button
+            className={`flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem] ${
+              location.pathname === routes.nftMarketplaceStats.url
+                ? 'text-green-500'
+                : 'underline'
+            }`}
+            onClick={() => navigate('/nftmarketplace/stats')}
+          >
+            <VerticalLineChartIcon />
             <p>Stats</p>
-          </div>
-          <div className="flex">
-            <p>icon</p>
+          </button>
+          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+            <PaperIcon />
             <p>Resource</p>
-          </div>
+          </button>
         </div>
         {/* End Second Sidebar Element */}
 
         {/* Third Sidebar Element */}
-        <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg">
-          <p className="uppercase text-blue-500 text-sm">Filter</p>
-          <div className="text-gray-400">
-            <div className="flex">
-              <p>icon</p>
-              <p>Status</p>
-            </div>
-            <div className="flex">
-              <p>icon</p>
-              <p>Price</p>
-            </div>
-            <div className="flex">
-              <p>icon</p>
-              <p>Collections</p>
-            </div>
-            <div className="flex">
-              <p>icon</p>
-              <p>Chains</p>
-            </div>
-            <div className="flex">
-              <p>icon</p>
-              <p>Categories</p>
-            </div>
-            <div className="flex">
-              <p>icon</p>
-              <p>On sale in</p>
-            </div>
-          </div>
+        <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg space-y-2 text-gray-400">
+          <p className="uppercase text-blue-500 text-sm ml-2">Filter</p>
+          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+            <MenuIcon />
+            <p>Status</p>
+          </button>
+          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+            <VerticalLineChartIcon />
+            <p>Price</p>
+          </button>
+          <button
+            className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]"
+            // onClick={() => navigate('/nftmarketplace/collections')}
+          >
+            <UsersIcon />
+            <p>Collections</p>
+          </button>
+          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+            <DotsCirleIcon />
+            <p>Chains</p>
+          </button>
+          <button
+            className={`flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem] ${
+              location.pathname === routes.nftMarketplaceCategories.url
+                ? 'text-green-500'
+                : 'underline'
+            }`}
+            onClick={() => navigate('/nftmarketplace/categories')}
+          >
+            <BagIcon />
+            <p>Categories</p>
+          </button>
+          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+            <DiscountIcon />
+            <p>On sale in</p>
+          </button>
         </div>
         {/* End Third Sidebar Element */}
 

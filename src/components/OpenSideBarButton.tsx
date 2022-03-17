@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openSidebar } from 'src/redux/modules/globals/actions';
 import { StoreState } from 'src/utils/storeTypes';
 
-const OpenSideBarButton: React.FC = () => {
+const OpenSidebarButton: React.FC = () => {
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
@@ -25,4 +25,4 @@ const OpenSideBarButton: React.FC = () => {
   );
 };
 
-export default OpenSideBarButton;
+export default OpenSidebarButton;
