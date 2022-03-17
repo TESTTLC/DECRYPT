@@ -3,8 +3,8 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
 
-import SideBar from './components/SideBar';
-import OpenSideBarButton from './components/OpenSideBarButton';
+import Sidebar from './components/Sidebar';
+import OpenSidebarButton from './components/OpenSidebarButton';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Staking from './pages/Staking';
@@ -23,12 +23,16 @@ import Header from './components/Header';
 import { StoreState } from './utils/storeTypes';
 import KYC from './pages/KYC';
 import DHS from './pages/DHS';
-import NFTMarketplace from './pages/NFTMarketplace/index';
-import AssetTokenization from './pages/AssetTokenization';
+import NFTMarketplace from './pages/NFTMarketplace/indexNew';
+import NFTMarketplaceEditProfile from './pages/NFTMarketplaceEditProfile';
+import NFTMarketplaceCategories from './pages/NFTMarketplaceCategories';
 import NFTMarketplaceSidebar from './components/NFTMarketplaceSidebar';
+import AssetTokenization from './pages/AssetTokenization';
 import { routes } from './utils/routes';
+import NFTMarketplaceStats from './pages/NFTMarketplaceStats';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO'];
+export const marketplaceRoutes = ['categories', 'collections'];
 
 const App = () => {
   const isSidebarOpen = useSelector<StoreState, boolean>(
@@ -36,7 +40,13 @@ const App = () => {
   );
 
   const location = useLocation();
-  console.log('location: ', location);
+
+  const shouldRenderMainHeader = () => {
+    if (location.pathname.startsWith(routes.nftMarketplace.url)) {
+      return false;
+    }
+    return true;
+  };
 
   return (
     <>
@@ -49,25 +59,23 @@ const App = () => {
             <span className="text-green-400">https://</span>decryption.com
           </p>
         </div>
-        {/* <SideBar /> */}
-        {/* {location.pathname === routes.nftMarketplace.url ? (
+        {location.pathname.startsWith(routes.nftMarketplace.url) ? (
           <NFTMarketplaceSidebar />
-        ) : ( */}
-        <SideBar />
-        {/* )} */}
+        ) : (
+          <Sidebar />
+        )}
 
         <div className="flex flex-col w-full min-h-screen z-10">
-          {location.pathname !== routes.nftMarketplace.url &&
-            location.pathname !== routes.dashboard.url && <Header />}
+          {shouldRenderMainHeader() && <Header />}
           <main
             className={` flex transition-all duration-500 ${
               isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''
-            } xs:justify-center px-5 mb-auto z-20`}
+            } xs:justify-center px-4 mb-auto z-20`}
           >
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/staking" element={<Staking />} />
               <Route path="/staking/:coinTag" element={<StakeCoin />} />
+              <Route path="/staking" element={<Staking />} />
               <Route path="/launchpad" element={<Launchpad />} />
               <Route
                 path="/launchpad/:coinTag"
@@ -80,6 +88,18 @@ const App = () => {
               <Route path="/termsofuse" element={<TermsOfUse />} />
               <Route path="/dexdisclaimer" element={<DexDisclaimer />} />
               <Route path="/kyc" element={<KYC />} />
+              <Route
+                path="/nftmarketplace/categories"
+                element={<NFTMarketplaceCategories />}
+              />
+              <Route
+                path="/nftmarketplace/stats"
+                element={<NFTMarketplaceStats />}
+              />
+              <Route
+                path="/nftmarketplace/editprofile"
+                element={<NFTMarketplaceEditProfile />}
+              />
               <Route path="/nftmarketplace" element={<NFTMarketplace />} />
               <Route path="/tokenization" element={<AssetTokenization />} />
               <Route
@@ -97,7 +117,7 @@ const App = () => {
           </div>
         </div>
 
-        <OpenSideBarButton />
+        <OpenSidebarButton />
       </div>
     </>
   );

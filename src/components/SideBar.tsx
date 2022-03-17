@@ -17,7 +17,7 @@ import { links } from '../utils/routes';
   defer
 ></script>;
 
-const SideBar: React.FC = () => {
+const Sidebar: React.FC = () => {
   const { isMobileDevice } = useDeviceInfo();
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
@@ -147,4 +147,4 @@ const SideBar: React.FC = () => {
   );
 };
 
-export default SideBar;
+export default Sidebar;
