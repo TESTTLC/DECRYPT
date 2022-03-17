@@ -41,10 +41,10 @@ const Sidebar: React.FC = () => {
         >
           <HiX className="w-5 h-5" />
         </button>
-        <h2 className="text-3xl font-semibold text-white">
-          TLChain{' '}
+        <h2 className="text-xl font-semibold text-white">
+          Decryption{' '}
           <span className="text-green-400 ml-1 drop-shadow-2xl shadow-white">
-            DeFi
+            DeFi HUB
           </span>
         </h2>
 
