@@ -14,7 +14,7 @@ const MarketplaceHeader: React.FC<Props> = ({ title }) => {
   return (
     <>
       <button
-        className="text-xs flex items-center space-x-1 text-white text-left w-[7.5rem] bg-gradient-to-r from-blue-500 to-green-500 hover:from-gray-700 hover:to-gray-700 pl-2 py-[0.15rem] rounded-md mt-6"
+        className="text-xs flex items-center space-x-1 text-white text-left w-[7.5rem] bg-gradient-to-r from-blue-500 to-green-500 hover:from-gray-700 hover:to-gray-700 pl-2 py-[0.15rem] rounded-md mt-3 xs:mt-6 mb-3"
         onClick={() => navigate('/')}
       >
         <MdOutlineKeyboardBackspace size={14} color="white" />
@@ -40,7 +40,7 @@ const MarketplaceHeader: React.FC<Props> = ({ title }) => {
         <div className="flex justify-end items-center col-span-1 ">
           <button
             className="rounded-full col-span-1 w-10 h-10 bg-black bg-opacity-70"
-            onClick={() => navigate('/nftmarketplace/editprofile')}
+            onClick={() => navigate('/nftmarketplace/profile')}
           >
             <img
               src={user3}

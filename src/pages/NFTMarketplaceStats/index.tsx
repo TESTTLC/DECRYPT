@@ -5,7 +5,7 @@ import image1 from 'src/assets/images/nft_stats_1.png';
 import image2 from 'src/assets/images/nft_stats_2.png';
 import image3 from 'src/assets/images/nft_stats_3.png';
 import image4 from 'src/assets/images/nft_stats_4.png';
-import NFTItem from 'src/pages/NFTMarketplace/components/Item';
+import NFTItem from 'src/pages/NFTMarketplace/components/NFTItem';
 
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
 import MarketplaceRightSidebar from '../NFTMarketplace/components/MarketplaceRightSidebar';

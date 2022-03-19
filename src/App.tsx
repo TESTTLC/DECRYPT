@@ -30,6 +30,10 @@ import NFTMarketplaceSidebar from './components/NFTMarketplaceSidebar';
 import AssetTokenization from './pages/AssetTokenization';
 import { routes } from './utils/routes';
 import NFTMarketplaceStats from './pages/NFTMarketplaceStats';
+import NFTMarketplaceProfile from './pages/NFTMarketplaceProfile';
+import NFTMarketplaceCreateItem from './pages/NFTMarketplaceCreateItem';
+import NFTMarketplaceCreateCollection from './pages/NFTMarketplaceCreateCollection';
+import NFTMarketplaceCategory from './pages/NFTMarketplaceCategory';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO'];
 export const marketplaceRoutes = ['categories', 'collections'];
@@ -99,6 +103,22 @@ const App = () => {
               <Route
                 path="/nftmarketplace/editprofile"
                 element={<NFTMarketplaceEditProfile />}
+              />
+              <Route
+                path="/nftmarketplace/profile"
+                element={<NFTMarketplaceProfile />}
+              />
+              <Route
+                path="/nftmarketplace/create-item"
+                element={<NFTMarketplaceCreateItem />}
+              />
+              <Route
+                path="/nftmarketplace/create-collection"
+                element={<NFTMarketplaceCreateCollection />}
+              />
+              <Route
+                path="/nftmarketplace/category/:categoryId"
+                element={<NFTMarketplaceCategory />}
               />
               <Route path="/nftmarketplace" element={<NFTMarketplace />} />
               <Route path="/tokenization" element={<AssetTokenization />} />

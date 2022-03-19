@@ -130,7 +130,12 @@ export const routes = {
   nftMarketplaceCategories: {
     id: 6,
     url: '/nftmarketplace/categories',
-    title: 'NFT Marketplace Routes',
+    title: 'NFT Marketplace Categories',
+  },
+  nftMarketplaceEditProfile: {
+    id: 6,
+    url: '/nftmarketplace/editprofile',
+    title: 'NFT Marketplace Edit Profile',
   },
 };
 

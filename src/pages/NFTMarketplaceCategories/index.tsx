@@ -18,36 +18,68 @@ import CategoriesListHeader from './components/CategoriesListHeader';
 
 const categories = [
   {
+    id: 1,
     title: 'Architecture',
-    categoryImageSource: image1,
+    image: image1,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 2,
     title: 'Abstract Hilll',
-    categoryImageSource: image2,
+    image: image2,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 3,
     title: 'Art',
-    categoryImageSource: image3,
+    image: image3,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 4,
     title: 'Photography',
-    categoryImageSource: image4,
+    image: image4,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 5,
     title: 'Way Photos',
-    categoryImageSource: image5,
+    image: image5,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 6,
     title: '3d Photography',
-    categoryImageSource: image6,
+    image: image6,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 7,
     title: 'Abstract',
-    categoryImageSource: image7,
+    image: image7,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
   {
+    id: 8,
     title: 'Signature',
-    categoryImageSource: image8,
+    image: image8,
+    userImage: user3,
+    description:
+      'Anmutig Studio was launched as a collection of unique NFTs generated.',
   },
 ];
 
@@ -60,16 +92,9 @@ const NFTMarketplaceCategories: React.FC = () => {
           <CategoriesListHeader />
           {/* Content */}
           <div className="grid grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-7 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full mt-4 gap-y-4 gap-x-4">
-            {Array(8)
-              .fill(null)
-              .map((item, index) => (
-                <NFTCategoryItem
-                  collectionImageSource={categories[index].categoryImageSource}
-                  collectionUserImageSource={user3}
-                  title={categories[index].title}
-                  description="Anmutig Studio was launched as a collection of unique NFTs generated."
-                />
-              ))}
+            {categories.map((item, index) => (
+              <NFTCategoryItem category={item} />
+            ))}
           </div>
           {/* Content */}
         </div>
