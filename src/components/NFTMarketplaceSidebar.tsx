@@ -52,9 +52,21 @@ const NFTMarketplaceSidebar: React.FC = () => {
         </div>
 
         {/* First Sidebar Element */}
-        <div className="flex w-full space-x-4 justify-center items-center bg-black bg-opacity-70 p-4 rounded-lg">
-          <button className="w-6 h-6 bg-blue-400 rounded-lg">+</button>
-          <p>Create NFT</p>
+        <div>
+          <button
+            className="flex w-full space-x-4 items-center bg-black bg-opacity-70 px-4 py-2 rounded-lg mb-1"
+            onClick={() => navigate(routes.nftMarketplaceCreateNFT.url)}
+          >
+            <div className="w-6 h-6 bg-blue-400 rounded-lg">+</div>
+            <p>Create NFT</p>
+          </button>
+          <button
+            className="flex w-full space-x-4 items-center bg-black bg-opacity-70 px-4 py-2 rounded-lg"
+            onClick={() => navigate(routes.nftMarketplaceCreateCollection.url)}
+          >
+            <div className="w-6 h-6 bg-blue-400 rounded-lg">+</div>
+            <p>Create Collection</p>
+          </button>
         </div>
         {/* End First Sidebar Element */}
 

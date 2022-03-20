@@ -123,19 +123,29 @@ export const routes = {
     title: 'NFT Marketplace',
   },
   nftMarketplaceStats: {
-    id: 6,
+    id: 7,
     url: '/nftmarketplace/stats',
     title: 'NFT Marketplace Routes',
   },
   nftMarketplaceCategories: {
-    id: 6,
+    id: 8,
     url: '/nftmarketplace/categories',
     title: 'NFT Marketplace Categories',
   },
   nftMarketplaceEditProfile: {
-    id: 6,
+    id: 9,
     url: '/nftmarketplace/editprofile',
     title: 'NFT Marketplace Edit Profile',
+  },
+  nftMarketplaceCreateNFT: {
+    id: 10,
+    url: '/nftmarketplace/create-item',
+    title: 'NFT Marketplace Create NFT',
+  },
+  nftMarketplaceCreateCollection: {
+    id: 11,
+    url: '/nftmarketplace/create-collection',
+    title: 'NFT Marketplace Create Collection',
   },
 };
 
