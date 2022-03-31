@@ -18,7 +18,6 @@ import { Path, useLocation, useParams } from 'react-router-dom';
 import BigButton from 'src/components/BigButton';
 
 import { ThirdwebSDK } from '../../../thirdweb-dev/sdk';
-import { useNFTCollection } from '../../../thirdweb-dev/react';
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
 import MarketplaceRightSidebar from '../NFTMarketplace/components/MarketplaceRightSidebar';
 import NFTItem from '../NFTMarketplace/components/NFTItem';
@@ -74,6 +73,7 @@ const NFTMarketplaceViewCollection: React.FC = (
       const localCollection = await collectionContract.metadata.get();
       setCollection({
         ...localCollection,
+        //@ts-ignore
         logoImageUri: localCollection.image,
         contractAddress: routeContractAddress,
         ownerAddress: '0x00',

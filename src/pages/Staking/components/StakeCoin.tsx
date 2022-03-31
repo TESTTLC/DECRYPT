@@ -53,8 +53,10 @@ const StakeCoin: React.FC = () => {
   const [totalRewards, setTotalRewards] = useState(0);
   const [isUnfreezing, setIsUnfreezing] = useState(false);
   const [currentChainId, setCurrentChainId] = useState(
+    //@ts-ignore
     window.ethereum?.networkVersion
-      ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      ? //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
       : undefined,
   );
   const [chainErrorMessage, setChainErrorMessage] = useState<
@@ -69,8 +71,10 @@ const StakeCoin: React.FC = () => {
   }, [walletAddress]);
   const chainChange = async () => {
     await changeChain(ChainsIds.TLC);
+    //@ts-ignore
     if (window.ethereum.networkVersion) {
       setCurrentChainId(
+        //@ts-ignore
         ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
       );
     }
@@ -117,10 +121,12 @@ const StakeCoin: React.FC = () => {
 
   useEffect(() => {
     if (window.ethereum) {
+      //@ts-ignore
       window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
       });
       setCurrentChainId(
+        //@ts-ignore
         ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
       );
     }

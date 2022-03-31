@@ -56,6 +56,7 @@ const NFTMarketplaceStats: React.FC = () => {
                   title={images[index].title}
                   price={images[index].price}
                   timeLeft={images[index].timeLeft}
+                  collectionName="Crypto Walk Of Fame"
                   //   isSquare={true}
                 />
               ))}

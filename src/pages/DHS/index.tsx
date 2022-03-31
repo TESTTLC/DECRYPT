@@ -76,8 +76,10 @@ const DHS: React.FC = () => {
     useState(0);
 
   const [currentChainId, setCurrentChainId] = useState(
+    //@ts-ignore
     window.ethereum?.networkVersion
-      ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      ? //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
       : undefined,
   );
 
@@ -286,19 +288,22 @@ const DHS: React.FC = () => {
 
   useEffect(() => {
     if (window.ethereum) {
+      //@ts-ignore
       window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
         // window.location.reload();
       });
-
+      //@ts-ignore
       if (window.ethereum?.networkVersion) {
         setCurrentChainId(
+          //@ts-ignore
           ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
         );
       }
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    //@ts-ignore
   }, [window.ethereum?.networkVersion]);
 
   return (

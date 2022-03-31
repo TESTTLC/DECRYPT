@@ -39,8 +39,10 @@ const DecentralizedExchange: React.FC = () => {
     (state) => state.account.walletAddress,
   );
   const [currentChainId, setCurrentChainId] = useState(
+    //@ts-ignore
     window.ethereum?.networkVersion
-      ? ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      ? //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
       : undefined,
   );
   const [usdtBalance, setUsdtBalance] = useState(0);
@@ -63,8 +65,10 @@ const DecentralizedExchange: React.FC = () => {
       const balance = await getBalance(contract, walletAddress);
       setUsdtBalance(balance);
     }
+    //@ts-ignore
     if (window.ethereum?.networkVersion) {
       setCurrentChainId(
+        //@ts-ignore
         ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
       );
     }
@@ -98,11 +102,13 @@ const DecentralizedExchange: React.FC = () => {
 
   useEffect(() => {
     if (window.ethereum) {
+      //@ts-ignore
       window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
         window.location.reload();
       });
       setCurrentChainId(
+        //@ts-ignore
         ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
       );
     }

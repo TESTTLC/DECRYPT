@@ -5,9 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-// import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react';
 
-import { ChainId, ThirdwebProvider } from '../thirdweb-dev/react';
+import { ChainId } from '../thirdweb-dev/sdk';
+import { ThirdwebProvider } from '../thirdweb-dev/react';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';

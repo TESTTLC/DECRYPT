@@ -21,14 +21,11 @@
     "jsx": "react-jsx",
     "baseUrl": "./",
     "types": [],
-  
   },
   "exclude": [
     "node_modules",
     
-    
   ],
-  "extends": "./tsconfig.paths.json",
   "include": [
     "src"
   ],

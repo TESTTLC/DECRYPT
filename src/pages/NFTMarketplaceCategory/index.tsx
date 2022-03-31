@@ -38,6 +38,7 @@ const NFTMarketplaceCategory: React.FC = () => {
                   title="Crypto Hero Marce"
                   price={66565}
                   timeLeft="2 days left"
+                  collectionName="Crypto Walk Of Fame"
                 />
               ))}
           </div>

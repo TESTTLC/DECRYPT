@@ -30,6 +30,7 @@ const CrossChainBridge: React.FC = () => {
 
   useEffect(() => {
     if (window.ethereum) {
+      //@ts-ignore
       window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
       });

@@ -104,7 +104,7 @@ const addNetwork = () => {
       },
       rpcUrls: ['https://mainnet-rpc.tlxscan.com/'],
       blockExplorerUrls: ['https://tlxscan.com/'],
-    },
+    } as AddEthereumChainParameter,
   ];
 
   window.ethereum
