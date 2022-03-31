@@ -25,8 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 // const persistor = persistStore(store);
 
 ReactDOM.render(
-  // <React.StrictMode>
-  <React.Fragment>
+  <React.StrictMode>
     <Provider store={store}>
       <CookiesProvider>
         <ThirdwebProvider desiredChainId={ChainId.TLChain}>
@@ -37,9 +36,7 @@ ReactDOM.render(
         </ThirdwebProvider>
       </CookiesProvider>
     </Provider>
-  </React.Fragment>,
-  // </React.Strictmode>,
-
+  </React.StrictMode>,
   document.getElementById('root'),
 );
 
