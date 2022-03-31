@@ -1,17 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
-import Logo from 'src/assets/images/logo.png';
-import Cookies from 'universal-cookie';
-import { useCookies } from 'react-cookie';
-import abi from 'src/contracts/Factory.json';
 import { Web3Provider } from '@ethersproject/providers';
-import { BytesLike, ethers } from 'ethers';
-// import { useAddress, useMetamask } from '@thirdweb-dev/react';
-import assasinsImage from 'src/assets/images/Assasin.png';
-// import { ThirdwebSDK } from '@thirdweb-dev/sdk';
 
 import { ContractRoles, ThirdwebSDK } from '../thirdweb-dev/sdk';
 
