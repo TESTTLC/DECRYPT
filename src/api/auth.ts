@@ -15,7 +15,7 @@ export const loginAPI = async (email: string, password: string) => {
       email,
       password,
     },
-    { withCredentials: true },
+    // { withCredentials: true },
   );
 };
 
@@ -27,6 +27,6 @@ export const registerAPI = async (email: string, password: string) => {
       email,
       password,
     },
-    { withCredentials: true },
+    // { withCredentials: true },
   );
 };
