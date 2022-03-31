@@ -1,15 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { ChainsIds } from 'src/utils/types';
 import MetamaskIcon from 'src/assets/svg/MetamaskIcon';
+import { useAuth0 } from '@auth0/auth0-react';
+import { setIsLoggedIn } from 'src/redux/modules/account/actions';
+import { setIsLoading } from 'src/redux/modules/globals/actions';
 
 import { useWalletConnector } from '../hooks/useWalletConnector';
 import SMALL_LOGO from '../assets/images/logo.png';
 import { routes } from '../utils/routes';
 
-interface LoginButtonProps {
+import CustomButton from './CustomButton';
+
+interface ConnectWalletButtonProps {
   connectWallet: () => void;
   disconnectWallet: () => void;
   walletAddress?: string;
@@ -19,7 +24,7 @@ const metamaskAppDeepLink = 'https://metamask.app.link/dapp/decryption.com';
 // "https://metamask.app.link/dapp/app-theluxurybank-com-hrcup.ondigitalocean.app";
 // const metamaskAppDeepLink = "https://metamask.app.link/dapp/192.168.1.2:3000";
 
-const LoginButton: React.FC<LoginButtonProps> = ({
+const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
   isMobileDevice,
   walletAddress,
   connectWallet,
@@ -105,12 +110,20 @@ const addNetwork = () => {
   ];
 
   window.ethereum
+    //@ts-ignore
     .request({ method: 'wallet_addEthereumChain', params })
     .then(() => console.log('Success'))
     .catch((error: Error) => console.log('Error', error.message));
 };
 
 const Header: React.FC = () => {
+  // const { logout } = useAuth0();
+  const dispatch = useDispatch();
+  const onLogout = () => {
+    localStorage.clear();
+    dispatch(setIsLoggedIn(false));
+  };
+
   const {
     walletAddress,
     connectWallet,
@@ -120,6 +133,9 @@ const Header: React.FC = () => {
   } = useWalletConnector();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
+  );
+  const isLoggedIn = useSelector<StoreState, boolean>(
+    (state) => state.account.isLoggedIn,
   );
 
   return (
@@ -187,12 +203,19 @@ const Header: React.FC = () => {
         <div className="items-center justify-center mx-2">
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
-            <LoginButton
+            <ConnectWalletButton
               walletAddress={walletAddress}
               connectWallet={connectWallet}
               disconnectWallet={disconnectWallet}
               isMobileDevice={isMobileDevice}
             />
+          </div>
+        </div>
+
+        <div className="items-center justify-center mx-2">
+          <div className="relative">
+            <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
+            <CustomButton text="Log out" onClick={onLogout} />
           </div>
         </div>
       </div>

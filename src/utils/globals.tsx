@@ -111,3 +111,5 @@ export const prices = {
   LSO: '0.07',
   TLX: 'Listing starts with $50',
 };
+
+export const headerPayloadName = '_sec_hpload';

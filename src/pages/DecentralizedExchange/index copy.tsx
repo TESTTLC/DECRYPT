@@ -132,7 +132,7 @@ const DecentralizedExchange: React.FC = () => {
   //       );
 
   //       const res = await fetch(
-  //         `${process.env.REACT_APP_API_BACKEND_EXCHANGE}api/claim`,
+  //         `${process.env.REACT_APP_API_BACKEND_EXCHANGE}/api/claim`,
   //         {
   //           method: "POST",
   //           headers: {

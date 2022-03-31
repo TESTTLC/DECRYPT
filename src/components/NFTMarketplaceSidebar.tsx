@@ -29,7 +29,6 @@ const NFTMarketplaceSidebar: React.FC = () => {
     (state) => state.globals.isSidebarOpen,
   );
   const location = useLocation();
-  console.log('Location: ', location);
 
   return (
     <div

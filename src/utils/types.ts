@@ -66,3 +66,11 @@ export const stakeRewards = {
   TLC: [11.25, 15.56, 18.8, 19.26, 63.58],
   LSO: [12.19, 17.32, 19.27, 51.25, 112],
 };
+
+export enum ProfileCategories {
+  COLLECTED = 'Collected',
+  CREATE = 'Create',
+  ACTIVITY = 'Activity',
+  OFFERS = 'Offers',
+  COLLECTIONS = 'Collections',
+}

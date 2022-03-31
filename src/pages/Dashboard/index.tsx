@@ -144,8 +144,6 @@ const Dashboard: React.FC = () => {
     const url = process.env.REACT_APP_JOIN_LAUNCHPAD_API;
     try {
       if (url && walletAddress) {
-        console.log('here');
-
         const res = await fetch(
           `${url}/walletAddress?walletAddress=${walletAddress}`,
           {
@@ -154,7 +152,6 @@ const Dashboard: React.FC = () => {
         );
 
         const result = await res.json();
-        console.log('result: ', result);
         if (result.walletAddress && result.totalPower) {
           setAlreadyJoined(true);
           setLaunchpadRegistrationPower(result.totalPower);
@@ -164,7 +161,6 @@ const Dashboard: React.FC = () => {
       }
     } catch (error) {
       setAlreadyJoined(false);
-      console.log('err');
     }
   }, [walletAddress]);
 

@@ -27,8 +27,11 @@ import { useContracts } from '../../hooks/useContracts';
 import { ChainsIds, Stake } from '../../utils/types';
 import {
   determinePowerForStake,
+  getTotalNumberOfTxByAddress,
+  getTotalValueLocked,
   getUserStakes,
 } from '../../utils/functions/Contracts';
+import ProjectElement from '../Launchpad/components/ProjectElement';
 
 import CryptoCityComponent from './components/CryptoCityComponent';
 import AnalysisComponent from './components/AnalysisComponent';
@@ -41,6 +44,7 @@ const DHS: React.FC = () => {
   const { isMobileSize } = useWindowSize();
   const { stakeContract: TLXStakeContract } = useContracts('TLX');
   const { stakeContract: TLCStakeContract } = useContracts('TLC');
+  const { stakeContract: LSOStakeContract } = useContracts('LSO');
   const navigate = useNavigate();
   const walletAddress = useSelector<StoreState, string | undefined>(
     (reduxState) => reduxState.account.walletAddress,
@@ -48,14 +52,23 @@ const DHS: React.FC = () => {
   const [showLaunchpadRegistration, setShowLaunchpadRegistration] =
     useState(false);
 
+  const [totalSelfTransactionsCount, setTotalSelfTransactionsCount] =
+    useState();
   const [switchChecked, setSwitchChecked] = useState(true);
   const [powerColor, setPowerColor] = useState('red-400');
   const [TLXPower, setTLXPower] = useState(0);
   const [TLCPower, setTLCPower] = useState(0);
-  const [totalTLXStaked, setTotalTLXStaked] = useState(0);
-  const [totalTLCStaked, setTotalTLCStaked] = useState(0);
+  const [totalSelfStakedTLX, setTotalSelfStakedTLX] = useState(0);
+  const [totalSelfStakedTLC, setTotalSelfStakedTLC] = useState(0);
   const [power, setPower] = useState(0);
+  const [totalValueLocked, setTotalValueLocked] = useState('');
+  const [totalRewards, setTotalRewards] = useState('');
+  const [totalTLCStaked, setTotalTLCStaked] = useState('');
+  const [totalTLXStaked, setTotalTLXStaked] = useState('');
+  const [totalLSOtaked, setTotalLSOStaked] = useState('');
+
   const [alreadyJoined, setAlreadyJoined] = useState(false);
+
   const [chainErrorMessage, setChainErrorMessage] = useState<
     string | undefined
   >(undefined);
@@ -101,7 +114,7 @@ const DHS: React.FC = () => {
           );
         });
         setTLXPower(currentPower);
-        setTotalTLXStaked(parseFloat(currentAmout.toFixed(3)));
+        setTotalSelfStakedTLX(parseFloat(currentAmout.toFixed(3)));
       }
     } catch (error) {}
   };
@@ -121,7 +134,7 @@ const DHS: React.FC = () => {
           );
         });
         setTLCPower(currentPower);
-        setTotalTLCStaked(parseFloat(currentAmout.toFixed(3)));
+        setTotalSelfStakedTLC(parseFloat(currentAmout.toFixed(3)));
       }
     } catch (error) {}
   };
@@ -138,8 +151,8 @@ const DHS: React.FC = () => {
           },
           body: JSON.stringify({
             walletAddress,
-            tlcStake: totalTLCStaked,
-            tlxStake: totalTLXStaked,
+            tlcStake: totalSelfStakedTLC,
+            tlxStake: totalSelfStakedTLX,
             totalPower: power,
           }),
         });
@@ -164,8 +177,6 @@ const DHS: React.FC = () => {
     const url = process.env.REACT_APP_JOIN_LAUNCHPAD_API;
     try {
       if (url && walletAddress) {
-        console.log('here');
-
         const res = await fetch(
           `${url}/walletAddress?walletAddress=${walletAddress}`,
           {
@@ -174,7 +185,6 @@ const DHS: React.FC = () => {
         );
 
         const result = await res.json();
-        console.log('result: ', result);
         if (result.walletAddress && result.totalPower) {
           setAlreadyJoined(true);
           setLaunchpadRegistrationPower(result.totalPower);
@@ -184,13 +194,24 @@ const DHS: React.FC = () => {
       }
     } catch (error) {
       setAlreadyJoined(false);
-      console.log('err');
     }
   }, [walletAddress]);
 
   const chainChange = async () => {
     await changeChain(ChainsIds.TLC);
   };
+
+  const getTotalSelfTransactions = async (addressHash: string) => {
+    const total = await getTotalNumberOfTxByAddress(addressHash);
+    setTotalSelfTransactionsCount(total);
+  };
+
+  useEffect(() => {
+    if (walletAddress) {
+      console.log('WORKING');
+      getTotalSelfTransactions(walletAddress);
+    }
+  }, [walletAddress]);
 
   useEffect(() => {
     chainChange();
@@ -224,6 +245,45 @@ const DHS: React.FC = () => {
     }
   }, [currentChainId]);
 
+  const getValueLocked = useCallback(async () => {
+    if (TLCStakeContract && TLXStakeContract && LSOStakeContract) {
+      const tlcStaked = await getTotalValueLocked(TLCStakeContract);
+      const tlxStaked = await getTotalValueLocked(TLXStakeContract);
+      const lsoStaked = await getTotalValueLocked(LSOStakeContract);
+
+      setTotalTLCStaked(parseFloat(tlcStaked.toFixed(1)).toLocaleString());
+      setTotalTLXStaked(parseFloat(tlxStaked.toFixed(1)).toLocaleString());
+      setTotalLSOStaked(parseFloat(lsoStaked.toFixed(1)).toLocaleString());
+
+      const valueLocked = 0.16 * tlcStaked + 40 * tlxStaked + 0.07 * lsoStaked;
+
+      setTotalValueLocked(parseFloat(valueLocked.toFixed(1)).toLocaleString());
+    }
+  }, [LSOStakeContract, TLCStakeContract, TLXStakeContract]);
+
+  const getTotalRewards = useCallback(async () => {
+    if (TLCStakeContract && TLXStakeContract && LSOStakeContract) {
+      const totalTLCRewards = await TLCStakeContract.getTotalRewards();
+      const totalTLXRewards = await TLXStakeContract.getTotalRewards();
+      const totalLSORewards = await LSOStakeContract.getTotalRewards();
+
+      const rewards = parseFloat(
+        parseFloat(
+          ethers.utils.formatEther(totalTLCRewards) +
+            ethers.utils.formatEther(totalTLXRewards) +
+            ethers.utils.formatEther(totalLSORewards),
+        ).toFixed(1),
+      ).toLocaleString();
+
+      setTotalRewards(rewards);
+    }
+  }, [LSOStakeContract, TLCStakeContract, TLXStakeContract]);
+
+  useEffect(() => {
+    getValueLocked();
+    getTotalRewards();
+  }, [getTotalRewards, getValueLocked]);
+
   useEffect(() => {
     if (window.ethereum) {
       window.ethereum.on('chainChanged', (chainId: string) => {
@@ -243,42 +303,62 @@ const DHS: React.FC = () => {
 
   return (
     <div className="w-full mt-2">
-      <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 grid-cols-2 gap-y-4 bg-black bg-opacity-70 w-full items-center justify-between px-4 py-1 rounded-xl">
-        <div className="flex col-span-1 h-full items-center space-x-16">
-          {!isMobileSize && (
-            <>
+      <div className="grid xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 grid-cols-2 gap-y-4 bg-black bg-opacity-70 w-full items-center justify-between px-4 py-1 rounded-xl">
+        <div className="flex col-span-1 h-full items-center space-x-12 md:space-x-4 lg:space-x-3">
+          {/* {!isMobileSize && (
+            <div className="lg:hidden xl:hidden">
               <p>Universe</p>
               <div className="h-1/3 w-[0.1rem] bg-gray-500 rounded-md" />
-            </>
-          )}
-          <div className="flex space-x-4">
+            </div>
+          )} */}
+          <div className="flex space-x-2">
             <img src={WalletPng} className="h-10 w-10" />
             <div className="">
-              <p className="text-sm font-bold text-gray-500">Total Value</p>
-              <p className="text-lg font-medium">$62,786</p>
+              <p className="text-sm font-bold text-gray-500">
+                Total Value Locked
+              </p>
+              {totalValueLocked && (
+                <p className="text-lg font-medium">${totalValueLocked}</p>
+              )}
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <EarningsIcon />
             <div className="">
               <p className="text-sm font-bold text-gray-500">Earnings</p>
-              <p className="text-lg font-medium">$8,500</p>
+              {totalRewards && (
+                <p className="text-lg font-medium">${totalRewards}</p>
+              )}
             </div>
           </div>
         </div>
-        <div className="flex col-span-1 space-x-16 h-full items-center">
-          <div className="flex items-center space-x-4">
+        <div className="flex col-span-1 space-x-16 lg:space-x-8 h-full items-center">
+          <div className="flex items-center space-x-2">
             <StakedFileIcon />
             <div className="">
               <p className="text-sm font-bold text-gray-500">$TLX Staked</p>
-              <p className="text-lg font-medium">237</p>
+              {totalTLXStaked && (
+                <p className="text-lg font-medium">${totalTLXStaked}</p>
+              )}
             </div>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2">
             <StakedFileIcon />
             <div className="">
               <p className="text-sm font-bold text-gray-500">$TLC Staked</p>
-              <p className="text-lg font-medium">18,239</p>
+              {totalTLCStaked && (
+                <p className="text-lg font-medium">${totalTLCStaked}</p>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <StakedFileIcon />
+            <div className="">
+              <p className="text-sm font-bold text-gray-500">$LSO Staked</p>
+              {totalLSOtaked && (
+                <p className="text-lg font-medium">${totalLSOtaked}</p>
+              )}
             </div>
           </div>
         </div>
@@ -287,7 +367,10 @@ const DHS: React.FC = () => {
         <div className="col-span-3 xs:col-span-1 sm:col-span-1 md:col-span-1 px-2 flex flex-col justify-center ">
           <div className="grid grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-2 justify-between gap-x-3 gap-y-4">
             <DailyInfoComponent />
-            <AnalysisComponent coinTag={'TLC'} />
+            {/* <AnalysisComponent coinTag={'TLC'} /> */}
+            <div className="flex" onClick={() => navigate('/launchpad/LSO')}>
+              <ProjectElement coinTag={'LSO'} />
+            </div>
             <AnalysisComponent coinTag={'TLX'} />
           </div>
           <div className="grid grid-cols-3 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 gap-x-16 gap-y-6 bg-black bg-opacity-70 mt-4 rounded-xl justify-between py-4 px-6">
@@ -330,7 +413,9 @@ const DHS: React.FC = () => {
                 </div>
                 <div className="">
                   <p className="text-xs text-gray-500">Transactions</p>
-                  <p>204</p>
+                  {totalSelfTransactionsCount && (
+                    <p>{totalSelfTransactionsCount}</p>
+                  )}
                 </div>
               </div>
               <div className="flex flex-[0.4] items-center space-x-2">
@@ -396,7 +481,7 @@ const DHS: React.FC = () => {
             </div>
           </div>
           <button className="bg-[#52FEFD] rounded-lg py-2 text-black mt-10">
-            Let's make an investment
+            Coming Soon
           </button>
           <div className="flex relative flex-col w-full h-40 bg-[#171726] shadow-innerWhite rounded-xl pl-4 pt-2 z-30 mt-4">
             <div className="flex justify-between items-center ">

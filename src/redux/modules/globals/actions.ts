@@ -6,3 +6,4 @@ export const setProvider = createAction<Web3Provider | undefined>(
 );
 export const openSidebar = createAction('globals/openSidebar');
 export const closeSidebar = createAction('globals/closeSidebar');
+export const setIsLoading = createAction<boolean>('globals/setIsLoading');

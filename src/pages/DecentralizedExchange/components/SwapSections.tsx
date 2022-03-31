@@ -96,7 +96,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   const onFromTokenChange = (token: string) => {
     setFromToken(token);
-    console.log('Token: ', token);
   };
 
   // const onToTokenChange = (token: string) => {
@@ -106,16 +105,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
     setAmountToSwap(parseFloat(e.target.value));
-    console.log('e: ', e.target.value);
   };
 
   // Send USDT
   const send = async () => {
-    console.log('amountToSwap: ', amountToSwap);
-    console.log('minimumAmount: ', minimumAmount);
-    console.log('provider: ', provider);
-    console.log('walletAddress: ', walletAddress);
-    console.log('fromToken: ', fromToken);
     if (
       provider &&
       walletAddress &&
@@ -123,7 +116,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       fromToken === 'USDT' &&
       currentChainId === ChainsIds.BSC
     ) {
-      console.log('Sending: ', amountToSwap, +' ' + fromToken);
       try {
         const contract = new ethers.Contract(
           USDTContractAddress,
@@ -137,7 +129,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         );
 
         const res = await fetch(
-          `${process.env.REACT_APP_API_BACKEND_EXCHANGE}api/claim`,
+          `${process.env.REACT_APP_API_BACKEND_EXCHANGE}/api/claim`,
           {
             method: 'POST',
             headers: {
@@ -155,7 +147,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
         await res.json();
       } catch (error) {
-        console.log('Error is: ', error);
         setIsLoading(false);
       }
     }
@@ -268,7 +259,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   currentChainId === ChainsIds.BSC
                 ) {
                   setIsLoading(true);
-                  console.log('here');
                   send();
                 }
               }}

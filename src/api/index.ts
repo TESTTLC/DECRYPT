@@ -1,12 +1,10 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
 
+import { api } from './api';
+
 dotenv.config();
 // axios.defaults.baseURL = "";
-
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BACKEND,
-});
 
 export const getTransaction = async (walletAddress: string) => {
   try {

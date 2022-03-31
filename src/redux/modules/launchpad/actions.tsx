@@ -17,16 +17,12 @@ export const getLSOLaunchpadRegistrationThunk = createAsyncThunk<
 >('launchpad/getLSOLaunchpadRegistration', async (args, thunkAPI) => {
   const state = thunkAPI.getState();
   if (isStoreState(state)) {
-    console.log('got here');
     try {
       // const result = (await registerAPI(args)).data;
-      console.log('got here2');
       const result = await getLSOLaunchpadRegistration(args.walletAddress);
       if (result) {
-        console.log('true');
         return true;
       }
-      console.log('false');
       return false;
 
       // return thunkAPI.rejectWithValue('No result (error on API request)');

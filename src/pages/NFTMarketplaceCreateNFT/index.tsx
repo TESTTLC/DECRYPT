@@ -10,7 +10,7 @@ const inputClass =
 const titleClass = 'text-lg font-medium';
 const propertyClass = 'bg-blue-500 py-1 text-sm rounded-md';
 
-const NFTMarketplaceCreateItem: React.FC = () => {
+const NFTMarketplaceCreateNFT: React.FC = () => {
   return (
     <div className="flex flex-col w-full">
       <MarketplaceHeader />
@@ -42,9 +42,9 @@ const NFTMarketplaceCreateItem: React.FC = () => {
 
             <input className={`${inputClass} w-4/5`} placeholder="Instagram" />
 
-            <button className="bg-blue-400 w-32 mt-7 rounded-full py-1 text-black text-sm mb-4">
+            {/* <button className="bg-blue-400 w-32 mt-7 rounded-full py-1 text-black text-sm mb-4">
               Submit
-            </button>
+            </button> */}
           </div>
 
           <div className="flex flex-col col-span-1 sm:col-span-2 xs:col-span-2 space-y-6">
@@ -107,4 +107,4 @@ const NFTMarketplaceCreateItem: React.FC = () => {
   );
 };
 
-export default NFTMarketplaceCreateItem;
+export default NFTMarketplaceCreateNFT;

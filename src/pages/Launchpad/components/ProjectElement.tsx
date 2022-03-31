@@ -59,7 +59,7 @@ const ProjectElement: React.FC<Props> = ({
 
   return (
     <div
-      className={`flex flex-grow flex-col w-full h-128 bg-black bg-opacity-50 relative rounded-md
+      className={`flex flex-grow flex-col w-full h-full bg-black bg-opacity-70  rounded-md
       ${
         showHoverAnimation
           ? 'transform duration-100 hover:scale-[1.04]'
@@ -86,24 +86,25 @@ const ProjectElement: React.FC<Props> = ({
           className="h-20 w-20 rounded-full object-cover object-top border-2 border-gray-500"
         ></img>
       </div>
+      <div className="px-4 flex-1">
+        <p className="mt-2 mb-1 w-24 bg-gray-700 rounded-full p-1 text-center text-sm text-gray-300 font-poppins uppercase font-semibold ">
+          Upcoming
+        </p>
+        <p className="font-poppins font-regular text-gray-300 text-sm">
+          {project.description}
+        </p>
+      </div>
       <div className="flex flex-col">
-        <div className="px-4">
-          <p className="mt-2 mb-1 w-24 bg-gray-700 rounded-full p-1 text-center text-sm text-gray-300 font-poppins uppercase font-semibold ">
-            Upcoming
-          </p>
-          <p className="font-poppins font-regular text-gray-300 text-sm">
-            {project.description}
-          </p>
-        </div>
-
-        <div className="absolute bottom-1 w-full px-4">
+        <div className="flex-[0.3] w-full px-4">
           <div className="flex justify-between items-center font-poppins">
             <p className="text-gray-200">Total Raise</p>
             <p className="text-green-400 text-2xl">$10,000,000</p>
           </div>
           <div className="flex justify-between items-center font-poppins mt-1">
             <p className="text-gray-200">Starts</p>
-            <p className="text-green-400 text-md">Feb 25, 11:00am UTC</p>
+            <p className="text-green-400 text-md text-right">
+              5 April 2022, 09:00 AM UTC
+            </p>
           </div>
 
           <div className="flex flex-col font-poppins mt-3">

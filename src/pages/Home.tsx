@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWallet, FaUser, FaTicketAlt } from 'react-icons/fa';
 import { IoRocketSharp } from 'react-icons/io5';
@@ -6,6 +6,9 @@ import { ImRocket } from 'react-icons/im';
 import { BiDevices } from 'react-icons/bi';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 import BigButton from '../components/BigButton';
 import stakingImage from '../assets/images/staking_1.png';
@@ -24,6 +27,7 @@ import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.j
 // import nftMarketplaceImage from '../assets/images/nft_1.webp';
 // import metaverseImage from '../assets/images/metaverse_1.webp';
 // import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.webp';
+// axios.defaults.withCredentials = true;
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -39,14 +43,13 @@ const Home: React.FC = () => {
             Projects & Roadmap
           </p>
           {/* <Link
-              key={routes.launchpad.title}
-              to={{ pathname: routes.launchpad.url }}
-              
-            >
-              <span className="text-white font-bold text-md underline">
-                View all upcoming projects &rarr;
-              </span>
-            </Link> */}
+            key={routes.launchpad.title}
+            to={{ pathname: routes.launchpad.url }}
+          >
+            <span className="text-white font-bold text-md underline">
+              View all upcoming projects &rarr;
+            </span>
+          </Link> */}
         </div>
         <div className="col-span-3 xs:col-span-4 sm:col-span-4 md:col-span-4 px-2 xs:px-0 sm:px-0 mb-4">
           <div className="grid gap-x-6 gap-y-6 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 justify-center items-center">

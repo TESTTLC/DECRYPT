@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
 import cryptoCity1 from 'src/assets/images/crypto-city-1.png';
 import cryptoCity2 from 'src/assets/images/crypto-city-2.png';
 import LoanIcon from 'src/assets/svg/Loan';
 import OfferIcon from 'src/assets/svg/Offer';
+import { routes } from 'src/utils/routes';
 
 const CryptoCityComponent: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div>
@@ -18,7 +21,10 @@ const CryptoCityComponent: React.FC = () => {
             <p>$86,565</p>
           </div>
 
-          <button className="flex space-x-2 justify-center items-center bg-[#E605CC] rounded-full py-1">
+          <button
+            className="flex space-x-2 justify-center items-center bg-[#E605CC] rounded-full py-1"
+            onClick={() => navigate(routes.nftMarketplace.url)}
+          >
             <p>Create A Syndicate</p>
             <LoanIcon />
           </button>
@@ -35,7 +41,12 @@ const CryptoCityComponent: React.FC = () => {
             <p>Villa Type 2</p>
             <p>$120,000</p>
           </div>
-          <button className="flex space-x-2 justify-center items-center bg-gradient-to-r from-purple-500 to-[#E605CC] rounded-full py-1">
+          <button
+            className="flex space-x-2 justify-center items-center bg-gradient-to-r from-purple-500 to-[#E605CC] rounded-full py-1"
+            onClick={() => {
+              navigate(routes.nftMarketplace.url);
+            }}
+          >
             <p>Instant Acquisition</p>
             <OfferIcon />
           </button>
@@ -52,7 +63,12 @@ const CryptoCityComponent: React.FC = () => {
             <p>Villa Type 3</p>
             <p>$120,000</p>
           </div>
-          <button className="bg-gradient-to-r from-purple-500 to-[#E605CC] rounded-full py-1">
+          <button
+            className="bg-gradient-to-r from-purple-500 to-[#E605CC] rounded-full py-1"
+            onClick={() => {
+              navigate(routes.nftMarketplace.url);
+            }}
+          >
             Invest
           </button>
         </div>

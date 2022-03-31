@@ -139,13 +139,18 @@ export const routes = {
   },
   nftMarketplaceCreateNFT: {
     id: 10,
-    url: '/nftmarketplace/create-item',
+    url: '/nftmarketplace/create-nft',
     title: 'NFT Marketplace Create NFT',
   },
   nftMarketplaceCreateCollection: {
     id: 11,
     url: '/nftmarketplace/create-collection',
     title: 'NFT Marketplace Create Collection',
+  },
+  nftMarketplaceViewCollection: {
+    id: 12,
+    url: '/nftmarketplace/view-collection',
+    title: 'NFT Marketplace View Collection',
   },
 };
 

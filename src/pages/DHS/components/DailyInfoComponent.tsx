@@ -1,20 +1,30 @@
+import { useSelector } from 'react-redux';
 import MarketTrendResults from 'src/assets/svg/MarketTrendResults';
+import { StoreState } from 'src/utils/storeTypes';
 
 const DailyInfoComponent: React.FC = () => {
+  const email = useSelector<StoreState, string>((state) => state.account.email);
+
   return (
-    <div className="flex flex-col justify-between col-span-1 sm:col-span-2 md:col-span-2 w-full">
-      <p className="font-bold text-2xl">Good morning, Leonard!</p>
-      <p className="text-gray-500 text-[0.65rem] mt-4">
-        Now you have full control over your financial instruments
-      </p>
-      <div className="bg-black bg-opacity-70rounded-xl py-4 w-full xs:w-full rounded-lg">
+    <div className="flex flex-col justify-between">
+      <div className="w-full">
+        <p className="font-bold text-2xl lg:text-md truncate">
+          Good morning,
+          <br />
+          {email}!
+        </p>
+        <p className="text-gray-500 text-[0.65rem] mt-4">
+          Now you have full control over your financial instruments
+        </p>
+      </div>
+      <div className="bg-black bg-opacity-70 rounded-xl py-4 w-full xs:w-full">
         <div className="px-8">
           <p>Today</p>
           <p className="text-gray-500 text-xs">Market trend</p>
           <div className="flex space-x-2 text-lg">
-            <p className="text-pink-500">68,5%</p>
+            <p className="text-pink-500">55%</p>
             <p className="text-[#5EFF5A] bg-green-900 rounded-r-full px-4">
-              12%
+              1%
             </p>
           </div>
           <p className="text-gray-500 text-[0.55rem] mt-2">

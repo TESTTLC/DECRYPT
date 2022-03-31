@@ -25,12 +25,6 @@ export const useWalletConnector = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (walletAddress) {
-      // onAddressChanged(walletAddress)
-    }
-  }, [walletAddress]);
-
   const checkIfWalletConnected = async () => {
     if (window.ethereum && localStorage.getItem('walletAddress')) {
       const accounts = await window.ethereum.request({
@@ -59,12 +53,16 @@ export const useWalletConnector = () => {
     const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
     dispatch(setProvider(web3Provider));
     localStorage.setItem('walletAddress', accounts[0]);
+    // localStorage.setItem('provider', JSON.stringify(web3Provider));
   };
 
   const disconnectWallet = async () => {
     if (localStorage.getItem('walletAddress')) {
       localStorage.removeItem('walletAddress');
     }
+    // if (localStorage.getItem('provider')) {
+    //   localStorage.removeItem('provider');
+    // }
     dispatch(setWalletAddress(undefined));
     dispatch(setProvider(undefined));
   };

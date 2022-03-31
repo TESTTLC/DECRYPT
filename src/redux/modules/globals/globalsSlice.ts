@@ -1,11 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { GlobalState } from 'src/utils/storeTypes';
 
-import { closeSidebar, openSidebar, setProvider } from './actions';
+import {
+  closeSidebar,
+  setIsLoading,
+  openSidebar,
+  setProvider,
+} from './actions';
 
 const initialState: GlobalState = {
   isSidebarOpen: true,
   provider: undefined,
+  isLoading: false,
 };
 
 const globalsSlice = createSlice({
@@ -23,6 +29,10 @@ const globalsSlice = createSlice({
 
     builder.addCase(closeSidebar, (state) => {
       return { ...state, isSidebarOpen: false };
+    });
+
+    builder.addCase(setIsLoading, (state, action) => {
+      return { ...state, isLoading: action.payload };
     });
   },
 });
