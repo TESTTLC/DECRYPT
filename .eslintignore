@@ -1,0 +1,24 @@
+# folders
+
+thirdweb-dev/*.js
+thirdweb-dev/*.ts
+thirdweb-dev/**/*
+thirdweb-dev/*
+thirdweb-dev
+thirdweb-dev/sdk
+thirdweb-dev/react
+./thirdweb-dev/react
+./thirdweb-dev/react/**/*
+./thirdweb-dev/react/**
+./thirdweb-dev/react/*
+thirdweb-dev/react/*
+thirdweb-dev/react/**
+thirdweb-dev/react/**/*
+
+node_modules
+node_modules/wagmi
+node_modules/wagmi-core
+./node_modules/wagmi
+./node_modules/wagmi-core
+
+# files

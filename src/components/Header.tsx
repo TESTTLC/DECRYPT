@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { ChainsIds } from 'src/utils/types';
 import MetamaskIcon from 'src/assets/svg/MetamaskIcon';
-import { useAuth0 } from '@auth0/auth0-react';
 import { setIsLoggedIn } from 'src/redux/modules/account/actions';
-import { setIsLoading } from 'src/redux/modules/globals/actions';
 
 import { useWalletConnector } from '../hooks/useWalletConnector';
 import SMALL_LOGO from '../assets/images/logo.png';
@@ -110,8 +108,7 @@ const addNetwork = () => {
   ];
 
   window.ethereum
-    //@ts-ignore
-    .request({ method: 'wallet_addEthereumChain', params })
+    ?.request({ method: 'wallet_addEthereumChain', params })
     .then(() => console.log('Success'))
     .catch((error: Error) => console.log('Error', error.message));
 };

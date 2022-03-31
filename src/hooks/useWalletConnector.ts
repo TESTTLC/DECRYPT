@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import { setWalletAddress } from 'src/redux/modules/account/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
-import { Web3Provider } from '@ethersproject/providers';
+import { ExternalProvider, Web3Provider } from '@ethersproject/providers';
 import { setProvider } from 'src/redux/modules/globals/actions';
 
 import { useDeviceInfo } from './useDeviceInfo';
@@ -33,7 +33,6 @@ export const useWalletConnector = () => {
 
       if (accounts.length) {
         dispatch(setWalletAddress(accounts[0]));
-        //@ts-ignore
         const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
         dispatch(setProvider(web3Provider));
       }
@@ -51,8 +50,8 @@ export const useWalletConnector = () => {
     });
 
     dispatch(setWalletAddress(accounts[0]));
-    //@ts-ignore
     const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
+
     dispatch(setProvider(web3Provider));
     localStorage.setItem('walletAddress', accounts[0]);
     // localStorage.setItem('provider', JSON.stringify(web3Provider));

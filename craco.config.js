@@ -8,10 +8,6 @@ const lib_3 = path.resolve(__dirname, './thirdweb-dev/react');
 const lib_4 = path.resolve(__dirname, './thirdweb-dev/react/index.js');
 const lib_5 = path.resolve(__dirname, './thirdweb-dev/SDK/dist');
 const lib_6 = path.resolve(__dirname, './thirdweb-dev/SDK/dist/index.js');
-// const lib_3 = path.resolve(__dirname, './SDK/dist/index.js');
-// const sharedLibTwo = path.resolve(__dirname, './thirdweb-dev/index.js');
-// const sharedLibThree = path.resolve(__dirname, './SDK/react/dist');
-// const sharedLibFour = path.resolve(__dirname, './SDK/react/dist/index.js');
 
 module.exports = {
   style: {

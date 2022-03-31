@@ -104,7 +104,8 @@
     "no-nested-ternary": "warn",
     "no-param-reassign": 0
   },
-  "ignorePatterns": "./src/assets/images"
+  "ignorePatterns": ["./src/assets/images", "./thirdweb-dev, ./thirdweb-dev/**/*", "thirdweb-dev"]
+  
   
 }
 
