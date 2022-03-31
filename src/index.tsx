@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
+import { CookiesProvider, useCookies } from 'react-cookie';
 
 import { ChainId } from '../thirdweb-dev/sdk';
 import { ThirdwebProvider } from '../thirdweb-dev/react';
@@ -24,17 +25,20 @@ if (process.env.NODE_ENV === 'production') {
 // const persistor = persistStore(store);
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <React.Fragment>
     <Provider store={store}>
-      <ThirdwebProvider desiredChainId={ChainId.TLChain}>
-        {/* <PersistGate loading={null} persistor={persistor}> */}
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThirdwebProvider>
-      {/* </PersistGate> */}
+      <CookiesProvider>
+        <ThirdwebProvider desiredChainId={ChainId.TLChain}>
+          {/* <PersistGate loading={null} persistor={persistor}> */}
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ThirdwebProvider>
+      </CookiesProvider>
     </Provider>
-  </React.StrictMode>,
+  </React.Fragment>,
+  // </React.Strictmode>,
 
   document.getElementById('root'),
 );

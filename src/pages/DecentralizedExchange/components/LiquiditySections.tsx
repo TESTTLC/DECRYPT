@@ -66,7 +66,6 @@ const LiquiditySections: React.FC = () => {
   const [toToken, setToToken] = useState(toModalTokes[0].tag);
 
   const onFromTokenChange = (token: string) => {
-    console.log('fromToken: ', fromToken);
     setFromToken(token);
   };
 

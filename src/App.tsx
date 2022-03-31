@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
@@ -56,8 +56,6 @@ const App = () => {
   const location = useLocation();
   const expiryDate = new Date();
   expiryDate.setTime(expiryDate.getTime() + 30 * 60 * 60 * 1000); //30 minutes
-  // useAddress();
-  // useMetamask();
 
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
@@ -81,6 +79,7 @@ const App = () => {
   if (window && document && localStorage) {
     addHeaderPayloadToCookies();
   }
+
   if (localStorage.getItem(headerPayloadName)) {
     const headerPayload = localStorage.getItem(headerPayloadName);
     if (

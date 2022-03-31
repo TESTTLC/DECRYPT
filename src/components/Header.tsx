@@ -30,7 +30,6 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
 }) => {
   if (isMobileDevice) {
     if (!window.ethereum) {
-      console.log('here');
       return (
         <a
           href={metamaskAppDeepLink}

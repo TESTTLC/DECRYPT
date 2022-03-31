@@ -25,20 +25,15 @@ export const addHeaderPayloadToCookies = async () => {
     }
 
     const cookies = new Cookies();
-    const headerPayloadCookie = cookies.get(headerPayloadName);
-    console.log('headerPayloadCookie: ', headerPayloadCookie);
-    if (!headerPayloadCookie) {
-      cookies.set(headerPayloadName, headerPayloadValue, {
-        path: '/',
-        secure: true,
-        sameSite: 'strict',
-        expires: newExpiryCookiesDate,
-        // httpOnly: true,
-      });
-    }
+    // const headerPayloadCookie = cookies.get(headerPayloadName);
+    cookies.set(headerPayloadName, headerPayloadValue, {
+      path: '/',
+      secure: true,
+      sameSite: 'strict',
+      expires: newExpiryCookiesDate,
+      // domain: 'localhost',
+    });
   }
-  console.log('called: ', headerPayload);
-  // }
 };
 
 export const getHeaderPayloadFromCookies = async () => {

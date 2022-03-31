@@ -5,7 +5,6 @@ import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 export const api = axios.create({
   baseURL: process.env.REACT_APP_API_BACKEND,
 });
-console.log('api url: ', process.env.REACT_APP_API_BACKEND);
 
 export function onRequestSuccess<T = Record<string, unknown>>(
   response: AxiosResponse<T>,

@@ -6,9 +6,6 @@ import { ImRocket } from 'react-icons/im';
 import { BiDevices } from 'react-icons/bi';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
 
 import BigButton from '../components/BigButton';
 import stakingImage from '../assets/images/staking_1.png';
@@ -251,8 +248,10 @@ const Home: React.FC = () => {
                 <IoRocketSharp size={20} />
               </div>
               <div className="ml-2">
-                <p className="font-semibold text-sm">NFT Marketplace Launch</p>
-                <p className="text-xs text-gray-400">15 March 2022</p>
+                <p className="font-semibold text-sm">
+                  Decryption Blockchain Incubator Launch
+                </p>
+                <p className="text-xs text-gray-400">05 April 2022</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -263,7 +262,7 @@ const Home: React.FC = () => {
                 <p className="font-semibold text-sm">
                   Decryption Launchpad V2 R
                 </p>
-                <p className="text-xs text-gray-400">15 March 2022</p>
+                <p className="text-xs text-gray-400">05 April 2022</p>
               </div>
             </div>
           </div>

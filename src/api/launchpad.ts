@@ -1,8 +1,6 @@
 export const getLSOLaunchpadRegistration = async (walletAddress: string) => {
   const url = process.env.REACT_APP_JOIN_LAUNCHPAD_API;
   try {
-    console.log('heresss');
-
     const res = await fetch(
       `${url}/walletAddress?walletAddress=${walletAddress}`,
       {

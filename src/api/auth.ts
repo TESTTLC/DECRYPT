@@ -15,7 +15,12 @@ export const loginAPI = async (email: string, password: string) => {
       email,
       password,
     },
-    // { withCredentials: true },
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Credentials': true,
+      },
+    },
   );
 };
 
@@ -27,6 +32,11 @@ export const registerAPI = async (email: string, password: string) => {
       email,
       password,
     },
-    // { withCredentials: true },
+    {
+      withCredentials: true,
+      headers: {
+        'Access-Control-Allow-Credentials': true,
+      },
+    },
   );
 };

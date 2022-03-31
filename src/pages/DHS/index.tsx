@@ -210,7 +210,6 @@ const DHS: React.FC = () => {
 
   useEffect(() => {
     if (walletAddress) {
-      console.log('WORKING');
       getTotalSelfTransactions(walletAddress);
     }
   }, [walletAddress]);
