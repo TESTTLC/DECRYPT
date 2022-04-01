@@ -59,10 +59,6 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
     [provider],
   );
 
-  console.log('SDK: ', sdk);
-  const mySdk = useSDK();
-  console.log('my sdk: ', mySdk);
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   //@ts-ignore
 
@@ -74,16 +70,13 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
         nftMetadata,
       );
       const nft = tx?.data; // (optional) fetch details of minted NFT
-      console.log('nftToCollection', nft);
     }
   };
 
   const mintIndividualNFT = async (
     nftMetadata: TokenContractDeployMetadata,
   ) => {
-    console.log('h1');
     const result = await sdk?.deployer.deployToken(nftMetadata);
-    console.log('Result: ', result);
   };
 
   const mintNFT = async () => {
@@ -122,10 +115,7 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
         localCollections.push(c);
       }
     });
-    console.log('collections: ', localCollections);
-    localCollections.map(async (item) => {
-      console.log('item: ', await item.metadata());
-    });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setCollections(localCollections);
     getDropdownElements(localCollections);
   }, [sdk, walletAddress]);
@@ -159,7 +149,6 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
 
   useEffect(() => {
     if (selectedCollectionContract) {
-      console.log('selected: ', selectedCollectionContract);
     }
   }, [selectedCollectionContract]);
 
@@ -254,7 +243,6 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
                   text="Select Collection"
                   elements={dropdownElements}
                   onSelect={(e) => {
-                    console.log('selected index: ', e.target.selectedIndex);
                     setCollectionAddress(
                       collections[e.target.selectedIndex - 1].address,
                     );
