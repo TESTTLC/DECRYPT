@@ -2,8 +2,19 @@ import { useNavigate } from 'react-router-dom';
 import categoriesImage from 'src/assets/images/Categories.png';
 import user3 from 'src/assets/images/user3.png';
 import { routes } from 'src/utils/routes';
+import { ProfileCategories } from 'src/utils/types';
 
-const ProfileHeader: React.FC = () => {
+interface Props {
+  setSelectedCategory: (category: string) => void;
+  selectedCategory: string;
+  categories: string[];
+}
+
+const ProfileHeader: React.FC<Props> = ({
+  setSelectedCategory,
+  selectedCategory,
+  categories,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -31,10 +42,16 @@ const ProfileHeader: React.FC = () => {
             Edit profile
           </button>
           <div className="flex justify-between space-x-12 mt-8">
-            <p className="text-md text-blue-500 font-medium">Collected</p>
-            <p className="text-md font-medium">Create</p>
-            <p className="text-md font-medium">Activity</p>
-            <p className="text-md font-medium">Offers</p>
+            {categories.map((category) => (
+              <button
+                className={`text-md ${
+                  selectedCategory === category ? 'text-blue-500' : 'text-white'
+                } font-medium`}
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </button>
+            ))}
           </div>
         </div>
       </div>

@@ -1,11 +1,17 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { ethers } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   setAccountData,
   setIsLoggedIn,
+  setWalletAddress,
 } from 'src/redux/modules/account/actions';
-import { openSidebar, setIsLoading } from 'src/redux/modules/globals/actions';
+import {
+  openSidebar,
+  setIsLoading,
+  setProvider,
+} from 'src/redux/modules/globals/actions';
 import { getLSOLaunchpadRegistrationThunk } from 'src/redux/modules/launchpad/actions';
 import {
   isUserInLocalStorage,
@@ -41,7 +47,7 @@ export const useCachedResources = () => {
     } else {
       window.localStorage.clear();
     }
-  }, [window.localStorage, localStorage]);
+  }, [dispatch]);
 
   // const loadUserInfo = async () => {
   //   if (isUserInLocalStorage()) {

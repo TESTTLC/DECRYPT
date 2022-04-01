@@ -6,6 +6,7 @@ interface Props {
   price: number;
   timeLeft: string;
   isSquare?: boolean;
+  onClick: () => void;
 }
 
 const ProfileNFTItem: React.FC<Props> = ({
@@ -14,16 +15,21 @@ const ProfileNFTItem: React.FC<Props> = ({
   price,
   timeLeft,
   isSquare,
+  onClick,
 }) => {
   return (
-    <div
+    <button
       // className={`w-72 h-[28rem] bg-black bg-opacity-70 rounded-xl overflow-hidden col-span-1`}
       className={`bg-black bg-opacity-70 rounded-xl overflow-hidden col-span-1`}
+      onClick={onClick}
     >
-      <img
-        src={imageSource}
-        className="w-full aspect-h-1 object-cover rounded-t-xl"
-      />
+      <div className="w-full aspect-h-1 aspect-w-1">
+        <img
+          src={imageSource}
+          // onLoadStart={() => {}
+          className="w-full h-full object-cover rounded-t-xl"
+        />
+      </div>
       <div className="p-4 flex flex-col space-y-4">
         <div className="flex justify-between items-center text-sm">
           <p className="text-blue-500">{title}</p>
@@ -39,7 +45,7 @@ const ProfileNFTItem: React.FC<Props> = ({
           <p className="text-sm text-gray-500">{timeLeft}</p>
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 

@@ -27,7 +27,7 @@ import Header from './components/Header';
 import { StoreState } from './utils/storeTypes';
 import KYC from './pages/KYC';
 import DHS from './pages/DHS';
-import NFTMarketplace from './pages/NFTMarketplace/indexNew';
+import NFTMarketplace from './pages/NFTMarketplace';
 import NFTMarketplaceEditProfile from './pages/NFTMarketplaceEditProfile';
 import NFTMarketplaceCategories from './pages/NFTMarketplaceCategories';
 import NFTMarketplaceSidebar from './components/NFTMarketplaceSidebar';

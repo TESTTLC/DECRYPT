@@ -5,6 +5,7 @@ interface Props {
   timeLeft: string;
   isSquare?: boolean;
   collectionName: string;
+  description?: string;
 }
 
 const NFTItem: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const NFTItem: React.FC<Props> = ({
   timeLeft,
   isSquare,
   collectionName,
+  description,
 }) => {
   return (
     <div
@@ -38,7 +40,9 @@ const NFTItem: React.FC<Props> = ({
           <p className="text-gray-500">Price</p>
         </div>
         <div className="flex justify-between items-center xs:text-sm">
-          <p>{collectionName}</p>
+          <p className="text-ellipsis overflow-hidden">
+            {description || collectionName}
+          </p>
           <p>${price}</p>
         </div>
         <div className="w-full h-[0.10rem] bg-gradient-to-r from-transparent via-gray-400 to-transparent" />

@@ -12,6 +12,7 @@ import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';
 import factoryAbi from 'src/contracts/Factory.json';
+import { BiImageAdd } from 'react-icons/bi';
 
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
 import MarketplaceRightSidebar from '../NFTMarketplace/components/MarketplaceRightSidebar';
@@ -39,67 +40,50 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
   const [featuredImagePreview, setFeaturedImagePreview] = useState<string>();
   const [logoImage, setLogoImage] = useState<File>();
   const [logoImagePreview, setLogoImagePreview] = useState<string>();
-
-  const [createCollection, { isLoading, isSuccess, isError, isUninitialized }] =
-    useCreateCollectionMutation();
-  const inputProfileImageRef = createRef<HTMLInputElement>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // const [createCollection, { isLoading, isSuccess, isError, isUninitialized }] =
+  //   useCreateCollectionMutation();
+  const inputLogoImageRef = createRef<HTMLInputElement>();
   const inputBannerImageRef = createRef<HTMLInputElement>();
   const inputFeaturedImageRef = createRef<HTMLInputElement>();
 
-  const onCreateCollection = useCallback(() => {
-    if (name && description && bannerImage && featuredImage && logoImage) {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('description', description);
-      formData.append('logoImage', logoImage);
-      formData.append('bannerImage', bannerImage);
-      formData.append('featuredImage', featuredImage);
-      const obj = { ...formData };
-      createCollection(formData);
-    }
-  }, [
-    bannerImage,
-    createCollection,
-    description,
-    featuredImage,
-    logoImage,
-    name,
-  ]);
-
-  // const mintNFT = async () => {
-  //   try {
-  //     if (walletAddress && provider) {
-  //       const sdk = new ThirdwebSDK(provider.getSigner());
-
-  //       const metadata = {
-  //         name: 'Music',
-  //         description: 'Music Collection',
-  //         primary_sale_recipient: walletAddress,
-  //         image: logoImage,
-  //       };
-
-  //       if (sdk && logoImage && name && description) {
-  //         const collection = sdk.getNFTCollection(
-  //           '0x1BC52287fAFb54B9047d564c6158Ff8d2f458Ba0',
-  //         );
-
-  //         const nftMetadata = {
-  //           name,
-  //           description,
-  //           image: logoImage,
-  //         };
-
-  //         const tx = await collection.mintTo(walletAddress, nftMetadata);
-  //         const { receipt } = tx; // the transaction receipt
-  //         const tokenId = tx.id; // the id of the NFT minted
-
-  //         const nft = await tx.data(); // (optional) fetch details of minted NFT
-  //       }
-  //     }
-  //   } catch (error) {
-  //     return;
+  // const onCreateCollection = useCallback(() => {
+  //   if (name && description && bannerImage && featuredImage && logoImage) {
+  //     const formData = new FormData();
+  //     formData.append('name', name);
+  //     formData.append('description', description);
+  //     formData.append('logoImage', logoImage);
+  //     formData.append('bannerImage', bannerImage);
+  //     formData.append('featuredImage', featuredImage);
+  //     const obj = { ...formData };
+  //     createCollection(formData);
   //   }
-  // };
+  // }, [
+  //   bannerImage,
+  //   createCollection,
+  //   description,
+  //   featuredImage,
+  //   logoImage,
+  //   name,
+  // ]);
+
+  const onCreateCollection = async () => {
+    console.log('Provider: ', provider);
+    console.log('Provider: ', walletAddress);
+    console.log('Provider: ', description);
+    console.log('Provider: ', logoImage);
+    if (provider && walletAddress && name && description && logoImage) {
+      const sdk = new ThirdwebSDK(provider.getSigner());
+      setIsLoading(true);
+      await sdk.deployer.deployNFTCollection({
+        name,
+        description,
+        image: logoImage,
+        primary_sale_recipient: walletAddress,
+      });
+      setIsLoading(false);
+    }
+  };
 
   const getCollection = async (contractAddress: string) => {
     if (provider && walletAddress) {
@@ -117,7 +101,6 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
       const result = await axios.post(
         'http://localhost:4000/collections',
         formData,
-
         {
           headers: {
             'content-type': 'multipart/form-data',
@@ -172,7 +155,33 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
             <p className="mt-2 mb-2 text-xs text-gray-400 w-4/5">
               This image will be used for navigation. <br /> 350x350 recommended
             </p>
-            <div className="relative w-24 h-24">
+            <button
+              className="flex items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-1/2 aspect-h-1 aspect-w-2 rounded-lg"
+              onClick={() => inputLogoImageRef.current?.click()}
+            >
+              {logoImagePreview ? (
+                <img
+                  src={logoImagePreview ? logoImagePreview : 'undefined'}
+                  className={`bg-transparent w-full h-full object-cover ${
+                    logoImagePreview ? '' : 'hidden'
+                  }`}
+                />
+              ) : (
+                <div className="flex w-full h-full items-center justify-center">
+                  <BiImageAdd size={70} />
+                </div>
+              )}
+              <input
+                type="file"
+                id="file"
+                ref={inputLogoImageRef}
+                className="hidden w-full h-full"
+                accept=".png, .jpg, .jpeg"
+                onChange={handleLogoImageChange}
+              />
+            </button>
+
+            {/* <div className="relative w-24 h-24">
               <img
                 src={logoImagePreview ? logoImagePreview : user3}
                 className="bg-gray-500 w-full h-full rounded-full object-cover"
@@ -180,25 +189,25 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
               <button
                 className="absolute right-1 bottom-1"
                 onClick={() => {
-                  inputProfileImageRef.current?.click();
-                  // handleLogoImageChange(inputProfileImageRef.current?.targe);
+                  inputLogoImageRef.current?.click();
+                  // handleLogoImageChange(inputLogoImageRef.current?.targe);
                 }}
               >
                 <EditButton />
                 <input
                   type="file"
                   id="file"
-                  ref={inputProfileImageRef}
+                  ref={inputLogoImageRef}
                   className="hidden"
                   accept=".png, .jpg, .jpeg"
                   onChange={handleLogoImageChange}
                 />
               </button>
 
-              {/* <img className="absolute right-2 bottom-2 bg-gray-700 rounded-full w-4 h-4" /> */}
-            </div>
+              <img className="absolute right-2 bottom-2 bg-gray-700 rounded-full w-4 h-4" />
+            </div>  */}
 
-            <p className={`${titleClass} mt-6 mb-2`}>Featured Image</p>
+            {/* <p className={`${titleClass} mt-6 mb-2`}>Featured Image</p>
 
             <p className="mt-2 text-xs text-gray-400 w-4/5 mb-4">
               This image will be used for featured your collection on the
@@ -209,18 +218,15 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
                 className="absolute top-10"
                 type="file"
                 name="file"
-                // name="bannerImage"
                 accept=".png, .jpg, .jpeg"
                 onChange={handleFeaturedImageChange}
               >
-                {/* <img /> */}
-                {/* <p>Upload here</p> */}
               </input>
               <img
                 className="w-full h-full  object-cover"
                 src={featuredImagePreview}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="flex flex-col col-span-1 sm:col-span-2 xs:col-span-2 space-y-6">
@@ -231,10 +237,35 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
                 including to much text in this banner image. 1400x400
                 recommended
               </p>
-              <div className="flex relative items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-4/5 h-40 rounded-lg">
-                {/* //onClick={() => {
-                //   inputBannerImageRef.current?.click();
-                // }} */}
+
+              <button
+                className="flex items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-4/5 aspect-h-1 aspect-w-3 rounded-lg"
+                onClick={() => inputBannerImageRef.current?.click()}
+              >
+                {bannerImagePreview ? (
+                  <img
+                    src={bannerImagePreview ? bannerImagePreview : 'undefined'}
+                    className={`bg-transparent w-full h-full object-cover ${
+                      bannerImagePreview ? '' : 'hidden'
+                    }`}
+                  />
+                ) : (
+                  <div className="flex w-full h-full items-center justify-center">
+                    <BiImageAdd size={70} />
+                  </div>
+                )}
+                <input
+                  type="file"
+                  id="file"
+                  ref={inputBannerImageRef}
+                  className="hidden w-full h-full"
+                  accept=".png, .jpg, .jpeg"
+                  onChange={handleBannerImageChange}
+                />
+              </button>
+
+              {/* <div className="flex relative items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-4/5 h-40 rounded-lg">
+                
                 <input
                   className="absolute top-10"
                   type="file"
@@ -247,7 +278,7 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
                   className="w-full h-full  object-cover"
                   src={bannerImagePreview}
                 />
-              </div>
+              </div> */}
             </div>
 
             <div>
@@ -259,18 +290,21 @@ const NFTMarketplaceCreateCollection: React.FC = () => {
                 <textarea
                   className={`${inputClass} w-4/5 rounded-xl min`}
                   placeholder="Provide a detailed description of your item"
-                  rows={7}
+                  rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
-              {/* <button className="bg-blue-400 w-32 mt-7 rounded-full py-1 text-black text-sm mb-4">
+              <button
+                className="bg-blue-400 w-32 mt-7 rounded-full py-1 text-black text-sm mb-4"
+                onClick={onCreateCollection}
+              >
                 {isLoading ? (
                   <TailSpin color="#fff" height={18} width={18} />
                 ) : (
                   'Create'
                 )}
-              </button> */}
+              </button>
             </div>
           </div>
         </div>

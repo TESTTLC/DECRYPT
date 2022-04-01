@@ -111,6 +111,7 @@ const NFTMarketplaceViewCollection: React.FC = (
                     price={66565}
                     collectionName={collection.name}
                     timeLeft="2 days left"
+                    description={item.metadata.description}
                   />
                 ))}
               </div>
