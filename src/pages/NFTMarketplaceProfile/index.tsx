@@ -27,11 +27,11 @@ import ProfileHeader from './components/ProfileHeader';
 
 const images = [image1, image2, image3, image4, image5, image6, image7, image8];
 const categories = [
+  ProfileCategories.COLLECTIONS,
   ProfileCategories.COLLECTED,
   ProfileCategories.CREATE,
   ProfileCategories.ACTIVITY,
   ProfileCategories.OFFERS,
-  ProfileCategories.COLLECTIONS,
 ];
 
 const NFTMarketplaceProfile: React.FC = () => {
@@ -50,7 +50,7 @@ const NFTMarketplaceProfile: React.FC = () => {
 
   const userId = useSelector<StoreState, number>((state) => state.account.id);
   const [selectedCategory, setSelectedCategory] = useState<string>(
-    ProfileCategories.COLLECTED,
+    ProfileCategories.COLLECTIONS,
   );
 
   const getCollectedItems = async () => {
