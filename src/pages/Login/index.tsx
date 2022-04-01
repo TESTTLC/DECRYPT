@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import CustomButton from 'src/components/CustomButton';
 import { useDispatch } from 'react-redux';
 import { login, register } from 'src/redux/modules/account/actions';
 import SMALL_LOGO from 'src/assets/images/logo.png';
@@ -48,20 +47,20 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div className="my-4">
+        <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 mt-6 gap-y-4 gap-x-6">
           <button
-            className="px-8 py-1 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg"
+            className="px-8 w-40 py-1 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg xs:text-sm"
             onClick={onLogin}
           >
             Log in
           </button>
+          <button
+            className="px-6 w-40 py-1 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg xs:text-sm"
+            onClick={onRegister}
+          >
+            Register
+          </button>
         </div>
-        <button
-          className="px-6 py-1 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg"
-          onClick={onRegister}
-        >
-          Create New Account
-        </button>
       </div>
       <div className="flex w-full items-center justify-center">
         <img src={SMALL_LOGO} alt="avatar" className="h-44 w-44 mx-2" />

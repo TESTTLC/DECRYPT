@@ -34,11 +34,11 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
         <a
           href={metamaskAppDeepLink}
           target="_blank"
-          className="rounded-md"
+          className="rounded-md w-full"
           rel="noreferrer"
         >
           <button className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600">
-            <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
+            <span className="text-center w-full hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
               {walletAddress
                 ? `Disconnect ${walletAddress.slice(
                     0,
@@ -56,9 +56,9 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
       return (
         <button
           onClick={walletAddress ? disconnectWallet : connectWallet}
-          className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+          className="w-full text-center rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
         >
-          <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
+          <span className="text-center w-full hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
             {walletAddress
               ? `Disconnect ${walletAddress.slice(
                   0,
@@ -76,9 +76,9 @@ const ConnectWalletButton: React.FC<ConnectWalletButtonProps> = ({
     return (
       <button
         onClick={walletAddress ? disconnectWallet : connectWallet}
-        className="rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
+        className="w-full rounded-md group-hover:text-gray-100 h-8 relative px-2 py-2 bg-black leading-none flex items-center divide-x divide-gray-600"
       >
-        <span className="hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
+        <span className="text-center w-full hover:text-gray-100 font-poppins py-4 text-sm text-indigo-400 transition duration-200 leading-[12px]">
           {walletAddress
             ? `Disconnect ${walletAddress.slice(0, 4)}...${walletAddress.slice(
                 walletAddress.length - 4,
@@ -174,21 +174,29 @@ const Header: React.FC = () => {
         </div>
       </div>
       <div
-        className={`flex items-center transition-all duration-500 ${
+        className={`grid grid-cols-5 xs:grid-cols-4 sm:grid-cols-4 gap-y-4 items-center transition-all duration-500 gap-x-3 ${
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
         <Link
           key={routes.dashboard.title}
           to={{ pathname: routes.dashboard.url }}
-          className="flex h-8 mx-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+          className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
         >
           <span className="text-center font-poppins text-sm">Dashboard</span>
         </Link>
 
+        <Link
+          key={routes.dashboardV2.title}
+          to={{ pathname: routes.dashboardV2.url }}
+          className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+        >
+          <span className="text-center font-poppins text-sm">Dashboard V2</span>
+        </Link>
+
         {window.ethereum && (
           <button
-            className="flex h-8 mx-2 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+            className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
             onClick={addNetwork}
           >
             <MetamaskIcon width={20} height={17} />
@@ -196,7 +204,7 @@ const Header: React.FC = () => {
           </button>
         )}
 
-        <div className="items-center justify-center mx-2">
+        <div className="xs:col-span-2 sm:col-span-2 md:col-span-2 items-center justify-center">
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
             <ConnectWalletButton
@@ -208,10 +216,14 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <div className="items-center justify-center mx-2">
+        <div className="sm:col-span-4 md:col-span-4 xs:col-span-4 items-center justify-center">
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
-            <CustomButton text="Log out" onClick={onLogout} />
+            <CustomButton
+              text="Log out"
+              onClick={onLogout}
+              customStyle="w-full text-center"
+            />
           </div>
         </div>
       </div>

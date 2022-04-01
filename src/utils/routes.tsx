@@ -152,6 +152,11 @@ export const routes = {
     url: '/nftmarketplace/view-collection',
     title: 'NFT Marketplace View Collection',
   },
+  dashboardV2: {
+    id: 13,
+    url: '/dhs',
+    title: 'DashboardV2',
+  },
 };
 
 export const social = [
