@@ -17,12 +17,16 @@ import {
   isUserInLocalStorage,
   addUserInLocalStorage,
 } from 'src/utils/functions/LocalStorage';
-import { StoreState } from 'src/utils/storeTypes';
+import { headerPayloadName } from 'src/utils/globals';
+import { BaseUser, StoreState } from 'src/utils/storeTypes';
+import Cookies from 'universal-cookie';
+import jwtDecode from 'jwt-decode';
 
 import { useDeviceInfo } from './useDeviceInfo';
 import { useWalletConnector } from './useWalletConnector';
 
 export const useCachedResources = () => {
+  const cookies = new Cookies();
   useWalletConnector();
   const dispatch = useDispatch();
   const walletAddress = useSelector<StoreState, string | undefined>(
@@ -34,6 +38,9 @@ export const useCachedResources = () => {
   const isLoading = useSelector<StoreState, boolean>(
     (reduxState) => reduxState.globals.isLoading,
   );
+  const isActivated = useSelector<StoreState, boolean>(
+    (reduxState) => reduxState.account.isActivated,
+  );
 
   if (walletAddress) {
     dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
@@ -43,40 +50,38 @@ export const useCachedResources = () => {
     const user = window.localStorage.getItem('user');
     if (user) {
       const foundUser = JSON.parse(user);
-      dispatch(setAccountData({ ...foundUser }));
+      dispatch(setAccountData({ ...foundUser, isLoading: false }));
     } else {
       window.localStorage.clear();
     }
   }, [dispatch]);
 
-  // const loadUserInfo = async () => {
-  //   if (isUserInLocalStorage()) {
-  //     dispatch(setIsLoggedIn(true));
-  //   } else {
-  //     dispatch(setIsLoggedIn(false));
-  //   }
-  //   dispatch(setIsLoading(false));
+  // const checkUserData = () => {
+  //   try {
+  //     const localStorageUserItem = window.localStorage.getItem('user');
+  //     const headerPayloadCookie = cookies.get(headerPayloadName);
+  //     const headerpayloadDecoded: { user: Partial<BaseUser> } =
+  //       jwtDecode(headerPayloadCookie);
+  //     console.log('HeaderPayloadDecoded: ', headerpayloadDecoded);
+  //     const headerpayloadUser = headerpayloadDecoded.user;
+  //     const localStorageUser = JSON.parse(localStorageUserItem || '{}');
+  //     if (
+  //       localStorageUser &&
+  //       headerpayloadUser &&
+  //       localStorageUser.id === headerpayloadUser.id
+  //     ) {
+  //       dispatch(setAccountData({ ...localStorageUser }));
+  //     } else {
+  //       window.localStorage.clear();
+  //     }
+  //   } catch (error) {}
   // };
 
-  // const updateUser = useCallback(() => {
-  //   if (user) {
-  //     const storageUser = {
-  //       name: user.name,
-  //       email: user.email,
-  //       profilePic: user.profile,
-  //     };
-  //     addUserInLocalStorage(storageUser);
-  //   }
-  // }, [user]);
-
   // useEffect(() => {
-  //   updateUser();
-  // }, [updateUser, user]);
+  //   checkUserData();
 
-  // useEffect(() => {
-  //   loadUserInfo();
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isAuthenticated]);
+  // }, [cookies, dispatch, localStorage]);
 
-  return { isLoading, isLoggedIn, dispatch };
+  return { isLoading, isActivated, isLoggedIn, dispatch };
 };

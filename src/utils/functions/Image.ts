@@ -16,3 +16,7 @@ const compressImage = async (file: File) => {
   const resizedFiile = Compress.convertBase64ToFile(base64str, imgExt);
   return resizedFiile;
 };
+
+export const getImageBucketUrl = (imageUri: string) => {
+  return `${process.env.REACT_APP_BUCKET_URL}/${imageUri}`;
+};

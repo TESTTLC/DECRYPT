@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
@@ -47,12 +47,13 @@ import { setIsLoggedIn } from './redux/modules/account/actions';
 import { addMinutesToCurrentDateTime } from './utils/functions/utils';
 import { addHeaderPayloadToCookies } from './utils/functions/Cookies';
 import NFTMarketplaceViewCollection from './pages/NFTMarketplaceViewCollection';
+import { getHeaderPayloadFromLocalStorage } from './utils/functions/LocalStorage';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO'];
 export const marketplaceRoutes = ['categories', 'collections'];
 
 const App = () => {
-  const { isLoading, isLoggedIn, dispatch } = useCachedResources();
+  const { isLoading, isLoggedIn, isActivated, dispatch } = useCachedResources();
   const location = useLocation();
   const expiryDate = new Date();
   expiryDate.setTime(expiryDate.getTime() + 30 * 60 * 60 * 1000); //30 minutes
@@ -77,18 +78,20 @@ const App = () => {
   };
 
   if (window && document && localStorage) {
-    addHeaderPayloadToCookies();
   }
+  addHeaderPayloadToCookies();
 
   if (localStorage.getItem(headerPayloadName)) {
-    const headerPayload = localStorage.getItem(headerPayloadName);
+    const headerPayload = getHeaderPayloadFromLocalStorage();
     if (
       headerPayload &&
+      JSON.parse(headerPayload).value &&
       JSON.parse(headerPayload).expiry >= addMinutesToCurrentDateTime(0)
     ) {
       dispatch(setIsLoggedIn(true));
     } else {
       setIsLoggedIn(false);
+      window.localStorage.clear();
     }
   }
 

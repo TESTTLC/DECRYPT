@@ -336,7 +336,7 @@ const DHS: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex col-span-1 space-x-16 lg:space-x-8 h-full items-center">
+        <div className="flex col-span-1 space-x-16 lg:space-x-8 xl:space-x-8 md:space-x-4 xs:space-x-4 h-full items-center">
           <div className="flex items-center space-x-2">
             <StakedFileIcon />
             <div className="">

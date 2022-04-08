@@ -5,16 +5,24 @@ import { AnyAction, ThunkDispatch } from '@reduxjs/toolkit';
 export interface BaseUser {
   id: number;
   walletAddress?: string;
+  email: string;
+  bio?: string;
   firstName?: string;
   lastName?: string;
   totalPower: number;
-  email: string;
+  username?: string;
+  profileImageUri?: string;
+  coverImageUri?: string;
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
 }
 
 export interface GlobalState {
   provider?: Web3Provider;
   isSidebarOpen: boolean;
   isLoading: boolean;
+  showActivationForm?: boolean;
 }
 
 export interface LaunchpadState {
@@ -24,7 +32,9 @@ export interface LaunchpadState {
 export interface AccountState extends BaseUser {
   isLoggedIn: boolean;
   isLoading: boolean;
+  isActivated: boolean;
   apiStatus: ApiStatus;
+  error?: string;
 }
 
 export interface Category {

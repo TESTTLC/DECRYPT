@@ -3,6 +3,9 @@ import MarketTrendResults from 'src/assets/svg/MarketTrendResults';
 import { StoreState } from 'src/utils/storeTypes';
 
 const DailyInfoComponent: React.FC = () => {
+  const username = useSelector<StoreState, string | undefined>(
+    (state) => state.account.username,
+  );
   const email = useSelector<StoreState, string>((state) => state.account.email);
 
   return (
@@ -11,7 +14,7 @@ const DailyInfoComponent: React.FC = () => {
         <p className="font-bold text-2xl lg:text-md truncate">
           Good morning,
           <br />
-          {email}!
+          {username || email}!
         </p>
         <p className="text-gray-500 text-[0.65rem] mt-4">
           Now you have full control over your financial instruments

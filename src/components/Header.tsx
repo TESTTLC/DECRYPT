@@ -113,7 +113,6 @@ const addNetwork = () => {
 };
 
 const Header: React.FC = () => {
-  // const { logout } = useAuth0();
   const dispatch = useDispatch();
   const onLogout = () => {
     localStorage.clear();
@@ -136,7 +135,7 @@ const Header: React.FC = () => {
 
   return (
     <div
-      className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-10 py-5 xs:px-0 sm:px-0
+      className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-6 py-5 xs:px-0 sm:px-0
     bg-transparent "
     >
       <div
@@ -144,7 +143,7 @@ const Header: React.FC = () => {
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         } mb-2`}
       >
-        <div className="items-start justify-center xs:w-96">
+        <div className="flex space-x-4 xs:flex-col xs:space-x-0 items-center justify-center xs:w-96">
           <div className="relative group">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
             <div className="relative px-2xs:px-0 py-2 bg-black leading-none flex items-center divide-x divide-gray-600 rounded-md">
@@ -158,7 +157,7 @@ const Header: React.FC = () => {
                   />
                 ) : null}
                 <span className="pr-0 font-poppins text-sm text-gray-100">
-                  New Release Coming Soon
+                  Release Coming Soon
                 </span>
               </span>
               <a
@@ -167,14 +166,23 @@ const Header: React.FC = () => {
                 className="text-center xs:ml-4 pl-4 pr-2 mr-2 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200"
                 rel="noreferrer"
               >
-                See what's new on our website &rarr;
+                Check our website &rarr;
               </a>
             </div>
           </div>
+          {window.ethereum && (
+            <button
+              className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 mb-2 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+              onClick={addNetwork}
+            >
+              <MetamaskIcon width={20} height={17} />
+              <span className="leading-[12px]">Add TLC Network</span>
+            </button>
+          )}
         </div>
       </div>
       <div
-        className={`grid grid-cols-5 xs:grid-cols-4 sm:grid-cols-4 gap-y-4 items-center transition-all duration-500 gap-x-3 ${
+        className={`grid grid-cols-4 xs:grid-cols-4 sm:grid-cols-4 gap-y-4 items-center transition-all duration-500 gap-x-3 ${
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
@@ -194,16 +202,6 @@ const Header: React.FC = () => {
           <span className="text-center font-poppins text-sm">Dashboard V2</span>
         </Link>
 
-        {window.ethereum && (
-          <button
-            className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
-            onClick={addNetwork}
-          >
-            <MetamaskIcon width={20} height={17} />
-            <span className="leading-[12px]">Add TLC Network</span>
-          </button>
-        )}
-
         <div className="xs:col-span-2 sm:col-span-2 md:col-span-2 items-center justify-center">
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
@@ -216,7 +214,7 @@ const Header: React.FC = () => {
           </div>
         </div>
 
-        <div className="sm:col-span-4 md:col-span-4 xs:col-span-4 items-center justify-center">
+        <div className="col-span-1 sm:col-span-2 md:col-span-2 xs:col-span-2 items-center justify-center">
           <div className="relative">
             <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
             <CustomButton

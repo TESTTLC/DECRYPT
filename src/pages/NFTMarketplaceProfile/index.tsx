@@ -58,6 +58,7 @@ const NFTMarketplaceProfile: React.FC = () => {
       const sdk = new ThirdwebSDK(provider.getSigner());
       const marketplaceContract = sdk.getMarketplace('eqeq');
       const nfts = await marketplaceContract.getAllListings();
+
       nfts.map((nft) => {
         console.log('i am nft owner: ', nft.sellerAddress === walletAddress);
       });
@@ -102,6 +103,7 @@ const NFTMarketplaceProfile: React.FC = () => {
       // );
 
       setCollections(localCollections);
+      console.log('localCollections: ', localCollections);
       // for (const nftCollection of nftCollections) {
       //   console.log(
       //     'nftCollectionContract.metadata: ',
@@ -132,6 +134,12 @@ const NFTMarketplaceProfile: React.FC = () => {
             categories={categories}
           />
           <div className="grid grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-7 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full gap-y-4 gap-x-4">
+            {!walletAddress && (
+              <p className="self-center col-span-full text-center mt-8 text-lg">
+                Connect wallet to have access to your profile{' '}
+                <b>{selectedCategory}</b> section
+              </p>
+            )}
             {selectedCategory === ProfileCategories.COLLECTIONS &&
               collections.map((item, index) => (
                 <ProfileNFTItem

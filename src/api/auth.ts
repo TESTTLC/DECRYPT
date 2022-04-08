@@ -40,3 +40,24 @@ export const registerAPI = async (email: string, password: string) => {
     },
   );
 };
+
+export const activateAccountAPI = async (
+  email: string,
+  activationCode: number,
+) => {
+  const url = `/auth/activateAccount/${email}`;
+  return postRequest<UserResponse>(
+    url,
+    {
+      activationCode,
+    },
+    {
+      withCredentials: true,
+    },
+  );
+};
+
+export const sendActivationCodeAPI = async (email: string) => {
+  const url = `/auth/sendActivationCode/${email}`;
+  return postRequest(url);
+};

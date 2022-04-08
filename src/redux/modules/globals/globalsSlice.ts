@@ -1,5 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { GlobalState } from 'src/utils/storeTypes';
+import { isErrorPayload } from 'src/utils/typeGuards';
+
+import { activateAccount, login, register } from '../account/actions';
 
 import {
   closeSidebar,
@@ -12,6 +15,7 @@ const initialState: GlobalState = {
   isSidebarOpen: true,
   provider: undefined,
   isLoading: false,
+  showActivationForm: undefined,
 };
 
 const globalsSlice = createSlice({
@@ -33,6 +37,25 @@ const globalsSlice = createSlice({
 
     builder.addCase(setIsLoading, (state, action) => {
       return { ...state, isLoading: action.payload };
+    });
+
+    builder.addCase(register.fulfilled, (state) => {
+      return { ...state, showActivationForm: true };
+    });
+
+    builder.addCase(login.rejected, (state, action) => {
+      let showActivationForm = undefined;
+      if (isErrorPayload(action.payload)) {
+        const { message } = action.payload;
+        if (message.includes('403')) {
+          showActivationForm = true;
+        }
+      }
+      return { ...state, showActivationForm };
+    });
+
+    builder.addCase(activateAccount.fulfilled, (state) => {
+      return { ...state, showActivationForm: false };
     });
   },
 });

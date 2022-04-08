@@ -1,4 +1,4 @@
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import auth0, { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setIsLoggedIn } from 'src/redux/modules/account/actions';
