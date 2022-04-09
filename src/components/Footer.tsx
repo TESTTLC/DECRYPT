@@ -225,7 +225,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <a
-                  href="https://tlxscan.com"
+                  href="https://explorer.tlchain.network/"
                   target="_blank"
                   className="text-white underline"
                   rel="noreferrer"

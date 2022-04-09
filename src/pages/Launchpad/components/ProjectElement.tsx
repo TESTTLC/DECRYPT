@@ -103,7 +103,7 @@ const ProjectElement: React.FC<Props> = ({
           <div className="flex justify-between items-center font-poppins mt-1">
             <p className="text-gray-200">Starts</p>
             <p className="text-green-400 text-md text-right">
-              5 April 2022, 09:00 AM UTC
+              16 April 2022, 09:00 AM UTC
             </p>
           </div>
 
@@ -114,7 +114,7 @@ const ProjectElement: React.FC<Props> = ({
             </div>
             <div className="flex flex-col items-end w-full mt-4">
               <p className="text-gray-200">Listing Time</p>
-              <p className="text-green-400">TBA</p>
+              <p className="text-green-400">24 April 2022</p>
             </div>
           </div>
           {showStakingButton ? (
