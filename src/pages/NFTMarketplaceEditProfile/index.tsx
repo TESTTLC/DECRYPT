@@ -27,15 +27,6 @@ const validationSchema = Yup.object().shape({
   facebook: Yup.string().url('Invalid Facebook URL').nullable(),
   twitter: Yup.string().url('Invalid Twitter URL').nullable(),
   instagram: Yup.string().url('Invalid Instagram URL').nullable(),
-
-  // password: Yup.string()
-  //   .required('Required')
-  //   .min(6, 'Password must be at least 6 characters'),
-  // ...(showRegisterForm && {
-  //   passwordConfirmation: Yup.string()
-  //     .required('Required')
-  //     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
-  // }),
 });
 
 const NFTMarketplaceEditProfile: React.FC = () => {
@@ -316,16 +307,9 @@ const NFTMarketplaceEditProfile: React.FC = () => {
                     </button>
                   </div>
                 </div>
-                <button
-                  className="bg-blue-400 w-32 rounded-full py-1 text-black text-sm mb-4"
-                  onClick={onImagesSubmit}
-                  type="submit"
-                >
-                  Submit Images
-                </button>
               </div>
             </div>
-            {/* <MarketplaceRightSidebar showCreditCard/> */}
+
             <MarketplaceRightSidebar />
           </div>
         )}

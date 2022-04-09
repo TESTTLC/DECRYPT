@@ -3,13 +3,30 @@ import NotificationsIcon from 'src/assets/svg/Notifications';
 import user3 from 'src/assets/images/user3.png';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { getImageBucketUrl } from 'src/utils/functions/Image';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+import { useEffect, useState } from 'react';
 
 interface Props {
   title?: string;
 }
 
 const MarketplaceHeader: React.FC<Props> = ({ title }) => {
+  const profileImageUri = useSelector<StoreState, string | undefined>(
+    (state) => state.account.profileImageUri,
+  );
   const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState('');
+
+  useEffect(() => {
+    if (profileImageUri) {
+      const profileImageBucketUrl = getImageBucketUrl(profileImageUri);
+      setProfileImage(profileImageBucketUrl);
+    } else {
+      setProfileImage(user3);
+    }
+  }, [profileImageUri]);
 
   return (
     <>
@@ -43,7 +60,7 @@ const MarketplaceHeader: React.FC<Props> = ({ title }) => {
             onClick={() => navigate('/nftmarketplace/profile')}
           >
             <img
-              src={user3}
+              src={profileImage}
               className="bg-gray-500 rounded-full h-full w-full object-cover"
             />
           </button>

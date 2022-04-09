@@ -154,7 +154,7 @@ const accountSlice = createSlice({
         const { message } = action.payload;
         if (message.includes('401')) {
           error = 'Wrong activation code';
-        } else {
+        } else if (message.includes('500')) {
           error = 'Something went wrong';
         }
       }

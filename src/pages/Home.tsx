@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaWallet, FaUser, FaTicketAlt } from 'react-icons/fa';
 import { IoRocketSharp } from 'react-icons/io5';
 import { ImRocket } from 'react-icons/im';
@@ -189,9 +189,13 @@ const Home: React.FC = () => {
               <p className="font-semibold mb-6 text-xs bg-gradient-to-r from-gray-700 to-gray-800 py-1 px-2 rounded-lg">
                 IT Support | Legal | Financial | Marketing | Media Studio
               </p>
-              <button className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm xs:text-xs xs:leading-[1rem]">
+              <a
+                className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm xs:text-xs xs:leading-[1rem]"
+                href="https://hub.decryption.com/"
+                target="_blank"
+              >
                 Registration Opens Soon
-              </button>
+              </a>
             </div>
             <div className="flex flex-col xs:justify-between xs:col-span-1 sm:col-span-1 md:col-span-1 justify-center items-center bg-black bg-opacity-70 rounded-md min-h-[18rem] text-center p-2">
               <p className="mt-2 text-xl sm:text-lg xs:text-sm">
@@ -203,9 +207,13 @@ const Home: React.FC = () => {
               <p className="font-semibold mb-6 text-xs bg-gradient-to-r from-gray-700 to-gray-800 py-1 px-2 rounded-lg">
                 Global exposure to over 20+ Family Offices partners
               </p>
-              <button className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm xs:text-xs xs:leading-[1rem]">
+              <a
+                className="bg-gradient-to-tr from-green-500 to-blue-500 px-4 py-1 rounded-xl text-sm xs:text-xs xs:leading-[1rem]"
+                href="https://hub.decryption.com/"
+                target="_blank"
+              >
                 Registration Opens Soon
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -223,7 +231,7 @@ const Home: React.FC = () => {
               <p className="font-semibold mt-2 text-center">TLC</p>
               <p className="text-xs text-gray-400 text-center">TLChain</p>
               <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
-              <p className="font-semibold mt-2">$0.16</p>
+              <p className="font-semibold mt-2">$0.20</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
               <div className="flex items-center justify-center  bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
@@ -237,7 +245,7 @@ const Home: React.FC = () => {
               <p className="font-semibold mt-2 text-center">LSO</p>
               <p className="text-xs text-gray-400 text-center">Lusso</p>
               <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
-              <p className="font-semibold mt-2">$0.07</p>
+              <p className="font-semibold mt-2">$0.10</p>
             </div>
           </div>
           <div className="w-full bg-black bg-opacity-70 rounded-lg py-4 px-6 lg:px-4 min-h-[13rem]">
@@ -249,9 +257,9 @@ const Home: React.FC = () => {
               </div>
               <div className="ml-2">
                 <p className="font-semibold text-sm">
-                  Decryption Blockchain Incubator Launch
+                  $TLC Listing | Launch Pool
                 </p>
-                <p className="text-xs text-gray-400">05 April 2022</p>
+                <p className="text-xs text-gray-400">11 April 2022</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -260,9 +268,9 @@ const Home: React.FC = () => {
               </div>
               <div className="ml-2">
                 <p className="font-semibold text-sm">
-                  Decryption Launchpad V2 R
+                  Luxandia NFT Collection | Phase 1
                 </p>
-                <p className="text-xs text-gray-400">05 April 2022</p>
+                <p className="text-xs text-gray-400">14 April 2022</p>
               </div>
             </div>
           </div>
@@ -275,10 +283,10 @@ const Home: React.FC = () => {
                   <BiDevices size={20} />
                 </div>
                 <div className="ml-2">
-                  <p className="font-semibold text-sm">Investor Dashboard</p>
-                  <p className="text-xs text-gray-400">
-                    An account, unlimited benefits
+                  <p className="font-semibold text-sm">
+                    TLChain Wallet Browser Extension
                   </p>
+                  <p className="text-xs text-gray-400">Mobile Sync Ready</p>
                 </div>
               </div>
               <div className="flex items-center mt-4">
@@ -286,9 +294,9 @@ const Home: React.FC = () => {
                   <FaTicketAlt size={20} />
                 </div>
                 <div className="ml-2">
-                  <p className="font-semibold text-sm">Decryption DEX V2</p>
+                  <p className="font-semibold text-sm">Investor Dashboard</p>
                   <p className="text-xs text-gray-400">
-                    DLab | SPool | AirForward | Betting
+                    An Account , unlimited benefits
                   </p>
                 </div>
               </div>
@@ -298,9 +306,9 @@ const Home: React.FC = () => {
                 </div>
                 <div className="ml-2">
                   <p className="font-semibold text-sm">
-                    DWallet Browser Extension
+                    Decryption VC Syndicate
                   </p>
-                  <p className="text-xs text-gray-400">Mobile Sync Ready</p>
+                  <p className="text-xs text-gray-400">Global Network Club</p>
                 </div>
               </div>
               <div className="flex items-center mt-4">
@@ -308,10 +316,10 @@ const Home: React.FC = () => {
                   <FaUser size={20} />
                 </div>
                 <div className="ml-2">
-                  <p className="font-semibold text-sm">
-                    Decryption VC Syndicate
+                  <p className="font-semibold text-sm">Asset Tokenization</p>
+                  <p className="text-xs text-gray-400">
+                    Digital tokens to fractionalize ownership of assets
                   </p>
-                  <p className="text-xs text-gray-400">Global Network Club</p>
                 </div>
               </div>
             </div>

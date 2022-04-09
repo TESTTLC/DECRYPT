@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import TheLuxuryCoin from '../../assets/images/staking_tlc.png';
-import TheLuxuryBank from '../../assets/images/staking_tlx.png';
-import LSO from '../../assets/images/staking_lso.png';
-import ICICB from '../../assets/images/staking_atari.png';
+import TheLuxuryCoin from '../../assets/images/staking_tlc_1.png';
+import TheLuxuryBank from '../../assets/images/staking_tlx_1.png';
+import LSO from '../../assets/images/staking_lso_1.png';
+import ICICB from '../../assets/images/staking_atari_1.png';
 import { routes } from '../../utils/routes';
 
 import Item from './components/Item';
