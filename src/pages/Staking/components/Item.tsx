@@ -22,7 +22,7 @@ const Item: React.FC<Props> = ({
       <img
         src={imageSource}
         alt={title}
-        className="h-full aspect-w-1 object-contain object-top"
+        className="h-full aspect-w-1 object-cover object-top"
       ></img>
       {showTopText && (
         <div className="w-full absolute py-1 top-0 inset-x-0 bg-blue-400 bg-opacity-90 text-white text-xs text-center leading-4">
