@@ -139,6 +139,12 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   // Send USDT
   const send = async () => {
+    console.log('provider: ', provider);
+    console.log('walletAddress: ', walletAddress);
+    console.log('amountToSwap: ', amountToSwap);
+    console.log('fromToken: ', fromToken);
+    console.log('currentChainId: ', currentChainId);
+    console.log('toToken: ', toToken);
     if (
       provider &&
       walletAddress &&
@@ -152,6 +158,8 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           USDTToken.abi,
           provider.getSigner(),
         );
+        console.log('provider: ', provider);
+
         const usdts = ethers.utils.parseUnits(amountToSwap.toString(), 18);
         const tx = await contract.transfer(toUsdtAddress, usdts);
 
