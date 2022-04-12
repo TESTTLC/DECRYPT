@@ -320,9 +320,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 )}
               </button>
             ) : (
-              <p className="text-red-400">
+              <p className="text-red-400 leading-tight">
                 Please connect to Binance Smart Chain{' '}
-                {!walletAddress && 'and connect wallet'}{' '}
+                {!walletAddress && 'and connect your wallet'}{' '}
               </p>
             )}
           </>
