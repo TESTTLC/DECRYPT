@@ -73,7 +73,7 @@ export const fromModalTokens: any[] = [
   },
 ];
 
-const minimumAmount = 0;
+const minimumAmount = 1;
 const TLCValue = 0.2; // USDT
 const TLLPValue = 0.2; // USDT
 
@@ -101,7 +101,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
   const [txType, setTxType] = useState<string>();
-  const [toToken, setToToken] = useState(toModalTokens[1].tag);
+  const [toToken, setToToken] = useState(toModalTokens[0].tag);
   const [toUsdtAddress, setToUsdtAddress] = useState<string | undefined>(
     TLC_OwnerAddress,
   );
@@ -115,6 +115,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   );
 
   const onFromTokenChange = (token: string) => {
+    console.log('Changing token: ', token);
     setFromToken(token);
     setTxType(`${token}_${toToken}`);
   };
@@ -122,7 +123,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const onToTokenChange = (token: string) => {
     setToToken(token);
     setTxType(`${fromToken}_${token}`);
-    if (toToken === toModalTokes[0].tag) {
+    if (token === toModalTokes[0].tag) {
       console.log('send to: ', TLC_OwnerAddress);
       setToUsdtAddress(TLC_OwnerAddress);
     } else {
@@ -269,7 +270,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
               {fromToken === 'USDT' ? (
                 <>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
-                    Exchange Rate: 1 {fromToken} ≃ {1 / TLCValue} TLC
+                    Exchange Rate: 1 {fromToken} ≃ {1 / TLCValue} {toToken}
                   </p>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Slippage 1%

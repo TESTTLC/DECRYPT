@@ -29,7 +29,7 @@ export const addHeaderPayloadToCookies = async () => {
     cookies.set(headerPayloadName, headerPayloadValue, {
       path: '/',
       secure: true,
-      sameSite: 'none',
+      sameSite: 'strict',
       expires: newExpiryCookiesDate,
     });
   }
