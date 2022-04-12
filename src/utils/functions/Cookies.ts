@@ -10,6 +10,8 @@ import {
 } from './LocalStorage';
 import { addMinutesToCurrentDateTime } from './utils';
 
+const cookies = new Cookies();
+
 export const addHeaderPayloadToCookies = async () => {
   const headerPayload = getHeaderPayloadFromLocalStorage();
   const newExpiryDate = addMinutesToCurrentDateTime(30);
@@ -24,20 +26,16 @@ export const addHeaderPayloadToCookies = async () => {
       );
     }
 
-    const cookies = new Cookies();
-    // const headerPayloadCookie = cookies.get(headerPayloadName);
     cookies.set(headerPayloadName, headerPayloadValue, {
       path: '/',
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'none',
       expires: newExpiryCookiesDate,
-      // domain: 'localhost',
     });
   }
 };
 
 export const getHeaderPayloadFromCookies = async () => {
-  const cookies = new Cookies();
   const headerPayloadCookie = cookies.get(headerPayloadName);
 
   return headerPayloadCookie;

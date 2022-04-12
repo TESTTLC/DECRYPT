@@ -107,9 +107,10 @@ export const stakingRewards = {
 };
 
 export const prices = {
-  TLC: '0.16',
+  TLC: '0.20',
   LSO: '0.07',
   TLX: 'Listing starts with $50',
+  TLLP: '0.20',
 };
 
 export const headerPayloadName = '_sec_hpload';

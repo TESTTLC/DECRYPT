@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import TheLuxuryCoin from '../../assets/images/staking_tlc_1.png';
 import TheLuxuryBank from '../../assets/images/staking_tlx_1.png';
 import LSO from '../../assets/images/staking_lso_1.png';
-import ICICB from '../../assets/images/staking_atari_1.png';
+import TLLP from '../../assets/images/TLLP_COIN.png';
 import { routes } from '../../utils/routes';
 
 import Item from './components/Item';
@@ -60,13 +60,13 @@ const Stake: React.FC = () => {
           {/* </GlowingWrapper> */}
           {/* <GlowingWrapper> */}
           <Item
-            coinTag="ATARI Token"
-            title="ATARI Token"
-            subtitle="A secure, fast, and highly scalable blockchain that is the foundation for the emerging industries of AI, Blockchain and Metaverse."
+            coinTag="TLLP"
+            title="TLLP Token"
+            subtitle="A secure, fast, and highly scalable blockchain liquidity pool token."
             onClick={() => {
               return;
             }}
-            imageSource={ICICB}
+            imageSource={TLLP}
             showTopText
           />
           {/* </GlowingWrapper> */}

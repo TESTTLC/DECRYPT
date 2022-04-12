@@ -27,7 +27,7 @@ const logger = createLogger({
 });
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   devTools: process.env.REACT_APP_NODE_ENV !== 'production',
   middleware: [logger, thunk, collectionsApi.middleware],
 });

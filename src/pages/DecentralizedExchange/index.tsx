@@ -150,8 +150,8 @@ const DecentralizedExchange: React.FC = () => {
       </div>
       <p className="text-xs items-center justify-between w-[37rem] xs:w-[22rem] text-center">
         You will have an opportunity to purchase $TLC from Feb 22 at 22 PM UTC
-        with a price of $0.16/TLC - 6.25 $TLC/1 USDT. The swap module will
-        remain open until 04 March at 10.30 UTC.
+        with a price of $0.20/TLC - 5 $TLC/1 USDT. The swap module will remain
+        open until 04 March at 10.30 UTC.
       </p>
 
       <button

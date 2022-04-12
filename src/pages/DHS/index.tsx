@@ -22,6 +22,7 @@ import communityBond3 from 'src/assets/images/community-bond-bg-3.png';
 import Switch from 'react-switch';
 import { AiFillStar } from 'react-icons/ai';
 import { useWindowSize } from 'src/hooks/useWindowSize';
+import { prices } from 'src/utils/globals';
 
 import { useContracts } from '../../hooks/useContracts';
 import { ChainsIds, Stake } from '../../utils/types';
@@ -256,7 +257,8 @@ const DHS: React.FC = () => {
       setTotalTLXStaked(parseFloat(tlxStaked.toFixed(1)).toLocaleString());
       setTotalLSOStaked(parseFloat(lsoStaked.toFixed(1)).toLocaleString());
 
-      const valueLocked = 0.16 * tlcStaked + 40 * tlxStaked + 0.07 * lsoStaked;
+      const valueLocked =
+        parseFloat(prices.TLC) * tlcStaked + 40 * tlxStaked + 0.07 * lsoStaked;
 
       setTotalValueLocked(parseFloat(valueLocked.toFixed(1)).toLocaleString());
     }

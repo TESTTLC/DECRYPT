@@ -77,8 +77,8 @@ const App = () => {
     return true;
   };
 
-  if (window && document && localStorage) {
-  }
+  // if (window && document && localStorage) {
+  // }
   addHeaderPayloadToCookies();
 
   if (localStorage.getItem(headerPayloadName)) {

@@ -97,10 +97,10 @@ const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
                 >
                   <img
                     src={token.image}
-                    className="w-6 h-6"
+                    className="w-6 h-6 object-cover"
                     alt={`${token.name}`}
                   />
-                  <p className="ml-2 text-xl font-semibold">
+                  <p className="ml-2 text-xl font-semibold ">
                     {token.tag} ({token.name})
                   </p>
                 </button>

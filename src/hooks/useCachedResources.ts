@@ -50,7 +50,9 @@ export const useCachedResources = () => {
     const user = window.localStorage.getItem('user');
     if (user) {
       const foundUser = JSON.parse(user);
-      dispatch(setAccountData({ ...foundUser, isLoading: false }));
+      dispatch(
+        setAccountData({ ...foundUser, isLoading: false, isLoggedIn: true }),
+      );
     } else {
       window.localStorage.clear();
     }

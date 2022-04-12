@@ -9,6 +9,7 @@ import usdtLogo from 'src/assets/images/tether.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlxLogo from 'src/assets/images/TLX-logo.png';
+import tlLpLogo from 'src/assets/images/TLLP_COIN.png';
 import atriLogo from 'src/assets/images/ATRI-logo.png';
 import { AiFillLock } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
@@ -20,6 +21,13 @@ import USDTToken from 'src/contracts/USDT.json';
 
 import SwapTokensModal from './SwapTokensModal';
 import Categories from './Categories';
+import { toModalTokes } from './LiquiditySections';
+
+/** Two Addreses because we have 1 for sending USDT to the TLLP address and
+ *  1 for sending USDT to the TLC address
+ */
+const TLC_OwnerAddress = process.env.REACT_APP_TLC_OWNER_ADDRESS;
+const TLLP_OwnerAddress = process.env.REACT_APP_TLLP_OWNER_ADDRESS;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fromModalTokens: any[] = [
@@ -65,16 +73,24 @@ export const fromModalTokens: any[] = [
   },
 ];
 
-export const toModalTokes: Project[] = [
+const minimumAmount = 0;
+const TLCValue = 0.2; // USDT
+const TLLPValue = 0.2; // USDT
+
+export const toModalTokens: Project[] = [
   {
     name: 'TLC',
     tag: 'TLC',
     image: tlcLogo,
+    value: TLCValue,
+  },
+  {
+    name: 'TLLP',
+    tag: 'TLLP',
+    image: tlLpLogo,
+    value: TLLPValue,
   },
 ];
-
-const minimumAmount = 100;
-const tlcValue = 0.16; // USDT
 
 interface Props {
   currentChainId: string;
@@ -84,7 +100,11 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
-  // const [toToken, setToToken] = useState(toModalTokes[0].tag);
+  const [txType, setTxType] = useState<string>();
+  const [toToken, setToToken] = useState(toModalTokens[1].tag);
+  const [toUsdtAddress, setToUsdtAddress] = useState<string | undefined>(
+    TLC_OwnerAddress,
+  );
   // const [amountToSwap, setamountToSwap] = useState(0);
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(
@@ -96,11 +116,20 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   const onFromTokenChange = (token: string) => {
     setFromToken(token);
+    setTxType(`${token}_${toToken}`);
   };
 
-  // const onToTokenChange = (token: string) => {
-  //   setToToken(token);
-  // };
+  const onToTokenChange = (token: string) => {
+    setToToken(token);
+    setTxType(`${fromToken}_${token}`);
+    if (toToken === toModalTokes[0].tag) {
+      console.log('send to: ', TLC_OwnerAddress);
+      setToUsdtAddress(TLC_OwnerAddress);
+    } else {
+      console.log('send to: ', TLLP_OwnerAddress);
+      setToUsdtAddress(TLLP_OwnerAddress);
+    }
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
@@ -123,10 +152,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           provider.getSigner(),
         );
         const usdts = ethers.utils.parseUnits(amountToSwap.toString(), 18);
-        const tx = await contract.transfer(
-          process.env.REACT_APP_TLC_OWNER_ADDRESS,
-          usdts,
-        );
+        const tx = await contract.transfer(toUsdtAddress, usdts);
 
         const res = await fetch(
           `${process.env.REACT_APP_API_BACKEND_EXCHANGE}/api/claim`,
@@ -140,6 +166,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
               address: walletAddress,
               txhash: tx.hash,
               amount: amountToSwap.toString(),
+              txType,
             }),
           },
         );
@@ -221,24 +248,28 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={amountToSwap / tlcValue}
+                  value={amountToSwap / TLCValue}
                 ></input>
               </div>
               {/* <SwapTokensModal tokens={[]} type="to" /> */}
               <div className="flex w-1/2 justify-end items-center mt-4">
-                <img
+                <SwapTokensModal
+                  tokens={toModalTokens}
+                  onTokenChange={onToTokenChange}
+                />
+                {/* <img
                   className="text-white font-poppins w-6 h-6 mr-2 object-cover "
                   src={tlchainImage}
                   alt="TLChain-Logo"
                 />
-                <p className="font-poppins text-md text-white">TLC</p>
+                <p className="font-poppins text-md text-white">TLC</p> */}
               </div>
             </div>
             <div className="h-14 mt-2">
               {fromToken === 'USDT' ? (
                 <>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
-                    Exchange Rate: 1 {fromToken} ≃ {1 / tlcValue} TLC
+                    Exchange Rate: 1 {fromToken} ≃ {1 / TLCValue} TLC
                   </p>
                   <p className="font-poppins text-gray-300 h-4 text-sm">
                     Slippage 1%
@@ -294,7 +325,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                         }`}
                       />
                       <img
-                        src={toModalTokes[0].image}
+                        src={toModalTokens[0].image}
                         className={`w-10 h-10 absolute left-11 bottom-2 rounded-full border-4 bg-gray-600 border-gray-800 p-[0.15rem] ${
                           isOdd ? 'z-20' : 'z-10'
                         }`}
@@ -302,7 +333,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                     </div>
                     <div className="flex-[0.3]">
                       <span>
-                        {t.tag}-{toModalTokes[0].tag}
+                        {t.tag}-{toModalTokens[0].tag}
                       </span>
                     </div>
                     <div className="flex-[0.5]">

@@ -45,6 +45,7 @@ export type Project = {
   tag: string;
   image: string;
   iconBackground?: string;
+  value?: number;
 };
 
 export enum ChainsIds {
@@ -62,7 +63,7 @@ export const defaultPowers = {
 
 export const stakeRewards = {
   // all values are represented as percentage
-  TLX: [15.34, 21.25, 29.68, 40.56, 86.12],
+  TLX: [15.34, 21.25, 29.68, 40.56, 112],
   TLC: [11.25, 15.56, 18.8, 19.26, 63.58],
   LSO: [12.19, 17.32, 19.27, 51.25, 112],
 };
