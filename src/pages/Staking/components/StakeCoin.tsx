@@ -25,6 +25,7 @@ import {
 import lso_1x from '../../../assets/images/lso_1x.png';
 import tlc_1x from '../../../assets/images/tlc_1x.png';
 import tlx_1x from '../../../assets/images/tlx_1x.png';
+import tllp_1x from '../../../assets/images/TLLP_COIN.png';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import * as contracts from '../../../utils/functions/Contracts';
 import NotFound from '../../NotFound';
@@ -46,7 +47,7 @@ const StakeCoin: React.FC = () => {
   const dispatch = useDispatch();
   const { isMobileSize } = useWindowSize();
   const [duration, setDuration] = useState(0);
-  const [stakeAmount, setStakeAmount] = useState(0);
+  const [stakeAmount, setStakeAmount] = useState('0');
   const [userStakes, setUserStakes] = useState([]);
   const stakeInputRef = useRef<null | HTMLInputElement>(null);
   const [balance, setBalance] = useState<number>();
@@ -152,7 +153,12 @@ const StakeCoin: React.FC = () => {
           let totalRew = 0;
           stakes.forEach((stake: Stake) => {
             const amount = parseFloat(ethers.utils.formatEther(stake.amount));
-            if (coinTag === 'TLX' || coinTag === 'TLC' || coinTag === 'LSO') {
+            if (
+              coinTag === 'TLX' ||
+              coinTag === 'TLC' ||
+              coinTag === 'LSO' ||
+              coinTag === 'TLLP'
+            ) {
               totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
             }
           });
@@ -197,7 +203,14 @@ const StakeCoin: React.FC = () => {
               "
               src={
                 // eslint-disable-next-line no-nested-ternary
-                coinTag === 'LSO' ? lso_1x : coinTag === 'TLC' ? tlc_1x : tlx_1x
+                coinTag === 'LSO'
+                  ? lso_1x
+                  : // eslint-disable-next-line no-nested-ternary
+                  coinTag === 'TLC'
+                  ? tlc_1x
+                  : coinTag === 'TLX'
+                  ? tlx_1x
+                  : tllp_1x
               }
               alt="TLX-Logo"
             />
@@ -222,28 +235,33 @@ const StakeCoin: React.FC = () => {
                     </p>
                     <p className="text-gray-400">
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
-                          .one_month
+                        stakingRewards[
+                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
+                        ].one_month
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
-                          .three_months
+                        stakingRewards[
+                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
+                        ].three_months
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
-                          .six_months
+                        stakingRewards[
+                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
+                        ].six_months
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
-                          .one_year
+                        stakingRewards[
+                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
+                        ].one_year
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO']
-                          .three_years
+                        stakingRewards[
+                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
+                        ].three_years
                       }
                     </p>
                   </>
@@ -277,7 +295,7 @@ const StakeCoin: React.FC = () => {
                       type={'number'}
                       ref={stakeInputRef}
                       onChange={(e) => {
-                        setStakeAmount(parseFloat(e.target.value));
+                        setStakeAmount(e.target.value);
                       }}
                       placeholder="Value..."
                       value={stakeAmount}
@@ -311,14 +329,14 @@ const StakeCoin: React.FC = () => {
                             coinTag !== 'TLC' &&
                             coinTag !== 'LSO' &&
                             stakeContract &&
-                            stakeAmount > 0
+                            parseFloat(stakeAmount) > 0
                           ) {
                             webStake(
                               tokenContract,
                               stakeContract,
                               stakeAddress,
                               walletAddress,
-                              stakeAmount,
+                              parseFloat(stakeAmount),
                               duration,
                               coinTag,
                             );
@@ -326,11 +344,11 @@ const StakeCoin: React.FC = () => {
                             coinTag &&
                             coinTag === 'TLC' &&
                             stakeContract &&
-                            stakeAmount > 0
+                            parseFloat(stakeAmount) > 0
                           ) {
                             contracts.tlcStake(
                               stakeContract,
-                              stakeAmount,
+                              parseFloat(stakeAmount),
                               duration,
                             );
                           } else if (
@@ -338,14 +356,14 @@ const StakeCoin: React.FC = () => {
                             coinTag === 'LSO' &&
                             stakeContract &&
                             isRegisteredInLSOLaunchpad &&
-                            stakeAmount > 0
+                            parseFloat(stakeAmount) > 0
                           ) {
                             webStake(
                               tokenContract,
                               stakeContract,
                               stakeAddress,
                               walletAddress,
-                              stakeAmount,
+                              parseFloat(stakeAmount),
                               duration,
                               coinTag,
                             );

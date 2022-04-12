@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import TheLuxuryCoin from '../../assets/images/staking_tlc_1.png';
 import TheLuxuryBank from '../../assets/images/staking_tlx_1.png';
 import LSO from '../../assets/images/staking_lso_1.png';
-import TLLP from '../../assets/images/TLLP_COIN.png';
+import TLLP from '../../assets/images/staking_tllp_1.png';
 import { routes } from '../../utils/routes';
 
 import Item from './components/Item';
@@ -63,11 +63,9 @@ const Stake: React.FC = () => {
             coinTag="TLLP"
             title="TLLP Token"
             subtitle="A secure, fast, and highly scalable blockchain liquidity pool token."
-            onClick={() => {
-              return;
-            }}
+            onClick={() => navigate(`/staking/TLLP`)}
             imageSource={TLLP}
-            showTopText
+            // showTopText
           />
           {/* </GlowingWrapper> */}
         </div>

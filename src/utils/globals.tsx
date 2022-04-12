@@ -25,6 +25,11 @@ export const TLCTokenContractAddress =
 export const TLCStakeContractAddress =
   '0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832';
 
+export const TLLPTokenContractAddress =
+  '0xd887f0837949310C0D174989b7145B83636fE731';
+export const TLLPStakeContractAddress =
+  '0x48500D88430B37E33237dD47948A8D02df660473';
+
 export const USDTContractAddress = '0x55d398326f99059fF775485246999027B3197955';
 
 export const ownerAddress = '0x21C710cACAFfD5d885094cD13988ee08700D26BD';
@@ -96,6 +101,13 @@ export const stakingRewards = {
     six_months: '18.80% APY - 6 months ',
     one_year: '19.26% APY - 12 months ',
     three_years: '63.58% APY - 36 months ',
+  },
+  TLLP: {
+    one_month: '12.19% APY - 1 months ',
+    three_months: '17.32% APY - 3 months ',
+    six_months: '19.27% APY - 6 months ',
+    one_year: '51.25% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
   },
   DEFAULT: {
     one_month: '',

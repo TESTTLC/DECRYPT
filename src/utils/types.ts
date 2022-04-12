@@ -59,6 +59,7 @@ export const defaultPowers = {
   TLX: [0.1, 0.3, 0.5, 0.7, 1],
   TLC: [0.01, 0.03, 0.05, 0.07, 0.1],
   LSO: [0.01, 0.03, 0.05, 0.07, 0.1],
+  TLLP: [0.01, 0.03, 0.05, 0.07, 0.1],
 };
 
 export const stakeRewards = {
@@ -66,6 +67,7 @@ export const stakeRewards = {
   TLX: [15.34, 21.25, 29.68, 40.56, 112],
   TLC: [11.25, 15.56, 18.8, 19.26, 63.58],
   LSO: [12.19, 17.32, 19.27, 51.25, 112],
+  TLLP: [12.19, 17.32, 19.27, 51.25, 112],
 };
 
 export enum ProfileCategories {

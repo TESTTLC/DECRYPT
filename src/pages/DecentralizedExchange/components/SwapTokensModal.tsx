@@ -56,7 +56,12 @@ const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
           className="flex h-full justify-end items-center"
         >
           <img
-            className="text-white font-poppins w-6 h-6 mr-1 object-cover"
+            // className="text-white font-poppins w-6 h-6 mr-1 object-cover"
+            className={`${
+              selectedToken.tag === 'TLLP'
+                ? 'w-8 h-8 object-contain'
+                : 'w-6 h-6 object-cover'
+            }`}
             src={selectedToken.image}
             // alt="The Luxury Coin"
           />
@@ -97,7 +102,11 @@ const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
                 >
                   <img
                     src={token.image}
-                    className="w-6 h-6 object-cover"
+                    className={`${
+                      token.tag === 'TLLP'
+                        ? 'w-8 h-8 object-contain'
+                        : 'w-6 h-6 object-cover'
+                    }`}
                     alt={`${token.name}`}
                   />
                   <p className="ml-2 text-xl font-semibold ">

@@ -100,7 +100,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
-  const [txType, setTxType] = useState<string>();
+  const [txType, setTxType] = useState<string>('');
   const [toToken, setToToken] = useState(toModalTokens[0].tag);
   const [toUsdtAddress, setToUsdtAddress] = useState<string | undefined>(
     TLC_OwnerAddress,
@@ -124,17 +124,16 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     setToToken(token);
     setTxType(`${fromToken}_${token}`);
     if (token === toModalTokes[0].tag) {
-      console.log('send to: ', TLC_OwnerAddress);
       setToUsdtAddress(TLC_OwnerAddress);
     } else {
-      console.log('send to: ', TLLP_OwnerAddress);
       setToUsdtAddress(TLLP_OwnerAddress);
     }
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
-    setAmountToSwap(parseFloat(e.target.value));
+    // setAmountToSwap(parseFloat(e.target.value));
+    setAmountToSwap(e.target.value);
   };
 
   // Send USDT
@@ -183,6 +182,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
         await res.json();
       } catch (error) {
+        console.log('Error: ', error);
         setIsLoading(false);
       }
     }
@@ -290,34 +290,41 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 </>
               ) : null}
             </div>
-            <button
-              className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-              onClick={() => {
-                if (
-                  amountToSwap >= minimumAmount &&
-                  fromToken === 'USDT' &&
-                  currentChainId === ChainsIds.BSC
-                ) {
-                  setIsLoading(true);
-                  send();
+            {walletAddress && currentChainId === ChainsIds.BSC ? (
+              <button
+                className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                onClick={() => {
+                  if (
+                    amountToSwap >= minimumAmount &&
+                    fromToken === 'USDT' &&
+                    currentChainId === ChainsIds.BSC
+                  ) {
+                    setIsLoading(true);
+                    send();
+                  }
+                }}
+                disabled={
+                  isLoading ||
+                  amountToSwap < minimumAmount ||
+                  fromToken !== 'USDT'
                 }
-              }}
-              disabled={
-                isLoading ||
-                amountToSwap < minimumAmount ||
-                fromToken !== 'USDT'
-              }
-            >
-              {isLoading ? (
-                <>
-                  {' '}
-                  Exchange in progress &nbsp;
-                  <TailSpin color="#fff" height={18} width={18} />
-                </>
-              ) : (
-                'Exchange'
-              )}
-            </button>
+              >
+                {isLoading ? (
+                  <>
+                    {' '}
+                    Exchange in progress &nbsp;
+                    <TailSpin color="#fff" height={18} width={18} />
+                  </>
+                ) : (
+                  'Exchange'
+                )}
+              </button>
+            ) : (
+              <p className="text-red-400">
+                Please connect to Binance Smart Chain{' '}
+                {!walletAddress && 'and connect wallet'}{' '}
+              </p>
+            )}
           </>
         ) : (
           <>

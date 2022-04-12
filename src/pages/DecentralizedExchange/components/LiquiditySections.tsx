@@ -153,7 +153,7 @@ const LiquiditySections: React.FC = () => {
               {/* <LiquidityTokensModal tokens={[]} type="to" /> */}
               <div className="flex w-1/2 justify-end items-center mt-4">
                 <img
-                  className="text-white font-poppins w-6 h-6 mr-2 object-cover "
+                  className="text-white font-poppins w-9 h-9 mr-2 object-cover "
                   src={tlchainImage}
                   alt="TLChain-Logo"
                 />

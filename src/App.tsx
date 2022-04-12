@@ -49,7 +49,7 @@ import { addHeaderPayloadToCookies } from './utils/functions/Cookies';
 import NFTMarketplaceViewCollection from './pages/NFTMarketplaceViewCollection';
 import { getHeaderPayloadFromLocalStorage } from './utils/functions/LocalStorage';
 
-export const coinsTags = ['TLX', 'TLC', 'LSO'];
+export const coinsTags = ['TLX', 'TLC', 'LSO', 'TLLP'];
 export const marketplaceRoutes = ['categories', 'collections'];
 
 const App = () => {

@@ -26,7 +26,6 @@ import { useDeviceInfo } from './useDeviceInfo';
 import { useWalletConnector } from './useWalletConnector';
 
 export const useCachedResources = () => {
-  const cookies = new Cookies();
   useWalletConnector();
   const dispatch = useDispatch();
   const walletAddress = useSelector<StoreState, string | undefined>(
@@ -56,7 +55,7 @@ export const useCachedResources = () => {
     } else {
       window.localStorage.clear();
     }
-  }, [dispatch]);
+  }, [dispatch, window.localStorage]);
 
   // const checkUserData = () => {
   //   try {
