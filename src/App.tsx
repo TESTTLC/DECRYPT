@@ -99,7 +99,7 @@ const App = () => {
     <>
       <div className="bg-image"></div>
       <div className="z-10 flex flex-col font-poppins text-white">
-        {isLoggedIn ? (
+        {localStorage.getItem('user') ? (
           <>
             <div className="z-50 flex items-center justify-center space-x-1 text-xs w-full h-8 bg-black bg-opacity-60 drop-shadow-xl shadow-lg">
               <AiFillLock size={14} color={'#34d399'} />
