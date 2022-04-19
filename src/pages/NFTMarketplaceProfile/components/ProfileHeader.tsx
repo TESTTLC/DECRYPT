@@ -8,7 +8,7 @@ import { AccountState, StoreState } from 'src/utils/storeTypes';
 import { ProfileCategories } from 'src/utils/types';
 import SelectDropdown from 'src/components/SelectDropdown';
 import { BiImageAdd } from 'react-icons/bi';
-import { setIsLoggedIn } from 'src/redux/modules/account/actions';
+import { logout, setIsLoggedIn } from 'src/redux/modules/account/actions';
 import Cookies from 'universal-cookie';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getImageBucketUrl } from 'src/utils/functions/Image';
@@ -68,7 +68,9 @@ const ProfileHeader: React.FC<Props> = ({
   const onLogout = () => {
     const cookies = new Cookies();
     localStorage.clear();
-    dispatch(setIsLoggedIn(false));
+    // dispatch(setIsLoggedIn(false));
+    // dispatch(setIsLoggedIn(false));
+    dispatch(logout());
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   };
 

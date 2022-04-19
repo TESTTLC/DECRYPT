@@ -209,9 +209,6 @@ export const getActualBalanceOf = async (
   try {
     const balance = await tokenContract.actualBalanceOf(account);
 
-    // userBalance = parseFloat(
-    //   parseFloat(ethers.utils.formatEther(balance._hex)).toFixed(3)
-    // );
     userBalance = parseFloat(
       parseFloat(ethers.utils.formatUnits(balance, 18)).toFixed(3),
     );
@@ -263,9 +260,7 @@ export const determinePowerForStake = (
 
 export const getTotalNumberOfTxByAddress = async (addressHash: string) => {
   try {
-    // const url = `${process.env.REACT_APP_TLX_RPC_API}/?module=account&action=txlist&address=${addressHash}&sort=asc`;
     const url = `https://tlxscan.com/api?module=account&action=txlist&address=${addressHash}&sort=asc`;
-    // const url = `https://tlxscan.com/api?module=account&action=txlist&address=0xd09e3A1F47432A14C6D782cAE30ec07543992E57&sort=asc`;
     const res = await fetch(url);
     const result = await res.json();
     const totalNumber = result.result.length;

@@ -12,10 +12,8 @@ import image8 from 'src/assets/images/nft_image_8.png';
 import { useGetCollectionsByUserIdQuery } from 'src/redux/modules/collections/queries';
 import { useSelector } from 'react-redux';
 import { Collection, StoreState } from 'src/utils/storeTypes';
-import { ProfileCategories } from 'src/utils/types';
-import { JsonRpcProvider, Web3Provider } from '@ethersproject/providers';
+import { Web3Provider } from '@ethersproject/providers';
 import { Path, useLocation, useParams } from 'react-router-dom';
-import BigButton from 'src/components/BigButton';
 
 import { ThirdwebSDK } from '../../../thirdweb-dev/sdk';
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';

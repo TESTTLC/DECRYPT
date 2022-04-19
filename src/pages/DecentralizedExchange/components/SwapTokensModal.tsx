@@ -22,10 +22,8 @@ const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
       top: '50%',
       left: '50%',
       right: 'auto',
-      // bottom: "auto",
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      // backgroundColor: "#080220",
       backgroundColor: '#080220',
       opacity: 1,
       backgroundOpacity: 1,
@@ -52,18 +50,15 @@ const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
       <div className="flex w-full justify-end mb-4">
         <button
           onClick={openModal}
-          // className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
           className="flex h-full justify-end items-center"
         >
           <img
-            // className="text-white font-poppins w-6 h-6 mr-1 object-cover"
             className={`${
               selectedToken.tag === 'TLLP'
                 ? 'w-8 h-8 object-contain'
                 : 'w-6 h-6 object-cover'
             }`}
             src={selectedToken.image}
-            // alt="The Luxury Coin"
           />
           <p className="ml-2 text-white font-poppins">{selectedToken.tag}</p>{' '}
           <GoArrowDown className="h-4 w-4 ml-2 mb-1" color="white" />

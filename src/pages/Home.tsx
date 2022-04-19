@@ -16,15 +16,6 @@ import exchangeImage from '../assets/images/exchange_1.png';
 import nftMarketplaceImage from '../assets/images/nft_1.png';
 import metaverseImage from '../assets/images/metaverse_1.jpeg';
 import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.jpeg';
-// import stakingImage from '../assets/images/staking_1.webp';
-// import createTokenImage from '../assets/images/create_token_1.webp';
-// import launchpadImage from '../assets/images/launchpad_1.webp';
-// import crossChainBridgeImage from '../assets/images/cross_chain_bridge_1.webp';
-// import exchangeImage from '../assets/images/exchange_1.webp';
-// import nftMarketplaceImage from '../assets/images/nft_1.webp';
-// import metaverseImage from '../assets/images/metaverse_1.webp';
-// import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.webp';
-// axios.defaults.withCredentials = true;
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -221,7 +212,6 @@ const Home: React.FC = () => {
           <div className="w-full grid grid-cols-2 gap-x-4 md:col-span-4">
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
               <div className="flex items-center justify-center bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
-                {/* <FaWallet size={20} /> */}
                 <img
                   src={tlcLogo}
                   className="w-8 h-8 p-0
@@ -235,7 +225,6 @@ const Home: React.FC = () => {
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
               <div className="flex items-center justify-center  bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
-                {/* <FaPaypal size={22} /> */}
                 <img
                   src={lsoLogo}
                   className="w-8 h-8 p-0
@@ -277,7 +266,6 @@ const Home: React.FC = () => {
           <div className="w-full mt-10 xs:mt-0 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-10">
             <div className="w-full min-h-[18rem] bg-black bg-opacity-70 rounded-lg py-4 px-6 lg:px-4">
               <p className="font-semibold text-md">Upcoming Releases</p>
-              {/* <p className="text-xs text-gray-400">Not joined</p> */}
               <div className="flex items-center mt-4">
                 <div className="flex items-center justify-center bg-gradient-to-br from-green-500 to-blue-500 min-w-[2.5rem] min-h-[2.5rem] rounded-lg">
                   <BiDevices size={20} />
@@ -324,7 +312,6 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-          {/* <div className="w-full h-16 bg-customBlue-800"></div> */}
         </div>
       </div>
     </div>

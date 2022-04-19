@@ -150,7 +150,6 @@ const LiquiditySections: React.FC = () => {
                   value={amountToSwap * 17}
                 ></input>
               </div>
-              {/* <LiquidityTokensModal tokens={[]} type="to" /> */}
               <div className="flex w-1/2 justify-end items-center mt-4">
                 <img
                   className="text-white font-poppins w-9 h-9 mr-2 object-cover "
@@ -209,14 +208,8 @@ const LiquiditySections: React.FC = () => {
                             {t.percentage2}%
                           </>
                         ) : (
-                          // `/${t.percentage2}`
                           ''
                         )}
-                        {/* {t.percentage2 ? (
-                        <AiFillLock size={20} color={'yellow'} />
-                      ) : (
-                        ''
-                      )} */}
                       </span>
                     </div>
                   </div>

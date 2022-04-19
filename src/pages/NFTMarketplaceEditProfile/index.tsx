@@ -1,8 +1,6 @@
 import { createRef, useEffect, useState } from 'react';
-import user3 from 'src/assets/images/user3.png';
-import categoriesImage from 'src/assets/images/Categories.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { AccountState, BaseUser, StoreState } from 'src/utils/storeTypes';
+import { AccountState, StoreState } from 'src/utils/storeTypes';
 import { updateUser } from 'src/redux/modules/account/actions';
 import { BiImageAdd } from 'react-icons/bi';
 import FormField from 'src/components/FormField';
@@ -34,7 +32,7 @@ const NFTMarketplaceEditProfile: React.FC = () => {
     (state) => state.account,
   );
   const dispatch = useDispatch();
-  const [localPassword, setLocalPassword] = useState('');
+  // const [localPassword, setLocalPassword] = useState('');
   const [localBio, setLocalBio] = useState<string | undefined>('');
   const [localUsername, setLocalUsername] = useState<string | undefined>('');
   const [localEmail, setLocalEmail] = useState<string>(account.email);
@@ -83,15 +81,15 @@ const NFTMarketplaceEditProfile: React.FC = () => {
     );
   };
 
-  const onImagesSubmit = () => {
-    const formData = new FormData();
-    // if (profileImage) {
-    //   formData.append('profileImage', profileImage);
-    // }
-    // if (coverImage) {
-    //   formData.append('coverImage', coverImage);
-    // }
-  };
+  // const onImagesSubmit = () => {
+  //   const formData = new FormData();
+  //   // if (profileImage) {
+  //   //   formData.append('profileImage', profileImage);
+  //   // }
+  //   // if (coverImage) {
+  //   //   formData.append('coverImage', coverImage);
+  //   // }
+  // };
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

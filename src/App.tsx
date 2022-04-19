@@ -21,7 +21,6 @@ import DecentralizedExchange from './pages/DecentralizedExchange';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfUse from './pages/TermsOfUse';
 import DexDisclaimer from './pages/DexDisclaimer';
-import NotFound from './pages/NotFound';
 import Dashboard from './pages/Dashboard';
 import Header from './components/Header';
 import { StoreState } from './utils/storeTypes';
@@ -39,35 +38,26 @@ import NFTMarketplaceCreateNFT from './pages/NFTMarketplaceCreateNFT';
 import NFTMarketplaceCreateCollection from './pages/NFTMarketplaceCreateCollection';
 import NFTMarketplaceCategory from './pages/NFTMarketplaceCategory';
 import Login from './pages/Login';
-// import Register from './pages/Register';
 import { useCachedResources } from './hooks/useCachedResources';
-// import { addHeaderPayloadToCookies } from './utils/functions/Cookies';
 import { headerPayloadName } from './utils/globals';
 import { setIsLoggedIn } from './redux/modules/account/actions';
 import { addMinutesToCurrentDateTime } from './utils/functions/utils';
 import { addHeaderPayloadToCookies } from './utils/functions/Cookies';
 import NFTMarketplaceViewCollection from './pages/NFTMarketplaceViewCollection';
 import { getHeaderPayloadFromLocalStorage } from './utils/functions/LocalStorage';
+import RequireAuth from './pages/RequireAuth';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO', 'TLLP'];
 export const marketplaceRoutes = ['categories', 'collections'];
 
 const App = () => {
-  const { isLoading, isLoggedIn, isActivated, dispatch } = useCachedResources();
+  const { isLoggedIn, isActivated, dispatch } = useCachedResources();
   const location = useLocation();
   const expiryDate = new Date();
   expiryDate.setTime(expiryDate.getTime() + 30 * 60 * 60 * 1000); //30 minutes
 
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
-  );
-
-  const provider = useSelector<StoreState, Web3Provider | undefined>(
-    (state) => state.globals.provider,
-  );
-
-  const walletAddress = useSelector<StoreState, string | undefined>(
-    (state) => state.account.walletAddress,
   );
 
   const shouldRenderMainHeader = () => {
@@ -77,8 +67,6 @@ const App = () => {
     return true;
   };
 
-  // if (window && document && localStorage) {
-  // }
   addHeaderPayloadToCookies();
 
   if (localStorage.getItem(headerPayloadName)) {
@@ -95,34 +83,49 @@ const App = () => {
     }
   }
 
+  const checkIfIsLoggedIn = () => {
+    if (localStorage.getItem('user')) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       <div className="bg-image"></div>
       <div className="z-10 flex flex-col font-poppins text-white">
-        {localStorage.getItem('user') ? (
-          <>
-            <div className="z-50 flex items-center justify-center space-x-1 text-xs w-full h-8 bg-black bg-opacity-60 drop-shadow-xl shadow-lg">
-              <AiFillLock size={14} color={'#34d399'} />
-              <p>
-                Scam/Phishing verification:{' '}
-                <span className="text-green-400">https://</span>decryption.com
-              </p>
-            </div>
-            {location.pathname.startsWith(routes.nftMarketplace.url) ? (
-              <NFTMarketplaceSidebar />
-            ) : (
-              <Sidebar />
-            )}
+        {/* {localStorage.getItem('user') ? ( */}
+        <>
+          <div className="z-50 flex items-center justify-center space-x-1 text-xs w-full h-8 bg-black bg-opacity-60 drop-shadow-xl shadow-lg">
+            <AiFillLock size={14} color={'#34d399'} />
+            <p>
+              Scam/Phishing verification:{' '}
+              <span className="text-green-400">https://</span>decryption.com
+            </p>
+          </div>
+          {location.pathname.startsWith(routes.nftMarketplace.url) ? (
+            <NFTMarketplaceSidebar />
+          ) : (
+            <Sidebar />
+          )}
 
-            <div className="flex flex-col w-full min-h-screen z-10">
-              {shouldRenderMainHeader() && <Header />}
-              <main
-                className={`flex flex-col transition-all duration-500 ${
-                  isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''
-                } xs:justify-center px-4 mb-auto z-20`}
-              >
-                <Routes>
-                  <Route path="/" element={<Home />} />
+          <div className="flex flex-col w-full min-h-screen z-10">
+            {shouldRenderMainHeader() && <Header />}
+            <main
+              className={`flex flex-col transition-all duration-500 ${
+                isSidebarOpen ? 'xs:ml-0 sm:ml-0 ml-60' : ''
+              } xs:justify-center px-4 mb-auto z-20`}
+            >
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                  element={
+                    <RequireAuth
+                      isAuthenticated={isLoggedIn}
+                      isActivated={isActivated}
+                    />
+                  }
+                >
                   <Route path="/staking/:coinTag" element={<StakeCoin />} />
                   <Route path="/staking" element={<Staking />} />
                   <Route path="/launchpad" element={<Launchpad />} />
@@ -186,33 +189,38 @@ const App = () => {
 
                   {/* <Route path="*" element={<NotFound />} /> */}
                   <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </main>
+                </Route>
+                {/* <Route path="/login" element={<Navigate to="/login" />} /> */}
+                {(!isLoggedIn || !isActivated) && (
+                  <Route path="/login" element={<Login />} />
+                )}
+              </Routes>
+            </main>
 
-              <div className="z-20">
-                <Footer />
-              </div>
+            <div className="z-20">
+              <Footer />
             </div>
+          </div>
 
-            <OpenSidebarButton />
-          </>
-        ) : (
-          // (
-          // )
-          // : isLoading ? (
-          //   <div className="z-10 flex flex-col w-full h-screen items-center justify-center font-poppins text-white">
-          //     <img src={Logo} className="w-40 h-40 animate-bounce opacity-20" />
-          //   </div>
+          <OpenSidebarButton />
+        </>
+        {/* ) : (
+          (
+          )
+          : isLoading ? (
+            <div className="z-10 flex flex-col w-full h-screen items-center justify-center font-poppins text-white">
+              <img src={Logo} className="w-40 h-40 animate-bounce opacity-20" />
+            </div>
           <div className="z-10 flex flex-col font-poppins text-white">
             <Routes>
-              {/* <Route path="/register" element={<Register />} /> */}
+              {/* <Route path="/register" element={<Register />} /> 
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Login />} />
 
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

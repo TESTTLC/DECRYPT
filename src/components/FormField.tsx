@@ -60,7 +60,7 @@ const FormField: React.FC<Props> = (props) => {
             setFieldValue(name, e.target.value);
           }}
           onBlur={() => setFieldTouched(name)}
-          value={values[name]}
+          value={values[name] || ''}
           autoCapitalize={
             name === 'firstName' || name === 'lastName' ? 'words' : 'none'
           }
@@ -77,7 +77,7 @@ const FormField: React.FC<Props> = (props) => {
             setFieldValue(name, e.target.value);
           }}
           onBlur={() => setFieldTouched(name)}
-          value={values[name]}
+          value={values[name] || ''}
           autoCapitalize={
             name === 'firstName' || name === 'lastName' ? 'words' : 'none'
           }

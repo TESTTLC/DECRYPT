@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { ChainsIds } from 'src/utils/types';
 import MetamaskIcon from 'src/assets/svg/MetamaskIcon';
-import { setIsLoggedIn } from 'src/redux/modules/account/actions';
+import { logout, setIsLoggedIn } from 'src/redux/modules/account/actions';
 
 import { useWalletConnector } from '../hooks/useWalletConnector';
 import SMALL_LOGO from '../assets/images/logo.png';
@@ -116,7 +116,9 @@ const Header: React.FC = () => {
   const dispatch = useDispatch();
   const onLogout = () => {
     localStorage.clear();
-    dispatch(setIsLoggedIn(false));
+    dispatch(logout());
+    // dispatch(setIsLoggedIn(false));
+    // dispatch(setIsActivated(false));
   };
 
   const {
@@ -182,7 +184,9 @@ const Header: React.FC = () => {
         </div>
       </div>
       <div
-        className={`grid grid-cols-4 xs:grid-cols-4 sm:grid-cols-4 gap-y-4 items-center transition-all duration-500 gap-x-3 ${
+        className={`grid ${
+          isLoggedIn ? 'grid-cols-4' : 'grid-cols-3'
+        } xs:grid-cols-4 sm:grid-cols-4 gap-y-4 items-center transition-all duration-500 gap-x-3 ${
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
@@ -213,17 +217,18 @@ const Header: React.FC = () => {
             />
           </div>
         </div>
-
-        <div className="col-span-1 sm:col-span-2 md:col-span-2 xs:col-span-2 items-center justify-center">
-          <div className="relative">
-            <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
-            <CustomButton
-              text="Log out"
-              onClick={onLogout}
-              customStyle="w-full text-center"
-            />
+        {isLoggedIn && (
+          <div className="col-span-1 sm:col-span-2 md:col-span-2 xs:col-span-2 items-center justify-center">
+            <div className="relative">
+              <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
+              <CustomButton
+                text="Log out"
+                onClick={onLogout}
+                customStyle="w-full text-center"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

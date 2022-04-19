@@ -1,5 +1,3 @@
-import { STATUS_CODES } from 'http';
-
 import { createSlice } from '@reduxjs/toolkit';
 import { AccountState, ApiStatus } from 'src/utils/storeTypes';
 import { isErrorPayload } from 'src/utils/typeGuards';
@@ -16,9 +14,9 @@ import {
   updateUser,
   getUser,
   activateAccount,
+  setIsActivated,
+  logout,
 } from './actions';
-// import {isErrorPayload} from '@utils/typeGuards';
-// import {ApiStatus, ProfileState} from 'types/store';
 
 const initialState: AccountState = {
   id: 0,
@@ -57,6 +55,12 @@ const accountSlice = createSlice({
     });
     builder.addCase(setIsLoggedIn, (state, action) => {
       return { ...state, isLoggedIn: action.payload };
+    });
+    builder.addCase(setIsActivated, (state, action) => {
+      return { ...state, isLoggedIn: action.payload };
+    });
+    builder.addCase(logout, () => {
+      return { ...initialState };
     });
     builder.addCase(login.fulfilled, (state, action) => {
       return {
@@ -120,9 +124,6 @@ const accountSlice = createSlice({
       const user = action.payload;
       addUserInLocalStorage({ ...state, ...user, password: undefined });
       return { ...state, ...user, password: '', isLoading: false };
-      // const partialUser = action.meta.arg;
-      // addUserInLocalStorage({ ...state, ...partialUser, password: undefined });
-      // return { ...state, ...partialUser, password: '', isLoading: false };
     });
     builder.addCase(updateUser.pending, (state) => {
       return { ...state, isLoading: true };
@@ -142,10 +143,9 @@ const accountSlice = createSlice({
       return { ...state, isLoading: false };
     });
     builder.addCase(activateAccount.fulfilled, (state) => {
-      // return { ...state, isLoading: false, isActivated: true };
       return { ...state, isLoading: false, error: undefined };
     });
-    builder.addCase(activateAccount.pending, (state, action) => {
+    builder.addCase(activateAccount.pending, (state) => {
       return { ...state, isLoading: true, error: undefined };
     });
     builder.addCase(activateAccount.rejected, (state, action) => {
@@ -159,7 +159,6 @@ const accountSlice = createSlice({
         }
       }
       return { ...state, isLoading: false, error };
-      // return { ...state, isLoading: false, isActivated: false };
     });
   },
 });

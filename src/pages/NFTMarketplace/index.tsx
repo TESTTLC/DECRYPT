@@ -23,7 +23,6 @@ const NFTMarketplace: React.FC = () => {
       <div className="grid grid-cols-10 gap-x-2 gap-y-4">
         <div className="col-span-8 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10">
           <MarketplaceHeaderSubHeader />
-          {/* Content */}
           <div className="grid grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full mt-4 gap-y-4 gap-x-4">
             {Array(8)
               .fill(null)
@@ -37,7 +36,6 @@ const NFTMarketplace: React.FC = () => {
                 />
               ))}
           </div>
-          {/* Content */}
         </div>
         <MarketplaceRightSidebar />
       </div>

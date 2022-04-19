@@ -32,10 +32,6 @@ const MarketplaceRightSidebar: React.FC = () => {
       </div> */}
 
       <div className="w-full relative flex flex-col justify-center items-center text-center rounded-xl bg-black bg-opacity-70 space-y-2 px-4 py-2">
-        {/* <img
-          src={cardBackground}
-          className="absolute top-0 bottom-0 left-0 right-0 object-cover w-full h-full"
-        /> */}
         <div className="flex w-full items-center justify-between">
           <p>$4,435</p>
           <ChipIcon />

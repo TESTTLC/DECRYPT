@@ -373,7 +373,6 @@ const DHS: React.FC = () => {
         <div className="col-span-3 xs:col-span-1 sm:col-span-1 md:col-span-1 px-2 flex flex-col justify-center ">
           <div className="grid grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 md:grid-cols-2 justify-between gap-x-3 gap-y-4">
             <DailyInfoComponent />
-            {/* <AnalysisComponent coinTag={'TLC'} /> */}
             <div className="flex" onClick={() => navigate('/launchpad/LSO')}>
               <ProjectElement coinTag={'LSO'} />
             </div>
@@ -501,9 +500,6 @@ const DHS: React.FC = () => {
               <div className="px-2 py-1 text-[#5EFF5A] bg-green-800 bg-opacity-75 rounded-l-lg">
                 Interest 10%
               </div>
-              {/* <span className="px-2 py-1 bg-yellow-900 bg-opacity-75 text-powerYellow rounded-l-lg">
-                  5 stars
-                </span> */}
             </div>
             <div className="flex space-x-8 mt-2 items-center">
               <div className="flex flex-col items-center justify-center">
@@ -557,8 +553,6 @@ const DHS: React.FC = () => {
                         className="mr-2"
                         checked={switchChecked}
                         onChange={() => setSwitchChecked(!switchChecked)}
-                        // onChange={this.handleChange}
-                        // checked={this.state.checked}
                       />
                     </div>
                   </div>
@@ -577,10 +571,6 @@ const DHS: React.FC = () => {
                     </button>
                   </div>
                 </div>
-
-                {/* <span className="px-2 py-1 bg-yellow-900 bg-opacity-75 text-powerYellow rounded-l-lg">
-                  5 stars
-                </span> */}
               </div>
             </div>
             <div className="flex absolute top-4 w-3/4 flex-col h-36 bg-gradient-to-r from-purple-600 to-pink-400 shadow-innerWhite rounded-xl pl-4 z-20 drop-shadow-lg">

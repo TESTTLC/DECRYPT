@@ -18,6 +18,9 @@ export const setAccountData = createAction<Partial<AccountState>>(
 );
 
 export const setIsLoggedIn = createAction<boolean>('account/setIsLoggedIn');
+export const setIsActivated = createAction<boolean>('account/setIsActivated');
+
+export const logout = createAction('account/logout');
 
 export const login = createAsyncThunk<
   BaseUser,

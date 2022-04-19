@@ -21,13 +21,10 @@ const ProjectDetails: React.FC = () => {
   }, [coinTag]);
 
   return project ? (
-    // bg-blockchain bg-cover blur-xl
     <div className="py-4 w-full grid gap-y-4 gap-x-4 md:gap-x-0 sm:gap-x-0 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 grid-cols-7 justify-center ">
       <div className="flex flex-col h-128 col-span-2 lg:col-span-3 xs:col-span-7">
-        {/* <GlowingWrapper customStyles=""> */}
         {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
         <ProjectElement coinTag={coinTag!} showStakingButton />
-        {/* </GlowingWrapper> */}
       </div>
       <div className="flex flex-col col-span-4 md:col-span-5 xs:col-span-7">
         <div className="py-8 xs:py-4 px-10 xs:px-2 flex flex-grow flex-col w-full min-h-[52rem] bg-black bg-opacity-50 relative rounded-md">

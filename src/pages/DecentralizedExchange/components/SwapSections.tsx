@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
-import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { ChainsIds, Project } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
 import usdtLogo from 'src/assets/images/tether.png';
@@ -105,7 +104,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [toUsdtAddress, setToUsdtAddress] = useState<string | undefined>(
     TLC_OwnerAddress,
   );
-  // const [amountToSwap, setamountToSwap] = useState(0);
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
@@ -132,7 +130,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
-    // setAmountToSwap(parseFloat(e.target.value));
     setAmountToSwap(e.target.value);
   };
 
@@ -228,7 +225,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   type="number"
                 ></input>
               </div>
-              {/* <SwapTokensModal tokens={localModalTokens} type="from" /> */}
               <div className="flex w-1/2 justify-end items-center mt-4">
                 {/* <img
               className="text-white font-poppins w-4 h-4 mr-2 object-cover "
@@ -362,14 +358,8 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                             {t.percentage2}%
                           </>
                         ) : (
-                          // `/${t.percentage2}`
                           ''
                         )}
-                        {/* {t.percentage2 ? (
-                        <AiFillLock size={20} color={'yellow'} />
-                      ) : (
-                        ''
-                      )} */}
                       </span>
                     </div>
                   </div>

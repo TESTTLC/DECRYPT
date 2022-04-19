@@ -7,16 +7,7 @@ import {
   setIsLoggedIn,
   setWalletAddress,
 } from 'src/redux/modules/account/actions';
-import {
-  openSidebar,
-  setIsLoading,
-  setProvider,
-} from 'src/redux/modules/globals/actions';
 import { getLSOLaunchpadRegistrationThunk } from 'src/redux/modules/launchpad/actions';
-import {
-  isUserInLocalStorage,
-  addUserInLocalStorage,
-} from 'src/utils/functions/LocalStorage';
 import { headerPayloadName } from 'src/utils/globals';
 import { BaseUser, StoreState } from 'src/utils/storeTypes';
 import Cookies from 'universal-cookie';
@@ -55,34 +46,8 @@ export const useCachedResources = () => {
     } else {
       window.localStorage.clear();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, window.localStorage]);
-
-  // const checkUserData = () => {
-  //   try {
-  //     const localStorageUserItem = window.localStorage.getItem('user');
-  //     const headerPayloadCookie = cookies.get(headerPayloadName);
-  //     const headerpayloadDecoded: { user: Partial<BaseUser> } =
-  //       jwtDecode(headerPayloadCookie);
-  //     console.log('HeaderPayloadDecoded: ', headerpayloadDecoded);
-  //     const headerpayloadUser = headerpayloadDecoded.user;
-  //     const localStorageUser = JSON.parse(localStorageUserItem || '{}');
-  //     if (
-  //       localStorageUser &&
-  //       headerpayloadUser &&
-  //       localStorageUser.id === headerpayloadUser.id
-  //     ) {
-  //       dispatch(setAccountData({ ...localStorageUser }));
-  //     } else {
-  //       window.localStorage.clear();
-  //     }
-  //   } catch (error) {}
-  // };
-
-  // useEffect(() => {
-  //   checkUserData();
-
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [cookies, dispatch, localStorage]);
 
   return { isLoading, isActivated, isLoggedIn, dispatch };
 };
