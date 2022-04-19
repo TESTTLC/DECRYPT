@@ -7,7 +7,7 @@ import maticBridgeImage from '../assets/images/matic-bridge.png';
 
 import { Project } from './types';
 
-export const MarketplaceAddress = '0xaF828bd31483cF8F5515ea44D1A2904f32422A51';
+export const marketplaceAddress = '0xaF828bd31483cF8F5515ea44D1A2904f32422A51';
 
 // /** Mainnet */
 export const TLXTokenContractAddress =
