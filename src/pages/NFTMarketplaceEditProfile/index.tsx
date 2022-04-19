@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AccountState, StoreState } from 'src/utils/storeTypes';
-import { updateUser } from 'src/redux/modules/account/actions';
+import { updatePassword, updateUser } from 'src/redux/modules/account/actions';
 import { BiImageAdd } from 'react-icons/bi';
 import FormField from 'src/components/FormField';
 import { Formik, FormikValues } from 'formik';
@@ -27,6 +27,10 @@ const validationSchema = Yup.object().shape({
   instagram: Yup.string().url('Invalid Instagram URL').nullable(),
 });
 
+const passwordValidationSchema = Yup.object().shape({
+  password: Yup.string().min(6, 'Password must be at least 6 characters'),
+});
+
 const NFTMarketplaceEditProfile: React.FC = () => {
   const account = useSelector<StoreState, AccountState>(
     (state) => state.account,
@@ -42,6 +46,7 @@ const NFTMarketplaceEditProfile: React.FC = () => {
   const [coverImage, setCoverImage] = useState<File>();
   const coverImageRef = createRef<HTMLInputElement>();
   const profileImageRef = createRef<HTMLInputElement>();
+  const [showPasswordField, setShowPasswordField] = useState(false);
 
   useEffect(() => {
     // setLocalPassword(account.password);
@@ -179,139 +184,185 @@ const NFTMarketplaceEditProfile: React.FC = () => {
     }
   };
 
+  const togglePasswordField = () => {
+    setShowPasswordField(!showPasswordField);
+  };
+  const onPasswordSubmit = (values: FormikValues) => {
+    const { password } = values;
+    console.log('Password: ', password);
+    if (password && password !== '') {
+      dispatch(updatePassword(password));
+    }
+  };
+
   return (
     <div className="flex flex-col w-full">
       <MarketplaceHeader />
-      <Formik
-        initialValues={{
-          email: account.email,
-          bio: account.bio,
-          username: account.username,
-          facebook: account.facebook,
-          twitter: account.twitter,
-          instagram: account.instagram,
-        }}
-        enableReinitialize
-        onSubmit={onSubmit}
-        validationSchema={validationSchema}
-      >
-        {({ handleSubmit }) => (
-          <div className="grid grid-cols-10 gap-x-2 gap-y-4 rounded-xl">
-            <div className="grid grid-cols-2 col-span-8 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10 bg-black bg-opacity-70 p-6 rounded-xl">
-              <div className="col-span-1 sm:col-span-2 xs:col-span-2">
-                <p className={titleClass}>Profile Settings</p>
-
-                <p className="mt-6 mb-2">Username*</p>
-                <FormField
-                  name="username"
-                  className={inputClass}
-                  placeholder="johndoe"
-                  // value={localUsername}
-                  // onChange={(e) => setLocalUsername(e.target.value)}
-                />
-
-                <p className="mt-6 mb-2">Email*</p>
-                <FormField
-                  name="email"
-                  className={inputClass}
-                  placeholder="johndoe@example.com"
-                  // value={localEmail}
-                  // onChange={(e) => setLocalEmail(e.target.value)}
-                />
-
-                <p className="mt-6 mb-2">Bio</p>
-                <FormField
-                  name="bio"
-                  className={`${inputClass} rounded-xl min`}
-                  placeholder="Description"
-                  isTextArea
-                  rows={10}
-
-                  // value={localBio}
-                  // onChange={(e) => setLocalBio(e.target.value)}
-                />
-
-                <p className="mt-6">Links</p>
-                <p className="mb-2 text-xs text-gray-400">
-                  Example: https://example.com
-                </p>
-                <div className="flex flex-col space-y-4">
+      <div className="grid grid-cols-10 gap-x-2 gap-y-4 rounded-xl">
+        <div className="grid grid-cols-2 col-span-8 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10 bg-black bg-opacity-70 p-6 rounded-xl">
+          <div className="col-span-1 sm:col-span-2 xs:col-span-2">
+            <p className={titleClass}>Profile Settings</p>
+            <Formik
+              initialValues={{
+                email: account.email,
+                bio: account.bio || '',
+                username: account.username || '',
+                facebook: account.facebook || '',
+                twitter: account.twitter || '',
+                instagram: account.instagram || '',
+              }}
+              enableReinitialize
+              onSubmit={onSubmit}
+              validationSchema={validationSchema}
+            >
+              {({ handleSubmit }) => (
+                <>
+                  <p className="mt-6 mb-2">Username*</p>
                   <FormField
-                    name="facebook"
+                    name="username"
                     className={inputClass}
-                    placeholder="Facebook"
+                    placeholder="johndoe"
+                    // value={localUsername}
+                    // onChange={(e) => setLocalUsername(e.target.value)}
                   />
-                  <FormField
-                    name="twitter"
-                    className={inputClass}
-                    placeholder="Twitter"
-                  />
-                  <FormField
-                    name="instagram"
-                    className={inputClass}
-                    placeholder="Instagram"
-                  />
-                </div>
 
+                  <p className="mt-6 mb-2">Email*</p>
+                  <FormField
+                    name="email"
+                    className={inputClass}
+                    placeholder="johndoe@example.com"
+                    // value={localEmail}
+                    // onChange={(e) => setLocalEmail(e.target.value)}
+                  />
+
+                  <p className="mt-6 mb-2">Bio</p>
+                  <FormField
+                    name="bio"
+                    className={`${inputClass} rounded-xl min`}
+                    placeholder="Description"
+                    isTextArea
+                    rows={10}
+
+                    // value={localBio}
+                    // onChange={(e) => setLocalBio(e.target.value)}
+                  />
+
+                  <p className="mt-6">Links</p>
+                  <p className="mb-2 text-xs text-gray-400">
+                    Example: https://example.com
+                  </p>
+                  <div className="flex flex-col space-y-4">
+                    <FormField
+                      name="facebook"
+                      className={inputClass}
+                      placeholder="Facebook"
+                    />
+                    <FormField
+                      name="twitter"
+                      className={inputClass}
+                      placeholder="Twitter"
+                    />
+                    <FormField
+                      name="instagram"
+                      className={inputClass}
+                      placeholder="Instagram"
+                    />
+                  </div>
+
+                  <button
+                    className="bg-blue-400 w-32 mt-7 rounded-full py-1 text-black text-sm mb-4"
+                    onClick={() => handleSubmit()}
+                    type="submit"
+                  >
+                    {account.isLoading ? 'Updating...' : 'Submit'}
+                  </button>
+                </>
+              )}
+            </Formik>
+          </div>
+
+          <div className="flex flex-col col-span-1 sm:col-span-2 xs:col-span-2 space-y-10">
+            <div>
+              <p className={titleClass}>Profile Image</p>
+              <div className="relative">
                 <button
-                  className="bg-blue-400 w-32 mt-7 rounded-full py-1 text-black text-sm mb-4"
-                  onClick={() => handleSubmit()}
-                  type="submit"
+                  className="flex items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-24 h-24 rounded-full object-cover overflow-hidden"
+                  onClick={() => profileImageRef.current?.click()}
                 >
-                  {account.isLoading ? 'Updating...' : 'Submit'}
+                  {renderProfileImage()}
+                  <input
+                    type="file"
+                    id="file"
+                    ref={profileImageRef}
+                    className="hidden w-full h-full"
+                    accept=".png, .jpg, .jpeg"
+                    onChange={handleProfileImageChange}
+                    // draggable={true}
+                  />
                 </button>
-              </div>
-
-              <div className="flex flex-col col-span-1 sm:col-span-2 xs:col-span-2 space-y-10">
-                <div>
-                  <p className={titleClass}>Profile Image</p>
-                  <div className="relative">
-                    <button
-                      className="flex items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-24 h-24 rounded-full object-cover overflow-hidden"
-                      onClick={() => profileImageRef.current?.click()}
-                    >
-                      {renderProfileImage()}
-                      <input
-                        type="file"
-                        id="file"
-                        ref={profileImageRef}
-                        className="hidden w-full h-full"
-                        accept=".png, .jpg, .jpeg"
-                        onChange={handleProfileImageChange}
-                        // draggable={true}
-                      />
-                    </button>
-                    {/* <img className="absolute right-2 bottom-2 bg-gray-700 rounded-full w-4 h-4" /> */}
-                  </div>
-                </div>
-
-                <div>
-                  <p className={titleClass}>Cover Image</p>
-                  <div className="relative">
-                    <button
-                      className="flex items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-full h-44 rounded-xl object-cover overflow-hidden"
-                      onClick={() => coverImageRef.current?.click()}
-                    >
-                      {renderCoverImage()}
-                      <input
-                        type="file"
-                        id="file"
-                        ref={coverImageRef}
-                        className="hidden w-full h-full"
-                        accept=".png, .jpg, .jpeg"
-                        onChange={handleCoverImageChange}
-                        // draggable={true}
-                      />
-                    </button>
-                  </div>
-                </div>
+                {/* <img className="absolute right-2 bottom-2 bg-gray-700 rounded-full w-4 h-4" /> */}
               </div>
             </div>
 
-            <MarketplaceRightSidebar />
+            <div>
+              <p className={titleClass}>Cover Image</p>
+              <div className="relative">
+                <button
+                  className="flex items-center justify-center bg-transparent border-[1px] border-blue-500 mt-6 w-full h-44 rounded-xl object-cover overflow-hidden"
+                  onClick={() => coverImageRef.current?.click()}
+                >
+                  {renderCoverImage()}
+                  <input
+                    type="file"
+                    id="file"
+                    ref={coverImageRef}
+                    className="hidden w-full h-full"
+                    accept=".png, .jpg, .jpeg"
+                    onChange={handleCoverImageChange}
+                    // draggable={true}
+                  />
+                </button>
+              </div>
+            </div>
+            <div className="flex flex-col items-start">
+              <button
+                onClick={togglePasswordField}
+                className="bg-blue-400 mt-7 rounded-full py-1 text-black text-sm mb-4 px-4"
+              >
+                {showPasswordField ? 'Cancel' : 'Change Password'}
+              </button>
+              <Formik
+                initialValues={{
+                  password: '',
+                }}
+                enableReinitialize
+                onSubmit={onPasswordSubmit}
+                validationSchema={passwordValidationSchema}
+              >
+                {({ handleSubmit }) =>
+                  showPasswordField && (
+                    <>
+                      <FormField
+                        name="password"
+                        className={inputClass}
+                        placeholder="Password"
+                      />
+                      <button
+                        onClick={() => handleSubmit()}
+                        type="submit"
+                        className="bg-blue-400 mt-7 rounded-full py-1 text-black text-sm mb-4 px-4"
+                      >
+                        Submit Password
+                      </button>
+                    </>
+                  )
+                }
+              </Formik>
+            </div>
           </div>
-        )}
-      </Formik>
+        </div>
+        <MarketplaceRightSidebar />
+      </div>
     </div>
   );
 };

@@ -4,10 +4,6 @@ import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
 export const api = axios.create({
   baseURL: process.env.REACT_APP_API_BACKEND,
-  headers: {
-    'Access-Control-Allow-Credentials': true,
-    'Access-Control-Allow-Origin': true,
-  },
 });
 
 export function onRequestSuccess<T = Record<string, unknown>>(

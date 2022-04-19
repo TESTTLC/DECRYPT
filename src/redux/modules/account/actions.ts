@@ -1,6 +1,6 @@
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { activateAccountAPI, loginAPI, registerAPI } from 'src/api/auth';
-import { getUserAPI, updateUserAPI } from 'src/api/user';
+import { getUserAPI, updatePasswordAPI, updateUserAPI } from 'src/api/user';
 import { getHeaderPayloadFromCookies } from 'src/utils/functions/Cookies';
 import { addHeaderPayloadToLocalStorageWithExpiry } from 'src/utils/functions/LocalStorage';
 import { addMinutesToCurrentDateTime } from 'src/utils/functions/utils';
@@ -100,6 +100,23 @@ export const updateUser = createAsyncThunk<BaseUser, FormData, ThunkApi>(
         }
         console.log('Result is: ', result);
         return result.data.user as BaseUser;
+      } catch (error) {
+        console.log('Err: ', error);
+        return thunkAPI.rejectWithValue(error);
+      }
+    } else {
+      return thunkAPI.rejectWithValue('No store found!');
+    }
+  },
+);
+
+export const updatePassword = createAsyncThunk<void, string, ThunkApi>(
+  'account/updatePassword',
+  async (password, thunkAPI) => {
+    const state = thunkAPI.getState();
+    if (isStoreState(state)) {
+      try {
+        await updatePasswordAPI(password, state.account.id);
       } catch (error) {
         console.log('Err: ', error);
         return thunkAPI.rejectWithValue(error);

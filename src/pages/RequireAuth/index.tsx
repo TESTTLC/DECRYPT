@@ -8,7 +8,8 @@ interface Props {
 }
 
 const RequireAuth: React.FC<Props> = ({ isAuthenticated, isActivated }) => {
-  return isAuthenticated && isActivated ? <Outlet /> : <Navigate to="/login" />;
+  // return isAuthenticated && isActivated ? <Outlet /> : <Navigate to="/login" />;
+  return localStorage.getItem('user') ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default RequireAuth;
