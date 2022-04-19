@@ -33,6 +33,7 @@ const initialState: AccountState = {
   apiStatus: ApiStatus.Idle,
   error: undefined,
   passwordError: undefined,
+  isPasswordUpdating: false,
   bio: undefined,
   coverImageUri: undefined,
   profileImageUri: undefined,

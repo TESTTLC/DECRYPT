@@ -35,7 +35,7 @@ const validationSchema = Yup.object().shape({
 const passwordValidationSchema = Yup.object().shape({
   password: Yup.string().min(6, 'Password must be at least 6 characters'),
   passwordConfirmation: Yup.string()
-    .required('Required')
+    .min(6)
     .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
@@ -55,6 +55,7 @@ const NFTMarketplaceEditProfile: React.FC = () => {
   const coverImageRef = createRef<HTMLInputElement>();
   const profileImageRef = createRef<HTMLInputElement>();
   const [showPasswordField, setShowPasswordField] = useState(false);
+  const [passwordDoneUpdating, setPasswordDoneUpdating] = useState(false);
 
   useEffect(() => {
     // setLocalPassword(account.password);
@@ -81,28 +82,8 @@ const NFTMarketplaceEditProfile: React.FC = () => {
       formData.append('coverImage', coverImage);
     }
 
-    dispatch(
-      updateUser(formData),
-      // updateUser({
-      //   username,
-      //   email,
-      //   bio,
-      //   twitter,
-      //   facebook,
-      //   instagram,
-      // }),
-    );
+    dispatch(updateUser(formData));
   };
-
-  // const onImagesSubmit = () => {
-  //   const formData = new FormData();
-  //   // if (profileImage) {
-  //   //   formData.append('profileImage', profileImage);
-  //   // }
-  //   // if (coverImage) {
-  //   //   formData.append('coverImage', coverImage);
-  //   // }
-  // };
 
   const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -195,7 +176,7 @@ const NFTMarketplaceEditProfile: React.FC = () => {
   const togglePasswordField = () => {
     setShowPasswordField(!showPasswordField);
   };
-  const onPasswordSubmit = (values: FormikValues) => {
+  const onPasswordSubmit = async (values: FormikValues) => {
     const { password, passwordConfirmation } = values;
     console.log('Password: ', password);
     if (
@@ -206,9 +187,17 @@ const NFTMarketplaceEditProfile: React.FC = () => {
       password === passwordConfirmation
     ) {
       console.log('Done');
-      const result = dispatch(updatePassword(password));
-      console.log('Result: ', result);
+      const result = await dispatch(updatePassword(password));
+      //@ts-ignore
+      if (result.meta.requestStatus === 'fulfilled') {
+        setPasswordDoneUpdating(true);
+        setShowPasswordField(false);
+      }
     }
+  };
+
+  const handlePasswordChange = () => {
+    dispatch(setPasswordError(undefined));
   };
 
   return (
@@ -363,14 +352,14 @@ const NFTMarketplaceEditProfile: React.FC = () => {
                         className={inputClass}
                         placeholder="Password"
                         isPassword
-                        onChange={() => dispatch(setPasswordError(undefined))}
+                        onChange={handlePasswordChange}
                       />
                       <FormField
                         name="passwordConfirmation"
                         className={`${inputClass} mt-4`}
                         placeholder="Password confirmation"
                         isPassword
-                        onChange={() => dispatch(setPasswordError(undefined))}
+                        onChange={handlePasswordChange}
                       />
                       {account.passwordError && (
                         <ErrorMessage
@@ -384,7 +373,9 @@ const NFTMarketplaceEditProfile: React.FC = () => {
                         type="submit"
                         className="bg-blue-400 mt-7 rounded-full py-1 text-black text-sm mb-4 px-4"
                       >
-                        Submit Password
+                        {account.isPasswordUpdating
+                          ? 'Updating...'
+                          : 'Submit Password'}
                       </button>
                     </>
                   )

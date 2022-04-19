@@ -14,7 +14,10 @@ import './index.css';
 import store from './redux/store';
 
 // replace console.* for disable log on production
-if (process.env.REACT_APP_NODE_ENV === 'production') {
+if (
+  process.env.REACT_APP_NODE_ENV === 'production' ||
+  process.env.REACT_APP_NODE_ENV === 'staging'
+) {
   console.log = () => {};
   console.error = () => {};
   console.debug = () => {};

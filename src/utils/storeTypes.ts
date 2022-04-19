@@ -33,6 +33,7 @@ export interface AccountState extends BaseUser {
   isLoggedIn: boolean;
   isLoading: boolean;
   isActivated: boolean;
+  isPasswordUpdating: boolean;
   apiStatus: ApiStatus;
   error?: string;
   passwordError?: string;

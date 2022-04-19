@@ -1,6 +1,4 @@
 import React from 'react';
-import nftMarketplaceImage from 'src/assets/images/nft_1.png';
-import { useNavigate } from 'react-router-dom';
 import image1 from 'src/assets/images/nft_image_1.png';
 import image2 from 'src/assets/images/nft_image_2.png';
 import image3 from 'src/assets/images/nft_image_3.png';
@@ -9,6 +7,12 @@ import image5 from 'src/assets/images/nft_image_5.png';
 import image6 from 'src/assets/images/nft_image_6.png';
 import image7 from 'src/assets/images/nft_image_7.png';
 import image8 from 'src/assets/images/nft_image_8.png';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+import { Web3Provider } from '@ethersproject/providers';
+import { marketplaceAddress } from 'src/utils/globals';
+
+import { ThirdwebSDK } from '../../../thirdweb-dev/sdk';
 
 import NFTItem from './components/NFTItem';
 import MarketplaceRightSidebar from './components/MarketplaceRightSidebar';
@@ -17,6 +21,21 @@ import MarketplaceHeaderSubHeader from './components/MarketplaceSubHeader';
 
 const images = [image1, image2, image3, image4, image5, image6, image7, image8];
 const NFTMarketplace: React.FC = () => {
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider,
+  );
+
+  // const getItems = async () => {
+  //   if (provider) {
+  //     const sdk = new ThirdwebSDK(provider.getSigner());
+  //     const marketplaceContract = sdk.getMarketplace(marketplaceAddress);
+  //     const listings = await marketplaceContract.getActiveListings();
+  //     listings.map((listing) => {
+  //       console.log('Listings: ', listing);
+  //     });
+  //     marketplaceContract.auction.createListing
+  //   }
+  // };
   return (
     <div className="w-full flex flex-col">
       <MarketplaceHeader />
