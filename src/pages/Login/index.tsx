@@ -51,7 +51,6 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleLogin = (values: FormikValues) => {
-    console.log('here');
     const { email, password } = values;
     if (email && password) {
       dispatch(login({ email, password }));
@@ -59,7 +58,6 @@ const Login = () => {
   };
 
   const handleRegister = (values: FormikValues) => {
-    console.log('here2');
     const { email, password, passwordConfirmation } = values;
     if (email && password && passwordConfirmation) {
       dispatch(register({ email, password }));
@@ -76,7 +74,6 @@ const Login = () => {
   };
 
   const handleAccountActivation = (values: FormikValues) => {
-    console.log('values: ', values.activationCode);
     const { activationCode } = values;
     if (activationCode) {
       dispatch(activateAccount({ email: accountEmail, activationCode }));
@@ -148,8 +145,6 @@ const Login = () => {
                   <button
                     className="mt-6 px-6 w-40 py-1 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg xs:text-sm"
                     onClick={() => {
-                      // console.log('here: ', handleSubmit());
-                      // console.log('showActivationForm: ', showActivationForm);
                       handleSubmit();
                     }}
                     type="submit"

@@ -16,6 +16,8 @@ import {
   activateAccount,
   setIsActivated,
   logout,
+  updatePassword,
+  setPasswordError,
 } from './actions';
 
 const initialState: AccountState = {
@@ -30,6 +32,7 @@ const initialState: AccountState = {
   isLoading: false,
   apiStatus: ApiStatus.Idle,
   error: undefined,
+  passwordError: undefined,
   bio: undefined,
   coverImageUri: undefined,
   profileImageUri: undefined,
@@ -131,7 +134,27 @@ const accountSlice = createSlice({
     builder.addCase(updateUser.rejected, (state) => {
       return { ...state, isLoading: false };
     });
-
+    builder.addCase(updatePassword.fulfilled, (state) => {
+      return { ...state, isPasswordUpdating: false, passwordError: undefined };
+    });
+    builder.addCase(updatePassword.pending, (state) => {
+      return { ...state, isPasswordUpdating: true, passwordError: undefined };
+    });
+    builder.addCase(updatePassword.rejected, (state, action) => {
+      let passwordError;
+      if (isErrorPayload(action.payload)) {
+        const { message } = action.payload;
+        if (message.includes('401')) {
+          passwordError = 'Unauthorized';
+        } else {
+          passwordError = 'Something went wrong. Please try again!';
+        }
+      }
+      return { ...state, isPasswordUpdating: false, passwordError };
+    });
+    builder.addCase(setPasswordError, (state, action) => {
+      return { ...state, passwordError: action.payload };
+    });
     builder.addCase(getUser.fulfilled, (state, action) => {
       const user = action.payload;
       return { ...state, ...user, password: '' };
@@ -155,7 +178,7 @@ const accountSlice = createSlice({
         if (message.includes('401')) {
           error = 'Wrong activation code';
         } else if (message.includes('500')) {
-          error = 'Something went wrong';
+          error = 'Something went wrong. Please try again!';
         }
       }
       return { ...state, isLoading: false, error };

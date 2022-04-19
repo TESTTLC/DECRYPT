@@ -7,9 +7,11 @@ interface Props {
 }
 
 const ErrorMessage: React.FC<Props> = ({ error, isVisible, customStyles }) => {
-  if (!isVisible || !error) return null;
+  // if (!isVisible || !error) return null;
 
-  return <p className={`text-red-500 ${customStyles}`}>{error}</p>;
+  return isVisible && error ? (
+    <p className={`text-red-500 ${customStyles}`}>{error}</p>
+  ) : null;
 };
 
 export default ErrorMessage;

@@ -35,6 +35,7 @@ export interface AccountState extends BaseUser {
   isActivated: boolean;
   apiStatus: ApiStatus;
   error?: string;
+  passwordError?: string;
 }
 
 export interface Category {

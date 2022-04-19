@@ -1,12 +1,17 @@
 import { createRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AccountState, StoreState } from 'src/utils/storeTypes';
-import { updatePassword, updateUser } from 'src/redux/modules/account/actions';
+import {
+  setPasswordError,
+  updatePassword,
+  updateUser,
+} from 'src/redux/modules/account/actions';
 import { BiImageAdd } from 'react-icons/bi';
 import FormField from 'src/components/FormField';
 import { Formik, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { getImageBucketUrl } from 'src/utils/functions/Image';
+import ErrorMessage from 'src/components/ErrorMessage';
 
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
 import MarketplaceRightSidebar from '../NFTMarketplace/components/MarketplaceRightSidebar';
@@ -29,6 +34,9 @@ const validationSchema = Yup.object().shape({
 
 const passwordValidationSchema = Yup.object().shape({
   password: Yup.string().min(6, 'Password must be at least 6 characters'),
+  passwordConfirmation: Yup.string()
+    .required('Required')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
 });
 
 const NFTMarketplaceEditProfile: React.FC = () => {
@@ -188,10 +196,18 @@ const NFTMarketplaceEditProfile: React.FC = () => {
     setShowPasswordField(!showPasswordField);
   };
   const onPasswordSubmit = (values: FormikValues) => {
-    const { password } = values;
+    const { password, passwordConfirmation } = values;
     console.log('Password: ', password);
-    if (password && password !== '') {
-      dispatch(updatePassword(password));
+    if (
+      password &&
+      password !== '' &&
+      passwordConfirmation &&
+      passwordConfirmation !== '' &&
+      password === passwordConfirmation
+    ) {
+      console.log('Done');
+      const result = dispatch(updatePassword(password));
+      console.log('Result: ', result);
     }
   };
 
@@ -346,7 +362,23 @@ const NFTMarketplaceEditProfile: React.FC = () => {
                         name="password"
                         className={inputClass}
                         placeholder="Password"
+                        isPassword
+                        onChange={() => dispatch(setPasswordError(undefined))}
                       />
+                      <FormField
+                        name="passwordConfirmation"
+                        className={`${inputClass} mt-4`}
+                        placeholder="Password confirmation"
+                        isPassword
+                        onChange={() => dispatch(setPasswordError(undefined))}
+                      />
+                      {account.passwordError && (
+                        <ErrorMessage
+                          error={account.passwordError}
+                          isVisible={account.passwordError ? true : false}
+                          customStyles="mt-2"
+                        />
+                      )}
                       <button
                         onClick={() => handleSubmit()}
                         type="submit"

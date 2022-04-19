@@ -10,17 +10,16 @@ import { isStoreState } from 'src/utils/typeGuards';
 export const setWalletAddress = createAction<string | undefined>(
   'account/setWalletAddress',
 );
-
 export const setTotalPower = createAction<number>('account/setTotalPower');
-
 export const setAccountData = createAction<Partial<AccountState>>(
   'account/setAccountData',
 );
-
 export const setIsLoggedIn = createAction<boolean>('account/setIsLoggedIn');
 export const setIsActivated = createAction<boolean>('account/setIsActivated');
-
 export const logout = createAction('account/logout');
+export const setPasswordError = createAction<string | undefined>(
+  'account/setPasswordError',
+);
 
 export const login = createAsyncThunk<
   BaseUser,

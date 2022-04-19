@@ -14,6 +14,7 @@ interface Props {
   minLength?: number;
   isTextArea?: boolean;
   rows?: number;
+  onChange?: () => void;
 }
 
 const FormField: React.FC<Props> = (props) => {
@@ -28,6 +29,7 @@ const FormField: React.FC<Props> = (props) => {
     minLength,
     isTextArea,
     rows,
+    onChange,
   } = props;
   const {
     setFieldTouched,
@@ -58,6 +60,7 @@ const FormField: React.FC<Props> = (props) => {
           readOnly={readOnly ? true : false}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
             setFieldValue(name, e.target.value);
+            onChange && onChange();
           }}
           onBlur={() => setFieldTouched(name)}
           value={values[name] || ''}
@@ -75,6 +78,7 @@ const FormField: React.FC<Props> = (props) => {
           readOnly={readOnly ? true : false}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             setFieldValue(name, e.target.value);
+            onChange && onChange();
           }}
           onBlur={() => setFieldTouched(name)}
           value={values[name] || ''}
