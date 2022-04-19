@@ -5,9 +5,9 @@ export const updateUserAPI = async (userData: FormData, userId: number) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return patchRequest(url, userData, {
     withCredentials: true,
-    headers: {
-      'Access-Control-Allow-Credentials': true,
-    },
+    // headers: {
+    //   'Access-Control-Allow-Credentials': true,
+    // },
   });
 };
 
