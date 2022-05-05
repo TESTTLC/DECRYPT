@@ -12,28 +12,28 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
     <path
       d="M16.8407 20.1637V6.5459"
       stroke="white"
-      stroke-width="2"
+      strokeWidth="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
     <path
       d="M20.9173 16.0674L16.8395 20.164L12.7617 16.0674"
       stroke="white"
-      stroke-width="2"
+      strokeWidth="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
     <path
       d="M6.91102 3.83301V17.4508"
       stroke="white"
-      stroke-width="2"
+      strokeWidth="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
     <path
       d="M2.83398 7.9287L6.91176 3.83203L10.9895 7.9287"
       stroke="white"
-      stroke-width="2"
+      strokeWidth="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />

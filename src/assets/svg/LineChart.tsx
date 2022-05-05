@@ -50,12 +50,12 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
       <path
         d="M118.722 129.131C84.6633 147.085 61 212 61 212L353 213V57C338.628 72.9486 326.026 81.3126 306.441 88.7189C288.283 95.5855 276.09 90.1333 257.45 95.3689C233.696 102.041 223.879 115.985 200.212 122.992C169.495 132.086 147.261 114.087 118.722 129.131Z"
         stroke="url(#paint1_linear_29462_5112)"
-        stroke-width="4"
+        strokeWidth="4"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
     </g>
-    <line x1="178" y1="134" x2="178" y2="209" stroke="white" stroke-width="2" />
+    <line x1="178" y1="134" x2="178" y2="209" stroke="white" strokeWidth="2" />
     <g filter="url(#filter0_dd_29462_5112)">
       <rect
         x="168"
@@ -72,13 +72,13 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         height="16"
         rx="8"
         stroke="white"
-        stroke-width="4"
+        strokeWidth="4"
       />
     </g>
     <g filter="url(#filter1_ddi_29462_5112)">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M180.421 111.602C179.181 113.466 177.171 113.466 175.931 111.602L174.015 108.863C173.141 107.614 172.704 106.989 172.136 106.537C171.634 106.137 171.059 105.838 170.443 105.655C169.748 105.449 168.985 105.449 167.46 105.449H137.47C133.134 105.449 131.561 104.923 129.976 103.936C128.391 102.949 127.147 101.5 126.299 99.6546C125.451 97.8088 125 95.9779 125 90.929V53.52C125 48.4711 125.451 46.6402 126.299 44.7944C127.147 42.9486 128.391 41.5 129.976 40.5128C131.561 39.5257 133.134 39 137.47 39H219.53C223.866 39 225.439 39.5257 227.024 40.5128C228.609 41.5 229.853 42.9486 230.701 44.7944C231.549 46.6402 232 48.4711 232 53.52V90.929C232 95.9779 231.549 97.8088 230.701 99.6546C229.853 101.5 228.609 102.949 227.024 103.936C225.439 104.923 223.866 105.449 219.53 105.449H192.235C189.991 105.449 188.869 105.449 187.828 105.673C186.071 106.052 184.448 106.897 183.13 108.12C182.35 108.845 181.707 109.764 180.421 111.602V111.602Z"
         fill="#171726"
       />
@@ -133,9 +133,9 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         width="30.6667"
         height="30.6667"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -184,9 +184,9 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         width="115"
         height="85"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -254,8 +254,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="213"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#CF21FE" />
-        <stop offset="1" stop-color="#05050F" />
+        <stop stopColor="#CF21FE" />
+        <stop offset="1" stopColor="#05050F" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_29462_5112"
@@ -265,8 +265,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="96.4551"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#E323FF" />
-        <stop offset="1" stop-color="#7517F8" />
+        <stop stopColor="#E323FF" />
+        <stop offset="1" stopColor="#7517F8" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_29462_5112"
@@ -276,8 +276,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="120.017"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#E323FF" />
-        <stop offset="1" stop-color="#7517F8" />
+        <stop stopColor="#E323FF" />
+        <stop offset="1" stopColor="#7517F8" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_29462_5112"
@@ -287,8 +287,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="230.024"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#E323FF" />
-        <stop offset="1" stop-color="#7517F8" />
+        <stop stopColor="#E323FF" />
+        <stop offset="1" stopColor="#7517F8" />
       </linearGradient>
       <clipPath id="clip0_29462_5112">
         <rect

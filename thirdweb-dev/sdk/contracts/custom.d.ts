@@ -2,7 +2,7 @@ import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractPrimarySale, ContractRoles, ContractRoyalty, IStorage, NetworkOrSignerOrProvider } from "../core";
 import { SDKOptions } from "../schema/sdk-options";
 import { ContractWrapper } from "../core/classes/contract-wrapper";
-import { AccessControlEnumerable, IThirdwebContract, IThirdwebPrimarySale, IThirdwebRoyalty } from "@thirdweb-dev/contracts";
+import { AccessControlEnumerable, IThirdwebContract, IThirdwebPrimarySale, IThirdwebRoyalty } from "../@custom-thirdweb-dev/contracts";
 import { UpdateableNetwork } from "../core/interfaces/contract";
 import { BaseContract, ContractInterface } from "ethers";
 /**

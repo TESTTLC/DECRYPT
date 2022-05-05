@@ -1,5 +1,5 @@
 import { UpdateableNetwork } from "../core/interfaces/contract";
-import { Split as SplitContract, Split__factory } from "@thirdweb-dev/contracts";
+import { Split as SplitContract, Split__factory } from "../@custom-thirdweb-dev/contracts";
 import { ContractWrapper } from "../core/classes/contract-wrapper";
 import { IStorage, NetworkOrSignerOrProvider, TransactionResult } from "../core";
 import { ContractMetadata } from "../core/classes/contract-metadata";

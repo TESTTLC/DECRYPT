@@ -1,5 +1,5 @@
 import { ContractWrapper } from "./contract-wrapper";
-import { IMarketplace, Marketplace } from "@thirdweb-dev/contracts";
+import { IMarketplace, Marketplace } from "../../@custom-thirdweb-dev/contracts";
 import { IStorage } from "../interfaces";
 import { BigNumberish } from "ethers";
 import { AuctionListing, NewAuctionListing, Offer } from "../../types/marketplace";

@@ -4,7 +4,7 @@ import { IStorage, NetworkOrSignerOrProvider, TransactionResult, TransactionResu
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractEncoder } from "../core/classes/contract-encoder";
 import { SDKOptions } from "../schema/sdk-options";
-import { Pack as PackContract, Pack__factory } from "@thirdweb-dev/contracts";
+import { Pack as PackContract, Pack__factory } from "../@custom-thirdweb-dev/contracts";
 import { ContractRoles } from "../core/classes/contract-roles";
 import { NFTMetadata } from "../schema/tokens/common";
 import { BigNumber, BigNumberish, BytesLike } from "ethers";

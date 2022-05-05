@@ -1,7 +1,7 @@
 import { IStorage } from "../interfaces/IStorage";
 import { DropErc721ContractSchema } from "../../schema/contracts/drop-erc721";
 import { ContractMetadata } from "./contract-metadata";
-import { DropERC1155 } from "@thirdweb-dev/contracts";
+import { DropERC1155 } from "../../@custom-thirdweb-dev/contracts";
 import { BigNumberish } from "ethers";
 import { ContractWrapper } from "./contract-wrapper";
 import { ClaimCondition, ClaimConditionInput } from "../../types";

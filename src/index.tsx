@@ -27,11 +27,16 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <CookiesProvider>
-        <ThirdwebProvider desiredChainId={ChainId.TLChain}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </ThirdwebProvider>
+        {/* <ThirdwebProvider
+          desiredChainId={ChainId.TLChain}
+          sdkOptions={{
+            gasSettings: { maxPriceInGwei: 500, speed: 'fast' },
+          }}
+        > */}
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+        {/* </ThirdwebProvider> */}
       </CookiesProvider>
     </Provider>
   </React.StrictMode>,

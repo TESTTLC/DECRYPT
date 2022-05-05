@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import { Collection, StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { Path, useLocation, useParams } from 'react-router-dom';
+import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
 
 import { ThirdwebSDK } from '../../../thirdweb-dev/sdk';
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
@@ -26,7 +27,7 @@ interface Props {
   imageSource: string;
   collectionId?: number;
   collectionName?: string;
-  contractAddress?: string;
+  contractAddress: string;
   ownerAddress: string;
 }
 
@@ -37,24 +38,15 @@ interface CustomLocation extends Path {
   key: Key;
 }
 
-const NFTMarketplaceViewCollection: React.FC = (
-  {
-    // name,
-    // description,
-    // imageSource,
-    // collectionId,
-    // collectionName,
-    // collectionAddress,
-    // ownerAddress,
-  },
-) => {
+const NFTMarketplaceViewCollection: React.FC = () => {
+  const { sdk } = useMarketplaceSDK();
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
   );
-  const { contractAddress: routeContractAddress } = useParams();
+  const { contractAddress } = useParams();
   const { state } = useLocation() as CustomLocation;
 
   const [collection, setCollection] = useState<Collection>();
@@ -62,23 +54,29 @@ const NFTMarketplaceViewCollection: React.FC = (
   const [nfts, setNfts] = useState<any[]>([]);
 
   const getCollection = useCallback(async () => {
-    if (provider && routeContractAddress) {
-      const sdk = new ThirdwebSDK(provider.getSigner());
-      const collectionContract = sdk.getNFTCollection(routeContractAddress);
-      const localNfts = await collectionContract.getAll();
-      setNfts(localNfts);
+    if (provider && contractAddress) {
+      try {
+        const collectionContract = sdk?.getNFTCollection(contractAddress);
+        const localNfts = await collectionContract?.getAll();
+        setNfts(localNfts || nfts);
 
-      const localCollection = await collectionContract.metadata.get();
-      setCollection({
-        ...localCollection,
-        //@ts-ignore
-        logoImageUri: localCollection.image,
-        contractAddress: routeContractAddress,
-        ownerAddress: '0x00',
-        id: 0,
-      });
+        const collectionAddress = collectionContract?.getAddress();
+
+        const localCollection = await collectionContract?.metadata.get();
+        setCollection({
+          ...localCollection,
+          //@ts-ignore
+          logoImageUri: localCollection.image,
+          contractAddress,
+          ownerAddress: '0x00',
+          id: 0,
+          collectionAddress,
+        });
+      } catch (error) {
+        console.log('Err: ', error);
+      }
     }
-  }, [provider, routeContractAddress]);
+  }, [provider, contractAddress, sdk, nfts]);
 
   useEffect(() => {
     getCollection();
@@ -95,7 +93,7 @@ const NFTMarketplaceViewCollection: React.FC = (
             categories={categories}
           /> */}
           <div className="flex">
-            {collection && nfts.length > 0 && (
+            {collection && nfts.length > 0 ? (
               // <img
               //   src={collection.logoImageUri}
               //   className="w-80 h-80 object-cover rounded-xl"
@@ -104,15 +102,21 @@ const NFTMarketplaceViewCollection: React.FC = (
               <div className="grid grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full mt-4 gap-y-4 gap-x-4">
                 {nfts.map((item, index) => (
                   <NFTItem
+                    key={`${item.metadata.id}-${index}`}
                     imageSource={item.metadata.image}
                     title={item.metadata.name}
                     price={66565}
                     collectionName={collection.name}
                     timeLeft="2 days left"
                     description={item.metadata.description}
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                    contractAddress={contractAddress ?? ''}
+                    id={item.metadata.id.toString()}
                   />
                 ))}
               </div>
+            ) : (
+              <div>No items found</div>
             )}
           </div>
           {/* <div className="grid grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-7 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full gap-y-4 gap-x-4"></div> */}

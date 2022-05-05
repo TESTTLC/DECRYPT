@@ -1,5 +1,5 @@
 import { Erc1155 } from "../core/classes/erc-1155";
-import { TokenERC1155, TokenERC1155__factory } from "@thirdweb-dev/contracts";
+import { TokenERC1155, TokenERC1155__factory } from "../@custom-thirdweb-dev/contracts";
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractRoles } from "../core/classes/contract-roles";
 import { ContractRoyalty } from "../core/classes/contract-royalty";

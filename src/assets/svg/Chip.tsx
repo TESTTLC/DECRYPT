@@ -35,7 +35,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         rx="3.60924"
         fill="url(#paint1_linear_30128_3868)"
         stroke="url(#paint2_linear_30128_3868)"
-        stroke-width="0.248913"
+        strokeWidth="0.248913"
       />
     </mask>
     <g mask="url(#mask0_30128_3868)">
@@ -47,7 +47,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         rx="0.933424"
         fill="url(#paint3_linear_30128_3868)"
         stroke="#9B9B9B"
-        stroke-width="0.622283"
+        strokeWidth="0.622283"
       />
       <g filter="url(#filter1_i_30128_3868)">
         <rect
@@ -66,7 +66,7 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         height="11.7583"
         rx="2.17799"
         stroke="url(#paint5_linear_30128_3868)"
-        stroke-width="0.622283"
+        strokeWidth="0.622283"
       />
       <g filter="url(#filter2_i_30128_3868)">
         <rect
@@ -85,13 +85,13 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         height="11.7583"
         rx="2.17799"
         stroke="url(#paint7_linear_30128_3868)"
-        stroke-width="0.622283"
+        strokeWidth="0.622283"
       />
     </g>
-    <path d="M16 8.97594V0" stroke="#9B9B9B" stroke-width="0.622283" />
-    <path d="M16 25.9994V17.333" stroke="#9B9B9B" stroke-width="0.622283" />
-    <path d="M11.9374 13H1" stroke="#9B9B9B" stroke-width="0.622283" />
-    <path d="M30.9999 13H19.75" stroke="#9B9B9B" stroke-width="0.622283" />
+    <path d="M16 8.97594V0" stroke="#9B9B9B" strokeWidth="0.622283" />
+    <path d="M16 25.9994V17.333" stroke="#9B9B9B" strokeWidth="0.622283" />
+    <path d="M11.9374 13H1" stroke="#9B9B9B" strokeWidth="0.622283" />
+    <path d="M30.9999 13H19.75" stroke="#9B9B9B" strokeWidth="0.622283" />
     <defs>
       <filter
         id="filter0_di_30128_3868"
@@ -100,9 +100,9 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         width="31.2446"
         height="27.2436"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -152,9 +152,9 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         width="30"
         height="13.6254"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend
           mode="normal"
           in="SourceGraphic"
@@ -187,9 +187,9 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         width="30"
         height="13.6254"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend
           mode="normal"
           in="SourceGraphic"
@@ -223,8 +223,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="26.0003"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#EBE9ED" />
-        <stop offset="1" stop-color="#C8C7CE" />
+        <stop stopColor="#EBE9ED" />
+        <stop offset="1" stopColor="#C8C7CE" />
       </linearGradient>
       <linearGradient
         id="paint1_linear_30128_3868"
@@ -234,8 +234,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="25.9993"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#EBE9ED" />
-        <stop offset="1" stop-color="#C8C7CE" />
+        <stop stopColor="#EBE9ED" />
+        <stop offset="1" stopColor="#C8C7CE" />
       </linearGradient>
       <linearGradient
         id="paint2_linear_30128_3868"
@@ -245,8 +245,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="25.9993"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#C9CACC" />
-        <stop offset="1" stop-color="#A0A6A6" />
+        <stop stopColor="#C9CACC" />
+        <stop offset="1" stopColor="#A0A6A6" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_30128_3868"
@@ -256,8 +256,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="17.3324"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#EBE9ED" />
-        <stop offset="1" stop-color="#C8C7CE" />
+        <stop stopColor="#EBE9ED" />
+        <stop offset="1" stopColor="#C8C7CE" />
       </linearGradient>
       <linearGradient
         id="paint4_linear_30128_3868"
@@ -267,8 +267,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="19.1892"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#EBE9ED" />
-        <stop offset="1" stop-color="#C8C7CE" />
+        <stop stopColor="#EBE9ED" />
+        <stop offset="1" stopColor="#C8C7CE" />
       </linearGradient>
       <linearGradient
         id="paint5_linear_30128_3868"
@@ -278,8 +278,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="19.1892"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#A9A9A9" />
-        <stop offset="1" stop-color="#8A8A8A" />
+        <stop stopColor="#A9A9A9" />
+        <stop offset="1" stopColor="#8A8A8A" />
       </linearGradient>
       <linearGradient
         id="paint6_linear_30128_3868"
@@ -289,8 +289,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="19.1892"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#EBE9ED" />
-        <stop offset="1" stop-color="#C8C7CE" />
+        <stop stopColor="#EBE9ED" />
+        <stop offset="1" stopColor="#C8C7CE" />
       </linearGradient>
       <linearGradient
         id="paint7_linear_30128_3868"
@@ -300,8 +300,8 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
         y2="19.1892"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#A9A9A9" />
-        <stop offset="1" stop-color="#8A8A8A" />
+        <stop stopColor="#A9A9A9" />
+        <stop offset="1" stopColor="#8A8A8A" />
       </linearGradient>
     </defs>
   </svg>

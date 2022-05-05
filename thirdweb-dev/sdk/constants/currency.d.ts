@@ -3,7 +3,7 @@ import { NativeToken } from "../types/currency";
 /**
  * @public
  */
-export declare const NATIVE_TOKEN_ADDRESS = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+export declare const NATIVE_TOKEN_ADDRESS = "0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6";
 /**
  * @public
  */

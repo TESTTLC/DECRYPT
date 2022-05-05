@@ -39,6 +39,8 @@ const NFTMarketplaceCategory: React.FC = () => {
                   price={66565}
                   timeLeft="2 days left"
                   collectionName="Crypto Walk Of Fame"
+                  id={index.toString()}
+                  contractAddress={''}
                 />
               ))}
           </div>

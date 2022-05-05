@@ -1,4 +1,4 @@
-import { TWFactory } from "@thirdweb-dev/contracts";
+import { TWFactory } from "../../@custom-thirdweb-dev/contracts";
 import { z } from "zod";
 import { SDKOptions } from "../../schema/sdk-options";
 import { IStorage } from "../interfaces/IStorage";

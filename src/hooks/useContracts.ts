@@ -13,6 +13,7 @@ import LuxandiaStake from '../contracts/LuxandiaStake.json';
 import LuxandiaFreeze from '../contracts/LuxandiaFreeze.json';
 import TheLuxuryLiquidityPoolToken from '../contracts/TheLuxuryLiquidityPoolToken.json';
 import TheLuxuryLiquidityPoolStake from '../contracts/TheLuxuryLiquidityPoolStake.json';
+import TheLuxuryNFT from '../contracts/TheLuxuryNFT.json';
 import OldTLXToken from '../contracts/OldTLXToken.json';
 import {
   LussoStakeContractAddress,
@@ -25,6 +26,7 @@ import {
   LussoFreezeContractAddress,
   TLLPTokenContractAddress,
   TLLPStakeContractAddress,
+  TLNFTTokenContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -81,6 +83,11 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setStakeAddress(TLLPStakeContractAddress);
       setTokenAbi(TheLuxuryLiquidityPoolToken.abi);
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi);
+    } else if (coinTag === 'TLNFT') {
+      setTokenAddress(TLNFTTokenContractAddress);
+      setStakeAddress('');
+      setTokenAbi(TheLuxuryNFT.abi);
+      // setStakeAbi(TheLuxuryLiquidityPoolStake.abi);
     }
   }, [coinTag, currentChainId]);
 

@@ -1,4 +1,4 @@
-import { IThirdwebContract } from "@thirdweb-dev/contracts";
+import { IThirdwebContract } from "../../@custom-thirdweb-dev/contracts";
 import { z } from "zod";
 import { IStorage } from "../interfaces/IStorage";
 import { ContractWrapper } from "./contract-wrapper";

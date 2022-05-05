@@ -1,6 +1,6 @@
 import { BigNumberish } from "ethers";
 import { ContractWrapper } from "./contract-wrapper";
-import { DropERC721 } from "@thirdweb-dev/contracts";
+import { DropERC721 } from "../../@custom-thirdweb-dev/contracts";
 import { NFTMetadataInput } from "../../schema/tokens/common";
 import { IStorage, TransactionResult, TransactionResultWithId } from "../index";
 import { BatchToReveal } from "../../types/delayed-reveal";

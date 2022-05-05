@@ -2,7 +2,7 @@ import { BigNumberish, BytesLike } from "ethers";
 import { ClaimCondition, ClaimConditionInput, ClaimVerification } from "../types";
 import { ContractWrapper } from "../core/classes/contract-wrapper";
 import { IStorage } from "../core";
-import { IDropClaimCondition } from "@thirdweb-dev/contracts/dist/IDropERC1155";
+import { IDropClaimCondition } from "../@custom-thirdweb-dev/contracts/dist/IDropERC1155";
 import { Provider } from "@ethersproject/providers";
 /**
  * Returns proofs and the overrides required for the transaction.

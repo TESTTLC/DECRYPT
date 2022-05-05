@@ -1,4 +1,4 @@
-import { Marketplace as MarketplaceContract, Marketplace__factory } from "@thirdweb-dev/contracts";
+import { Marketplace as MarketplaceContract, Marketplace__factory } from "../@custom-thirdweb-dev/contracts";
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractRoles } from "../core/classes/contract-roles";
 import { ContractEncoder } from "../core/classes/contract-encoder";

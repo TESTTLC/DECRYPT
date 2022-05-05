@@ -6,8 +6,16 @@ import tlcBridgeImage from '../assets/images/tlc-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
 
 import { Project } from './types';
+export const nativeTLCAddress = '0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6';
+//old good
+// export const marketplaceAddress = '0x627A2868fe43E5fd14BB27eC3002A6089ee2c04B';
+//new good result
+export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 
-export const marketplaceAddress = '0xaF828bd31483cF8F5515ea44D1A2904f32422A51';
+export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
+
+export const TLNFTTokenContractAddress =
+  '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
 // /** Mainnet */
 export const TLXTokenContractAddress =

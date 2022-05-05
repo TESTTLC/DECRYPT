@@ -46,6 +46,8 @@ import { addHeaderPayloadToCookies } from './utils/functions/Cookies';
 import NFTMarketplaceViewCollection from './pages/NFTMarketplaceViewCollection';
 import { getHeaderPayloadFromLocalStorage } from './utils/functions/LocalStorage';
 import RequireAuth from './pages/RequireAuth';
+import NFTDetails from './pages/NFTDetails';
+import WhiteLists from './pages/Whitelists';
 
 export const coinsTags = ['TLX', 'TLC', 'LSO', 'TLLP'];
 export const marketplaceRoutes = ['categories', 'collections'];
@@ -67,8 +69,8 @@ const App = () => {
     return true;
   };
 
+  // useEffect(() => {
   addHeaderPayloadToCookies();
-
   if (localStorage.getItem(headerPayloadName)) {
     const headerPayload = getHeaderPayloadFromLocalStorage();
     if (
@@ -82,6 +84,7 @@ const App = () => {
       window.localStorage.clear();
     }
   }
+  // });
 
   const checkIfIsLoggedIn = () => {
     if (localStorage.getItem('user')) {
@@ -148,6 +151,10 @@ const App = () => {
                     element={<NFTMarketplaceCategories />}
                   />
                   <Route
+                    path="/nftmarketplace/whitelists"
+                    element={<WhiteLists />}
+                  />
+                  <Route
                     path="/nftmarketplace/stats"
                     element={<NFTMarketplaceStats />}
                   />
@@ -168,7 +175,7 @@ const App = () => {
                     element={<NFTMarketplaceCreateNFT />}
                   />
                   <Route
-                    path="/nftmarketplace/view-collection/:contractAddress"
+                    path="/nftmarketplace/collection/:contractAddress"
                     element={<NFTMarketplaceViewCollection />}
                   />
                   <Route
@@ -178,6 +185,14 @@ const App = () => {
                   <Route
                     path="/nftmarketplace/category/:categoryId"
                     element={<NFTMarketplaceCategory />}
+                  />
+                  <Route
+                    path="/nftmarketplace/collection/:contractAddress/nft/:id"
+                    element={<NFTDetails />}
+                  />
+                  <Route
+                    path="/nftmarketplace/collection/:contractAddress/nft/:id"
+                    element={<NFTDetails />}
                   />
                   <Route path="/nftmarketplace" element={<NFTMarketplace />} />
                   <Route path="/tokenization" element={<AssetTokenization />} />

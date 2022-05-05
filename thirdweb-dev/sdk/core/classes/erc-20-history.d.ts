@@ -1,5 +1,5 @@
 import { ContractWrapper } from "./contract-wrapper";
-import { TokenERC20 } from "@thirdweb-dev/contracts";
+import { TokenERC20 } from "../../@custom-thirdweb-dev/contracts";
 import { TokenHolderBalance } from "../../types";
 /**
  * Manages history for Token contracts

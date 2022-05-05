@@ -1,6 +1,6 @@
 import { TransactionResult } from "../types";
 import { Role } from "../../common/role";
-import { AccessControlEnumerable } from "@thirdweb-dev/contracts";
+import { AccessControlEnumerable } from "../../@custom-thirdweb-dev/contracts";
 import { ContractWrapper } from "./contract-wrapper";
 /**
  * Handles Contract roles and permissions

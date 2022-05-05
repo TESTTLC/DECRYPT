@@ -1,7 +1,7 @@
 import { PayloadToSign721, SignedPayload721 } from "../../schema/contracts/common/signature";
 import { TransactionResultWithId } from "../types";
 import { ContractWrapper } from "./contract-wrapper";
-import { TokenERC721 } from "@thirdweb-dev/contracts";
+import { TokenERC721 } from "../../@custom-thirdweb-dev/contracts";
 import { IStorage } from "../interfaces";
 import { ContractRoles } from "./contract-roles";
 import { NFTCollection } from "../../contracts";

@@ -84,6 +84,17 @@ const NFTMarketplaceSidebar: React.FC = () => {
             <p>Marketplace</p>
           </button>
           <button
+            className={`flex items-center text-left space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem] ${
+              location.pathname === routes.nftMarketplace.url
+                ? 'text-white'
+                : 'underline'
+            }`}
+            onClick={() => navigate('/nftmarketplace/whitelists')}
+          >
+            <MenuIcon />
+            <p>Whitelists</p>
+          </button>
+          <button
             className={`flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem] ${
               location.pathname === routes.nftMarketplaceStats.url
                 ? 'text-green-500'

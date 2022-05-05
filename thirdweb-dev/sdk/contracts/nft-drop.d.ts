@@ -1,5 +1,5 @@
 import { ContractRoles } from "../core/classes/contract-roles";
-import { DropERC721, DropERC721__factory } from "@thirdweb-dev/contracts";
+import { DropERC721, DropERC721__factory } from "../@custom-thirdweb-dev/contracts";
 import { BigNumber, BigNumberish, BytesLike } from "ethers";
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractRoyalty } from "../core/classes/contract-royalty";

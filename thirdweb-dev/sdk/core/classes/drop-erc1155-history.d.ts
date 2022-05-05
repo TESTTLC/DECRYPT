@@ -1,4 +1,4 @@
-import { DropERC1155 } from "@thirdweb-dev/contracts";
+import { DropERC1155 } from "../../@custom-thirdweb-dev/contracts";
 import { ContractWrapper } from "./contract-wrapper";
 import { BigNumberish } from "ethers";
 /**

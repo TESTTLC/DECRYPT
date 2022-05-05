@@ -1,4 +1,4 @@
-import { VoteERC20, VoteERC20__factory } from "@thirdweb-dev/contracts";
+import { VoteERC20, VoteERC20__factory } from "../@custom-thirdweb-dev/contracts";
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { IStorage, NetworkOrSignerOrProvider, TransactionResult, TransactionResultWithId } from "../core";
 import { SDKOptions } from "../schema/sdk-options";

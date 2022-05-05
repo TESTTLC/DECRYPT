@@ -1,4 +1,4 @@
-import { TokenERC20, TokenERC20__factory } from "@thirdweb-dev/contracts";
+import { TokenERC20, TokenERC20__factory } from "../@custom-thirdweb-dev/contracts";
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractRoles } from "../core/classes/contract-roles";
 import { IStorage, NetworkOrSignerOrProvider, TransactionResult } from "../core";

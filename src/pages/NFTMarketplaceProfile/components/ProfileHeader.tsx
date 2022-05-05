@@ -108,8 +108,9 @@ const ProfileHeader: React.FC<Props> = ({
           </div>
 
           <div className="flex justify-between space-x-12 mt-8">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <button
+                key={`${category}-${index}`}
                 className={`text-md ${
                   selectedCategory === category ? 'text-blue-500' : 'text-white'
                 } font-medium`}

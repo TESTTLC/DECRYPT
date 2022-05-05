@@ -1,7 +1,7 @@
 import { PayloadToSign20, SignedPayload20 } from "../../schema/contracts/common/signature";
 import { TransactionResult } from "../types";
 import { ContractWrapper } from "./contract-wrapper";
-import { TokenERC20 } from "@thirdweb-dev/contracts";
+import { TokenERC20 } from "../../@custom-thirdweb-dev/contracts";
 import { ContractRoles } from "./contract-roles";
 import { Token } from "../../contracts";
 /**

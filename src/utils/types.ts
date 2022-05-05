@@ -1,5 +1,22 @@
 import { ReactElement } from 'react';
 
+export interface ListingProperties {
+  // address of the contract the asset you want to list is on
+  assetContractAddress: string;
+  // token ID of the asset you want to list
+  tokenId: string;
+  // in how many seconds will the listing open up
+  startTimeInSeconds: number;
+  // how long the listing will be open for
+  listingDurationInSeconds: number;
+  // how many of the asset you want to list
+  quantity: number;
+  // address of the currency contract that will be used to pay for the listing
+  currencyContractAddress: string;
+  // how much the asset will be sold for
+  buyoutPricePerToken: string;
+}
+
 export enum StackingDuration {
   ONE_MONTH = 0,
   THREE_MONTHS = 1,

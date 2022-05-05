@@ -1,5 +1,5 @@
 import { ContractWrapper } from "./contract-wrapper";
-import { IMarketplace, Marketplace } from "@thirdweb-dev/contracts";
+import { IMarketplace, Marketplace } from "../../@custom-thirdweb-dev/contracts";
 import { BigNumberish } from "ethers";
 import { DirectListing, NewDirectListing, Offer } from "../../types/marketplace";
 import { TransactionResult, TransactionResultWithId } from "../types";

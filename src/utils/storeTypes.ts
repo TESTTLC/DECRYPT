@@ -44,16 +44,16 @@ export interface Category {
   description: string;
 }
 
-interface ContractCollection {
-  symbol?: any;
-  description?: any;
-  image?: any;
-  seller_fee_basis_points?: any;
-  fee_recipient?: any;
-  external_link?: any;
+export interface CollectionMetadata {
+  symbol?: string;
+  description?: string;
+  image?: string;
+  seller_fee_basis_points?: number;
+  fee_recipient?: string;
+  external_link?: string;
   name: string;
 }
-export interface Collection extends ContractCollection {
+export interface Collection extends CollectionMetadata {
   id?: number;
   name: string;
   description?: string;
@@ -73,6 +73,8 @@ export enum SaleType {
 }
 export interface NFT {
   id: number;
+  address: string;
+  contractAddress: string;
   name: string;
   description: string;
   collectionId?: number;
@@ -81,6 +83,7 @@ export interface NFT {
   price: number;
   saleType: SaleType;
   auctionDuration?: number; //in days
+  isSaleActive: boolean;
 }
 
 export type AppDispatch = ThunkDispatch<StoreState, unknown, AnyAction>;

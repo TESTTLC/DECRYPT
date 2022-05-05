@@ -302,7 +302,6 @@ const NFTMarketplaceEditProfile: React.FC = () => {
                     className="hidden w-full h-full"
                     accept=".png, .jpg, .jpeg"
                     onChange={handleProfileImageChange}
-                    // draggable={true}
                   />
                 </button>
                 {/* <img className="absolute right-2 bottom-2 bg-gray-700 rounded-full w-4 h-4" /> */}

@@ -1,7 +1,7 @@
 import { NFTMetadataOrUri, NFTMetadataOwner } from "../schema/tokens/common";
 import type { IStorage, NetworkOrSignerOrProvider, TransactionResultWithId } from "../core";
 import { ContractWrapper } from "../core/classes/contract-wrapper";
-import { TokenERC721, TokenERC721__factory } from "@thirdweb-dev/contracts";
+import { TokenERC721, TokenERC721__factory } from "../@custom-thirdweb-dev/contracts";
 import { SDKOptions } from "../schema/sdk-options";
 import { ContractMetadata } from "../core/classes/contract-metadata";
 import { ContractRoles } from "../core/classes/contract-roles";

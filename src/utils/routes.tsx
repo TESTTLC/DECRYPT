@@ -149,11 +149,16 @@ export const routes = {
   },
   nftMarketplaceViewCollection: {
     id: 12,
-    url: '/nftmarketplace/view-collection',
+    url: '/nftmarketplace/collection',
     title: 'NFT Marketplace View Collection',
   },
-  dashboardV2: {
+  nftDetails: {
     id: 13,
+    url: '/nftmarketplace/collection',
+    title: 'NFT Marketplace NFT Details',
+  },
+  dashboardV2: {
+    id: 14,
     url: '/dhs',
     title: 'DashboardV2',
   },
