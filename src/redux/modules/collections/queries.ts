@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Collection } from 'src/utils/storeTypes';
 
+const baseUrl = process.env.REACT_APP_API_BACKEND;
+
 interface CollectionsResponse {
   message: 'string';
   collections: Collection[];
@@ -14,7 +16,7 @@ interface CollectionResponse {
 export const collectionsApi = createApi({
   reducerPath: 'collectionsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:4000/collections`,
+    baseUrl: `${baseUrl}/collections`,
     credentials: 'include', // for cookies
   }),
   tagTypes: ['Collection'],

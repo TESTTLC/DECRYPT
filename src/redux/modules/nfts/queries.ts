@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { NFT } from 'src/utils/storeTypes';
 
+const baseUrl = process.env.REACT_APP_API_BACKEND;
+
 interface NFTsResponse {
   message: 'string';
   nfts: NFT[];
@@ -14,7 +16,7 @@ interface NFTResponse {
 export const nftsApi = createApi({
   reducerPath: 'nftsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:4000/nfts`,
+    baseUrl: `${baseUrl}/nfts`,
     credentials: 'include', // for cookies
   }),
   tagTypes: ['NFT'],
