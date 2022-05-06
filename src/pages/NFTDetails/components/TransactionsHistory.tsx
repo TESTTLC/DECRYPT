@@ -16,21 +16,23 @@ import { StoreState } from 'src/utils/storeTypes';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 import { ellipsizeAddress, epochToDate } from 'src/utils/functions/utils';
+import { useParams } from 'react-router-dom';
 const borderStyle = 'border-opacity-20 border-blue-600';
 
 interface Props {
   contractAddress?: string;
 }
 
+type CustomParams = {
+  id: string;
+};
+
 const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
   );
   const [transfersHistory, setTransfersHistory] = useState<any[]>([]);
-  //   const walletAddress = useSelector<StoreState, string | undefined>(
-  //     (state) => state.account.walletAddress,
-  //   );
-
+  const { id: nftId } = useParams<CustomParams>();
   const getTransfers = useCallback(async () => {
     if (provider && contractAddress) {
       //   const owned = `${process.env.REACT_APP_TLX_RPC_API}?module=account&action=tokenlist&address=${walletAddress}`;
@@ -58,10 +60,7 @@ const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
         const mintsFilter = contract.filters.TokensMinted();
         const transferFilter = contract.filters.Transfer();
         const salesFilter = contract.filters.OwnerUpdated();
-        const filter: MarketplaceFilter = {
-          tokenContract: contractAddress,
-          tokenId: 0,
-        };
+
         console.log('filters: ', contract.filters);
         const mints = await contract.queryFilter(mintsFilter);
         const transfers = await contract.queryFilter(transferFilter);
@@ -88,11 +87,12 @@ const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
             console.log('transfers: ', t.decode(t.data, t.topics));
             // console.log('block: ', block);
             // console.log('receipt: ', receipt);
-            console.log('txx: ', txx);
-            _transfersHistory.push({
-              ...decoded,
-              timestamp: epochToDate(block.timestamp),
-            });
+            if (decoded.tokenId.toString() === nftId) {
+              _transfersHistory.push({
+                ...decoded,
+                timestamp: epochToDate(block.timestamp),
+              });
+            }
           }
         });
 
@@ -122,36 +122,39 @@ const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
     getTransfers();
   }, [getTransfers]);
 
-  return transfersHistory.length > 0 ? (
+  return (
     <div className="mt-4 py-3">
       <p className="text-xl">Transfer History</p>
       <div
         className={`${borderStyle} border-b-[2px] w-full bg-black bg-opacity-30 p-6 mt-2 rounded-xl`}
       >
-        <div>
-          <p></p>
-          <div className="flex justify-between text-xl mb-3">
-            <p className="flex-[0.33] text-left">From</p>
-            <p className="flex-[0.33] text-center">To</p>
-            <p className="flex-[0.33] text-right">Date</p>
+        {transfersHistory.length > 0 ? (
+          <div>
+            <div className="flex justify-between text-xl mb-3">
+              <p className="flex-[0.33] text-left">From</p>
+              <p className="flex-[0.33] text-center">To</p>
+              <p className="flex-[0.33] text-right">Date</p>
+            </div>
+            {transfersHistory.map((t) => {
+              return (
+                <div className="flex justify-between my-1">
+                  <p className="flex-[0.33] text-left">
+                    {ellipsizeAddress(t.from, 8)}
+                  </p>
+                  <p className="flex-[0.33] text-center">
+                    {ellipsizeAddress(t.to, 8)}
+                  </p>
+                  <p className="flex-[0.33] text-right">{t.timestamp}</p>
+                </div>
+              );
+            })}
           </div>
-          {transfersHistory.map((t) => {
-            return (
-              <div className="flex justify-between my-1">
-                <p className="flex-[0.33] text-left">
-                  {ellipsizeAddress(t.from, 8)}
-                </p>
-                <p className="flex-[0.33] text-center">
-                  {ellipsizeAddress(t.to, 8)}
-                </p>
-                <p className="flex-[0.33] text-right">{t.timestamp}</p>
-              </div>
-            );
-          })}
-        </div>
+        ) : (
+          <p>No transfer history for this item</p>
+        )}
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default TransactionsHistory;

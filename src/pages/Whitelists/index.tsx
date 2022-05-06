@@ -11,6 +11,8 @@ import { NFTDropAddress, TLNFTTokenContractAddress } from 'src/utils/globals';
 import { ethers } from 'ethers';
 import Papa from 'papaparse';
 import LoadingSpinner from 'src/components/LoadingSpinner';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
 
 import {
   NFTDrop,
@@ -88,54 +90,60 @@ const WhiteLists: React.FC = () => {
       <MarketplaceHeader title="Free Community Rewards for all the TLX holders" />
       <div className="grid grid-cols-10 gap-x-2 gap-y-4">
         <div className="col-span-8 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10">
-          <div></div>
-          <div className="w-full flex flex-col px-10 justify-center items-center space-y-5">
-            {isLoading ? (
-              <LoadingSpinner width={40} height={40} />
-            ) : (
-              <>
-                {nft && (
-                  <img
-                    src={nft?.metadata.image || ''}
-                    className="w-full h-full object-cover"
-                  />
-                )}
-                {owned?.length === 0 && isFetchingDone && (
-                  <>
-                    <p>
-                      Please proceed to mint your{' '}
-                      <span className="text-green-500">#Restart</span> -
-                      Blockhain & Metaverse Innovation Summit ticket.
-                    </p>
+          {walletAddress ? (
+            <div className="w-full flex flex-col px-10 justify-center items-center space-y-5">
+              {isLoading ? (
+                <LoadingSpinner width={40} height={40} />
+              ) : (
+                <>
+                  {nft && (
+                    <img
+                      src={nft?.metadata.image || ''}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  {owned?.length === 0 && isFetchingDone && (
+                    <>
+                      <p>
+                        Please proceed to mint your{' '}
+                        <span className="text-green-500">#Restart</span> -
+                        Blockhain & Metaverse Innovation Summit ticket.
+                      </p>
 
-                    <button
-                      className="self-center flex justify-center items-center w-40 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl font-semibold"
-                      onClick={mint}
-                    >
-                      {isMinting ? (
-                        <LoadingSpinner width={8} height={8} />
-                      ) : (
-                        <p>Mint now</p>
-                      )}
-                    </button>
-                  </>
-                )}
-                {owned?.length > 0 && isFetchingDone && (
-                  <div className="text-center">
-                    <p>Your owned token:</p>
-                    Contract address:{' '}
-                    <span className="text-green-500">{NFTDropAddress}</span>
-                    <p>
-                      Token ID:{' '}
-                      <span className="text-green-500">
-                        {owned[0].metadata.id.toString()}
-                      </span>
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+                      <button
+                        className="self-center flex justify-center items-center w-40 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl font-semibold"
+                        onClick={mint}
+                      >
+                        {isMinting ? (
+                          <LoadingSpinner width={8} height={8} />
+                        ) : (
+                          <p>Mint now</p>
+                        )}
+                      </button>
+                    </>
+                  )}
+                  {owned?.length > 0 && isFetchingDone && (
+                    <div className="text-center">
+                      <p>Your owned token:</p>
+                      Contract address:{' '}
+                      <span className="text-green-500">{NFTDropAddress}</span>
+                      <p>
+                        Token ID:{' '}
+                        <span className="text-green-500">
+                          {owned[0].metadata.id.toString()}
+                        </span>
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          ) : (
+            <p className="w-full text-center mt-20">
+              {' '}
+              Please connect your wallet
+            </p>
+          )}
         </div>
         <MarketplaceRightSidebar />
       </div>

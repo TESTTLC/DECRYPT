@@ -21,6 +21,7 @@ const ProfileNFTCollection: React.FC<Props> = ({
   name,
   collectionTotalCount,
 }) => {
+  console.log('Id: ', id);
   return (
     <div
       key={`${id}-${name}`}
@@ -41,14 +42,8 @@ const ProfileNFTCollection: React.FC<Props> = ({
           {/* <p className="text-gray-500">Price</p> */}
         </div>
         <div className="w-full h-[0.10rem] bg-gradient-to-r from-transparent via-gray-400 to-transparent px-4" />
-        <div className="flex text-xs px-4 pt-2 text-center items-center">
-          <EllipsisText
-            text={
-              'OneOnes is a collection of 6565 companions that will transport you to the hidden Magical World. The OneOnes is an NFT project built on storytelling and interaction expanding the Magical World created by Migrating Lines in his 1/1 art. From a technical perspective, the OneOnes are minted on the Ethereum blockchain as a unique, non-fungible token (NFT). This project is born by merging the 1/1 art world and the pfp collectible world. There are a total of 8 Core Families of OneOnes and several 1/1 Celestial OneOnes that will be unleashed!' ||
-              ''
-            }
-            length={82}
-          />
+        <div className="flex text-xs px-4 pt-2 text-center items-center overflow-hidden truncate flex-nowrap ">
+          <EllipsisText text={description} length={82} />
 
           {/* <p className="w-full">
             {ellipsizeText(

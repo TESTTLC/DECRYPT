@@ -376,7 +376,7 @@ const NFTDetails: React.FC = () => {
               </div>
               <div>
                 <p className="text-5xl mt-4 font-semibold">
-                  {nft.metadata.name} #{parseInt(nftId || '0', 10) + 1}
+                  {nft.metadata.name} #{parseInt(nftId || '0', 10)}
                 </p>
                 <p className="mt-6 text-lg xs:text-sm">Owned by {ownedBy}</p>
 
