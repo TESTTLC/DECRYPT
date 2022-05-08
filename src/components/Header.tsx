@@ -159,7 +159,7 @@ const Header: React.FC = () => {
                   />
                 ) : null}
                 <span className="pr-0 font-poppins text-sm text-gray-100">
-                  Release Coming Soon
+                  Powered by
                 </span>
               </span>
               <a
@@ -168,7 +168,7 @@ const Header: React.FC = () => {
                 className="text-center xs:ml-4 pl-4 pr-2 mr-2 font-poppins text-sm text-indigo-400 group-hover:text-gray-100 transition duration-200"
                 rel="noreferrer"
               >
-                Check our website &rarr;
+                TLChain Network &rarr;
               </a>
             </div>
           </div>
@@ -190,20 +190,20 @@ const Header: React.FC = () => {
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
-        <Link
+        {/* <Link
           key={routes.dashboard.title}
           to={{ pathname: routes.dashboard.url }}
           className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
         >
           <span className="text-center font-poppins text-sm">Dashboard</span>
-        </Link>
+        </Link> */}
 
         <Link
           key={routes.dashboardV2.title}
           to={{ pathname: routes.dashboardV2.url }}
           className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
         >
-          <span className="text-center font-poppins text-sm">Dashboard V2</span>
+          <span className="text-center font-poppins text-sm">Dashboard</span>
         </Link>
 
         <div className="xs:col-span-2 sm:col-span-2 md:col-span-2 items-center justify-center">

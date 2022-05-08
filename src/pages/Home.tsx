@@ -175,7 +175,7 @@ const Home: React.FC = () => {
                 Decryption Blockchain Incubator
               </p>
               <p className="font-semibold mt-2 text-3xl sm:text-xl xs:text-xl xs:leading-[1.25rem] xs:flex-[0.25]">
-                1000+ SQM A+ Office Building
+                4000+ SQM A+ Office Building
               </p>
               <p className="font-semibold mb-6 text-xs bg-gradient-to-r from-gray-700 to-gray-800 py-1 px-2 rounded-lg">
                 IT Support | Legal | Financial | Marketing | Media Studio
@@ -246,9 +246,9 @@ const Home: React.FC = () => {
               </div>
               <div className="ml-2">
                 <p className="font-semibold text-sm">
-                  $TLC Listing | Launch Pool
+                  $TLC Listing | DEX Release
                 </p>
-                <p className="text-xs text-gray-400">11 April 2022</p>
+                <p className="text-xs text-gray-400">May 2022</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -257,9 +257,9 @@ const Home: React.FC = () => {
               </div>
               <div className="ml-2">
                 <p className="font-semibold text-sm">
-                  Luxandia NFT Collection | Phase 1
+                  $TLC | $LSO | Bridges release
                 </p>
-                <p className="text-xs text-gray-400">14 April 2022</p>
+                <p className="text-xs text-gray-400">May 2022</p>
               </div>
             </div>
           </div>
