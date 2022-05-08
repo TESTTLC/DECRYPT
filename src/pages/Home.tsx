@@ -28,7 +28,7 @@ const Home: React.FC = () => {
       <div className="w-full grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1">
         <div className="col-span-4 mb-4">
           <p className="text-white font-bold font-poppins text-2xl">
-            Projects & Roadmap
+            Ecosystem
           </p>
           {/* <Link
             key={routes.launchpad.title}
