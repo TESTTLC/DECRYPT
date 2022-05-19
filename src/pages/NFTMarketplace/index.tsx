@@ -6,6 +6,7 @@ import { MarketplaceFilter } from '@thirdweb-dev/sdk/dist/types/marketplace/Mark
 import { TailSpin } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import { routes } from 'src/utils/routes';
+import { ChainsIds } from 'src/utils/types';
 
 import {
   AuctionListing,
@@ -20,7 +21,9 @@ import MarketplaceHeaderSubHeader from './components/MarketplaceSubHeader';
 
 // const images = [image1, image2, image3, image4, image5, image6, image7, image8];
 const NFTMarketplace: React.FC = () => {
-  const { sdk, marketplace } = useMarketplaceSDK();
+  const { sdk, marketplace, walletAddress, currentChainId } =
+    useMarketplaceSDK();
+
   const navigate = useNavigate();
   const [listings, setListings] = useState<(DirectListing | AuctionListing)[]>(
     [],
@@ -28,8 +31,10 @@ const NFTMarketplace: React.FC = () => {
   const [collectionsNames, setCollectionsNames] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log('currentChainId', currentChainId);
+
   const getActiveListings = useCallback(async () => {
-    if (listings.length === 0) {
+    if (listings.length === 0 && currentChainId === ChainsIds.TLC) {
       try {
         const filter: MarketplaceFilter = {
           start: 0,
@@ -57,7 +62,7 @@ const NFTMarketplace: React.FC = () => {
         setIsLoading(false);
       }
     }
-  }, [listings.length, marketplace, sdk]);
+  }, [currentChainId, listings.length, marketplace, sdk]);
 
   useEffect(() => {
     getActiveListings();
@@ -69,46 +74,56 @@ const NFTMarketplace: React.FC = () => {
       <div className="grid grid-cols-10 gap-x-2 gap-y-4">
         <div className="col-span-8 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10">
           <MarketplaceHeaderSubHeader />
-          {isLoading ? (
-            <div className="w-full flex justify-center items-center text-center mt-20">
-              <TailSpin color="#fff" height={40} width={40} />
-            </div>
-          ) : (
-            <div className="grid grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full mt-4 gap-y-4 gap-x-4">
-              {listings.length === 0 && !isLoading && marketplace && (
-                <p>No active listings found</p>
-              )}
-              {listings?.map((item, index) => (
-                <NFTItem
-                  key={`${item.asset.id}-${index}`}
-                  imageSource={item.asset.image || ''}
-                  title={item.asset.name}
-                  price={parseFloat(formatEther(item.buyoutPrice.toString()))}
-                  timeLeft={
-                    item.type === ListingType.Direct
-                      ? epochToDate(
-                          item.secondsUntilEnd.toString(),
-                          'localeString',
-                        )
-                      : epochToDate(
-                          item.endTimeInEpochSeconds.toString(),
-                          'localeString',
-                        )
-                  }
-                  collectionName={collectionsNames[index]}
-                  id={item.asset.id.toString()}
-                  contractAddress={item.assetContractAddress}
-                  onClick={() => {
-                    navigate(
-                      `${routes.nftDetails.url}/${
-                        item.assetContractAddress
-                      }/nft/${item.asset.id.toString()}`,
-                    );
-                  }}
-                />
-              ))}
-            </div>
+          {!walletAddress && (
+            <p className="text-center mt-10">Please connect your wallet</p>
           )}
+          {currentChainId !== ChainsIds.TLC && (
+            <p className="text-center mt-10">
+              Please connect to TLChain Mainnet - {currentChainId}
+            </p>
+          )}
+          {walletAddress &&
+            currentChainId === ChainsIds.TLC &&
+            (isLoading ? (
+              <div className="w-full flex justify-center items-center text-center mt-20">
+                <TailSpin color="#fff" height={40} width={40} />
+              </div>
+            ) : (
+              <div className="grid grid-cols-4 2xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2 w-full mt-4 gap-y-4 gap-x-4">
+                {listings.length === 0 && !isLoading && marketplace && (
+                  <p>No active listings found</p>
+                )}
+                {listings?.map((item, index) => (
+                  <NFTItem
+                    key={`${item.asset.id}-${index}`}
+                    imageSource={item.asset.image || ''}
+                    title={item.asset.name}
+                    price={parseFloat(formatEther(item.buyoutPrice.toString()))}
+                    timeLeft={
+                      item.type === ListingType.Direct
+                        ? epochToDate(
+                            item.secondsUntilEnd.toString(),
+                            'localeString',
+                          )
+                        : epochToDate(
+                            item.endTimeInEpochSeconds.toString(),
+                            'localeString',
+                          )
+                    }
+                    collectionName={collectionsNames[index]}
+                    id={item.asset.id.toString()}
+                    contractAddress={item.assetContractAddress}
+                    onClick={() => {
+                      navigate(
+                        `${routes.nftDetails.url}/${
+                          item.assetContractAddress
+                        }/nft/${item.asset.id.toString()}`,
+                      );
+                    }}
+                  />
+                ))}
+              </div>
+            ))}
         </div>
         <MarketplaceRightSidebar />
       </div>

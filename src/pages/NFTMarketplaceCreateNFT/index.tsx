@@ -53,8 +53,8 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [collections, setCollections] = useState<any[]>([]);
   const [image, setImage] = useState<File>();
-  const [isLoading, setIsLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState<string>();
+  const [isLoading, setIsLoading] = useState(false);
   const inputImageRef = createRef<HTMLInputElement>();
   const [dropdownElements, setDropdownElements] = useState<string[]>([]);
   // const [externalLink, setExternalLink] = useState<string>();

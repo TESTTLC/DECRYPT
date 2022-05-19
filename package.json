@@ -5,6 +5,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.9.0",
     "@ethersproject/providers": "^5.5.1",
+    "@metamask/detect-provider": "^1.2.0",
     "@reduxjs/toolkit": "^1.8.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

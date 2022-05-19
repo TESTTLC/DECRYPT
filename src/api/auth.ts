@@ -61,3 +61,9 @@ export const sendActivationCodeAPI = async (email: string) => {
   const url = `/auth/sendActivationCode/${email}`;
   return postRequest(url);
 };
+
+export const sendResetPasswordEmailAPI = async (email: string) => {
+  const url = `/auth/sendResetPasswordEmail/${email}`;
+  console.log('url: ', url);
+  return postRequest(url);
+};

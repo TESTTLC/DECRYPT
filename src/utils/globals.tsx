@@ -40,13 +40,31 @@ export const TLLPTokenContractAddress =
 export const TLLPStakeContractAddress =
   '0x48500D88430B37E33237dD47948A8D02df660473';
 
+export const TTXTokenContractAddress =
+  '0x75300704eD0b5644BeE9f5F8Fc2003d59C27AB8E';
+
+export const TTXChildTokenContractAddress =
+  '0x75300704eD0b5644BeE9f5F8Fc2003d59C27AB8E';
+
 export const USDTContractAddress = '0x55d398326f99059fF775485246999027B3197955';
 
 export const ownerAddress = '0x21C710cACAFfD5d885094cD13988ee08700D26BD';
 
 /** Bridge */
 export const BSCBridgeContractAddress =
-  '0x8Ef7f7480F9c892E570cF655Ec678C47703e3d37';
+  '0x9E9B77E0b04E9B5fcdBFB8a33D97C7B115897dec';
+
+export const BSCChildBridgeContractAddress =
+  '0x0F3DEA3b8D47B6E016966A4e7675a3dCf3002Bd1';
+
+export const LSO_MainBridgeContractAddress =
+  '0x41982760519299703d5bD9d138cFF15CBEE3db43';
+
+export const LSO_BSCChildBridgeContractAddress =
+  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
+
+export const LSO_FTMChildBridgeContractAddress =
+  '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
 
 /** Mainnet */
 // export const OldTLXTokenContractAddress =
@@ -57,38 +75,87 @@ export const OldTLXTokenContractAddress =
 // export const TLCStakeContractAddress =
 //   "0xb4628fFdb9D2E4a13827dfb473B8d6c0419DC2Ad";
 
-export const modalTokens: Project[] = [
-  {
-    name: 'Binance Smart Chain',
-    tag: 'BSC',
-    image: bscBridgeImage,
+export const bridgeAddresses = {
+  LSO: {
+    main: {
+      address: LSO_MainBridgeContractAddress,
+    },
+    child: {
+      BSC: {
+        address: LSO_BSCChildBridgeContractAddress,
+      },
+      FTM: {
+        address: LSO_FTMChildBridgeContractAddress,
+      },
+    },
   },
-  {
-    name: 'Ethereum',
-    tag: 'ETH',
-    image: ethBridgeImage,
+  TLC: {
+    main: {
+      address: TLCTokenContractAddress,
+    },
+    child: {
+      BSC: {
+        address: BSCChildBridgeContractAddress,
+      },
+    },
   },
-  {
-    name: 'Fantom',
-    tag: 'FTM',
-    image: ftmBridgeImage,
-  },
-  {
-    name: 'Polygon',
-    tag: 'MATIC',
-    image: maticBridgeImage,
-  },
-  {
-    name: 'Solana',
-    tag: 'SOL',
-    image: solBridgeImage,
-  },
-  {
+};
+
+//ftm, smartchain, avalanche
+export const modalChains = {
+  TLC: {
     name: 'TLChain',
     tag: 'TLC',
     image: tlcBridgeImage,
   },
-];
+  BSC: {
+    name: 'Binance Smart Chain',
+    tag: 'BSC',
+    image: bscBridgeImage,
+  },
+  FTM: {
+    name: 'Fantom',
+    tag: 'FTM',
+    image: ftmBridgeImage,
+  },
+  AVA: {
+    name: 'Avalanche',
+    tag: 'AVA',
+    image: ethBridgeImage,
+  },
+
+  // {
+  //   name: 'Ethereum',
+  //   tag: 'ETH',
+  //   image: ethBridgeImage,
+  // },
+  // {
+  //   name: 'Polygon',
+  //   tag: 'MATIC',
+  //   image: maticBridgeImage,
+  // },
+  // {
+  //   name: 'Solana',
+  //   tag: 'SOL',
+  //   image: solBridgeImage,
+  // },
+  // {
+  //   name: 'TLChain',
+  //   tag: 'TLC',
+  //   image: tlcBridgeImage,
+  // },
+};
+
+export const modalCoins = {
+  LSO: {
+    name: 'Lusso',
+    tag: 'LSO',
+  },
+  TLC: {
+    name: 'TLChain',
+    tag: 'TLC',
+  },
+};
 
 export const stakingRewards = {
   TLX: {

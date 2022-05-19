@@ -86,6 +86,14 @@ export interface NFT {
   isSaleActive: boolean;
 }
 
+export interface BridgeState {
+  // fromToken: string;
+  // toToken: string;
+  token: string;
+  fromChain: string;
+  toChain: string;
+}
+
 export type AppDispatch = ThunkDispatch<StoreState, unknown, AnyAction>;
 
 export type ThunkApi = {
@@ -96,6 +104,7 @@ export type ThunkApi = {
 export type StoreState = {
   account: AccountState;
   globals: GlobalState;
+  bridge: BridgeState;
 };
 
 export enum ApiStatus {

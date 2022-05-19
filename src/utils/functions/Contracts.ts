@@ -2,6 +2,11 @@
 /** Functions from TLX Contracts */
 import { ethers, Contract } from 'ethers';
 
+import {
+  bridgeAddresses,
+  LSO_BSCChildBridgeContractAddress,
+  LSO_MainBridgeContractAddress,
+} from '../globals';
 import { defaultPowers } from '../types';
 
 /** This function will call the tokenContract.methods.approve is done */
@@ -269,6 +274,27 @@ export const getTotalNumberOfTxByAddress = async (addressHash: string) => {
   } catch (error) {
     console.log('Err: ', error);
   }
+};
+
+export const getBridgeAddresses = (
+  token: string,
+  fromChain: string,
+  toChain: string,
+) => {
+  console.log('herSSSSSe: ', toChain);
+  let mainBridgeAddress = '';
+  let childBridgeAddress = '';
+  if (token === 'LSO') {
+    mainBridgeAddress = bridgeAddresses.LSO.main.address;
+    if (toChain === 'BSC') {
+      childBridgeAddress = bridgeAddresses.LSO.child.BSC.address;
+    }
+    if (toChain === 'FTM') {
+      childBridgeAddress = bridgeAddresses.LSO.child.FTM.address;
+    }
+  }
+
+  return { mainBridgeAddress, childBridgeAddress };
 };
 
 // const freezeTo = async () => {

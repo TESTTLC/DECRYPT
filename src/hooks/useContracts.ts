@@ -14,6 +14,7 @@ import LuxandiaFreeze from '../contracts/LuxandiaFreeze.json';
 import TheLuxuryLiquidityPoolToken from '../contracts/TheLuxuryLiquidityPoolToken.json';
 import TheLuxuryLiquidityPoolStake from '../contracts/TheLuxuryLiquidityPoolStake.json';
 import TheLuxuryNFT from '../contracts/TheLuxuryNFT.json';
+import TTXToken from '../contracts/TTX.json';
 import OldTLXToken from '../contracts/OldTLXToken.json';
 import {
   LussoStakeContractAddress,
@@ -27,6 +28,7 @@ import {
   TLLPTokenContractAddress,
   TLLPStakeContractAddress,
   TLNFTTokenContractAddress,
+  TTXTokenContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -85,26 +87,37 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi);
     } else if (coinTag === 'TLNFT') {
       setTokenAddress(TLNFTTokenContractAddress);
-      setStakeAddress('');
+      setStakeAddress('-');
       setTokenAbi(TheLuxuryNFT.abi);
-      // setStakeAbi(TheLuxuryLiquidityPoolStake.abi);
+      setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
+    } else if (coinTag === 'TTX') {
+      setTokenAddress(TTXTokenContractAddress);
+      setStakeAddress('-');
+      setTokenAbi(TTXToken.abi);
+      setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
     }
   }, [coinTag, currentChainId]);
 
   const connectToContracts = async () => {
     try {
       if (provider) {
+        console.log('here1');
         const contractT = new ethers.Contract(
           tokenAddress,
           tokenAbi,
           provider.getSigner(),
         );
+        console.log('here2');
 
         const contractS = new ethers.Contract(
           stakeAddress,
           stakeAbi,
           provider.getSigner(),
         );
+
+        console.log('here3');
+
+        console.log('Connected to contracts with: ', contractT);
 
         if (coinTag === 'LSO') {
           const contractF = new ethers.Contract(
@@ -126,6 +139,12 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
   };
 
   useEffect(() => {
+    console.log('provider: ', provider);
+    console.log('walletAddress: ', walletAddress);
+    console.log('tokenAbi: ', tokenAbi);
+    console.log('stakeAbi: ', stakeAbi);
+    console.log('alreadyConnectedToContracts: ', alreadyConnectedToContracts);
+
     if (
       provider &&
       walletAddress &&
@@ -135,6 +154,7 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       stakeAddress &&
       !alreadyConnectedToContracts
     ) {
+      console.log('got here');
       connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

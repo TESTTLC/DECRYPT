@@ -126,6 +126,8 @@ const App = () => {
                     <RequireAuth
                       isAuthenticated={isLoggedIn}
                       isActivated={isActivated}
+                      // isAuthenticated={true}
+                      // isActivated={true}
                     />
                   }
                 >

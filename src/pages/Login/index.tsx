@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   activateAccount,
@@ -7,11 +7,11 @@ import {
   setRequestError,
 } from 'src/redux/modules/account/actions';
 import LOGO from 'src/assets/images/logo.png';
-import { Formik, FormikValues, useFormik } from 'formik';
+import { Formik, FormikValues, useFormik, useFormikContext } from 'formik';
 import * as Yup from 'yup';
 import FormField from 'src/components/FormField';
 import { StoreState } from 'src/utils/storeTypes';
-import { sendActivationCodeAPI } from 'src/api/auth';
+import { sendActivationCodeAPI, sendResetPasswordEmailAPI } from 'src/api/auth';
 
 const inputClass =
   'bg-transparent border-[1px] rounded-full border-blue-500 px-4 py-2 text-sm w-full';
@@ -29,6 +29,7 @@ const Login = () => {
   );
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const formikRef = useRef(null);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -49,7 +50,13 @@ const Login = () => {
   });
 
   const dispatch = useDispatch();
+  const formikValues = useFormikContext();
 
+  useEffect(() => {
+    console.log('formikValues: ', formikValues?.values);
+  }, [formikValues]);
+
+  console.log('formikValues: ', formikValues);
   const handleLogin = (values: FormikValues) => {
     const { email, password } = values;
     if (email && password) {
@@ -84,6 +91,11 @@ const Login = () => {
     await sendActivationCodeAPI(accountEmail);
   };
 
+  const sendResetPasswordEmail = async () => {
+    console.log('formikValues.values: ', formikRef.current?.values.email);
+    await sendResetPasswordEmailAPI(formikRef.current?.values.email);
+  };
+
   useEffect(() => {
     if (!showActivationForm) {
       setShowRegisterForm(false);
@@ -94,6 +106,7 @@ const Login = () => {
     // <div className="grid grid-cols-1 items-center justify-center">
     <div className="w-1/2 xs:w-full sm:w-full md:w-full items-center justify-center self-center">
       <Formik
+        innerRef={formikRef}
         initialValues={{
           email: '',
           password: '',
@@ -111,7 +124,7 @@ const Login = () => {
         // onSubmit={showRegisterForm ? handleRegister : handleLogin}
         validationSchema={validationSchema}
       >
-        {({ handleSubmit }) => (
+        {({ handleSubmit, handleChange }) => (
           <div className="w-full flex flex-col bg-black bg-opacity-70 rounded-xl h-[40rem] items-center justify-center">
             <img src={LOGO} alt="avatar" className="h-32 w-32" />
             {showActivationForm ? (
@@ -203,6 +216,16 @@ const Login = () => {
                         className="text-blue-500 hover:underline"
                       >
                         Register here
+                      </button>
+                    </p>
+
+                    <p className="mt-4">
+                      Forgot password?{' '}
+                      <button
+                        onClick={() => sendResetPasswordEmail()}
+                        className="text-blue-500 hover:underline"
+                      >
+                        Send recover email
                       </button>
                     </p>
                   </>

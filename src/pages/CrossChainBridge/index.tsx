@@ -3,21 +3,39 @@ import React, { useEffect, useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { TailSpin } from 'react-loader-spinner';
-import { StoreState } from 'src/utils/storeTypes';
+import { BridgeState, StoreState } from 'src/utils/storeTypes';
+import { useBridgeContracts } from 'src/hooks/useBridgeContracts';
 
 import { ChainsIds } from '../../utils/types';
 import { changeChain } from '../../utils/functions/MetaMask';
 import { useContracts } from '../../hooks/useContracts';
-import { modalTokens } from '../../utils/globals';
+import {
+  BSCChildBridgeContractAddress,
+  modalChains,
+  modalCoins,
+  BSCBridgeContractAddress,
+} from '../../utils/globals';
 import { getTransaction, initialize } from '../../api/index';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import TokensModal from './components/TokensModal';
 
+const gasFee = 5;
 const CrossChainBridge: React.FC = () => {
+  const bridgeState = useSelector<StoreState, BridgeState>(
+    (state) => state.bridge,
+  );
   const [totalBalance, setTotalBalance] = useState(0);
+  const [amountToSend, setAmountToSend] = useState('0');
   const [isLoading, setIsLoading] = useState(false);
-  const { tokenContract } = useContracts('OldTLX');
+
+  const { mainBridgeContract, childBridgeContract } = useBridgeContracts(
+    bridgeState.token,
+    bridgeState.fromChain,
+    bridgeState.toChain,
+  );
+
+  const { tokenContract } = useContracts('LSO');
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
@@ -47,16 +65,9 @@ const CrossChainBridge: React.FC = () => {
 
   const chainChange = async () => {
     try {
-      await changeChain(ChainsIds.BSC);
+      await changeChain(ChainsIds.TLC);
     } catch (error) {}
   };
-
-  // const getFreezedCount = async () => {
-  //   try {
-  //     const count = await tokenContract.freezingCount(walletAddress);
-
-  //   } catch (error) {}
-  // };
 
   const initializeSwap = async () => {
     if (walletAddress && totalBalance > 0) {
@@ -93,6 +104,69 @@ const CrossChainBridge: React.FC = () => {
     }
   };
 
+  const approve = async () => {
+    try {
+      if (parseFloat(amountToSend) > 0) {
+        setIsLoading(true);
+        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const tx = await tokenContract.functions.approve(
+          mainBridgeContract?.address,
+          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+        );
+        await tx.wait();
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log('Err on approve: ', error);
+    }
+  };
+
+  const swap = async () => {
+    try {
+      if (parseFloat(amountToSend) > 0) {
+        console.log(
+          'childBridgeContract?.address: ',
+          childBridgeContract?.address,
+        );
+        setIsLoading(true);
+        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const tx = await mainBridgeContract?.receiveTokens(
+          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+          childBridgeContract?.address,
+        );
+        await tx.wait();
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log('Err on swap: ', error);
+    }
+  };
+
+  const returnTokens = async () => {
+    try {
+      if (parseFloat(amountToSend) > 0) {
+        console.log(
+          'childBridgeContract?.address: ',
+          childBridgeContract?.address,
+        );
+        setIsLoading(true);
+        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const tx = await childBridgeContract?.returnTokens(
+          walletAddress,
+          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+          mainBridgeContract?.address,
+        );
+        await tx.wait();
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log('Err on swap: ', error);
+    }
+  };
+
   return (
     <div className="flex flex-col flex-1 items-center">
       <div className="flex flex-col">
@@ -104,14 +178,14 @@ const CrossChainBridge: React.FC = () => {
           </p>
         </div>
         <div className="flex">
-          <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
-            {totalBalance} TLX
+          {/* <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
+            {amountToSend} TLX
           </p>
           <p className="text-white font-poppins font-semibold text-lg mb-4">
             &nbsp;available on BSC
-          </p>
+          </p> */}
         </div>
-        <div className="relative items-center w-[44rem] xs:w-[22rem] h-[22rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
+        <div className="relative items-center w-[44rem] xs:w-[22rem] h-[23rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
           <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
             <div className="flex w-1/2 flex-col h-full">
               <p className="text-gray-400 font-medium font-poppins text-sm">
@@ -119,13 +193,17 @@ const CrossChainBridge: React.FC = () => {
               </p>
               <input
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
-                value={totalBalance}
-                // value={0}
+                value={amountToSend}
+                onChange={(e) => setAmountToSend(e.target.value)}
                 type="text"
-                disabled
+                // disabled
               ></input>
             </div>
-            <TokensModal tokens={modalTokens} type="from" />
+            <TokensModal
+              chains={{ TLC: modalChains.TLC }}
+              type="from"
+              // onFromTokenSelect={() => setFromToken()}
+            />
           </div>
           <div className="w-full flex items-center justify-center h-14">
             <FaArrowCircleDown
@@ -141,28 +219,45 @@ const CrossChainBridge: React.FC = () => {
               <input
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                 type="text"
-                disabled
-                value={totalBalance}
-                // value={0}
+                value={amountToSend}
               ></input>
             </div>
-            <TokensModal tokens={[modalTokens[5]]} type="to" />
+            <TokensModal chains={{ BSC: modalChains.BSC }} type="to" />
           </div>
-          <button
-            onClick={initializeSwap}
-            className="mt-6 flex w-full h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <>
-                {' '}
-                Swapping in progress &nbsp;
-                <TailSpin color="#fff" height={18} width={18} />
-              </>
-            ) : (
-              'Swap'
-            )}
-          </button>
+          <p className="my-4 text-sm">
+            You will spend{' '}
+            <span className="text-green-400">{amountToSend}</span> + 5 (gas fee)
+            as a total of {parseFloat(amountToSend) + 5} {bridgeState.token}
+          </p>
+          <div className="flex w-full space-x-8">
+            <button
+              onClick={approve}
+              className="flex-[0.5] flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <TailSpin color="#fff" height={18} width={18} />
+                </>
+              ) : (
+                `Approve`
+              )}
+            </button>
+            <button
+              // onClick={bridgeState.toChain !== 'TLC' ? swap : returnTokens}
+              onClick={swap}
+              className="flex flex-[0.5] h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <TailSpin color="#fff" height={18} width={18} />
+                </>
+              ) : (
+                'Send'
+              )}
+            </button>
+          </div>
         </div>
       </div>
       <div className="w-[44rem] xs:w-[22rem] mt-10 text-sm">
