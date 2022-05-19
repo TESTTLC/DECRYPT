@@ -29,6 +29,7 @@ const Login = () => {
   );
 
   const [showRegisterForm, setShowRegisterForm] = useState(false);
+  const [mailSent, setMailSent] = useState(false);
   const formikRef = useRef(null);
 
   const validationSchema = Yup.object().shape({
@@ -94,6 +95,7 @@ const Login = () => {
   const sendResetPasswordEmail = async () => {
     //@ts-ignore
     await sendResetPasswordEmailAPI(formikRef.current?.values.email);
+    setMailSent(true);
   };
 
   useEffect(() => {
@@ -220,12 +222,12 @@ const Login = () => {
                     </p>
 
                     <p className="mt-4">
-                      Forgot password?{' '}
+                      {mailSent ? 'Email sent! ' : 'Forgot your password? '}
                       <button
                         onClick={() => sendResetPasswordEmail()}
                         className="text-blue-500 hover:underline"
                       >
-                        Send recover email
+                        {mailSent ? 'Resend' : 'Send recover email'}
                       </button>
                     </p>
                   </>
