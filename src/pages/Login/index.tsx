@@ -92,7 +92,7 @@ const Login = () => {
   };
 
   const sendResetPasswordEmail = async () => {
-    console.log('formikValues.values: ', formikRef.current?.values.email);
+    //@ts-ignore
     await sendResetPasswordEmailAPI(formikRef.current?.values.email);
   };
 
