@@ -115,17 +115,22 @@ const TokensModal: React.FC<Props> = ({
   const updateState = (params: { chain?: string; token?: string }) => {
     console.log('updateState', params);
     if (type === 'from') {
-      console.log('chain-1', params.chain);
+      // if (params.chain === bridgeState.toChain)
       dispatch(
         updateBridgeState({
+          ...(params.chain === bridgeState.toChain && {
+            toChain: bridgeState.fromChain,
+          }),
           ...(params.chain && { fromChain: params.chain }),
           ...(params.token && { token: params.token }),
         }),
       );
     } else if (type === 'to') {
-      console.log('chain-2', params.chain);
       dispatch(
         updateBridgeState({
+          ...(params.chain === bridgeState.fromChain && {
+            fromChain: bridgeState.toChain,
+          }),
           ...(params.chain && { toChain: params.chain }),
           ...(params.token && { token: params.token }),
         }),

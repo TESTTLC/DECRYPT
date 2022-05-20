@@ -54,17 +54,20 @@ export const ownerAddress = '0x21C710cACAFfD5d885094cD13988ee08700D26BD';
 export const BSCBridgeContractAddress =
   '0x9E9B77E0b04E9B5fcdBFB8a33D97C7B115897dec';
 
-export const BSCChildBridgeContractAddress =
-  '0x0F3DEA3b8D47B6E016966A4e7675a3dCf3002Bd1';
-
 export const LSO_MainBridgeContractAddress =
   '0x41982760519299703d5bD9d138cFF15CBEE3db43';
 
-export const LSO_BSCChildBridgeContractAddress =
-  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
+export const LSO_BSCSideBridgeContractAddress =
+  '0x25C6330D43445985f564285f3735600c8A94b74a';
 
-export const LSO_FTMChildBridgeContractAddress =
+export const LSO_FTMSideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
+export const LussoBinanceChildTokenContractAddress =
+  '0x56F0878AE8F02E30d08B2D8D540ec59ffFa9e06e';
+
+export const LussoFTMChildTokenContractAddress =
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 /** Mainnet */
 // export const OldTLXTokenContractAddress =
@@ -82,10 +85,10 @@ export const bridgeAddresses = {
     },
     child: {
       BSC: {
-        address: LSO_BSCChildBridgeContractAddress,
+        address: LSO_BSCSideBridgeContractAddress,
       },
       FTM: {
-        address: LSO_FTMChildBridgeContractAddress,
+        address: LSO_FTMSideBridgeContractAddress,
       },
     },
   },
@@ -95,7 +98,7 @@ export const bridgeAddresses = {
     },
     child: {
       BSC: {
-        address: BSCChildBridgeContractAddress,
+        address: 'toBeAdded',
       },
     },
   },

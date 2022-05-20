@@ -12,8 +12,10 @@ import { headerPayloadName } from 'src/utils/globals';
 import { BaseUser, StoreState } from 'src/utils/storeTypes';
 import Cookies from 'universal-cookie';
 import jwtDecode from 'jwt-decode';
+import { ChainsIds } from 'src/utils/types';
+import { updateBridgeState } from 'src/redux/modules/bridge/actions';
+import { getChain } from 'src/utils/functions/Contracts';
 
-import { useDeviceInfo } from './useDeviceInfo';
 import { useWalletConnector } from './useWalletConnector';
 
 export const useCachedResources = () => {
@@ -35,6 +37,15 @@ export const useCachedResources = () => {
   if (walletAddress) {
     dispatch(getLSOLaunchpadRegistrationThunk({ walletAddress }));
   }
+
+  useEffect(() => {
+    const localStorageChainId = localStorage.getItem('currentChainId');
+    if (!localStorageChainId) {
+      localStorage.setItem('currentChainId', ChainsIds.TLC);
+    } else {
+      // dispatch(updateBridgeState({ fromChain: getChain(localStorageChainId), toChain:  }));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const user = window.localStorage.getItem('user');

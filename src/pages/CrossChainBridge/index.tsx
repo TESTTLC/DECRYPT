@@ -1,16 +1,18 @@
+/* eslint-disable no-nested-ternary */
 import { ethers } from 'ethers';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { TailSpin } from 'react-loader-spinner';
 import { BridgeState, StoreState } from 'src/utils/storeTypes';
 import { useBridgeContracts } from 'src/hooks/useBridgeContracts';
+import { getChain, getChainId } from 'src/utils/functions/Contracts';
 
 import { ChainsIds } from '../../utils/types';
 import { changeChain } from '../../utils/functions/MetaMask';
 import { useContracts } from '../../hooks/useContracts';
 import {
-  BSCChildBridgeContractAddress,
+  BSCSideBridgeContractAddress,
   modalChains,
   modalCoins,
   BSCBridgeContractAddress,
@@ -28,23 +30,39 @@ const CrossChainBridge: React.FC = () => {
   const [totalBalance, setTotalBalance] = useState(0);
   const [amountToSend, setAmountToSend] = useState('0');
   const [isLoading, setIsLoading] = useState(false);
+  const [approveDone, setApproveDone] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
-  const { mainBridgeContract, childBridgeContract } = useBridgeContracts(
-    bridgeState.token,
-    bridgeState.fromChain,
-    bridgeState.toChain,
-  );
+  const { mainBridgeContract, sideBridgeContract, tokenContract } =
+    useBridgeContracts(
+      bridgeState.token,
+      bridgeState.fromChain,
+      bridgeState.toChain,
+    );
 
-  const { tokenContract } = useContracts('LSO');
+  // const { tokenContract } = useContracts('LSO', bridgeState.token);
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
 
   const [currentChainId, setCurrentChainId] = useState<string>();
 
+  const chainChange = useCallback(async () => {
+    try {
+      const chainToChange = getChainId(bridgeState.fromChain);
+      await changeChain(chainToChange);
+    } catch (error) {}
+  }, [bridgeState.fromChain]);
+
+  //@ts-ignore
+  window?.ethereum?.on('chainChanged', (chainId) => {
+    localStorage.setItem('currentChainId', chainId.toString());
+    window.location.reload();
+  });
+
   useEffect(() => {
-    chainChange();
-  }, []);
+    // chainChange();
+  }, [chainChange]);
 
   useEffect(() => {
     if (window.ethereum) {
@@ -52,9 +70,20 @@ const CrossChainBridge: React.FC = () => {
       window.ethereum.on('chainChanged', (chainId: string) => {
         setCurrentChainId(chainId);
       });
+      setCurrentChainId(
+        //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window.ethereum]);
+  }, [window.ethereum, bridgeState.fromChain]);
+
+  useEffect(() => {
+    setCurrentChainId(
+      //@ts-ignore
+      ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
+    );
+  });
 
   useEffect(() => {
     if (tokenContract && walletAddress) {
@@ -63,11 +92,11 @@ const CrossChainBridge: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenContract, walletAddress, currentChainId]);
 
-  const chainChange = async () => {
-    try {
-      await changeChain(ChainsIds.TLC);
-    } catch (error) {}
-  };
+  useEffect(() => {
+    if (!localStorage.getItem('currentChainId')) {
+      localStorage.setItem('currentChainId', ChainsIds.TLC);
+    }
+  }, []);
 
   const initializeSwap = async () => {
     if (walletAddress && totalBalance > 0) {
@@ -93,7 +122,7 @@ const CrossChainBridge: React.FC = () => {
 
         setTotalBalance(parseFloat(available.toFixed(3)));
       } else {
-        const result = await tokenContract.balanceOf(walletAddress);
+        const result = await tokenContract?.balanceOf(walletAddress);
         if (result) {
           const available = parseFloat(ethers.utils.formatEther(result));
           setTotalBalance(parseFloat(available.toFixed(3)));
@@ -106,15 +135,17 @@ const CrossChainBridge: React.FC = () => {
 
   const approve = async () => {
     try {
+      setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + gasFee;
-        const tx = await tokenContract.functions.approve(
+        const tx = await tokenContract?.functions.approve(
           mainBridgeContract?.address,
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
         );
         await tx.wait();
         setIsLoading(false);
+        setApproveDone(true);
       }
     } catch (error) {
       setIsLoading(false);
@@ -122,39 +153,70 @@ const CrossChainBridge: React.FC = () => {
     }
   };
 
-  const swap = async () => {
+  const approveSide = async () => {
     try {
+      setErrorMessage(undefined);
+      if (parseFloat(amountToSend) > 0) {
+        setIsLoading(true);
+        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const tx = await tokenContract?.functions.approve(
+          sideBridgeContract?.address,
+          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+        );
+        await tx.wait();
+        setIsLoading(false);
+        setApproveDone(true);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log('Err on approve: ', error);
+    }
+  };
+
+  const receiveTokens = async () => {
+    try {
+      setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         console.log(
-          'childBridgeContract?.address: ',
-          childBridgeContract?.address,
+          'sideBridgeContract?.address: ',
+          sideBridgeContract?.address,
         );
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + gasFee;
         const tx = await mainBridgeContract?.receiveTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
-          childBridgeContract?.address,
+          sideBridgeContract?.address,
         );
         await tx.wait();
         setIsLoading(false);
       }
-    } catch (error) {
+    } catch (error: { message: string }) {
       setIsLoading(false);
-      console.log('Err on swap: ', error);
+
+      if (error.message.includes('whitelist')) {
+        setErrorMessage('You are not whitelisted');
+      } else if (error.message.includes('denied')) {
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Something went wrong');
+      }
+      console.log('Err on receiveTokens: ', error);
     }
   };
 
   const returnTokens = async () => {
     try {
+      console.log('RETURN TOKENS');
+      console.log('mainBridgeContract', mainBridgeContract);
+      console.log('sideBridgeContract', sideBridgeContract);
       if (parseFloat(amountToSend) > 0) {
         console.log(
-          'childBridgeContract?.address: ',
-          childBridgeContract?.address,
+          'sideBridgeContract?.address: ',
+          sideBridgeContract?.address,
         );
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + gasFee;
-        const tx = await childBridgeContract?.returnTokens(
-          walletAddress,
+        const tx = await sideBridgeContract?.returnTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
           mainBridgeContract?.address,
         );
@@ -163,9 +225,18 @@ const CrossChainBridge: React.FC = () => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log('Err on swap: ', error);
+      setErrorMessage('Something went wrong');
+      console.log('Err on returnTokens: ', error);
     }
   };
+
+  const chainError = useMemo(() => {
+    const neededChainId = getChainId(bridgeState.fromChain);
+
+    if (currentChainId !== neededChainId) {
+      return `You are on the another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
+    }
+  }, [currentChainId, bridgeState.fromChain]);
 
   return (
     <div className="flex flex-col flex-1 items-center">
@@ -178,6 +249,7 @@ const CrossChainBridge: React.FC = () => {
           </p>
         </div>
         <div className="flex">
+          {chainError && <p className="text-red-500 text-sm">{chainError}</p>}
           {/* <p className="text-green-400 font-poppins font-semibold text-lg mb-4">
             {amountToSend} TLX
           </p>
@@ -196,7 +268,6 @@ const CrossChainBridge: React.FC = () => {
                 value={amountToSend}
                 onChange={(e) => setAmountToSend(e.target.value)}
                 type="text"
-                // disabled
               ></input>
             </div>
             <TokensModal
@@ -222,7 +293,11 @@ const CrossChainBridge: React.FC = () => {
                 value={amountToSend}
               ></input>
             </div>
-            <TokensModal chains={{ BSC: modalChains.BSC }} type="to" />
+            <TokensModal
+              // chains={{ TLC: modalChains.TLC, BSC: modalChains.BSC }}
+              chains={{ BSC: modalChains.BSC }}
+              type="to"
+            />
           </div>
           <p className="my-4 text-sm">
             You will spend{' '}
@@ -230,34 +305,50 @@ const CrossChainBridge: React.FC = () => {
             as a total of {parseFloat(amountToSend) + 5} {bridgeState.token}
           </p>
           <div className="flex w-full space-x-8">
-            <button
-              onClick={approve}
-              className="flex-[0.5] flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <TailSpin color="#fff" height={18} width={18} />
-                </>
+            {currentChainId === ChainsIds.TLC ? (
+              !approveDone ? (
+                <button
+                  onClick={
+                    bridgeState.toChain !== 'TLC' ? approve : approveSide
+                  }
+                  className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <TailSpin color="#fff" height={18} width={18} />
+                    </>
+                  ) : (
+                    `Approve`
+                  )}
+                </button>
               ) : (
-                `Approve`
-              )}
-            </button>
-            <button
-              // onClick={bridgeState.toChain !== 'TLC' ? swap : returnTokens}
-              onClick={swap}
-              className="flex flex-[0.5] h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <>
-                  <TailSpin color="#fff" height={18} width={18} />
-                </>
-              ) : (
-                'Send'
-              )}
-            </button>
+                <button
+                  onClick={
+                    bridgeState.toChain !== 'TLC' ? receiveTokens : returnTokens
+                  }
+                  // onClick={swap}
+                  className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <TailSpin color="#fff" height={18} width={18} />
+                    </>
+                  ) : (
+                    'Send'
+                  )}
+                </button>
+              )
+            ) : (
+              <p className="w-full text-center">
+                Please connect to TLChain Mainnet
+              </p>
+            )}
           </div>
+          {errorMessage && (
+            <p className="my-4 text-sm text-center">{errorMessage}</p>
+          )}
         </div>
       </div>
       <div className="w-[44rem] xs:w-[22rem] mt-10 text-sm">

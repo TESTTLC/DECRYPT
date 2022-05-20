@@ -4,14 +4,19 @@ import Web3 from 'web3';
 import { useSelector } from 'react-redux';
 import { Web3Provider } from '@ethersproject/providers';
 import { StoreState } from 'src/utils/storeTypes';
-import { getBridgeAddresses } from 'src/utils/functions/Contracts';
+import {
+  getBridgeAddresses,
+  getTokenAddress,
+} from 'src/utils/functions/Contracts';
 
 import MainBridge from '../contracts/MainBridge.json';
-import ChildBridge from '../contracts/ChildBridge.json';
+import SideBridge from '../contracts/SideBridge.json';
+import TokenErc721 from '../contracts/LuxandiaToken.json';
 import {
   bridgeAddresses,
   BSCBridgeContractAddress,
-  BSCChildBridgeContractAddress,
+  BSCSideBridgeContractAddress,
+  LussoTokenContractAddress,
 } from '../utils/globals';
 
 export const useBridgeContracts = (
@@ -30,7 +35,11 @@ export const useBridgeContracts = (
     ethers.Contract | undefined
   >();
 
-  const [childBridgeContract, setChildBridgeContract] = useState<
+  const [sideBridgeContract, setSideBridgeContract] = useState<
+    ethers.Contract | undefined
+  >();
+
+  const [tokenContract, setTokenContract] = useState<
     ethers.Contract | undefined
   >();
 
@@ -40,25 +49,31 @@ export const useBridgeContracts = (
   const [mainBridgeAddress, setMainBridgeAddress] = useState(
     bridgeAddresses.LSO.main.address,
   );
-  const [childBridgeAddress, setChildBridgeAddress] = useState(
+  const [sideBridgeAddress, setSideBridgeAddress] = useState(
     bridgeAddresses.LSO.child.BSC.address,
   );
+  const [tokenAddress, setTokenAddress] = useState(LussoTokenContractAddress);
+
+  const getTokenContractAddress = useCallback(() => {
+    const address = getTokenAddress(coinTag, fromChain);
+    setTokenAddress(address);
+  }, [coinTag, fromChain]);
 
   const getAddresses = useCallback(() => {
-    const { mainBridgeAddress: mainAddr, childBridgeAddress: childAddr } =
+    const { mainBridgeAddress: mainAddr, sideBridgeAddress: childAddr } =
       getBridgeAddresses(coinTag, fromChain, toChain);
-
+    getTokenContractAddress();
     setMainBridgeAddress(mainAddr);
-    setChildBridgeAddress(childAddr);
-  }, [coinTag, fromChain, toChain]);
+    setSideBridgeAddress(childAddr);
+  }, [coinTag, fromChain, getTokenContractAddress, toChain]);
 
   useEffect(() => {
     connectToContracts();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coinTag, mainBridgeAddress, childBridgeAddress]);
+  }, [coinTag, mainBridgeAddress, sideBridgeAddress, tokenAddress]);
 
   const connectToContracts = async () => {
+    console.log('connecting?');
     try {
       if (provider) {
         const mainContract = new ethers.Contract(
@@ -66,15 +81,22 @@ export const useBridgeContracts = (
           MainBridge.abi,
           provider.getSigner(),
         );
-        console.log('here????: ', childBridgeAddress);
-        const childContract = new ethers.Contract(
-          childBridgeAddress,
-          ChildBridge.abi,
+        console.log('here????: ', sideBridgeAddress);
+        const sideContract = new ethers.Contract(
+          sideBridgeAddress,
+          SideBridge.abi,
+          provider.getSigner(),
+        );
+
+        const tknContract = new ethers.Contract(
+          tokenAddress,
+          TokenErc721.abi,
           provider.getSigner(),
         );
 
         setMainBridgeContract(mainContract);
-        setChildBridgeContract(childContract);
+        setSideBridgeContract(sideContract);
+        setTokenContract(tknContract);
         setAlreadyConnectedToContracts(true);
       }
     } catch (error) {
@@ -91,11 +113,13 @@ export const useBridgeContracts = (
 
   useEffect(() => {
     getAddresses();
-  }, [coinTag, fromChain, getAddresses, toChain]);
+    // getTokenContractAddress();
+  }, [coinTag, fromChain, getAddresses, getTokenContractAddress, toChain]);
 
   return {
     provider,
     mainBridgeContract,
-    childBridgeContract,
+    sideBridgeContract,
+    tokenContract,
   };
 };

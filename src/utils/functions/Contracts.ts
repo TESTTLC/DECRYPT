@@ -4,10 +4,13 @@ import { ethers, Contract } from 'ethers';
 
 import {
   bridgeAddresses,
-  LSO_BSCChildBridgeContractAddress,
+  LSO_BSCSideBridgeContractAddress,
   LSO_MainBridgeContractAddress,
+  LussoBinanceChildTokenContractAddress,
+  LussoStakeContractAddress,
+  LussoTokenContractAddress,
 } from '../globals';
-import { defaultPowers } from '../types';
+import { ChainsIds, defaultPowers } from '../types';
 
 /** This function will call the tokenContract.methods.approve is done */
 export const approveStakeTokens = async (
@@ -283,18 +286,64 @@ export const getBridgeAddresses = (
 ) => {
   console.log('herSSSSSe: ', toChain);
   let mainBridgeAddress = '';
-  let childBridgeAddress = '';
+  let sideBridgeAddress = '';
   if (token === 'LSO') {
     mainBridgeAddress = bridgeAddresses.LSO.main.address;
+    if (toChain === 'TLC') {
+      if (fromChain === 'BSC') {
+        sideBridgeAddress = bridgeAddresses.LSO.child.BSC.address;
+      }
+      if (fromChain === 'FTM') {
+        sideBridgeAddress = bridgeAddresses.LSO.child.FTM.address;
+      }
+    }
     if (toChain === 'BSC') {
-      childBridgeAddress = bridgeAddresses.LSO.child.BSC.address;
+      sideBridgeAddress = bridgeAddresses.LSO.child.BSC.address;
     }
     if (toChain === 'FTM') {
-      childBridgeAddress = bridgeAddresses.LSO.child.FTM.address;
+      sideBridgeAddress = bridgeAddresses.LSO.child.FTM.address;
     }
   }
 
-  return { mainBridgeAddress, childBridgeAddress };
+  return { mainBridgeAddress, sideBridgeAddress };
+};
+
+export const getTokenAddress = (token: string, fromChain: string) => {
+  let tokenAddress = '';
+  if (token === 'LSO') {
+    if (fromChain === 'TLC') {
+      tokenAddress = LussoTokenContractAddress;
+      // tokenAddress === '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
+    } else if (fromChain === 'BSC') {
+      tokenAddress = LussoBinanceChildTokenContractAddress;
+    }
+  }
+
+  return tokenAddress;
+};
+
+export const getChainId = (chain: string) => {
+  let chainId = ChainsIds.TLC;
+  if (chain === 'TLC') {
+    chainId = ChainsIds.TLC;
+  } else if (chain === 'BSC') {
+    chainId = ChainsIds.BSC;
+  }
+  return chainId;
+  // } else if (chain === 'FTM') {
+  //   chainId = 'Futrue';
+  // }
+};
+
+export const getChain = (chainId: string) => {
+  let chain = 'TLC';
+  if (chainId === ChainsIds.TLC) {
+    chain = 'TLC';
+  } else if (chainId === ChainsIds.BSC) {
+    chain = 'BSC';
+  }
+
+  return chain;
 };
 
 // const freezeTo = async () => {
