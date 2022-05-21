@@ -11,12 +11,7 @@ import { getChain, getChainId } from 'src/utils/functions/Contracts';
 import { ChainsIds } from '../../utils/types';
 import { changeChain } from '../../utils/functions/MetaMask';
 import { useContracts } from '../../hooks/useContracts';
-import {
-  BSCSideBridgeContractAddress,
-  modalChains,
-  modalCoins,
-  BSCBridgeContractAddress,
-} from '../../utils/globals';
+import { modalChains } from '../../utils/globals';
 import { getTransaction, initialize } from '../../api/index';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
@@ -169,7 +164,7 @@ const CrossChainBridge: React.FC = () => {
       }
     } catch (error) {
       setIsLoading(false);
-      console.log('Err on approve: ', error);
+      console.log('Err on approveSide: ', error);
     }
   };
 
@@ -177,10 +172,6 @@ const CrossChainBridge: React.FC = () => {
     try {
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
-        console.log(
-          'sideBridgeContract?.address: ',
-          sideBridgeContract?.address,
-        );
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + gasFee;
         const tx = await mainBridgeContract?.receiveTokens(
@@ -189,8 +180,10 @@ const CrossChainBridge: React.FC = () => {
         );
         await tx.wait();
         setIsLoading(false);
+        setApproveDone(false);
       }
-    } catch (error: { message: string }) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       setIsLoading(false);
 
       if (error.message.includes('whitelist')) {
@@ -206,14 +199,7 @@ const CrossChainBridge: React.FC = () => {
 
   const returnTokens = async () => {
     try {
-      console.log('RETURN TOKENS');
-      console.log('mainBridgeContract', mainBridgeContract);
-      console.log('sideBridgeContract', sideBridgeContract);
       if (parseFloat(amountToSend) > 0) {
-        console.log(
-          'sideBridgeContract?.address: ',
-          sideBridgeContract?.address,
-        );
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + gasFee;
         const tx = await sideBridgeContract?.returnTokens(
@@ -222,6 +208,7 @@ const CrossChainBridge: React.FC = () => {
         );
         await tx.wait();
         setIsLoading(false);
+        setApproveDone(false);
       }
     } catch (error) {
       setIsLoading(false);
@@ -271,7 +258,8 @@ const CrossChainBridge: React.FC = () => {
               ></input>
             </div>
             <TokensModal
-              chains={{ TLC: modalChains.TLC }}
+              chains={{ TLC: modalChains.TLC, BSC: modalChains.BSC }}
+              // chains={{ TLC: modalChains.TLC }}
               type="from"
               // onFromTokenSelect={() => setFromToken()}
             />
@@ -294,8 +282,8 @@ const CrossChainBridge: React.FC = () => {
               ></input>
             </div>
             <TokensModal
-              // chains={{ TLC: modalChains.TLC, BSC: modalChains.BSC }}
-              chains={{ BSC: modalChains.BSC }}
+              chains={{ TLC: modalChains.TLC, BSC: modalChains.BSC }}
+              // chains={{ BSC: modalChains.BSC }}
               type="to"
             />
           </div>
@@ -305,46 +293,47 @@ const CrossChainBridge: React.FC = () => {
             as a total of {parseFloat(amountToSend) + 5} {bridgeState.token}
           </p>
           <div className="flex w-full space-x-8">
-            {currentChainId === ChainsIds.TLC ? (
-              !approveDone ? (
-                <button
-                  onClick={
-                    bridgeState.toChain !== 'TLC' ? approve : approveSide
-                  }
-                  className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <TailSpin color="#fff" height={18} width={18} />
-                    </>
-                  ) : (
-                    `Approve`
-                  )}
-                </button>
-              ) : (
-                <button
-                  onClick={
-                    bridgeState.toChain !== 'TLC' ? receiveTokens : returnTokens
-                  }
-                  // onClick={swap}
-                  className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <>
-                      <TailSpin color="#fff" height={18} width={18} />
-                    </>
-                  ) : (
-                    'Send'
-                  )}
-                </button>
-              )
+            {/* {currentChainId === getChainId(bridgeState.fromChain) ? ( */}
+            {!approveDone ? (
+              <button
+                onClick={bridgeState.toChain !== 'TLC' ? approve : approveSide}
+                className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center "
+                disabled={
+                  isLoading ||
+                  currentChainId !== getChainId(bridgeState.fromChain)
+                }
+              >
+                {isLoading ? (
+                  <>
+                    <TailSpin color="#fff" height={18} width={18} />
+                  </>
+                ) : (
+                  `Approve`
+                )}
+              </button>
             ) : (
-              <p className="w-full text-center">
-                Please connect to TLChain Mainnet
-              </p>
+              <button
+                onClick={
+                  bridgeState.toChain !== 'TLC' ? receiveTokens : returnTokens
+                }
+                // onClick={swap}
+                className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <TailSpin color="#fff" height={18} width={18} />
+                  </>
+                ) : (
+                  'Send'
+                )}
+              </button>
             )}
+            {/* ) : (
+              <p className="w-full text-center">
+                Please connect to Selected "From" Chain
+              </p>
+            )} */}
           </div>
           {errorMessage && (
             <p className="my-4 text-sm text-center">{errorMessage}</p>

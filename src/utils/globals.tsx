@@ -5,11 +5,8 @@ import solBridgeImage from '../assets/images/sol-bridge.png';
 import tlcBridgeImage from '../assets/images/tlc-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
 
-import { Project } from './types';
 export const nativeTLCAddress = '0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6';
-//old good
-// export const marketplaceAddress = '0x627A2868fe43E5fd14BB27eC3002A6089ee2c04B';
-//new good result
+
 export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 
 export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
@@ -69,14 +66,8 @@ export const LussoBinanceChildTokenContractAddress =
 export const LussoFTMChildTokenContractAddress =
   '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
-/** Mainnet */
-// export const OldTLXTokenContractAddress =
-//   "0xea255909e46a54d54255219468991c69ca0e659d";
-/** Testnet */
 export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
-// export const TLCStakeContractAddress =
-//   "0xb4628fFdb9D2E4a13827dfb473B8d6c0419DC2Ad";
 
 export const bridgeAddresses = {
   LSO: {
