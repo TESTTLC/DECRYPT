@@ -12,12 +12,7 @@ import {
 import MainBridge from '../contracts/MainBridge.json';
 import SideBridge from '../contracts/SideBridge.json';
 import TokenErc721 from '../contracts/LuxandiaToken.json';
-import {
-  bridgeAddresses,
-  BSCBridgeContractAddress,
-  BSCSideBridgeContractAddress,
-  LussoTokenContractAddress,
-} from '../utils/globals';
+import { bridgeAddresses, LussoTokenContractAddress } from '../utils/globals';
 
 export const useBridgeContracts = (
   coinTag: string,

@@ -46,7 +46,8 @@ export const useMarketplaceSDK = () => {
   }, [loadSDK]);
 
   const detectProvider = async () => {
-    const p = await detectEthereumProvider();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const p: any = await detectEthereumProvider();
     setCurrentProvider(p);
     if (p && p.chainId) {
       //@ts-ignore
