@@ -7,9 +7,9 @@ import bscBridgeImage from 'src/assets/images/bsc-bridge.png';
 import solBridgeImage from 'src/assets/images/sol-bridge.png';
 import tlcBridgeImage from 'src/assets/images/tlc-bridge.png';
 import maticBridgeImage from 'src/assets/images/matic-bridge.png';
+import avaxBridgeImage from 'src/assets/images/avax-token.png';
 import tlxOldToken from 'src/assets/images/tlx-token-old.png';
 import tlxNewToken from 'src/assets/images/tlx-token-new.png';
-import atariToken from 'src/assets/images/atari-token.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import { modalChains } from 'src/utils/globals';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,14 +31,7 @@ interface Props {
   // onToTokenSelect?: () => void;
 }
 
-const TokensModal: React.FC<Props> = ({
-  chains,
-  type,
-  // onFromChainSelect,
-  // onToChainSelect,
-  // onFromTokenSelect,
-  // onToTokenSelect,
-}) => {
+const TokensModal: React.FC<Props> = ({ chains, type }) => {
   const { isMobileSize } = useWindowSize();
   const bridgeState = useSelector<StoreState, BridgeState>(
     (state) => state.bridge,
@@ -84,6 +77,8 @@ const TokensModal: React.FC<Props> = ({
       setImageUsed(solBridgeImage);
     } else if (selectedChain === 'TLC') {
       setImageUsed(tlcBridgeImage);
+    } else if (selectedChain === 'AVAX') {
+      setImageUsed(avaxBridgeImage);
     }
 
     if (bridgeState.token === 'TLX') {
@@ -115,11 +110,16 @@ const TokensModal: React.FC<Props> = ({
   const updateState = (params: { chain?: string; token?: string }) => {
     console.log('updateState', params);
     if (type === 'from') {
-      // if (params.chain === bridgeState.toChain)
       dispatch(
         updateBridgeState({
-          ...(params.chain === bridgeState.toChain && {
-            toChain: bridgeState.fromChain,
+          // ...(params.chain !== 'TLC' && {
+          //   toChain: 'TLC',
+          // }),
+          // ...(params.chain === bridgeState.toChain && {
+          //   toChain: bridgeState.fromChain,
+          // }),
+          ...(params.chain !== 'TLC' && {
+            toChain: 'TLC',
           }),
           ...(params.chain && { fromChain: params.chain }),
           ...(params.token && { token: params.token }),
@@ -128,8 +128,14 @@ const TokensModal: React.FC<Props> = ({
     } else if (type === 'to') {
       dispatch(
         updateBridgeState({
-          ...(params.chain === bridgeState.fromChain && {
-            fromChain: bridgeState.toChain,
+          // ...(params.chain !== 'TLC' && {
+          //   fromChain: 'TLC',
+          // }),
+          // ...(params.chain === bridgeState.fromChain && {
+          //   fromChain: bridgeState.toChain,
+          // }),
+          ...(params.chain !== 'TLC' && {
+            fromChain: 'TLC',
           }),
           ...(params.chain && { toChain: params.chain }),
           ...(params.token && { token: params.token }),
@@ -203,7 +209,7 @@ const TokensModal: React.FC<Props> = ({
                   } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
                   onClick={() => updateState({ chain: chain.tag })}
                 >
-                  <img src={chain.image} className="w-10 h-10" />
+                  <img src={chain.image} className="w-8 h-8 mr-2" />
                   <p className="text-xl font-semibold">
                     {chain.tag} ({chain.name})
                   </p>

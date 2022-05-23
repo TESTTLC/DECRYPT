@@ -74,10 +74,12 @@ const CrossChainBridge: React.FC = () => {
   }, [window.ethereum, bridgeState.fromChain]);
 
   useEffect(() => {
-    setCurrentChainId(
-      //@ts-ignore
-      ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
-    );
+    if (window?.ethereum) {
+      setCurrentChainId(
+        //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
+      );
+    }
   });
 
   useEffect(() => {
@@ -219,7 +221,8 @@ const CrossChainBridge: React.FC = () => {
 
   const chainError = useMemo(() => {
     const neededChainId = getChainId(bridgeState.fromChain);
-
+    console.log('currentChainId: ', currentChainId);
+    console.log('neededChainId: ', neededChainId);
     if (currentChainId !== neededChainId) {
       return `You are on the another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
     }
@@ -258,7 +261,12 @@ const CrossChainBridge: React.FC = () => {
               ></input>
             </div>
             <TokensModal
-              chains={{ TLC: modalChains.TLC, BSC: modalChains.BSC }}
+              chains={{
+                TLC: modalChains.TLC,
+                BSC: modalChains.BSC,
+                FTM: modalChains.FTM,
+                AVAX: modalChains.AVAX,
+              }}
               // chains={{ TLC: modalChains.TLC }}
               type="from"
               // onFromTokenSelect={() => setFromToken()}
@@ -282,7 +290,12 @@ const CrossChainBridge: React.FC = () => {
               ></input>
             </div>
             <TokensModal
-              chains={{ TLC: modalChains.TLC, BSC: modalChains.BSC }}
+              chains={{
+                TLC: modalChains.TLC,
+                BSC: modalChains.BSC,
+                FTM: modalChains.FTM,
+                AVAX: modalChains.AVAX,
+              }}
               // chains={{ BSC: modalChains.BSC }}
               type="to"
             />

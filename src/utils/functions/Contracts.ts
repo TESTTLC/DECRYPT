@@ -6,7 +6,9 @@ import {
   bridgeAddresses,
   LSO_BSCSideBridgeContractAddress,
   LSO_MainBridgeContractAddress,
+  LussoAvalancheChildTokenContractAddress,
   LussoBinanceChildTokenContractAddress,
+  LussoFantomChildTokenContractAddress,
   LussoStakeContractAddress,
   LussoTokenContractAddress,
 } from '../globals';
@@ -296,12 +298,19 @@ export const getBridgeAddresses = (
       if (fromChain === 'FTM') {
         sideBridgeAddress = bridgeAddresses.LSO.child.FTM.address;
       }
+      if (fromChain === 'AVAX') {
+        sideBridgeAddress = bridgeAddresses.LSO.child.AVAX.address;
+      }
     }
+    // sideBridgeAddress = bridgeAddresses[token].child[toChain].address;
     if (toChain === 'BSC') {
       sideBridgeAddress = bridgeAddresses.LSO.child.BSC.address;
     }
     if (toChain === 'FTM') {
       sideBridgeAddress = bridgeAddresses.LSO.child.FTM.address;
+    }
+    if (toChain === 'AVAX') {
+      sideBridgeAddress = bridgeAddresses.LSO.child.AVAX.address;
     }
   }
 
@@ -316,6 +325,10 @@ export const getTokenAddress = (token: string, fromChain: string) => {
       // tokenAddress === '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
     } else if (fromChain === 'BSC') {
       tokenAddress = LussoBinanceChildTokenContractAddress;
+    } else if (fromChain === 'FTM') {
+      tokenAddress = LussoFantomChildTokenContractAddress;
+    } else if (fromChain === 'AVAX') {
+      tokenAddress = LussoAvalancheChildTokenContractAddress;
     }
   }
 
@@ -328,11 +341,12 @@ export const getChainId = (chain: string) => {
     chainId = ChainsIds.TLC;
   } else if (chain === 'BSC') {
     chainId = ChainsIds.BSC;
+  } else if (chain === 'FTM') {
+    chainId = ChainsIds.FTM;
+  } else if (chain === 'AVAX') {
+    chainId = ChainsIds.AVAX;
   }
   return chainId;
-  // } else if (chain === 'FTM') {
-  //   chainId = 'Futrue';
-  // }
 };
 
 export const getChain = (chainId: string) => {
@@ -341,6 +355,10 @@ export const getChain = (chainId: string) => {
     chain = 'TLC';
   } else if (chainId === ChainsIds.BSC) {
     chain = 'BSC';
+  } else if (chainId === ChainsIds.FTM) {
+    chain = 'FTM';
+  } else if (chainId === ChainsIds.AVAX) {
+    chain = 'AVAX';
   }
 
   return chain;

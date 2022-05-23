@@ -69,6 +69,8 @@ export enum ChainsIds {
   BSC = '0x38',
   BSC_TESTNET = '0x61', //97
   TLC = '0x1439',
+  FTM = '0xfa',
+  AVAX = '0xa86a',
 }
 
 export const defaultPowers = {

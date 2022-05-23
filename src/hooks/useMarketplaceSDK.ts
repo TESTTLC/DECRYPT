@@ -48,8 +48,10 @@ export const useMarketplaceSDK = () => {
   const detectProvider = async () => {
     const p = await detectEthereumProvider();
     setCurrentProvider(p);
-    //@ts-ignore
-    setCurrentChainId(p.chainId);
+    if (p && p.chainId) {
+      //@ts-ignore
+      setCurrentChainId(p.chainId);
+    }
   };
   detectProvider();
 

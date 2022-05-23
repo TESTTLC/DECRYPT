@@ -4,6 +4,7 @@ import bscBridgeImage from '../assets/images/bsc-bridge.png';
 import solBridgeImage from '../assets/images/sol-bridge.png';
 import tlcBridgeImage from '../assets/images/tlc-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
+import avaxBridgeImage from '../assets/images/avax-token.png';
 
 export const nativeTLCAddress = '0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6';
 
@@ -58,13 +59,19 @@ export const LSO_BSCSideBridgeContractAddress =
   '0x25C6330D43445985f564285f3735600c8A94b74a';
 
 export const LSO_FTMSideBridgeContractAddress =
+  '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
+
+export const LSO_AVAXSideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
+export const LussoAvalancheChildTokenContractAddress =
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
+
+export const LussoFantomChildTokenContractAddress =
+  '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
 
 export const LussoBinanceChildTokenContractAddress =
   '0x56F0878AE8F02E30d08B2D8D540ec59ffFa9e06e';
-
-export const LussoFTMChildTokenContractAddress =
-  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
@@ -80,6 +87,9 @@ export const bridgeAddresses = {
       },
       FTM: {
         address: LSO_FTMSideBridgeContractAddress,
+      },
+      AVAX: {
+        address: LSO_AVAXSideBridgeContractAddress,
       },
     },
   },
@@ -112,10 +122,10 @@ export const modalChains = {
     tag: 'FTM',
     image: ftmBridgeImage,
   },
-  AVA: {
+  AVAX: {
     name: 'Avalanche',
-    tag: 'AVA',
-    image: ethBridgeImage,
+    tag: 'AVAX',
+    image: avaxBridgeImage,
   },
 
   // {
