@@ -5,6 +5,8 @@ import { StoreState } from 'src/utils/storeTypes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getLSOLaunchpadRegistration } from 'src/api/launchpad';
 import { stakingRewards } from 'src/utils/globals';
+import testContract from 'src/contracts/MainBridgeMainToken.json';
+import { Web3Provider } from '@ethersproject/providers';
 
 import GlowingButton from '../../../components/GlowingButton';
 import SelectDropdown from '../../../components/SelectDropdown';
@@ -37,6 +39,10 @@ const StakeCoin: React.FC = () => {
 
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
+  );
+
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider,
   );
 
   const { stakeContract, tokenContract, stakeAddress, freezeContract } =
@@ -453,8 +459,49 @@ const StakeCoin: React.FC = () => {
     }
   };
 
+  const testTBT = async () => {
+    const c = new ethers.Contract(
+      '0x7d2fCB4e971EF7775D490850f204ae1449dA620A',
+      testContract.abi,
+      provider?.getSigner(),
+    );
+    const overrides = { value: ethers.utils.parseEther('0.05') };
+    const tx = await c.receiveTokens(
+      '0xff8046Ae3b6E9c275728501856b5E0e37F59d6eb',
+      overrides,
+    );
+    const response = await tx.wait();
+
+    console.log('response: ', response);
+  };
+
+  const unlockTokens = async () => {
+    const c = new ethers.Contract(
+      '0x7d2fCB4e971EF7775D490850f204ae1449dA620A',
+      testContract.abi,
+      provider?.getSigner(),
+    );
+    console.log('walletAddress: ', walletAddress);
+    const tx = await c.unlockTokens(
+      '0xd09e3A1F47432A14C6D782cAE30ec07543992E57',
+      ethers.utils.parseEther('0.04'),
+    );
+    const response = await tx.wait();
+    console.log('response: ', response);
+  };
+
   return coinsTags.includes(coinTag ?? '') ? (
     <div className="w-full border-t-2 border-white border-opacity-60">
+      {/* <button onClick={testTBT} className="w-40 h-10 bg-black bg-opacity-70">
+        TBT
+      </button>
+
+      <button
+        onClick={unlockTokens}
+        className="w-40 h-10 bg-black bg-opacity-70"
+      >
+        Unlock
+      </button> */}
       <Stats
         coinTag={coinTag as 'TLC' | 'TLX' | 'LSO'}
         totalRewards={totalRewards}

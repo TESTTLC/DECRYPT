@@ -52,6 +52,9 @@ export const ownerAddress = '0x21C710cACAFfD5d885094cD13988ee08700D26BD';
 export const BSCBridgeContractAddress =
   '0x9E9B77E0b04E9B5fcdBFB8a33D97C7B115897dec';
 
+export const TLC_MainBridgeContractAddress =
+  '0x24b74c5A0b0126E37Fc0EE9fe231D6105Bbf4815';
+
 export const LSO_MainBridgeContractAddress =
   '0x41982760519299703d5bD9d138cFF15CBEE3db43';
 
@@ -63,6 +66,21 @@ export const LSO_FTMSideBridgeContractAddress =
 
 export const LSO_AVAXSideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
+export const TLC_FTMSideBridgeContractAddress =
+  '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
+
+export const TLC_AVAXSideBridgeContractAddress =
+  '0x160d97B05a7E7D249f8FcEb47b2A35170f3eF949';
+
+export const TLC_BSC_ChildTokenContractAddress =
+  '0xCd6a8C968F6820f7163e7fb41F75048b92E4318D';
+
+export const TLC_AVAX_ChildTokenContractAddress =
+  '0xd97136B7caB42058F75E05e3D8C5C87CceaC8Bc3';
+
+export const TLC_FTM_ChildTokenContractAddress =
+  '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
 
 export const LussoAvalancheChildTokenContractAddress =
   '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
@@ -76,12 +94,18 @@ export const LussoBinanceChildTokenContractAddress =
 export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
 
+export const TLC_BSCSideBridgeContractAddress =
+  '0xbBcdB8C8E0D17b76F5ED2B9FC36A60154c2142F2';
+
 export const bridgeAddresses = {
   LSO: {
     main: {
       address: LSO_MainBridgeContractAddress,
     },
     child: {
+      TLC: {
+        address: LSO_MainBridgeContractAddress,
+      },
       BSC: {
         address: LSO_BSCSideBridgeContractAddress,
       },
@@ -95,11 +119,20 @@ export const bridgeAddresses = {
   },
   TLC: {
     main: {
-      address: TLCTokenContractAddress,
+      address: TLC_MainBridgeContractAddress,
     },
     child: {
+      TLC: {
+        address: TLC_MainBridgeContractAddress,
+      },
       BSC: {
-        address: 'toBeAdded',
+        address: TLC_BSCSideBridgeContractAddress,
+      },
+      FTM: {
+        address: TLC_FTMSideBridgeContractAddress,
+      },
+      AVAX: {
+        address: TLC_AVAXSideBridgeContractAddress,
       },
     },
   },

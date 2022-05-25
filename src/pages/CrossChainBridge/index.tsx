@@ -17,7 +17,6 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 
 import TokensModal from './components/TokensModal';
 
-const gasFee = 5;
 const CrossChainBridge: React.FC = () => {
   const bridgeState = useSelector<StoreState, BridgeState>(
     (state) => state.bridge,
@@ -41,6 +40,11 @@ const CrossChainBridge: React.FC = () => {
   );
 
   const [currentChainId, setCurrentChainId] = useState<string>();
+  const [gasFee, setGasFee] = useState(bridgeState.token === 'TLC' ? 1 : 5);
+
+  useEffect(() => {
+    setGasFee(bridgeState.token === 'TLC' ? 1 : 5);
+  }, [bridgeState.token]);
 
   const chainChange = useCallback(async () => {
     try {
@@ -84,7 +88,7 @@ const CrossChainBridge: React.FC = () => {
 
   useEffect(() => {
     if (tokenContract && walletAddress) {
-      getBalance();
+      // getBalance();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenContract, walletAddress, currentChainId]);
@@ -175,11 +179,23 @@ const CrossChainBridge: React.FC = () => {
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
+        console.log('ssss: ', sideBridgeContract?.address);
         const finalAmount = parseFloat(amountToSend) + gasFee;
-        const tx = await mainBridgeContract?.receiveTokens(
-          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
-          sideBridgeContract?.address,
-        );
+        let tx;
+        if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
+          const overrides = {
+            value: ethers.utils.parseEther(finalAmount.toString()),
+          };
+          tx = await mainBridgeContract?.receiveTokens(
+            sideBridgeContract?.address,
+            overrides,
+          );
+        } else {
+          tx = await mainBridgeContract?.receiveTokens(
+            ethers.utils.parseEther(finalAmount.toString()),
+            sideBridgeContract?.address,
+          );
+        }
         await tx.wait();
         setIsLoading(false);
         setApproveDone(false);
@@ -203,6 +219,10 @@ const CrossChainBridge: React.FC = () => {
     try {
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
+        console.log(
+          'sideBridgeContract?.address: ',
+          sideBridgeContract?.address,
+        );
         const finalAmount = parseFloat(amountToSend) + gasFee;
         const tx = await sideBridgeContract?.returnTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
@@ -227,6 +247,16 @@ const CrossChainBridge: React.FC = () => {
       return `You are on the another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
     }
   }, [currentChainId, bridgeState.fromChain]);
+
+  const showApproveButton = useMemo(() => {
+    if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
+      return false;
+    } else if (!approveDone) {
+      return true;
+    } else {
+      return false;
+    }
+  }, [approveDone, bridgeState.token, bridgeState.fromChain]);
 
   return (
     <div className="flex flex-col flex-1 items-center">
@@ -256,7 +286,10 @@ const CrossChainBridge: React.FC = () => {
               <input
                 className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                 value={amountToSend}
-                onChange={(e) => setAmountToSend(e.target.value)}
+                onChange={(e) => {
+                  setApproveDone(false);
+                  setAmountToSend(e.target.value);
+                }}
                 type="text"
               ></input>
             </div>
@@ -302,12 +335,13 @@ const CrossChainBridge: React.FC = () => {
           </div>
           <p className="my-4 text-sm">
             You will spend{' '}
-            <span className="text-green-400">{amountToSend}</span> + 5 (gas fee)
-            as a total of {parseFloat(amountToSend) + 5} {bridgeState.token}
+            <span className="text-green-400">{amountToSend}</span> + {gasFee}{' '}
+            (gas fee) as a total of {parseFloat(amountToSend) + gasFee}{' '}
+            {bridgeState.token}
           </p>
           <div className="flex w-full space-x-8">
             {/* {currentChainId === getChainId(bridgeState.fromChain) ? ( */}
-            {!approveDone ? (
+            {showApproveButton ? (
               <button
                 onClick={bridgeState.toChain !== 'TLC' ? approve : approveSide}
                 className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center "
@@ -326,9 +360,20 @@ const CrossChainBridge: React.FC = () => {
               </button>
             ) : (
               <button
-                onClick={
-                  bridgeState.toChain !== 'TLC' ? receiveTokens : returnTokens
-                }
+                onClick={() => {
+                  if (
+                    bridgeState.toChain === 'TLC' &&
+                    bridgeState.fromChain === 'TLC'
+                  ) {
+                    return;
+                  } else {
+                    if (bridgeState.toChain !== 'TLC') {
+                      receiveTokens();
+                    } else {
+                      returnTokens();
+                    }
+                  }
+                }}
                 // onClick={swap}
                 className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
                 disabled={isLoading}

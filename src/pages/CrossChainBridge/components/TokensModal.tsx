@@ -11,6 +11,7 @@ import avaxBridgeImage from 'src/assets/images/avax-token.png';
 import tlxOldToken from 'src/assets/images/tlx-token-old.png';
 import tlxNewToken from 'src/assets/images/tlx-token-new.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
+import tlcLogo from 'src/assets/images/TLC-logo.png';
 import { modalChains } from 'src/utils/globals';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBridgeState } from 'src/redux/modules/bridge/actions';
@@ -81,8 +82,8 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
       setImageUsed(avaxBridgeImage);
     }
 
-    if (bridgeState.token === 'TLX') {
-      setImageUsedToken(tlxNewToken);
+    if (bridgeState.token === 'TLC') {
+      setImageUsedToken(tlcLogo);
     } else if (bridgeState.token === 'LSO') {
       setImageUsedToken(lsoLogo);
     }
@@ -108,8 +109,13 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
   }
 
   const updateState = (params: { chain?: string; token?: string }) => {
-    console.log('updateState', params);
     if (type === 'from') {
+      //   let { toChain } = bridgeState;
+      //   if (params.chain === 'TLC') {
+      //     toChain = bridgeState.fromChain;
+      //   } else {
+      //     toChain = 'TLC';
+      //   }
       dispatch(
         updateBridgeState({
           // ...(params.chain !== 'TLC' && {
@@ -118,14 +124,22 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
           // ...(params.chain === bridgeState.toChain && {
           //   toChain: bridgeState.fromChain,
           // }),
-          ...(params.chain !== 'TLC' && {
-            toChain: 'TLC',
-          }),
+          // ...(params.chain && { toChain }),
+          ...(params.chain &&
+            params.chain !== 'TLC' && {
+              toChain: 'TLC',
+            }),
           ...(params.chain && { fromChain: params.chain }),
           ...(params.token && { token: params.token }),
         }),
       );
     } else if (type === 'to') {
+      // let { fromChain } = bridgeState;
+      // if (params.chain === 'TLC' &&) {
+      //   fromChain = bridgeState.toChain;
+      // } else {
+      //   fromChain = 'TLC';
+      // }
       dispatch(
         updateBridgeState({
           // ...(params.chain !== 'TLC' && {
@@ -134,13 +148,23 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
           // ...(params.chain === bridgeState.fromChain && {
           //   fromChain: bridgeState.toChain,
           // }),
-          ...(params.chain !== 'TLC' && {
-            fromChain: 'TLC',
-          }),
+          // ...(params.chain && { fromChain }),
+          ...(params.chain &&
+            params.chain !== 'TLC' && {
+              fromChain: 'TLC',
+            }),
           ...(params.chain && { toChain: params.chain }),
           ...(params.token && { token: params.token }),
         }),
       );
+    }
+  };
+
+  const changeToken = () => {
+    if (bridgeState.token === 'TLC') {
+      updateState({ token: 'LSO' });
+    } else {
+      updateState({ token: 'TLC' });
     }
   };
 
@@ -149,7 +173,7 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
       <div className="flex w-full justify-end mb-4">
         <div className="flex items-center">
           <button
-            // onClick={() => updateState({ token: selectedToken })}
+            onClick={changeToken}
             // onClick={onFromTokenSelect && onFromTokenSelect}
             className="flex text-white font-poppins items-center justify-center"
           >
@@ -162,6 +186,7 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
                */}
               {bridgeState.token}
             </p>
+            <GoArrowDown className="h-4 w-4 ml-1" color="white" />
 
             {/* {type === 'from' ? (
               <GoArrowDown className="h-4 w-4 ml-2 mt-1" color="white" />
@@ -179,7 +204,7 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
             src={imageUsed}
           />
           <p className="text-white font-poppins">{selectedChain}</p>{' '}
-          <GoArrowDown className="h-4 w-4 ml-2 mb-1" color="white" />
+          <GoArrowDown className="h-4 w-4 ml-1" color="white" />
         </button>
       </div>
       <Modal
