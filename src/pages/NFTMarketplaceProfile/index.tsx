@@ -43,7 +43,7 @@ const categories = [
   ProfileCategories.COLLECTED,
   //   ProfileCategories.CREATE,
   ProfileCategories.ACTIVITY,
-  ProfileCategories.LIKED,
+  //   ProfileCategories.LIKED,
   //   ProfileCategories.OFFERS,
 ];
 
@@ -313,7 +313,7 @@ const NFTMarketplaceProfile: React.FC = () => {
             </div>
           )}
 
-          {selectedCategory === ProfileCategories.LIKED && (
+          {/* {selectedCategory === ProfileCategories.LIKED && (
             <div className="flex w-full justify-around">
               <div className="">
                 <p className="text-xl font-semibold text-center mb-2">
@@ -356,7 +356,7 @@ const NFTMarketplaceProfile: React.FC = () => {
                 )}
               </div>
             </div>
-          )}
+          )} */}
         </div>
         <MarketplaceRightSidebar />
       </div>
