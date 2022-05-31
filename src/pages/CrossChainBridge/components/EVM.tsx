@@ -62,7 +62,7 @@ const EVM: React.FC = () => {
   }, [bridgeState.fromChain]);
 
   if (window && window?.ethereum) {
-    //ts-ignore
+    //@ts-ignore
     window.ethereum.on('chainChanged', (chainId) => {
       localStorage.setItem('currentChainId', chainId.toString());
       window.location.reload();
