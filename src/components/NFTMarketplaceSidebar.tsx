@@ -15,6 +15,7 @@ import DotsCirleIcon from 'src/assets/svg/DotsCirle';
 import BagIcon from 'src/assets/svg/Bag';
 import DiscountIcon from 'src/assets/svg/Discount';
 import { routes } from 'src/utils/routes';
+import { useGetLastCreatedQuery } from 'src/redux/modules/nfts/queries';
 
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -29,6 +30,7 @@ const NFTMarketplaceSidebar: React.FC = () => {
     (state) => state.globals.isSidebarOpen,
   );
   const location = useLocation();
+  const { data: lastCreated } = useGetLastCreatedQuery();
 
   return (
     <div
@@ -51,7 +53,7 @@ const NFTMarketplaceSidebar: React.FC = () => {
         </div>
 
         {/* First Sidebar Element */}
-        <div>
+        <div className="mt-10">
           <button
             className="flex w-full space-x-4 items-center bg-black bg-opacity-70 px-4 py-2 rounded-lg mb-1"
             onClick={() => navigate(routes.nftMarketplaceCreateNFT.url)}
@@ -94,7 +96,7 @@ const NFTMarketplaceSidebar: React.FC = () => {
             <MenuIcon />
             <p>Whitelists</p>
           </button>
-          <button
+          {/* <button
             className={`flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem] ${
               location.pathname === routes.nftMarketplaceStats.url
                 ? 'text-green-500'
@@ -104,25 +106,25 @@ const NFTMarketplaceSidebar: React.FC = () => {
           >
             <VerticalLineChartIcon />
             <p>Stats</p>
-          </button>
-          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+          </button> */}
+          {/* <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
             <PaperIcon />
             <p>Resource</p>
-          </button>
+          </button> */}
         </div>
         {/* End Second Sidebar Element */}
 
         {/* Third Sidebar Element */}
         <div className="flex flex-col w-full bg-black bg-opacity-70 p-4 rounded-lg space-y-2 text-gray-400">
           <p className="uppercase text-blue-500 text-sm ml-2">Filter</p>
-          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+          {/* <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
             <MenuIcon />
             <p>Status</p>
-          </button>
-          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+          </button> */}
+          {/* <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
             <VerticalLineChartIcon />
             <p>Price</p>
-          </button>
+          </button> */}
           <button
             className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]"
             // onClick={() => navigate('/nftmarketplace/collections')}
@@ -145,10 +147,10 @@ const NFTMarketplaceSidebar: React.FC = () => {
             <BagIcon />
             <p>Categories</p>
           </button>
-          <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
+          {/* <button className="flex items-center space-x-2 hover:bg-gray-700 rounded-md px-2 py-[0.1rem]">
             <DiscountIcon />
             <p>On sale in</p>
-          </button>
+          </button> */}
         </div>
         {/* End Third Sidebar Element */}
 
@@ -158,10 +160,10 @@ const NFTMarketplaceSidebar: React.FC = () => {
             className="w-full h-60 object-cover rounded-xl"
           />
           <div className="p-4 flex flex-col space-y-4">
-            <p className="text-xs text-gray-500">Crypto Hero Marce</p>
+            <p className="text-xs text-gray-500">Decryption New Features</p>
             <div className="flex justify-between items-center text-sm">
-              <p className="text-blue-500">Crypto Hero Marce</p>
-              <p className="text-gray-500">x</p>
+              <p className="text-blue-500">Coming Soon!</p>
+              {/* <p className="text-gray-500">x</p> */}
             </div>
           </div>
         </div>

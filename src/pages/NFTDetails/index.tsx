@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Key, useCallback, useEffect, useRef, useState } from 'react';
-import { Path, useLocation, useParams } from 'react-router-dom';
+import {
+  Path,
+  useLocation,
+  useNavigate,
+  useParams,
+  useRoutes,
+} from 'react-router-dom';
 import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
 import { collectionsApi } from 'src/redux/modules/collections/queries';
 import { resolveIpfsUrl } from 'src/utils/functions/utils';
@@ -18,6 +24,22 @@ import * as Yup from 'yup';
 import { Formik, FormikValues } from 'formik';
 import { TailSpin } from 'react-loader-spinner';
 import LoadingSpinner from 'src/components/LoadingSpinner';
+import { routes } from 'src/utils/routes';
+import likeAnimation from 'src/assets/lottie/like.json';
+import { RiHeartFill, RiHeartLine } from 'react-icons/ri';
+import {
+  useDislikeItemMutation,
+  useGetLikesQuery,
+  useLikeItemMutation,
+} from 'src/redux/modules/likes/queries';
+import { FiCopy } from 'react-icons/fi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  FacebookShareCount,
+} from 'react-share';
 
 import {
   AuctionListing,
@@ -63,14 +85,27 @@ const borderStyle = 'border-opacity-20 border-blue-600';
 const NFTDetails: React.FC = () => {
   const { contractAddress, id: nftId } = useParams<CustomParams>();
   const { sdk, marketplace, provider, walletAddress } = useMarketplaceSDK();
-
+  const navigate = useNavigate();
   const [nft, setNft] = useState<NFTMetadataOwner>();
   const [ownedBy, setOwnedBy] = useState<string>();
   const [collectionMetadata, setCollectionMetadata] =
     useState<CollectionMetadata>();
+  const { data } = useGetLikesQuery(
+    {
+      contractAddress: contractAddress!,
+      contractNftId: Number(nftId),
+      type: 'NFT',
+    },
+    { skip: !nftId || !contractAddress },
+  );
+  const [likeItem, { isSuccess: isLikeSuccess }] = useLikeItemMutation();
+  const [dislikeItem, { isSuccess: isDislikeSuccess }] =
+    useDislikeItemMutation();
+
   const [collection, setCollection] = useState<NFTCollection>();
   const [isActiveListing, setIsActiveListing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isBuyLoading, setIsBuyLoading] = useState(false);
   const [isNewSaleLoading, setIsNewSaleLoading] = useState(false);
   const [isSelfOwned, setIsSelfOwned] = useState(false);
   const [listing, setListing] = useState<AuctionListing | DirectListing>();
@@ -78,6 +113,15 @@ const NFTDetails: React.FC = () => {
   const [isAddingListingInfo, setIsAddingListingInfo] = useState(false);
   const [showNewSaleContainer, setShowNewSaleContainer] = useState(false);
   const newSaleContainerRef = useRef<HTMLDivElement>(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const [countLikes, setCountLikes] = useState(0);
+
+  useEffect(() => {
+    if (data && data.countLikes) {
+      setCountLikes(data.countLikes);
+      setIsLiked(data.likedByRequestingUser);
+    }
+  }, [data]);
 
   const getNFT = useCallback(async () => {
     if (sdk && contractAddress && nftId && provider) {
@@ -102,34 +146,44 @@ const NFTDetails: React.FC = () => {
   const checkNFTListing = useCallback(async () => {
     if (sdk && marketplace && nft && nftId && contractAddress) {
       setListingLoading(true);
-      const _listings = await marketplace.getAllListings({
-        seller: nft.owner,
-        tokenContract: contractAddress,
-      });
-      const filteredListings = _listings.filter(
+      const _listings = await marketplace.getActiveListings();
+      const _l = _listings.filter(
         (_listing) =>
           _listing.asset.id.toString() === nftId &&
           _listing.assetContractAddress.toLowerCase() ===
             contractAddress.toLowerCase(),
       );
 
-      console.log('_listings: ', _listings);
-      console.log('filteredListings: ', filteredListings);
-      if (filteredListings.length > 0) {
-        if (filteredListings[filteredListings.length - 1]) {
-          const lastListing = filteredListings[filteredListings.length - 1];
-          if (lastListing.type === ListingType.Direct) {
-            const isActive = await marketplace.direct.isStillValidListing(
-              lastListing,
-            );
-            console.log('isactive: ', isActive);
-            setIsActiveListing(isActive);
-          }
-
-          console.log('lastListing: ', lastListing);
-          setListing(lastListing);
-        }
+      if (_l.length > 0) {
+        setIsActiveListing(true);
+        setListing(_l[0]);
       }
+
+      //   const _listings = await marketplace.getAllListings({
+      //     seller: nft.owner,
+      //     tokenContract: contractAddress,
+      //   });
+      //   const filteredListings = _listings.filter(
+      //     (_listing) =>
+      //       _listing.asset.id.toString() === nftId &&
+      //       _listing.assetContractAddress.toLowerCase() ===
+      //         contractAddress.toLowerCase(),
+      //   );
+
+      //   if (filteredListings.length > 0) {
+      //     if (filteredListings[filteredListings.length - 1]) {
+      //       const lastListing = filteredListings[filteredListings.length - 1];
+      //       if (lastListing.type === ListingType.Direct) {
+      //         const isActive = await marketplace.direct.isStillValidListing(
+      //           lastListing,
+      //         );
+
+      //         setIsActiveListing(isActive);
+      //       }
+
+      //       setListing(lastListing);
+      //     }
+      //   }
 
       setListingLoading(false);
     }
@@ -142,51 +196,32 @@ const NFTDetails: React.FC = () => {
   const getDetails = useCallback(async () => {
     try {
       if (sdk && marketplace && nftId && walletAddress && provider) {
-        console.log('Here done');
         const marketplaceMetadata = marketplace.metadata;
-        console.log('marketplaceMetadata: ', marketplaceMetadata);
       }
     } catch (error) {
       console.log('Error 2: ', error);
     }
   }, [marketplace, nftId, provider, sdk, walletAddress]);
 
-  const grantAccess = async () => {
-    try {
-      if (provider && walletAddress && sdk) {
-        // const p = ethers.getDefaultProvider('https://mainnet-rpc.tlxscan.com');
-        const wallet = new ethers.Wallet(
-          process.env.REACT_APP_MARKETPLACE_DEPLOYER_WALLET_PK || '',
-          provider,
-        );
-        const marketplaceDeployMetadata: MarketplaceContractDeployMetadata = {
-          name: 'TLChain Marketplace',
-          trusted_forwarders: ['0x4C86F3C5Dafa55CA760c349263793953BBBc9695'],
-          platform_fee_recipient: wallet.address,
-          platform_fee_basis_points: 100,
-        };
-        console.log(
-          'Bytes32: ',
-          ethers.utils.formatBytes32String('Marketplace'),
-        );
-
-        console.log(
-          'type1: ',
-          ethers.utils.parseBytes32String(
-            '0x6d61726b6574706c616365000000000000000000000000000000000000000000',
-          ),
-        );
-        console.log(
-          'type: ',
-          ethers.utils.parseBytes32String(
-            '0x4d61726b6574706c616365000000000000000000000000000000000000000000',
-          ),
-        );
-      }
-    } catch (error) {
-      console.log('Error: ', error);
-    }
-  };
+  //   const grantAccess = async () => {
+  //     try {
+  //       if (provider && walletAddress && sdk) {
+  //         // const p = ethers.getDefaultProvider('https://mainnet-rpc.tlxscan.com');
+  //         const wallet = new ethers.Wallet(
+  //           process.env.REACT_APP_MARKETPLACE_DEPLOYER_WALLET_PK || '',
+  //           provider,
+  //         );
+  //         const marketplaceDeployMetadata: MarketplaceContractDeployMetadata = {
+  //           name: 'TLChain Marketplace',
+  //           trusted_forwarders: ['0x4C86F3C5Dafa55CA760c349263793953BBBc9695'],
+  //           platform_fee_recipient: wallet.address,
+  //           platform_fee_basis_points: 100,
+  //         };
+  //       }
+  //     } catch (error) {
+  //       console.log('Error: ', error);
+  //     }
+  //   };
 
   useEffect(() => {
     getNFT();
@@ -227,8 +262,6 @@ const NFTDetails: React.FC = () => {
       ) {
         setIsNewSaleLoading(true);
         const { price, duration } = values;
-        console.log('price: ', price);
-        console.log('duration: ', duration);
         const listingProperties: ListingProperties = {
           assetContractAddress: contractAddress,
           tokenId: nftId,
@@ -242,9 +275,9 @@ const NFTDetails: React.FC = () => {
         const result = await marketplace.direct.createListing(
           listingProperties,
         );
-        console.log('result: ', result);
-        setIsNewSaleLoading(false);
         setShowNewSaleContainer(false);
+        await checkNFTListing();
+        setIsNewSaleLoading(false);
       }
     } catch (error) {
       setIsNewSaleLoading(false);
@@ -256,7 +289,6 @@ const NFTDetails: React.FC = () => {
   const makeOffer = async () => {
     if (sdk && marketplace && walletAddress && provider && listing) {
       const currency = listing.currencyContractAddress;
-      console.log('currency: ', currency);
       const offer = await marketplace.direct.makeOffer(
         listing.id,
         1,
@@ -276,11 +308,11 @@ const NFTDetails: React.FC = () => {
         console.log('Event is: ', event);
       });
     }
-    console.log('collection: ', collection?.getAddress());
   };
 
-  const onBuy = async () => {
+  const buyItem = async () => {
     if (sdk && marketplace && walletAddress && provider && listing) {
+      setIsBuyLoading(true);
       try {
         const result = await marketplace.buyoutListing(listing.id, 1);
         if (result.receipt.status === 1) {
@@ -289,14 +321,33 @@ const NFTDetails: React.FC = () => {
             seller: nft?.owner,
             buyer: walletAddress,
             nftName: nft?.metadata.name,
+            nftId: nft?.metadata.id,
           });
+          await checkNFTListing();
         }
 
-        console.log('Result: ', result);
+        setIsBuyLoading(false);
       } catch (error) {
+        setIsBuyLoading(false);
         console.log('Error: ', error);
       }
     }
+  };
+
+  const notify = () => toast('Link copied to Clipboard');
+
+  const copyUrlToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    notify();
+  };
+
+  const likeOptions = {
+    loop: false,
+    autoplay: false,
+    animationData: likeAnimation,
+    rendererSettings: {
+      //   preserveAspectRatio: "xMidYMid slice"
+    },
   };
 
   return (
@@ -305,6 +356,7 @@ const NFTDetails: React.FC = () => {
       {nft && collection && collectionMetadata && (
         <>
           <div className="flex w-full xs:flex-col sm:flex-col md:flex-col space-x-10 xs:space-x-0 sm:space-x-0 md:space-x-0 xs:items-center sm:items-center md:items-center">
+            <ToastContainer style={{ marginTop: 40 }} />
             <div className="flex-grow w-full max-w-[24rem]">
               <div className="aspect-w-1 aspect-h-1 rounded-lg overflow-hidden">
                 <img
@@ -354,7 +406,14 @@ const NFTDetails: React.FC = () => {
             </div>
             <div className="mx-auto flex-auto xs:max-w-[24rem]">
               <div className="flex items-center justify-between">
-                <button className="text-start text-blue-500 hover:text-blue-700 text-2xl">
+                <button
+                  onClick={() =>
+                    navigate(
+                      `${routes.nftMarketplaceViewCollection.url}/${contractAddress}`,
+                    )
+                  }
+                  className="text-start text-blue-500 hover:text-blue-700 text-2xl"
+                >
                   {collectionMetadata.name}
                 </button>
                 {nft.owner.toLowerCase() === walletAddress?.toLowerCase() &&
@@ -375,10 +434,69 @@ const NFTDetails: React.FC = () => {
                   )}
               </div>
               <div>
-                <p className="text-5xl mt-4 font-semibold">
-                  {nft.metadata.name} #{parseInt(nftId || '0', 10)}
-                </p>
+                <div className="flex justify-between">
+                  <p className="text-5xl mt-4 font-semibold">
+                    {nft.metadata.name} #{parseInt(nftId || '0', 10)}
+                  </p>
+                  <div className="flex items-center mt-4 space-x-4">
+                    <button className="" onClick={copyUrlToClipboard}>
+                      <FiCopy size={30} />
+                    </button>
+                    <FacebookShareButton
+                      url={window.location.href}
+                      quote={nft.metadata.name}
+                      //   className="Demo__some-network__share-button"
+                    >
+                      <FacebookIcon size={32} round />
+                    </FacebookShareButton>
+                  </div>
+                </div>
                 <p className="mt-6 text-lg xs:text-sm">Owned by {ownedBy}</p>
+                {/* <Lottie options={likeOptions} height={400} width={400} /> */}
+                <div className="flex space-x-4 mt-4">
+                  <div className="">
+                    {isLiked ? (
+                      <button>
+                        <RiHeartFill
+                          size={30}
+                          onClick={() => {
+                            if (contractAddress && nftId) {
+                              dislikeItem({
+                                contractAddress,
+                                contractNftId: Number(nftId),
+                                type: 'NFT',
+                              });
+                              setIsLiked(false);
+                              setCountLikes(countLikes - 1);
+                            }
+                          }}
+                        />
+                      </button>
+                    ) : (
+                      <button>
+                        <RiHeartLine
+                          size={30}
+                          onClick={() => {
+                            if (contractAddress && nftId) {
+                              likeItem({
+                                contractAddress,
+                                contractNftId: Number(nftId),
+                                type: 'NFT',
+                              });
+                              setIsLiked(true);
+                              setCountLikes(countLikes + 1);
+                            }
+                          }}
+                        />
+                      </button>
+                    )}
+                    {countLikes > 0 && (
+                      <p>
+                        {countLikes} {countLikes === 1 ? 'like' : 'likes'}
+                      </p>
+                    )}
+                  </div>
+                </div>
 
                 <div className="">
                   {listingLoading ? (
@@ -388,10 +506,11 @@ const NFTDetails: React.FC = () => {
                   ) : (
                     <ListingSaleDetails
                       listing={listing}
-                      onBuy={onBuy}
+                      onBuy={buyItem}
                       isActiveListing={isActiveListing}
                       walletAddress={walletAddress}
                       ownerAddress={nft.owner}
+                      isBuyLoading={isBuyLoading}
                     />
                   )}
                 </div>

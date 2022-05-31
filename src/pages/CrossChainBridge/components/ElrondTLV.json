@@ -1,0 +1,36 @@
+{
+  "identifier": "TLV-5acbb7",
+  "name": "TlvWrappedEgld",
+  "ticker": "TLV-5acbb7",
+  "owner": "erd1l4lls5wp7m44jvjff9fp0g6dd0ecwzwwnz44gaxm2j5ny35uyfjsksrd00",
+  "minted": "1000001000000001000",
+  "burnt": "500000000000000005",
+  "initialMinted": "1",
+  "decimals": 18,
+  "isPaused": false,
+  "transactions": 2,
+  "accounts": 1,
+  "canUpgrade": true,
+  "canMint": false,
+  "canBurn": false,
+  "canChangeOwner": false,
+  "canPause": false,
+  "canFreeze": false,
+  "canWipe": false,
+  "supply": "1",
+  "circulatingSupply": "1",
+  "roles": [
+    {
+      "address": "erd1qqqqqqqqqqqqqpgqsj32jhey2jj665p7fjrfyhwcs84ut7vhyfjsl3aw95",
+      "canLocalMint": true,
+      "canLocalBurn": true,
+      "roles": ["ESDTRoleLocalMint", "ESDTRoleLocalBurn"]
+    },
+    {
+      "address": "erd1qqqqqqqqqqqqqpgqr33h830ht8ck835xtpavdks4pxdv92e5yfjs264zzy",
+      "canLocalMint": true,
+      "canLocalBurn": true,
+      "roles": ["ESDTRoleLocalMint", "ESDTRoleLocalBurn"]
+    }
+  ]
+}

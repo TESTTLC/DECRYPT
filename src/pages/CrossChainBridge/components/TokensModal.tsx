@@ -8,11 +8,13 @@ import solBridgeImage from 'src/assets/images/sol-bridge.png';
 import tlcBridgeImage from 'src/assets/images/tlc-bridge.png';
 import maticBridgeImage from 'src/assets/images/matic-bridge.png';
 import avaxBridgeImage from 'src/assets/images/avax-token.png';
-import tlxOldToken from 'src/assets/images/tlx-token-old.png';
+import elrondBridgeImage from 'src/assets/images/elrond-bridge.png';
+import elrondCoinImage from 'src/assets/images/egld-coin.png';
+import usdtBridgeImage from 'src/assets/images/USDT-logo.png';
 import tlxNewToken from 'src/assets/images/tlx-token-new.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
-import { modalChains } from 'src/utils/globals';
+import { modalChains, modalCoins } from 'src/utils/globals';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBridgeState } from 'src/redux/modules/bridge/actions';
 import { BridgeState, StoreState } from 'src/utils/storeTypes';
@@ -25,14 +27,12 @@ Modal.setAppElement('#root');
 interface Props {
   index?: number;
   chains: Partial<typeof modalChains>;
+  coins: Partial<typeof modalCoins>;
   type: 'from' | 'to';
-  // onFromChainSelect?: () => void;
-  // onToChainSelect?: () => void;
-  // onFromTokenSelect?: () => void;
-  // onToTokenSelect?: () => void;
+  chainType?: 'ELROND' | 'EVM';
 }
 
-const TokensModal: React.FC<Props> = ({ chains, type }) => {
+const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
   const { isMobileSize } = useWindowSize();
   const bridgeState = useSelector<StoreState, BridgeState>(
     (state) => state.bridge,
@@ -43,6 +43,7 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
 
   const [imageUsed, setImageUsed] = useState('');
   const [imageUsedToken, setImageUsedToken] = useState('');
+  const [isTokensModalOpen, setIsTokensModalOpen] = useState(false);
   // const [selectedToken, setSelectedToken] = useState(bridgeState.token);
 
   const customStyles = {
@@ -66,6 +67,12 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
   };
 
   useEffect(() => {
+    if (bridgeState.token === 'EGLD') {
+      changeToken('LSO');
+    }
+  }, []);
+
+  useEffect(() => {
     if (selectedChain === 'BSC') {
       setImageUsed(bscBridgeImage);
     } else if (selectedChain === 'ETH') {
@@ -80,22 +87,19 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
       setImageUsed(tlcBridgeImage);
     } else if (selectedChain === 'AVAX') {
       setImageUsed(avaxBridgeImage);
+    } else if (selectedChain === 'ELROND') {
+      setImageUsed(elrondCoinImage);
     }
 
     if (bridgeState.token === 'TLC') {
       setImageUsedToken(tlcLogo);
     } else if (bridgeState.token === 'LSO') {
       setImageUsedToken(lsoLogo);
+    } else if (bridgeState.token === 'USDT') {
+      setImageUsedToken(usdtBridgeImage);
+    } else if (bridgeState.token === 'EGLD') {
+      setImageUsedToken(elrondCoinImage);
     }
-
-    // switch (selectedToken) {
-    //   case 'TLX':
-    //     setImageUsedToken(tlxNewToken);
-    //     break;
-    //   case 'LSO':
-    //     setImageUsedToken(lsoLogo);
-    //     break;
-    // }
   }, [selectedChain, bridgeState.token, type]);
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -134,12 +138,6 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
         }),
       );
     } else if (type === 'to') {
-      // let { fromChain } = bridgeState;
-      // if (params.chain === 'TLC' &&) {
-      //   fromChain = bridgeState.toChain;
-      // } else {
-      //   fromChain = 'TLC';
-      // }
       dispatch(
         updateBridgeState({
           // ...(params.chain !== 'TLC' && {
@@ -160,11 +158,15 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
     }
   };
 
-  const changeToken = () => {
-    if (bridgeState.token === 'TLC') {
-      updateState({ token: 'LSO' });
-    } else {
-      updateState({ token: 'TLC' });
+  const changeToken = (token: string) => {
+    if (chainType === 'EVM') {
+      console.log('EVM here with token: ', token);
+      updateState({ token });
+      //   if (bridgeState.token === 'TLC') {
+      //     updateState({ ...bridgeState, token: 'LSO' });
+      //   } else {
+      //     updateState({ ...bridgeState, token: 'TLC' });
+      //   }
     }
   };
 
@@ -173,7 +175,7 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
       <div className="flex w-full justify-end mb-4">
         <div className="flex items-center">
           <button
-            onClick={changeToken}
+            onClick={() => setIsTokensModalOpen(true)}
             // onClick={onFromTokenSelect && onFromTokenSelect}
             className="flex text-white font-poppins items-center justify-center"
           >
@@ -181,17 +183,49 @@ const TokensModal: React.FC<Props> = ({ chains, type }) => {
               className="text-white font-poppins w-6 h-6 mr-2 object-cover"
               src={imageUsedToken}
             />
-            <p className="text-white font-poppins">
-              {/* {type === 'from' ? selectedToken : 'TLX'}
-               */}
-              {bridgeState.token}
-            </p>
+            <p className="text-white font-poppins">{bridgeState.token}</p>
             <GoArrowDown className="h-4 w-4 ml-1" color="white" />
 
             {/* {type === 'from' ? (
               <GoArrowDown className="h-4 w-4 ml-2 mt-1" color="white" />
             ) : null} */}
           </button>
+          <Modal
+            isOpen={isTokensModalOpen}
+            // onAfterOpen={afterOpenModal}
+            onRequestClose={() => setIsTokensModalOpen(false)}
+            style={customStyles}
+            contentLabel="Modal"
+            overlayClassName="Overlay"
+            preventScroll={false}
+          >
+            <div className="z-50 flex flex-1 flex-col items-center h-full w-full relative px-6 pt-2 pb-4">
+              <div className="flex flex-col h-20 w-full text-white font-poppins">
+                <p className="font-poppins text-md mt-4 ">Switch to</p>
+              </div>
+              <ul className="flex flex-col w-full text-white font-poppins justify-center items-center">
+                {Object.values(coins).map((token, index) => (
+                  <li
+                    key={`${token.tag}/${index}`}
+                    className="w-full hover:bg-gray-800 "
+                  >
+                    <button
+                      className={`w-full flex ${
+                        index === 0 || index === Object.values(coins).length - 1
+                          ? undefined
+                          : 'border-t-2'
+                      } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
+                      onClick={() => changeToken(token.tag)}
+                    >
+                      <img src={token.image} className="w-8 h-8 mr-2" />
+                      <p className="text-xl font-semibold">{token.tag}</p>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Modal>
+
           <div className="h-8 w-1 bg-gray-800 mx-6" />
         </div>
         <button

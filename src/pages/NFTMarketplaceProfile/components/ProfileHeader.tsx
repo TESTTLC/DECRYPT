@@ -107,11 +107,11 @@ const ProfileHeader: React.FC<Props> = ({
             </button>
           </div>
 
-          <div className="flex justify-between space-x-12 mt-8">
+          <div className="flex justify-between mt-8">
             {categories.map((category, index) => (
               <button
                 key={`${category}-${index}`}
-                className={`text-md ${
+                className={`text-md w-32 ${
                   selectedCategory === category ? 'text-blue-500' : 'text-white'
                 } font-medium`}
                 onClick={() => setSelectedCategory(category)}

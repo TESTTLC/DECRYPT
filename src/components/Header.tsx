@@ -174,7 +174,7 @@ const Header: React.FC = () => {
           </div>
           {window.ethereum && (
             <button
-              className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 mb-2 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+              className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
               onClick={addNetwork}
             >
               <MetamaskIcon width={20} height={17} />
@@ -185,7 +185,7 @@ const Header: React.FC = () => {
       </div>
       <div
         className={`grid ${
-          isLoggedIn ? 'grid-cols-4' : 'grid-cols-3'
+          isLoggedIn ? 'grid-cols-3' : 'grid-cols-3'
         } xs:grid-cols-4 sm:grid-cols-4 gap-y-4 items-center transition-all duration-500 gap-x-3 ${
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}

@@ -73,7 +73,10 @@ const NFTMarketplace: React.FC = () => {
       <MarketplaceHeader />
       <div className="grid grid-cols-10 gap-x-2 gap-y-4">
         <div className="col-span-8 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10">
-          <MarketplaceHeaderSubHeader />
+          <MarketplaceHeaderSubHeader
+            isLoading={isLoading}
+            numberOfResults={listings.length}
+          />
           {!walletAddress && (
             <p className="text-center mt-10">Please connect your wallet</p>
           )}

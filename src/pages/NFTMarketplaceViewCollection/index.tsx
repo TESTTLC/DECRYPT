@@ -13,8 +13,9 @@ import { useGetCollectionsByUserIdQuery } from 'src/redux/modules/collections/qu
 import { useSelector } from 'react-redux';
 import { Collection, StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
-import { Path, useLocation, useParams } from 'react-router-dom';
+import { Path, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
+import { routes } from 'src/utils/routes';
 
 import { ThirdwebSDK } from '../../../thirdweb-dev/sdk';
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
@@ -40,6 +41,7 @@ interface CustomLocation extends Path {
 
 const NFTMarketplaceViewCollection: React.FC = () => {
   const { sdk } = useMarketplaceSDK();
+  const navigate = useNavigate();
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
@@ -54,9 +56,9 @@ const NFTMarketplaceViewCollection: React.FC = () => {
   const [nfts, setNfts] = useState<any[]>([]);
 
   const getCollection = useCallback(async () => {
-    if (provider && contractAddress) {
+    if (provider && contractAddress && sdk) {
       try {
-        const collectionContract = sdk?.getNFTCollection(contractAddress);
+        const collectionContract = sdk.getNFTCollection(contractAddress);
         const localNfts = await collectionContract?.getAll();
         setNfts(localNfts || nfts);
 
@@ -112,6 +114,13 @@ const NFTMarketplaceViewCollection: React.FC = () => {
                     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     contractAddress={contractAddress ?? ''}
                     id={item.metadata.id.toString()}
+                    onClick={() => {
+                      navigate(
+                        `${
+                          routes.nftDetails.url
+                        }/${contractAddress}/nft/${item.metadata.id.toString()}`,
+                      );
+                    }}
                   />
                 ))}
               </div>

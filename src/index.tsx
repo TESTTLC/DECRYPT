@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { CookiesProvider } from 'react-cookie';
+import { DappUI, DappProvider } from '@elrondnetwork/dapp-core';
 
 import { ChainId } from '../thirdweb-dev/sdk';
 import { ThirdwebProvider } from '../thirdweb-dev/react';
@@ -12,6 +13,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
 import store from './redux/store';
+
+const environment = 'devnet';
+const {
+  TransactionsToastList,
+  SignTransactionsModals,
+  NotificationModal,
+  DappCorePages: { UnlockPage },
+} = DappUI;
 
 // replace console.* for disable log on production
 if (
@@ -25,20 +34,27 @@ if (
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <CookiesProvider>
-        {/* <ThirdwebProvider
+    <DappProvider
+      environment={environment}
+      customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
+      completedTransactionsDelay={200}
+    >
+      <Provider store={store}>
+        <CookiesProvider>
+          {/* <ThirdwebProvider
           desiredChainId={ChainId.TLChain}
           sdkOptions={{
             gasSettings: { maxPriceInGwei: 500, speed: 'fast' },
           }}
         > */}
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-        {/* </ThirdwebProvider> */}
-      </CookiesProvider>
-    </Provider>
+          <BrowserRouter>
+            <SignTransactionsModals className="custom-class-for-modals" />
+            <App />
+          </BrowserRouter>
+          {/* </ThirdwebProvider> */}
+        </CookiesProvider>
+      </Provider>
+    </DappProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

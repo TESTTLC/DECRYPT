@@ -69,8 +69,6 @@ export const useBridgeContracts = (
   }, [coinTag, mainBridgeAddress, sideBridgeAddress, tokenAddress]);
 
   const connectToContracts = async () => {
-    console.log('connecting?');
-
     let selectedBridgeAbi = MainBridge.abi;
     if (coinTag === 'TLC') {
       if (toChain === 'TLC') {
@@ -81,18 +79,26 @@ export const useBridgeContracts = (
     }
     try {
       if (provider) {
-        const mainContract = new ethers.Contract(
-          mainBridgeAddress,
-          selectedBridgeAbi,
-          provider.getSigner(),
-        );
-        console.log('here????: ', sideBridgeAddress);
+        let mainContract;
+        if (toChain === 'ELROND') {
+          mainContract = undefined;
+        } else {
+          mainContract = new ethers.Contract(
+            mainBridgeAddress,
+            selectedBridgeAbi,
+            provider.getSigner(),
+          );
+        }
+
+        console.log('mainBridgeAddress: ', mainBridgeAddress);
+        console.log('SideBridgeAddress: ', sideBridgeAddress);
+        console.log('tokenAddress', tokenAddress);
+
         const sideContract = new ethers.Contract(
           sideBridgeAddress,
           SideBridge.abi,
           provider.getSigner(),
         );
-
         const tknContract = new ethers.Contract(
           tokenAddress,
           TokenErc721.abi,

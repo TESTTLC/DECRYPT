@@ -18,3 +18,8 @@ export const getUserCollectionsAPI = async (userId: number) => {
     },
   });
 };
+
+export const checkNameAvailabilityAPI = async (name: string) => {
+  const url = `/collections/checkNameAvailability/${name}`;
+  return getRequest<{ available: boolean }>(url);
+};

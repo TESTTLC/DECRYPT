@@ -53,6 +53,26 @@ export interface AssetTokenizationProject {
   moreDetails: ReactElement;
   website: string;
 }
+
+export interface SaleResult {
+  id: number;
+  type: string;
+  txHash: string;
+  from: string;
+  to: string;
+  contractAddress: string;
+  value: number;
+  lister: string;
+  buyer: string;
+  listingId: number;
+}
+
+export interface Activity {
+  recentSales: SaleResult[];
+  recentBuys: SaleResult[];
+}
+
+//ENUMS
 export enum CoinTags {}
 
 export type Project = {
@@ -91,8 +111,9 @@ export const stakeRewards = {
 
 export enum ProfileCategories {
   COLLECTED = 'Collected',
-  CREATE = 'Create',
+  //   CREATE = 'Create',
   ACTIVITY = 'Activity',
-  OFFERS = 'Offers',
+  //   OFFERS = 'Offers',
   COLLECTIONS = 'Collections',
+  LIKED = 'Liked',
 }

@@ -5,6 +5,11 @@ import solBridgeImage from '../assets/images/sol-bridge.png';
 import tlcBridgeImage from '../assets/images/tlc-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
 import avaxBridgeImage from '../assets/images/avax-token.png';
+import usdtCoinImage from '../assets/images/USDT-logo.png';
+import lsoCoinImage from '../assets/images/LSO-logo.png';
+import elrondCoinImage from '../assets/images/egld-coin.png';
+
+export const stableCoins = ['USDT', 'USDC'];
 
 export const nativeTLCAddress = '0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6';
 
@@ -53,7 +58,7 @@ export const BSCBridgeContractAddress =
   '0x9E9B77E0b04E9B5fcdBFB8a33D97C7B115897dec';
 
 export const TLC_MainBridgeContractAddress =
-  '0x24b74c5A0b0126E37Fc0EE9fe231D6105Bbf4815';
+  '0x295993595620231fa5afc04c5c7ee21ad3b55b8A';
 
 export const LSO_MainBridgeContractAddress =
   '0x41982760519299703d5bD9d138cFF15CBEE3db43';
@@ -97,6 +102,42 @@ export const OldTLXTokenContractAddress =
 export const TLC_BSCSideBridgeContractAddress =
   '0xbBcdB8C8E0D17b76F5ED2B9FC36A60154c2142F2';
 
+export const TLChain_USDT_SideBridgeContractAddress =
+  '0xCDdd421bdead917Da8EC2626B92Bc38D5C2061a1';
+export const TLChain_USDT_ChildTokenContractAddress =
+  '0x537C0Ea12C8D50d2D7c608a4b981638bF64e03c6';
+export const TLChain_USDC_SideBridgeContractAddress =
+  '0x2e4f445b25cbC24B2f1ab1b8B0C39763674142B5';
+export const TLChain_USDC_ChildTokenContractAddress =
+  '0x1a39bC1940058fF4626E1E79fb2C093AEe27105A';
+
+export const Binance_USDT_MainBridgeContractAddress =
+  '0xabd0F4b51CaA250c9EAD80742496Be39798D1c46';
+export const Binance_USDC_MainBridgeContractAddress =
+  '0xa503e0834a73b8577C88e788532c33D08075eE78';
+
+export const WEGLD_TLC_SideBridgeContractAddress =
+  '0xc5bbf394Af1b927dA723C809684799AA034a49bd';
+
+export const WEGLD_TLC_ChildTokenContractAddress =
+  '0x62106a226f0AD0d0DC969954b4259645C0c0D42D';
+
+export const TLC_ELROND_SideBridgeContractAddress =
+  'erd1qqqqqqqqqqqqqpgqr33h830ht8ck835xtpavdks4pxdv92e5yfjs264zzy';
+
+export const USDT_BSC_TOKEN_ContractAddress =
+  '0x55d398326f99059fF775485246999027B3197955';
+export const USDC_BSC_TOKEN_ContractAddress =
+  '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d';
+
+export const ELROND_LOCK_SC_ADDRESS =
+  'erd1qqqqqqqqqqqqqpgqehnmrqxsw5hzd3ulcxxhx7x8dra0mkjmyfjs90a733';
+export const ELROND_TOKEN_SC_ABI = 'abi/elrond-token-manager.abi.json';
+export const ELROND_TOKEN_SC_NAME = 'Bridge';
+export const ELROND_TOKEN_ID = 'TLV-8ac90e';
+
+export const TIMEOUT = 6000;
+
 export const bridgeAddresses = {
   LSO: {
     main: {
@@ -114,6 +155,13 @@ export const bridgeAddresses = {
       },
       AVAX: {
         address: LSO_AVAXSideBridgeContractAddress,
+      },
+      MATIC: {
+        address: LSO_AVAXSideBridgeContractAddress,
+      },
+      ELROND: {
+        //sidebridge
+        address: '',
       },
     },
   },
@@ -133,6 +181,51 @@ export const bridgeAddresses = {
       },
       AVAX: {
         address: TLC_AVAXSideBridgeContractAddress,
+      },
+      MATIC: {
+        address: TLC_AVAXSideBridgeContractAddress,
+      },
+      ELROND: {
+        //sidebridge
+        address: WEGLD_TLC_SideBridgeContractAddress,
+      },
+    },
+  },
+  EGLD: {
+    main: {
+      address: ELROND_LOCK_SC_ADDRESS,
+    },
+    child: {
+      TLC: {
+        address: WEGLD_TLC_SideBridgeContractAddress,
+      },
+      ELROND: {
+        address: WEGLD_TLC_SideBridgeContractAddress,
+      },
+    },
+  },
+  USDT: {
+    main: {
+      address: TLChain_USDT_SideBridgeContractAddress,
+    },
+    child: {
+      TLC: {
+        address: Binance_USDT_MainBridgeContractAddress,
+      },
+      BSC: {
+        address: Binance_USDT_MainBridgeContractAddress,
+      },
+    },
+  },
+  USDC: {
+    // Main refers to the main chain
+    main: {
+      address: Binance_USDC_MainBridgeContractAddress,
+    },
+    // Child refers to the second chain
+    child: {
+      TLC: {
+        address: TLChain_USDC_SideBridgeContractAddress,
       },
     },
   },
@@ -159,6 +252,16 @@ export const modalChains = {
     name: 'Avalanche',
     tag: 'AVAX',
     image: avaxBridgeImage,
+  },
+  MATIC: {
+    name: 'Polygon',
+    tag: 'MATIC',
+    image: maticBridgeImage,
+  },
+  ELROND: {
+    name: 'Elrond',
+    tag: 'ELROND',
+    image: elrondCoinImage,
   },
 
   // {
@@ -187,10 +290,22 @@ export const modalCoins = {
   LSO: {
     name: 'Lusso',
     tag: 'LSO',
+    image: lsoCoinImage,
   },
   TLC: {
     name: 'TLChain',
     tag: 'TLC',
+    image: tlcBridgeImage,
+  },
+  USDT: {
+    name: 'Tether',
+    tag: 'USDT',
+    image: usdtCoinImage,
+  },
+  EGLD: {
+    name: 'Elrond',
+    tag: 'EGLD',
+    image: elrondCoinImage,
   },
 };
 

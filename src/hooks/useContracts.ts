@@ -29,6 +29,7 @@ import {
   TLLPStakeContractAddress,
   TLNFTTokenContractAddress,
   TTXTokenContractAddress,
+  WEGLD_TLC_ChildTokenContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -95,29 +96,28 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setStakeAddress('-');
       setTokenAbi(TTXToken.abi);
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
+    } else if (coinTag === 'EGLD') {
+      setTokenAddress(WEGLD_TLC_ChildTokenContractAddress);
+      setStakeAddress('-');
+      setTokenAbi(TTXToken.abi);
+      setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
     }
   }, [coinTag, currentChainId]);
 
   const connectToContracts = async () => {
     try {
       if (provider) {
-        console.log('here1');
         const contractT = new ethers.Contract(
           tokenAddress,
           tokenAbi,
           provider.getSigner(),
         );
-        console.log('here2');
 
         const contractS = new ethers.Contract(
           stakeAddress,
           stakeAbi,
           provider.getSigner(),
         );
-
-        console.log('here3');
-
-        console.log('Connected to contracts with: ', contractT);
 
         if (coinTag === 'LSO') {
           const contractF = new ethers.Contract(
@@ -139,12 +139,6 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
   };
 
   useEffect(() => {
-    console.log('provider: ', provider);
-    console.log('walletAddress: ', walletAddress);
-    console.log('tokenAbi: ', tokenAbi);
-    console.log('stakeAbi: ', stakeAbi);
-    console.log('alreadyConnectedToContracts: ', alreadyConnectedToContracts);
-
     if (
       provider &&
       walletAddress &&

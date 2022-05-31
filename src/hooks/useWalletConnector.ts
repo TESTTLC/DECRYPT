@@ -51,6 +51,7 @@ export const useWalletConnector = () => {
     });
 
     dispatch(setWalletAddress(accounts[0]));
+
     //@ts-ignore
     const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
 

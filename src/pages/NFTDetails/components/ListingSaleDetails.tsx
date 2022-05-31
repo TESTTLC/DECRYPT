@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { epochToDate } from 'src/utils/functions/utils';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
+import { TailSpin } from 'react-loader-spinner';
 
 const borderStyle = 'border-opacity-20 border-blue-600';
 const containerPaddings = 'px-6 py-6';
@@ -24,6 +25,7 @@ interface Listing {
   isActiveListing: boolean;
   walletAddress?: string;
   ownerAddress: string;
+  isBuyLoading: boolean;
 }
 
 const ListingSaleDetails: React.FC<Listing> = ({
@@ -32,6 +34,7 @@ const ListingSaleDetails: React.FC<Listing> = ({
   isActiveListing,
   walletAddress,
   ownerAddress,
+  isBuyLoading,
 }) => {
   const { marketplace } = useMarketplaceSDK();
   const [secondsUntilEnd, setSecondsUntilEnd] = useState(
@@ -50,11 +53,6 @@ const ListingSaleDetails: React.FC<Listing> = ({
     }
   };
 
-  console.log(
-    'isActiveListing && walletAddress !== ownerAddress: ',
-    isActiveListing,
-    walletAddress !== ownerAddress,
-  );
   return listing ? (
     <div
       className={`${borderStyle} border-[2px] rounded-lg mt-6 overflow-hidden`}
@@ -75,7 +73,7 @@ const ListingSaleDetails: React.FC<Listing> = ({
             alt="TLChain-Logo"
           />
           <p className="text-3xl font-semibold">
-            {formatEther(listing.buyoutPrice)} TLC
+            {formatEther(listing.buyoutPrice)} TLNFT
           </p>
         </div>
         <div className="flex mt-2 space-x-4">
@@ -91,26 +89,30 @@ const ListingSaleDetails: React.FC<Listing> = ({
           {isActiveListing &&
             walletAddress?.toLowerCase() !== ownerAddress.toLowerCase() && (
               <button
-                className="w-40 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl font-semibold"
+                className="flex items-center justify-center w-40 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl font-semibold"
                 onClick={onBuy}
               >
-                Buy now
+                {isBuyLoading ? (
+                  <TailSpin color="#fff" height={10} width={10} />
+                ) : (
+                  'Buy'
+                )}
               </button>
             )}
-          {walletAddress?.toLowerCase() !== ownerAddress.toLowerCase() && (
+          {/* {walletAddress?.toLowerCase() !== ownerAddress.toLowerCase() && (
             <button
               className="w-40 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl font-semibold"
               // onClick={onBuy}
             >
               Make offer
             </button>
-          )}
+          )} */}
         </div>
       </div>
     </div>
   ) : (
     <div
-      className={`${borderStyle} border-[2px] rounded-lg mt-10 overflow-hidden`}
+      className={`${borderStyle} border-[2px] rounded-lg mt-4 overflow-hidden`}
     >
       <div
         className={`${borderStyle} border-b-[2px] w-full bg-black bg-opacity-30 py-6`}

@@ -6,6 +6,8 @@ import { updateBridgeState } from './actions';
 
 const initialState: BridgeState = {
   token: 'LSO',
+  //   fromToken: 'LSO',
+  //   toToken: 'LSO',
   fromChain: modalChains.TLC.tag,
   toChain: modalChains.BSC.tag,
 };

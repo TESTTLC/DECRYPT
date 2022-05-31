@@ -29,7 +29,7 @@ export const collectionsApi = createApi({
       providesTags: (result) =>
         result
           ? [
-              ...result.collections.map(
+              ...result?.collections?.map(
                 ({ id }) => ({ type: 'Collection', id } as const),
               ),
               { type: 'Collection', id: 'LIST' },
@@ -44,13 +44,26 @@ export const collectionsApi = createApi({
         result
           ? [
               //identifier for the specific collection
-              ...result.collections.map(
+              ...result.collections?.map(
                 ({ id }) => ({ type: 'Collection', id } as const),
               ),
               { type: 'Collection', id: 'LIST_BY_USERID' },
             ]
           : //identifier for the entire list of collections
             [{ type: 'Collection', id: 'LIST_BY_USERID' }],
+    }),
+
+    getLatestCollections: builder.query<CollectionsResponse, void>({
+      query: () => '/latest',
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.collections?.map(
+                ({ id }) => ({ type: 'Collection', id } as const),
+              ),
+              { type: 'Collection', id: 'LIST_LATEST' },
+            ]
+          : [{ type: 'Collection', id: 'LIST_LATEST' }],
     }),
 
     createCollection: builder.mutation<CollectionResponse, FormData>({
@@ -71,5 +84,6 @@ export const collectionsApi = createApi({
 export const {
   useGetCollectionsQuery,
   useGetCollectionsByUserIdQuery,
+  useGetLatestCollectionsQuery,
   useCreateCollectionMutation,
 } = collectionsApi;

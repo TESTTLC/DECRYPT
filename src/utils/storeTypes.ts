@@ -16,6 +16,7 @@ export interface BaseUser {
   facebook?: string;
   twitter?: string;
   instagram?: string;
+  collectionsCount?: number;
 }
 
 export interface GlobalState {

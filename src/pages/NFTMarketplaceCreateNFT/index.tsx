@@ -16,6 +16,7 @@ import FormField from 'src/components/FormField';
 
 import {
   NFTCollection,
+  NFTMetadata,
   TokenContractDeployMetadata,
 } from '../../../thirdweb-dev/sdk';
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
@@ -69,8 +70,9 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
     name: string;
     description: string;
     imageUri?: string;
+    contractNftId: string;
   }) => {
-    const { name, description, imageUri } = params;
+    const { name, description, imageUri, contractNftId } = params;
     if (
       name &&
       description &&
@@ -90,6 +92,7 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
       formData.append('description', description);
       formData.append('image', image);
       formData.append('imageUri', metadata.image || '');
+      formData.append('contractNftId', contractNftId);
       // formData.append('externalLink', externalLink || '');
 
       await createNFT(formData);
@@ -103,10 +106,12 @@ const NFTMarketplaceCreateNFT: React.FC = () => {
         nftMetadata,
       );
       const nft = await tx.data(); // (optional) fetch details of minted NFT
+
       if (tx.id) {
         await sendNFTToDB({
           name: nftMetadata.name,
-          description: nftMetadata.description,
+          description: nftMetadata.description || '',
+          contractNftId: nft.metadata.id.toString(),
         });
       }
     }

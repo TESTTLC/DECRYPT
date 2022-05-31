@@ -93,3 +93,23 @@ export const joinLaunchpadApi = async (
     console.log('Error: ', error);
   }
 };
+
+export const sendTxHashToBackend = async (
+  txHash: string,
+  walletAddress: string,
+) => {
+  const ip = 'http://159.65.10.226:3100';
+  const tlcElrondBackendAPI = axios.create({
+    baseURL: `${ip}/api/checkTransactionHash?`,
+  });
+
+  try {
+    const result = await tlcElrondBackendAPI.post(
+      //   `/${txHash}?tx=${txHash}&wallet=${walletAddress}`,
+      `tx=${txHash}&wallet=${walletAddress}`,
+    );
+    console.log('Result: ', result);
+  } catch (error) {
+    console.log('Error: ', error);
+  }
+};

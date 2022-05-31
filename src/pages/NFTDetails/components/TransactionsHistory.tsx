@@ -35,33 +35,17 @@ const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
   const { id: nftId } = useParams<CustomParams>();
   const getTransfers = useCallback(async () => {
     if (provider && contractAddress) {
-      //   const owned = `${process.env.REACT_APP_TLX_RPC_API}?module=account&action=tokenlist&address=${walletAddress}`;
-      //   console.log('Owned: ', owned);
-
       try {
-        // const ownedResult = await fetch(owned);
-        // const ownedData = await ownedResult.json();
-        // console.log('Owned: ', ownedData);
-
         const contract = new ethers.Contract(
           contractAddress,
           TokenERC721.abi,
           provider?.getSigner(),
         );
 
-        const marketplaceContract = new ethers.Contract(
-          marketplaceAddress,
-          MarketplaceJSON.abi,
-          provider?.getSigner(),
-        );
-        console.log('marketplaceFilters: ', marketplaceContract.filters);
-        console.log('contractFilters: ', contract.filters);
-
         const mintsFilter = contract.filters.TokensMinted();
         const transferFilter = contract.filters.Transfer();
         const salesFilter = contract.filters.OwnerUpdated();
 
-        console.log('filters: ', contract.filters);
         const mints = await contract.queryFilter(mintsFilter);
         const transfers = await contract.queryFilter(transferFilter);
         const sales = await contract.queryFilter(salesFilter);
@@ -70,23 +54,12 @@ const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
         const _transfersHistory: any[] = [];
         const salesHistory: any[] = [];
 
-        // mints.forEach(async (m) => {
-        //   const receipt = await m.getTransactionReceipt();
-
-        //   mintsHistory.push({ from: receipt.from, to: receipt.to });
-        // });
-
         transfers?.forEach(async (t) => {
           if (t.decode) {
             const decoded = t.decode(t.data, t.topics);
             const block = await t.getBlock();
             const receipt = await t.getTransactionReceipt();
             const txx = await t.getTransaction();
-            // console.log('M: ', t);
-            // console.log('txx: ', txx);
-            console.log('transfers: ', t.decode(t.data, t.topics));
-            // console.log('block: ', block);
-            // console.log('receipt: ', receipt);
             if (decoded.tokenId.toString() === nftId) {
               _transfersHistory.push({
                 ...decoded,
@@ -96,27 +69,12 @@ const TransactionsHistory: React.FC<Props> = ({ contractAddress }) => {
           }
         });
 
-        // sales.forEach(async (t) => {
-        //   const receipt = await t.getTransactionReceipt();
-        //   salesHistory.push({ from: receipt.from, to: receipt.to });
-        // });
-
-        // console.log('mintsHistory: ', mintsHistory);
-        console.log('transfersHistory: ', transfersHistory);
-        // console.log('salesHistory: ', salesHistory);
-
-        // contract.on(transferFilter, (from, to, amount, event, qst) => {
-        //   console.log('own tokens: ', from, to, amount, event, qst);
-        //   // if (to === walletAddress) {
-        //   // }
-        // });
-
         setTransfersHistory(_transfersHistory);
       } catch (error) {
         console.log('Error: ', error);
       }
     }
-  }, [provider, contractAddress]);
+  }, [provider, contractAddress, nftId]);
 
   useEffect(() => {
     getTransfers();

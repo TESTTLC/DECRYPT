@@ -3,9 +3,6 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
-import { Web3Provider } from '@ethersproject/providers';
-
-import { ContractRoles, ThirdwebSDK } from '../thirdweb-dev/sdk';
 
 import Sidebar from './components/Sidebar';
 import OpenSidebarButton from './components/OpenSidebarButton';
@@ -32,7 +29,6 @@ import NFTMarketplaceCategories from './pages/NFTMarketplaceCategories';
 import NFTMarketplaceSidebar from './components/NFTMarketplaceSidebar';
 import AssetTokenization from './pages/AssetTokenization';
 import { routes } from './utils/routes';
-import NFTMarketplaceStats from './pages/NFTMarketplaceStats';
 import NFTMarketplaceProfile from './pages/NFTMarketplaceProfile';
 import NFTMarketplaceCreateNFT from './pages/NFTMarketplaceCreateNFT';
 import NFTMarketplaceCreateCollection from './pages/NFTMarketplaceCreateCollection';
@@ -69,7 +65,6 @@ const App = () => {
     return true;
   };
 
-  // useEffect(() => {
   addHeaderPayloadToCookies();
   if (localStorage.getItem(headerPayloadName)) {
     const headerPayload = getHeaderPayloadFromLocalStorage();
@@ -84,14 +79,6 @@ const App = () => {
       window.localStorage.clear();
     }
   }
-  // });
-
-  const checkIfIsLoggedIn = () => {
-    if (localStorage.getItem('user')) {
-      return true;
-    }
-    return false;
-  };
 
   return (
     <>
@@ -157,10 +144,6 @@ const App = () => {
                     element={<WhiteLists />}
                   />
                   <Route
-                    path="/nftmarketplace/stats"
-                    element={<NFTMarketplaceStats />}
-                  />
-                  <Route
                     path="/nftmarketplace/editprofile"
                     element={<NFTMarketplaceEditProfile />}
                   />
@@ -168,10 +151,7 @@ const App = () => {
                     path="/nftmarketplace/profile"
                     element={<NFTMarketplaceProfile />}
                   />
-                  {/* <Route
-                    path="/nftmarketplace/profile/:category"
-                    element={<NFTMarketplaceProfile />}
-                  /> */}
+
                   <Route
                     path="/nftmarketplace/create-nft"
                     element={<NFTMarketplaceCreateNFT />}
@@ -204,10 +184,8 @@ const App = () => {
                   />
                   <Route path="/dhs" element={<DHS />} />
 
-                  {/* <Route path="*" element={<NotFound />} /> */}
                   <Route path="*" element={<Navigate to="/" />} />
                 </Route>
-                {/* <Route path="/login" element={<Navigate to="/login" />} /> */}
                 {(!isLoggedIn || !isActivated) && (
                   <Route path="/login" element={<Login />} />
                 )}
@@ -221,23 +199,6 @@ const App = () => {
 
           <OpenSidebarButton />
         </>
-        {/* ) : (
-          (
-          )
-          : isLoading ? (
-            <div className="z-10 flex flex-col w-full h-screen items-center justify-center font-poppins text-white">
-              <img src={Logo} className="w-40 h-40 animate-bounce opacity-20" />
-            </div>
-          <div className="z-10 flex flex-col font-poppins text-white">
-            <Routes>
-              {/* <Route path="/register" element={<Register />} /> 
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Login />} />
-
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </div>
-        )} */}
       </div>
     </>
   );

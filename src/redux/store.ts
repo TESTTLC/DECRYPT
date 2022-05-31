@@ -4,6 +4,8 @@ import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import { collectionsApi } from './modules/collections/queries';
+import { likesApi } from './modules/likes/queries';
+import { nftsApi } from './modules/nfts/queries';
 import rootReducer from './rootReducer';
 
 const logger = createLogger({
@@ -14,7 +16,13 @@ const logger = createLogger({
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.REACT_APP_NODE_ENV !== 'production',
-  middleware: [logger, thunk, collectionsApi.middleware],
+  middleware: [
+    logger,
+    thunk,
+    collectionsApi.middleware,
+    nftsApi.middleware,
+    likesApi.middleware,
+  ],
 });
 
 const listener = () => {

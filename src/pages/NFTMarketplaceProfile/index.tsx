@@ -9,7 +9,7 @@ import image7 from 'src/assets/images/nft_image_7.png';
 import image8 from 'src/assets/images/nft_image_8.png';
 import { useSelector } from 'react-redux';
 import { Collection, StoreState } from 'src/utils/storeTypes';
-import { ChainsIds, ProfileCategories } from 'src/utils/types';
+import { ChainsIds, ProfileCategories, SaleResult } from 'src/utils/types';
 import { Web3Provider } from '@ethersproject/providers';
 import { useNavigate } from 'react-router-dom';
 import { routes } from 'src/utils/routes';
@@ -17,6 +17,8 @@ import { changeChain } from 'src/utils/functions/MetaMask';
 import { ethers } from 'ethers';
 import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
 import { TailSpin } from 'react-loader-spinner';
+import { getSalesActivity } from 'src/api/events';
+import { ellipsizeAddress } from 'src/utils/functions/utils';
 
 import { NFTMetadataOwner } from '../../../thirdweb-dev/sdk';
 import MarketplaceHeader from '../NFTMarketplace/components/MarketplaceHeader';
@@ -39,9 +41,10 @@ interface CustomNFT extends NFTMetadataOwner {
 const categories = [
   ProfileCategories.COLLECTIONS,
   ProfileCategories.COLLECTED,
-  ProfileCategories.CREATE,
+  //   ProfileCategories.CREATE,
   ProfileCategories.ACTIVITY,
-  ProfileCategories.OFFERS,
+  ProfileCategories.LIKED,
+  //   ProfileCategories.OFFERS,
 ];
 
 const NFTMarketplaceProfile: React.FC = () => {
@@ -70,6 +73,8 @@ const NFTMarketplaceProfile: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>(
     ProfileCategories.COLLECTIONS,
   );
+  const [recentSales, setRecentSales] = useState<SaleResult[]>([]);
+  const [recentBuys, setRecentBuys] = useState<SaleResult[]>([]);
 
   const getCollectedItems = useCallback(async () => {
     try {
@@ -108,33 +113,35 @@ const NFTMarketplaceProfile: React.FC = () => {
   }, [sdk, walletAddress]);
 
   const getAllCollections = useCallback(async () => {
+    setIsLoading(true);
     try {
       console.log('getAllCollections');
-      setIsLoading(true);
-      const contracts = await sdk?.getContractList(walletAddress ?? '');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const nftCollections: any = [];
+      if (walletAddress && sdk) {
+        const contracts = await sdk.getContractList(walletAddress ?? '');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const nftCollections: any = [];
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      contracts?.map(async (contract: any) => {
-        if (contract.contractType === 'nft-collection') {
-          const nftCollectionContract = contract;
-          nftCollections.push(nftCollectionContract);
-        }
-      });
-      const localCollections: Collection[] = [];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      for (const c of nftCollections) {
-        const item = await c.metadata();
-
-        localCollections.push({
-          ...item,
-          imageUri: item.image,
-          contractAddress: c.address,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await contracts?.map(async (contract: any) => {
+          if (contract.contractType === 'nft-collection') {
+            const nftCollectionContract = contract;
+            nftCollections.push(nftCollectionContract);
+          }
         });
-      }
+        const localCollections: Collection[] = [];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (const c of nftCollections) {
+          const item = await c.metadata();
 
-      setCollections(localCollections);
+          localCollections.push({
+            ...item,
+            imageUri: item.image,
+            contractAddress: c.address,
+          });
+        }
+
+        setCollections(localCollections);
+      }
       setIsLoading(false);
     } catch (error) {
       console.log('Error: ', error);
@@ -146,6 +153,16 @@ const NFTMarketplaceProfile: React.FC = () => {
     await changeChain(ChainsIds.TLC);
   };
 
+  const getActivity = useCallback(async () => {
+    if (walletAddress) {
+      const result = await getSalesActivity(walletAddress);
+      setRecentSales(result.recentSales);
+      setRecentBuys(result.recentBuys);
+
+      console.log('result', result);
+    }
+  }, [walletAddress]);
+
   useEffect(() => {
     if (
       selectedCategory === ProfileCategories.COLLECTIONS
@@ -154,7 +171,10 @@ const NFTMarketplaceProfile: React.FC = () => {
     ) {
       getAllCollections();
     }
-  }, [currentChainId, getAllCollections, selectedCategory]);
+    if (selectedCategory === ProfileCategories.ACTIVITY) {
+      getActivity();
+    }
+  }, [getActivity, getAllCollections, selectedCategory]);
 
   useEffect(() => {
     if (currentChainId !== ChainsIds.TLC) {
@@ -165,11 +185,7 @@ const NFTMarketplaceProfile: React.FC = () => {
   }, [currentChainId, window.ethereum?.networkVersion]);
 
   useEffect(() => {
-    if (
-      selectedCategory === ProfileCategories.COLLECTED
-      // &&
-      // currentChainId === ChainsIds.TLC
-    ) {
+    if (selectedCategory === ProfileCategories.COLLECTED) {
       getCollectedItems();
     }
   }, [currentChainId, getCollectedItems, selectedCategory]);
@@ -189,7 +205,7 @@ const NFTMarketplaceProfile: React.FC = () => {
             setSelectedCategory={setSelectedCategory}
             categories={categories}
           />
-          {isLoading && (
+          {isLoading && selectedCategory !== ProfileCategories.ACTIVITY && (
             <div className="w-full flex justify-center items-center text-center mt-20">
               <TailSpin color="#fff" height={40} width={40} />
             </div>
@@ -252,6 +268,95 @@ const NFTMarketplaceProfile: React.FC = () => {
               </>
             )}
           </div>
+          {selectedCategory === ProfileCategories.ACTIVITY && (
+            <div className="flex w-full justify-around">
+              <div className="">
+                <p className="text-xl font-semibold text-center mb-2">
+                  Recent Sales
+                </p>
+                {recentSales.map((sale, index) => (
+                  <div className="flex text-center space-x-2">
+                    <p>Tx Hash: </p>
+                    <a
+                      className="text-blue-500 hover:text-blue-700"
+                      href={`${process.env.REACT_APP_TLX_SCAN}/tx/${sale.txHash}`}
+                      target="_blank"
+                    >
+                      {ellipsizeAddress(sale.txHash, 20)}
+                    </a>
+                  </div>
+                ))}
+                {recentSales.length === 0 && (
+                  <p className="text-center text-gray-400">No recent sales</p>
+                )}
+              </div>
+              <div>
+                <p className="text-xl font-semibold text-center mb-2">
+                  Recent Buys
+                </p>
+                {recentBuys.map((buy, index) => (
+                  <div className="flex text-center space-x-2">
+                    <p>Tx Hash: </p>
+                    <a
+                      className="text-blue-500 hover:text-blue-700"
+                      href={`${process.env.REACT_APP_TLX_SCAN}/tx/${buy.txHash}`}
+                      target="_blank"
+                    >
+                      {ellipsizeAddress(buy.txHash, 20)}
+                    </a>
+                  </div>
+                ))}
+                {recentBuys.length === 0 && (
+                  <p className="text-center text-gray-400">No recent buys</p>
+                )}
+              </div>
+            </div>
+          )}
+
+          {selectedCategory === ProfileCategories.LIKED && (
+            <div className="flex w-full justify-around">
+              <div className="">
+                <p className="text-xl font-semibold text-center mb-2">
+                  Recent Sales
+                </p>
+                {recentSales.map((sale, index) => (
+                  <div className="flex text-center space-x-2">
+                    <p>Tx Hash: </p>
+                    <a
+                      className="text-blue-500 hover:text-blue-700"
+                      href={`${process.env.REACT_APP_TLX_SCAN}/tx/${sale.txHash}`}
+                      target="_blank"
+                    >
+                      {ellipsizeAddress(sale.txHash, 20)}
+                    </a>
+                  </div>
+                ))}
+                {recentSales.length === 0 && (
+                  <p className="text-center text-gray-400">No recent sales</p>
+                )}
+              </div>
+              <div>
+                <p className="text-xl font-semibold text-center mb-2">
+                  Recent Buys
+                </p>
+                {recentBuys.map((buy, index) => (
+                  <div className="flex text-center space-x-2">
+                    <p>Tx Hash: </p>
+                    <a
+                      className="text-blue-500 hover:text-blue-700"
+                      href={`${process.env.REACT_APP_TLX_SCAN}/tx/${buy.txHash}`}
+                      target="_blank"
+                    >
+                      {ellipsizeAddress(buy.txHash, 20)}
+                    </a>
+                  </div>
+                ))}
+                {recentBuys.length === 0 && (
+                  <p className="text-center text-gray-400">No recent buys</p>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         <MarketplaceRightSidebar />
       </div>

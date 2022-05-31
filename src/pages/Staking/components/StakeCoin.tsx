@@ -70,6 +70,8 @@ const StakeCoin: React.FC = () => {
     string | undefined
   >(undefined);
 
+  console.log('StakeContract: ', stakeContract);
+
   const getUserTLCBalance = useCallback(async () => {
     if (walletAddress) {
       const TLCBalance = await contracts.getTLCBalance(walletAddress);

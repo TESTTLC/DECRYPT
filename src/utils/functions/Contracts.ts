@@ -11,10 +11,13 @@ import {
   LussoFantomChildTokenContractAddress,
   LussoStakeContractAddress,
   LussoTokenContractAddress,
+  TLChain_USDT_ChildTokenContractAddress,
   TLCTokenContractAddress,
   TLC_AVAX_ChildTokenContractAddress,
   TLC_BSC_ChildTokenContractAddress,
   TLC_FTM_ChildTokenContractAddress,
+  USDT_BSC_TOKEN_ContractAddress,
+  WEGLD_TLC_ChildTokenContractAddress,
 } from '../globals';
 import { ChainsIds, defaultPowers } from '../types';
 
@@ -291,7 +294,6 @@ export const getBridgeAddresses = (
   toChain: string,
 ) => {
   // return ChainsIds[chain as unknown as keyof typeof ChainsIds] || ChainsIds.TLC;
-  console.log('herSSSSSe: ', toChain);
   let mainBridgeAddress = '';
   let sideBridgeAddress = '';
 
@@ -357,6 +359,34 @@ export const getBridgeAddresses = (
     }
   }
 
+  if (token === 'EGLD') {
+    mainBridgeAddress = bridgeAddresses.EGLD.main.address;
+    if (toChain === 'TLC') {
+      sideBridgeAddress = bridgeAddresses.EGLD.child.TLC.address;
+    }
+    if (toChain === 'ELROND') {
+      sideBridgeAddress = bridgeAddresses.EGLD.child.ELROND.address;
+    }
+  }
+
+  if (token === 'USDT') {
+    // mainBridgeAddress = bridgeAddresses.USDT.child.BSC.address;
+    // if (toChain === 'TLC') {
+    //   sideBridgeAddress = bridgeAddresses.USDT.child.TLC.address;
+    // }
+    // if (toChain === 'BSC') {
+    //   sideBridgeAddress = bridgeAddresses.USDT.main.address;
+    // }
+
+    mainBridgeAddress = bridgeAddresses.USDT.child.BSC.address;
+    if (toChain === 'TLC') {
+      sideBridgeAddress = bridgeAddresses.USDT.main.address;
+    }
+    if (toChain === 'BSC') {
+      sideBridgeAddress = bridgeAddresses.USDT.main.address;
+    }
+  }
+
   return { mainBridgeAddress, sideBridgeAddress };
 };
 
@@ -384,6 +414,20 @@ export const getTokenAddress = (token: string, fromChain: string) => {
       tokenAddress = LussoFantomChildTokenContractAddress;
     } else if (fromChain === 'AVAX') {
       tokenAddress = LussoAvalancheChildTokenContractAddress;
+    }
+  }
+
+  if (token === 'EGLD') {
+    if (fromChain === 'TLC') {
+      tokenAddress = WEGLD_TLC_ChildTokenContractAddress;
+    }
+  }
+
+  if (token === 'USDT') {
+    if (fromChain === 'TLC') {
+      tokenAddress = TLChain_USDT_ChildTokenContractAddress;
+    } else {
+      tokenAddress = USDT_BSC_TOKEN_ContractAddress;
     }
   }
 
