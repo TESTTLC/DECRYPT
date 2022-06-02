@@ -48,7 +48,10 @@ const NFTMarketplaceSidebar: React.FC = () => {
         >
           <HiX className="w-5 h-5" />
         </button>
-        <div className="self-center">
+        <div
+          className="self-center cursor-pointer"
+          onClick={() => navigate('/')}
+        >
           <DecryptionLogo className="justify-self-auto self-center" />
         </div>
 

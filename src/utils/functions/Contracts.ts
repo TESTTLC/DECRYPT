@@ -11,11 +11,13 @@ import {
   LussoFantomChildTokenContractAddress,
   LussoStakeContractAddress,
   LussoTokenContractAddress,
+  TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
   TLCTokenContractAddress,
   TLC_AVAX_ChildTokenContractAddress,
   TLC_BSC_ChildTokenContractAddress,
   TLC_FTM_ChildTokenContractAddress,
+  USDC_BSC_TOKEN_ContractAddress,
   USDT_BSC_TOKEN_ContractAddress,
   WEGLD_TLC_ChildTokenContractAddress,
 } from '../globals';
@@ -370,20 +372,22 @@ export const getBridgeAddresses = (
   }
 
   if (token === 'USDT') {
-    // mainBridgeAddress = bridgeAddresses.USDT.child.BSC.address;
-    // if (toChain === 'TLC') {
-    //   sideBridgeAddress = bridgeAddresses.USDT.child.TLC.address;
-    // }
-    // if (toChain === 'BSC') {
-    //   sideBridgeAddress = bridgeAddresses.USDT.main.address;
-    // }
-
     mainBridgeAddress = bridgeAddresses.USDT.child.BSC.address;
     if (toChain === 'TLC') {
       sideBridgeAddress = bridgeAddresses.USDT.main.address;
     }
     if (toChain === 'BSC') {
       sideBridgeAddress = bridgeAddresses.USDT.main.address;
+    }
+  }
+
+  if (token === 'USDC') {
+    mainBridgeAddress = bridgeAddresses.USDC.child.BSC.address;
+    if (toChain === 'TLC') {
+      sideBridgeAddress = bridgeAddresses.USDC.main.address;
+    }
+    if (toChain === 'BSC') {
+      sideBridgeAddress = bridgeAddresses.USDC.main.address;
     }
   }
 
@@ -428,6 +432,14 @@ export const getTokenAddress = (token: string, fromChain: string) => {
       tokenAddress = TLChain_USDT_ChildTokenContractAddress;
     } else {
       tokenAddress = USDT_BSC_TOKEN_ContractAddress;
+    }
+  }
+
+  if (token === 'USDC') {
+    if (fromChain === 'TLC') {
+      tokenAddress = TLChain_USDC_ChildTokenContractAddress;
+    } else {
+      tokenAddress = USDC_BSC_TOKEN_ContractAddress;
     }
   }
 

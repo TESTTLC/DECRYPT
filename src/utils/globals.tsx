@@ -6,6 +6,7 @@ import tlcBridgeImage from '../assets/images/tlc-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
 import avaxBridgeImage from '../assets/images/avax-token.png';
 import usdtCoinImage from '../assets/images/USDT-logo.png';
+import usdcCoinImage from '../assets/images/USDC-logo.png';
 import lsoCoinImage from '../assets/images/LSO-logo.png';
 import elrondCoinImage from '../assets/images/egld-coin.png';
 
@@ -102,28 +103,26 @@ export const OldTLXTokenContractAddress =
 export const TLC_BSCSideBridgeContractAddress =
   '0xbBcdB8C8E0D17b76F5ED2B9FC36A60154c2142F2';
 
-export const TLChain_USDT_SideBridgeContractAddress =
-  '0xCDdd421bdead917Da8EC2626B92Bc38D5C2061a1';
-export const TLChain_USDT_ChildTokenContractAddress =
-  '0x537C0Ea12C8D50d2D7c608a4b981638bF64e03c6';
 export const TLChain_USDC_SideBridgeContractAddress =
   '0x2e4f445b25cbC24B2f1ab1b8B0C39763674142B5';
 export const TLChain_USDC_ChildTokenContractAddress =
   '0x1a39bC1940058fF4626E1E79fb2C093AEe27105A';
-
-export const Binance_USDT_MainBridgeContractAddress =
-  '0xabd0F4b51CaA250c9EAD80742496Be39798D1c46';
 export const Binance_USDC_MainBridgeContractAddress =
   '0xa503e0834a73b8577C88e788532c33D08075eE78';
 
+export const TLChain_USDT_SideBridgeContractAddress =
+  '0xCDdd421bdead917Da8EC2626B92Bc38D5C2061a1';
+export const TLChain_USDT_ChildTokenContractAddress =
+  '0x537C0Ea12C8D50d2D7c608a4b981638bF64e03c6';
+
+export const Binance_USDT_MainBridgeContractAddress =
+  '0xabd0F4b51CaA250c9EAD80742496Be39798D1c46';
+
 export const WEGLD_TLC_SideBridgeContractAddress =
-  '0xc5bbf394Af1b927dA723C809684799AA034a49bd';
+  '0x51ecC0062002808B9e632D57A207be5F1850F118';
 
 export const WEGLD_TLC_ChildTokenContractAddress =
-  '0x62106a226f0AD0d0DC969954b4259645C0c0D42D';
-
-export const TLC_ELROND_SideBridgeContractAddress =
-  'erd1qqqqqqqqqqqqqpgqr33h830ht8ck835xtpavdks4pxdv92e5yfjs264zzy';
+  '0xBABfCD8324b2457c091B643CD6DC46B25577B253';
 
 export const USDT_BSC_TOKEN_ContractAddress =
   '0x55d398326f99059fF775485246999027B3197955';
@@ -131,7 +130,7 @@ export const USDC_BSC_TOKEN_ContractAddress =
   '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d';
 
 export const ELROND_LOCK_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqehnmrqxsw5hzd3ulcxxhx7x8dra0mkjmyfjs90a733';
+  'erd1qqqqqqqqqqqqqpgqx98hk5hncut4awe5cgxsufqhger208ssyfjsa464c6';
 export const ELROND_TOKEN_SC_ABI = 'abi/elrond-token-manager.abi.json';
 export const ELROND_TOKEN_SC_NAME = 'Bridge';
 export const ELROND_TOKEN_ID = 'TLV-8ac90e';
@@ -218,14 +217,15 @@ export const bridgeAddresses = {
     },
   },
   USDC: {
-    // Main refers to the main chain
     main: {
-      address: Binance_USDC_MainBridgeContractAddress,
+      address: TLChain_USDC_SideBridgeContractAddress,
     },
-    // Child refers to the second chain
     child: {
       TLC: {
-        address: TLChain_USDC_SideBridgeContractAddress,
+        address: Binance_USDC_MainBridgeContractAddress,
+      },
+      BSC: {
+        address: Binance_USDC_MainBridgeContractAddress,
       },
     },
   },
@@ -301,6 +301,11 @@ export const modalCoins = {
     name: 'Tether',
     tag: 'USDT',
     image: usdtCoinImage,
+  },
+  USDC: {
+    name: 'USD Coin',
+    tag: 'USDC',
+    image: usdcCoinImage,
   },
   EGLD: {
     name: 'Elrond',

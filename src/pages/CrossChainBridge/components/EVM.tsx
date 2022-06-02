@@ -18,7 +18,7 @@ import { modalChains, modalCoins } from '../../../utils/globals';
 
 import TokensModal from './TokensModal';
 
-const gasFees = {
+const fees = {
   TLC: 1,
   LSO: 5,
   USDT: 1,
@@ -48,10 +48,10 @@ const EVM: React.FC = () => {
   );
 
   const [currentChainId, setCurrentChainId] = useState<string>();
-  const [gasFee, setGasFee] = useState(bridgeState.token === 'LSO' ? 5 : 1);
+  const [fee, setFee] = useState(bridgeState.token === 'LSO' ? 5 : 1);
 
   useEffect(() => {
-    setGasFee(bridgeState.token === 'LSO' ? 5 : 1);
+    setFee(bridgeState.token === 'LSO' ? 5 : 1);
   }, [bridgeState.token]);
 
   const chainChange = useCallback(async () => {
@@ -69,9 +69,9 @@ const EVM: React.FC = () => {
     });
   }
 
-  useEffect(() => {
-    // chainChange();
-  }, [chainChange]);
+  //   useEffect(() => {
+  // chainChange();
+  //   }, [chainChange]);
 
   useEffect(() => {
     setApproveDone(false);
@@ -153,7 +153,7 @@ const EVM: React.FC = () => {
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
-        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const finalAmount = parseFloat(amountToSend) + fee;
         const tx = await tokenContract?.functions.approve(
           mainBridgeContract?.address,
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
@@ -173,7 +173,7 @@ const EVM: React.FC = () => {
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
-        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const finalAmount = parseFloat(amountToSend) + fee;
         const tx = await tokenContract?.functions.approve(
           sideBridgeContract?.address,
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
@@ -192,12 +192,11 @@ const EVM: React.FC = () => {
     if (bridgeState.token === 'TLC') {
       approveSide();
     } else {
-      approveMain();
-      //   if (isStableCoin(bridgeState.token)) {
-      //       approveMain();
-      //     } else {
-      //       approveSide();
-      //   }
+      if (isStableCoin(bridgeState.token)) {
+        approveSide();
+      } else {
+        approveMain();
+      }
     }
     // bridgeState.toChain === 'TLC' ? approveSide : approveMain;
   };
@@ -209,7 +208,7 @@ const EVM: React.FC = () => {
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
         console.log('ssss: ', sideBridgeContract?.address);
-        const finalAmount = parseFloat(amountToSend) + gasFee;
+        const finalAmount = parseFloat(amountToSend) + fee;
         let tx;
 
         if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
@@ -248,14 +247,18 @@ const EVM: React.FC = () => {
 
   const returnTokens = async () => {
     try {
-      console.log('On Return TOKENS');
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
         console.log(
           'sideBridgeContract?.address: ',
           sideBridgeContract?.address,
         );
-        const finalAmount = parseFloat(amountToSend) + gasFee;
+        // console.log(
+        //   'allowance: ',
+        //   await sideBridgeContract?.allowance(walletAddress),
+        // );
+        console.log('side: ', sideBridgeContract);
+        const finalAmount = parseFloat(amountToSend) + fee;
         const tx = await sideBridgeContract?.returnTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
           mainBridgeContract?.address,
@@ -350,6 +353,7 @@ const EVM: React.FC = () => {
               TLC: modalCoins.TLC,
               LSO: modalCoins.LSO,
               USDT: modalCoins.USDT,
+              USDC: modalCoins.USDC,
             }}
             // chains={{ TLC: modalChains.TLC }}
             type="from"
@@ -384,6 +388,7 @@ const EVM: React.FC = () => {
               TLC: modalCoins.TLC,
               LSO: modalCoins.LSO,
               USDT: modalCoins.USDT,
+              USDC: modalCoins.USDC,
             }}
             // chains={{ BSC: modalChains.BSC }}
             type="to"
@@ -392,7 +397,7 @@ const EVM: React.FC = () => {
         </div>
         <p className="my-4 text-sm">
           You will spend <span className="text-green-400">{amountToSend}</span>{' '}
-          + {gasFee} (gas fee) as a total of {parseFloat(amountToSend) + gasFee}{' '}
+          + {fee} (fee) as a total of {parseFloat(amountToSend) + fee}{' '}
           {bridgeState.token}
         </p>
         <div className="flex w-full space-x-8">

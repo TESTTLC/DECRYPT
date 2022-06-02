@@ -7,7 +7,7 @@ interface Props {
   contractAddress: string;
   imageSource: string;
   title: string;
-  price: number;
+  price?: number;
   timeLeft: string;
   isSquare?: boolean;
   collectionName: string;
@@ -48,7 +48,7 @@ const NFTItem: React.FC<Props> = ({
       <div className="p-4 flex flex-col space-y-4">
         <div className="flex justify-between items-center text-sm">
           <p className="text-blue-500">{title}</p>
-          <p className="text-white">{price} (TLNFT)</p>
+          {price && <p className="text-white">{price} (TLNFT)</p>}
         </div>
         <div className="flex justify-between items-center xs:text-sm">
           <p className="text-ellipsis overflow-hidden">

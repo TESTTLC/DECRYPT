@@ -6,6 +6,7 @@ import ChipIcon from 'src/assets/svg/Chip';
 import user1 from 'src/assets/images/user1.png';
 import user2 from 'src/assets/images/user2.png';
 import user3 from 'src/assets/images/user3.png';
+import defaultUserImage from 'src/assets/images/default_user.png';
 import cardBackground from 'src/assets/images/credit_card_bg.png';
 import { useEffect } from 'react';
 import { useGetLatestCollectionsQuery } from 'src/redux/modules/collections/queries';
@@ -102,7 +103,7 @@ const MarketplaceRightSidebar: React.FC = () => {
           {creatorsData?.creators.map((creator) => (
             <div className="flex space-x-2">
               <img
-                src={creator.profileImageUri ?? user1}
+                src={creator.profileImageUri || defaultUserImage}
                 className="bg-gray-500 rounded-full h-10 w-10"
               />
               <div>

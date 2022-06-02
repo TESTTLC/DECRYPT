@@ -11,7 +11,6 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { updateBridgeState } from 'src/redux/modules/bridge/actions';
 
 import { ChainsIds } from '../../utils/types';
-import { changeChain } from '../../utils/functions/MetaMask';
 import { useContracts } from '../../hooks/useContracts';
 import { modalChains } from '../../utils/globals';
 import { getTransaction, initialize } from '../../api/index';

@@ -11,6 +11,7 @@ import avaxBridgeImage from 'src/assets/images/avax-token.png';
 import elrondBridgeImage from 'src/assets/images/elrond-bridge.png';
 import elrondCoinImage from 'src/assets/images/egld-coin.png';
 import usdtBridgeImage from 'src/assets/images/USDT-logo.png';
+import usdcCoinImage from 'src/assets/images/USDC-logo.png';
 import tlxNewToken from 'src/assets/images/tlx-token-new.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
@@ -99,6 +100,8 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
       setImageUsedToken(usdtBridgeImage);
     } else if (bridgeState.token === 'EGLD') {
       setImageUsedToken(elrondCoinImage);
+    } else if (bridgeState.token === 'USDC') {
+      setImageUsedToken(usdcCoinImage);
     }
   }, [selectedChain, bridgeState.token, type]);
 

@@ -28,10 +28,10 @@ import {
   Balance,
   TransactionWatcher,
 } from '@elrondnetwork/erdjs';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import MainBridgeMainToken from 'src/contracts/MainBridgeMainToken.json';
 import MainBridge from 'src/contracts/MainBridge.json';
-import SideBridge from 'src/contracts/SideBridge.json';
+import SideBridgeEGLD from 'src/contracts/SideBridgeEGLD.json';
 import New_SideBridge from 'src/contracts/New_SideBridge.json';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import {
@@ -40,8 +40,6 @@ import {
   ELROND_TOKEN_SC_NAME,
   modalChains,
   modalCoins,
-  TIMEOUT,
-  TLC_ELROND_SideBridgeContractAddress,
   WEGLD_TLC_SideBridgeContractAddress,
 } from 'src/utils/globals';
 import TLVAbi from 'src/contracts/ElrondTLV.json';
@@ -69,7 +67,7 @@ interface IContractInteractor {
   controller: DefaultSmartContractController;
 }
 
-const gasFee = 0;
+const fee = 0.01;
 
 const Elrond: React.FC = () => {
   const walletAddress = useSelector<StoreState, string | undefined>(
@@ -82,7 +80,7 @@ const Elrond: React.FC = () => {
   const bridgeState = useSelector<StoreState, BridgeState>(
     (state) => state.bridge,
   );
-  const { isLoggedIn } = useGetLoginInfo();
+  const { isLoggedIn: isMaiarLoggedIn } = useGetLoginInfo();
   const { network } = useGetNetworkConfig();
   const { address } = useGetAccountInfo();
   const {
@@ -113,11 +111,6 @@ const Elrond: React.FC = () => {
   useEffect(() => {
     setApproveDone(false);
   }, [bridgeState.token, bridgeState.fromChain, bridgeState.toChain]);
-
-  //   console.log('isLoggedIn: ', isLoggedIn);
-  //   console.log('hasPendingTransactions', hasPendingTransactions);
-  //   console.log('pendingTransactions', pendingTransactions);
-  //   console.log('pendingTransactionsArray', pendingTransactionsArray);
 
   const deposit = async () => {
     console.log('HOW MANY TIMES DEPOSIT?');
@@ -173,9 +166,11 @@ const Elrond: React.FC = () => {
   const approveSide = async () => {
     try {
       setErrorMessage(undefined);
+
       if (Number(amount) > 0) {
         setIsLoading(true);
-        const finalAmount = Number(amount) + gasFee;
+        const finalAmount = Number(amount) + fee;
+
         const tx = await tokenContract?.functions.approve(
           sideBridgeContract?.address,
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
@@ -190,6 +185,8 @@ const Elrond: React.FC = () => {
     }
   };
 
+  console.log('Address: ', address);
+
   const returnTokens = async () => {
     try {
       if (Number(amount) > 0 && ethProvider) {
@@ -199,17 +196,17 @@ const Elrond: React.FC = () => {
           sideBridgeContract?.address,
         );
 
-        const finalAmount = Number(amount) + gasFee;
+        const finalAmount = Number(amount) + fee;
 
         const sideContract = new ethers.Contract(
           WEGLD_TLC_SideBridgeContractAddress,
-          SideBridge.abi,
+          SideBridgeEGLD.abi,
           ethProvider.getSigner(),
         );
 
         const tx = await sideContract.returnTokens(
-          ethers.utils.parseUnits('10', 'ether'),
-          '0x0000000000000000000000000000000000000000',
+          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+          address,
         );
 
         setIsLoading(false);
@@ -257,16 +254,44 @@ const Elrond: React.FC = () => {
     })();
   }, [contractInteractor, hasPendingTransactions, address]);
 
+  const send = () => {
+    if (bridgeState.fromChain === 'TLC') {
+      if (approveDone) {
+        returnTokens();
+      } else {
+        approveSide();
+      }
+    } else {
+      deposit();
+    }
+  };
+
+  const buttonText = useMemo(() => {
+    if (bridgeState.fromChain === 'TLC') {
+      if (approveDone) {
+        return 'Send';
+      } else {
+        return 'Approve';
+      }
+    } else {
+      return 'Send';
+    }
+  }, [approveDone, bridgeState.fromChain]);
+
   return (
     <div className="flex">
       {/* {chainError && <p className="text-red-500 text-sm">{chainError}</p>} */}
       {/* <button onClick={test}>TEST</button> */}
       <div className="relative items-center w-[44rem] xs:w-[22rem] h-[23rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
-        {!isLoggedIn ? (
-          <ExtensionLoginButton
-            callbackRoute={'/crosschainbridge'}
-            loginButtonText={'Extension'}
-          />
+        {!isMaiarLoggedIn ? (
+          <div className="w-full flex items-center justify-center">
+            <ExtensionLoginButton
+              callbackRoute={'/crosschainbridge'}
+              loginButtonText={'Connect with MAIAR'}
+              loginButtonClassName={{ backgroundColor: 'red' }}
+              style={{ backgroundColor: 'green' }}
+            />
+          </div>
         ) : (
           <>
             <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
@@ -325,33 +350,31 @@ const Elrond: React.FC = () => {
             </div>
             <p className="my-4 text-sm">
               You will spend{' '}
-              <span className="text-green-400">{depositedAmount}</span> + -10
-              (gas fee) as a total of {depositedAmount}{' '}
+              <span className="text-green-400">{depositedAmount}</span> + {fee}
+              (fee) as a total of {depositedAmount} EGLD
               {/* {bridgeState.token} */}
             </p>
             <div className="flex w-full space-x-8">
               {/* {currentChainId === getChainId(bridgeState.fromChain) ? ( */}
-
-              <button
-                onClick={
-                  bridgeState.fromChain === 'TLC' ? returnTokens : deposit
-                }
-                className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-                //   disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <TailSpin color="#fff" height={18} width={18} />
-                  </>
-                ) : (
-                  'Send'
-                )}
-              </button>
-              {/* ) : (
-              <p className="w-full text-center">
-                Please connect to Selected "From" Chain
-              </p>
-            )} */}
+              {walletAddress ? (
+                <button
+                  // onClick={ approveDone ? send : approveSide}
+                  onClick={send}
+                  className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                  //   disabled={isLoading}
+                >
+                  {/* eslint-disable-next-line no-nested-ternary */}
+                  {isLoading ? (
+                    <>
+                      <TailSpin color="#fff" height={18} width={18} />
+                    </>
+                  ) : (
+                    `${buttonText}`
+                  )}
+                </button>
+              ) : (
+                <p>Please connect your Metamask wallet to receive the tokens</p>
+              )}
             </div>
             {/* {errorMessage && (
           <p className="my-4 text-sm text-center">{errorMessage}</p>

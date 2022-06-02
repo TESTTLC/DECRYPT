@@ -40,7 +40,7 @@ interface CustomLocation extends Path {
 }
 
 const NFTMarketplaceViewCollection: React.FC = () => {
-  const { sdk } = useMarketplaceSDK();
+  const { sdk, marketplace } = useMarketplaceSDK();
   const navigate = useNavigate();
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
@@ -54,6 +54,7 @@ const NFTMarketplaceViewCollection: React.FC = () => {
   const [collection, setCollection] = useState<Collection>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [nfts, setNfts] = useState<any[]>([]);
+  const [listingsIds, setListingsIds] = useState<string[]>([]);
 
   const getCollection = useCallback(async () => {
     if (provider && contractAddress && sdk) {
@@ -80,9 +81,26 @@ const NFTMarketplaceViewCollection: React.FC = () => {
     }
   }, [provider, contractAddress, sdk, nfts]);
 
+  const getListings = useCallback(async () => {
+    console.log('Here');
+    const _listings = await marketplace?.getAllListings({
+      tokenContract: contractAddress,
+    });
+    const _listingsIds: string[] = [];
+    _listings?.forEach((_listing) => {
+      _listingsIds.push(_listing.id);
+    });
+    console.log('listingsIds: ', _listingsIds);
+    // setListingsIds(_listingsIds);
+  }, [contractAddress, marketplace]);
+
   useEffect(() => {
     getCollection();
   }, [getCollection]);
+
+  useEffect(() => {
+    getListings();
+  }, [getListings]);
 
   return (
     <div className="w-full flex flex-col">
@@ -107,7 +125,8 @@ const NFTMarketplaceViewCollection: React.FC = () => {
                     key={`${item.metadata.id}-${index}`}
                     imageSource={item.metadata.image}
                     title={item.metadata.name}
-                    price={66565}
+                    // price={66565}
+
                     collectionName={collection.name}
                     timeLeft="2 days left"
                     description={item.metadata.description}

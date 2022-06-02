@@ -337,6 +337,7 @@ const NFTDetails: React.FC = () => {
   const notify = () => toast('Link copied to Clipboard');
 
   const copyUrlToClipboard = () => {
+    console.log('window.location.href: ', window.location.href);
     navigator.clipboard.writeText(window.location.href);
     notify();
   };

@@ -99,15 +99,17 @@ export const sendTxHashToBackend = async (
   walletAddress: string,
 ) => {
   const ip = 'http://159.65.10.226:3100';
-  const tlcElrondBackendAPI = axios.create({
-    baseURL: `${ip}/api/checkTransactionHash?`,
-  });
+  //   const tlcElrondBackendAPI = axios.create({
+  //     baseURL: `${ip}/api/checkTransactionHash?`,
+  //   });
 
   try {
-    const result = await tlcElrondBackendAPI.post(
-      //   `/${txHash}?tx=${txHash}&wallet=${walletAddress}`,
-      `tx=${txHash}&wallet=${walletAddress}`,
-    );
+    console.log('Sending txHash to backend: ', txHash);
+    console.log('WalletAddress: ', walletAddress);
+    const formData = new FormData();
+    formData.append('tx', txHash);
+    formData.append('wallet', walletAddress);
+    const result = await axios.post(`${ip}/api/checkTransactionHash`, formData);
     console.log('Result: ', result);
   } catch (error) {
     console.log('Error: ', error);
