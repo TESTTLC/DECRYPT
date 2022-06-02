@@ -5,6 +5,8 @@ import { TailSpin } from 'react-loader-spinner';
 import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { Project } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
+import usdtLogo from 'src/assets/images/USDT-logo.png';
+import egldLogo from 'src/assets/images/egld-coin.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlxLogo from 'src/assets/images/TLX-logo.png';
@@ -25,12 +27,28 @@ export const fromModalTokens: any[] = [
     percentage2: 179,
   },
   {
+    name: 'USDT',
+    tag: 'USDT',
+    image: usdtLogo,
+    iconBackground: '',
+    percentage1: 19,
+    percentage2: 179,
+  },
+  {
     name: 'LSO',
     tag: 'LSO',
     image: lsoLogo,
     iconBackground: 'white',
     percentage1: 19,
     percentage2: 120,
+  },
+  {
+    name: 'EGLD',
+    tag: 'EGLD',
+    image: egldLogo,
+    iconBackground: '',
+    percentage1: 30,
+    percentage2: 170,
   },
   {
     name: 'TLX',
@@ -40,14 +58,14 @@ export const fromModalTokens: any[] = [
     percentage1: 30,
     percentage2: 170,
   },
-  {
-    name: 'ATRI',
-    tag: 'ATRI',
-    image: atriLogo,
-    iconBackground: '',
-    percentage1: 6.5,
-    percentage2: undefined,
-  },
+  //   {
+  //     name: 'ATRI',
+  //     tag: 'ATRI',
+  //     image: atriLogo,
+  //     iconBackground: '',
+  //     percentage1: 6.5,
+  //     percentage2: undefined,
+  //   },
 ];
 
 export const toModalTokes: Project[] = [

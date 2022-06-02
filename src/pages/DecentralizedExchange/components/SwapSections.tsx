@@ -9,7 +9,7 @@ import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlxLogo from 'src/assets/images/TLX-logo.png';
 import tlLpLogo from 'src/assets/images/TLLP_COIN.png';
-import atriLogo from 'src/assets/images/ATRI-logo.png';
+import egldLogo from 'src/assets/images/egld-coin.png';
 import { AiFillLock } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
@@ -31,15 +31,7 @@ const TLLP_OwnerAddress = process.env.REACT_APP_TLLP_OWNER_ADDRESS;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fromModalTokens: any[] = [
   {
-    name: 'Tether',
-    tag: 'USDT',
-    image: usdtLogo,
-    iconBackground: '',
-    percentage1: 19,
-    percentage2: 179,
-  },
-  {
-    name: 'USD Coin',
+    name: 'USDC',
     tag: 'USDC',
     image: usdcLogo,
     iconBackground: '',
@@ -47,7 +39,15 @@ export const fromModalTokens: any[] = [
     percentage2: 179,
   },
   {
-    name: 'Luxandia',
+    name: 'USDT',
+    tag: 'USDT',
+    image: usdtLogo,
+    iconBackground: '',
+    percentage1: 19,
+    percentage2: 179,
+  },
+  {
+    name: 'LSO',
     tag: 'LSO',
     image: lsoLogo,
     iconBackground: 'white',
@@ -55,21 +55,29 @@ export const fromModalTokens: any[] = [
     percentage2: 120,
   },
   {
-    name: 'The Luxury',
+    name: 'EGLD',
+    tag: 'EGLD',
+    image: egldLogo,
+    iconBackground: '',
+    percentage1: 30,
+    percentage2: 170,
+  },
+  {
+    name: 'TLX',
     tag: 'TLX',
     image: tlxLogo,
     iconBackground: '',
     percentage1: 30,
     percentage2: 170,
   },
-  {
-    name: 'Atari Token',
-    tag: 'ATRI',
-    image: atriLogo,
-    iconBackground: '',
-    percentage1: 6.5,
-    percentage2: undefined,
-  },
+  //   {
+  //     name: 'Atari Token',
+  //     tag: 'ATRI',
+  //     image: atriLogo,
+  //     iconBackground: '',
+  //     percentage1: 6.5,
+  //     percentage2: undefined,
+  //   },
 ];
 
 const minimumAmount = 200;

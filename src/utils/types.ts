@@ -91,6 +91,7 @@ export enum ChainsIds {
   TLC = '0x1439',
   FTM = '0xfa',
   AVAX = '0xa86a',
+  MATIC = '0x89',
 }
 
 export const defaultPowers = {

@@ -29,7 +29,7 @@ import {
   TLLPStakeContractAddress,
   TLNFTTokenContractAddress,
   TTXTokenContractAddress,
-  WEGLD_TLC_ChildTokenContractAddress,
+  TLChain_wEGLD_ChildTokenContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -97,7 +97,7 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setTokenAbi(TTXToken.abi);
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
     } else if (coinTag === 'EGLD') {
-      setTokenAddress(WEGLD_TLC_ChildTokenContractAddress);
+      setTokenAddress(TLChain_wEGLD_ChildTokenContractAddress);
       setStakeAddress('-');
       setTokenAbi(TTXToken.abi);
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed

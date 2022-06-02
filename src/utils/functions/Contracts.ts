@@ -4,22 +4,24 @@ import { ethers, Contract } from 'ethers';
 
 import {
   bridgeAddresses,
-  LSO_BSCSideBridgeContractAddress,
+  Binance_LSO_SideBridgeContractAddress,
   LSO_MainBridgeContractAddress,
-  LussoAvalancheChildTokenContractAddress,
-  LussoBinanceChildTokenContractAddress,
-  LussoFantomChildTokenContractAddress,
+  Avalance_LSO_ChildTokenContractAddress,
+  Binance_LSO_ChildTokenContractAddress,
+  Fantom_LSO_ChildTokenContractAddress,
   LussoStakeContractAddress,
   LussoTokenContractAddress,
   TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
   TLCTokenContractAddress,
-  TLC_AVAX_ChildTokenContractAddress,
-  TLC_BSC_ChildTokenContractAddress,
-  TLC_FTM_ChildTokenContractAddress,
+  Avalance_TLC_ChildTokenContractAddress,
+  Binance_TLC_ChildTokenContractAddress,
+  Fantom_TLC_ChildTokenContractAddress,
   USDC_BSC_TOKEN_ContractAddress,
   USDT_BSC_TOKEN_ContractAddress,
-  WEGLD_TLC_ChildTokenContractAddress,
+  TLChain_wEGLD_ChildTokenContractAddress,
+  Polygon_wTLC_ChildTokenContractAddress,
+  Polygon_wLSO_ChildTokenContractAddress,
 } from '../globals';
 import { ChainsIds, defaultPowers } from '../types';
 
@@ -299,19 +301,6 @@ export const getBridgeAddresses = (
   let mainBridgeAddress = '';
   let sideBridgeAddress = '';
 
-  // const selectedToken = token as unknown as keyof typeof bridgeAddresses;
-  // const selectedChild =
-  //   toChain as unknown as keyof typeof bridgeAddresses.TLC.child;
-
-  // console.log('selectedChild: ', selectedChild);
-  // console.log('selectedToken: ', selectedToken);
-  // mainBridgeAddress = bridgeAddresses[selectedToken].main.address || 'ERR';
-  // sideBridgeAddress =
-  //   bridgeAddresses[selectedToken].child[selectedChild].address || 'ERR';
-
-  // console.log('sideBridgeAddress: ', sideBridgeAddress);
-  // console.log('mainBridgeAddress: ', mainBridgeAddress);
-
   if (token === 'LSO') {
     mainBridgeAddress = bridgeAddresses.LSO.main.address;
     if (toChain === 'TLC') {
@@ -324,6 +313,9 @@ export const getBridgeAddresses = (
       if (fromChain === 'AVAX') {
         sideBridgeAddress = bridgeAddresses.LSO.child.AVAX.address;
       }
+      if (fromChain === 'MATIC') {
+        sideBridgeAddress = bridgeAddresses.LSO.child.MATIC.address;
+      }
     }
     // sideBridgeAddress = bridgeAddresses[token].child[toChain].address;
     if (toChain === 'BSC') {
@@ -334,6 +326,9 @@ export const getBridgeAddresses = (
     }
     if (toChain === 'AVAX') {
       sideBridgeAddress = bridgeAddresses.LSO.child.AVAX.address;
+    }
+    if (toChain === 'MATIC') {
+      sideBridgeAddress = bridgeAddresses.LSO.child.MATIC.address;
     }
   }
 
@@ -349,6 +344,9 @@ export const getBridgeAddresses = (
       if (fromChain === 'AVAX') {
         sideBridgeAddress = bridgeAddresses.TLC.child.AVAX.address;
       }
+      if (fromChain === 'MATIC') {
+        sideBridgeAddress = bridgeAddresses.TLC.child.MATIC.address;
+      }
     }
     if (toChain === 'BSC') {
       sideBridgeAddress = bridgeAddresses.TLC.child.BSC.address;
@@ -358,6 +356,9 @@ export const getBridgeAddresses = (
     }
     if (toChain === 'AVAX') {
       sideBridgeAddress = bridgeAddresses.TLC.child.AVAX.address;
+    }
+    if (toChain === 'MATIC') {
+      sideBridgeAddress = bridgeAddresses.TLC.child.MATIC.address;
     }
   }
 
@@ -401,11 +402,13 @@ export const getTokenAddress = (token: string, fromChain: string) => {
     if (fromChain === 'TLC') {
       tokenAddress = TLCTokenContractAddress;
     } else if (fromChain === 'BSC') {
-      tokenAddress = TLC_BSC_ChildTokenContractAddress;
+      tokenAddress = Binance_TLC_ChildTokenContractAddress;
     } else if (fromChain === 'FTM') {
-      tokenAddress = TLC_FTM_ChildTokenContractAddress;
+      tokenAddress = Fantom_TLC_ChildTokenContractAddress;
     } else if (fromChain === 'AVAX') {
-      tokenAddress = TLC_AVAX_ChildTokenContractAddress;
+      tokenAddress = Avalance_TLC_ChildTokenContractAddress;
+    } else if (fromChain === 'MATIC') {
+      tokenAddress = Polygon_wTLC_ChildTokenContractAddress;
     }
   }
 
@@ -413,17 +416,19 @@ export const getTokenAddress = (token: string, fromChain: string) => {
     if (fromChain === 'TLC') {
       tokenAddress = LussoTokenContractAddress;
     } else if (fromChain === 'BSC') {
-      tokenAddress = LussoBinanceChildTokenContractAddress;
+      tokenAddress = Binance_LSO_ChildTokenContractAddress;
     } else if (fromChain === 'FTM') {
-      tokenAddress = LussoFantomChildTokenContractAddress;
+      tokenAddress = Fantom_LSO_ChildTokenContractAddress;
     } else if (fromChain === 'AVAX') {
-      tokenAddress = LussoAvalancheChildTokenContractAddress;
+      tokenAddress = Avalance_LSO_ChildTokenContractAddress;
+    } else if (fromChain === 'Matic') {
+      tokenAddress = Polygon_wLSO_ChildTokenContractAddress;
     }
   }
 
   if (token === 'EGLD') {
     if (fromChain === 'TLC') {
-      tokenAddress = WEGLD_TLC_ChildTokenContractAddress;
+      tokenAddress = TLChain_wEGLD_ChildTokenContractAddress;
     }
   }
 

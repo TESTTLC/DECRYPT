@@ -98,10 +98,7 @@ export const sendTxHashToBackend = async (
   txHash: string,
   walletAddress: string,
 ) => {
-  const ip = 'http://159.65.10.226:3100';
-  //   const tlcElrondBackendAPI = axios.create({
-  //     baseURL: `${ip}/api/checkTransactionHash?`,
-  //   });
+  const ip = process.env.REACT_APP_BRIDGE_IP;
 
   try {
     console.log('Sending txHash to backend: ', txHash);

@@ -27,20 +27,22 @@ import {
   TransactionPayload,
   Balance,
   TransactionWatcher,
+  BytesValue,
+  GasLimit,
+  ArgSerializer,
 } from '@elrondnetwork/erdjs';
 import { useEffect, useMemo, useState } from 'react';
-import MainBridgeMainToken from 'src/contracts/MainBridgeMainToken.json';
-import MainBridge from 'src/contracts/MainBridge.json';
 import SideBridgeEGLD from 'src/contracts/SideBridgeEGLD.json';
-import New_SideBridge from 'src/contracts/New_SideBridge.json';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import {
   ELROND_LOCK_SC_ADDRESS,
+  ELROND_TLC_SC_ADDRESS,
+  ELROND_TLC_TOKEN_ID,
   ELROND_TOKEN_SC_ABI,
   ELROND_TOKEN_SC_NAME,
   modalChains,
   modalCoins,
-  WEGLD_TLC_SideBridgeContractAddress,
+  TLChain_wEGLD_ChildTokenContractAddress,
 } from 'src/utils/globals';
 import TLVAbi from 'src/contracts/ElrondTLV.json';
 import { convertEsdtToWei, convertWeiToEsdt } from 'src/utils/functions/utils';
@@ -96,6 +98,7 @@ const Elrond: React.FC = () => {
   const [txSessionId, setTxSessionId] = useState<string>();
   const [currentTxHash, setCurrentTxHash] = useState<string>();
   const [amount, setAmount] = useState('0');
+  const [amountToWrap, setAmountToWrap] = useState('0');
   const [isLoading, setIsLoading] = useState(false);
   const [approveDone, setApproveDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
@@ -199,7 +202,7 @@ const Elrond: React.FC = () => {
         const finalAmount = Number(amount) + fee;
 
         const sideContract = new ethers.Contract(
-          WEGLD_TLC_SideBridgeContractAddress,
+          TLChain_wEGLD_ChildTokenContractAddress,
           SideBridgeEGLD.abi,
           ethProvider.getSigner(),
         );
@@ -282,14 +285,12 @@ const Elrond: React.FC = () => {
     <div className="flex">
       {/* {chainError && <p className="text-red-500 text-sm">{chainError}</p>} */}
       {/* <button onClick={test}>TEST</button> */}
-      <div className="relative items-center w-[44rem] xs:w-[22rem] h-[23rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
+      <div className="relative items-center w-[44rem] xs:w-[22rem] min-h-[23rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
         {!isMaiarLoggedIn ? (
           <div className="w-full flex items-center justify-center">
             <ExtensionLoginButton
               callbackRoute={'/crosschainbridge'}
               loginButtonText={'Connect with MAIAR'}
-              loginButtonClassName={{ backgroundColor: 'red' }}
-              style={{ backgroundColor: 'green' }}
             />
           </div>
         ) : (
@@ -376,6 +377,7 @@ const Elrond: React.FC = () => {
                 <p>Please connect your Metamask wallet to receive the tokens</p>
               )}
             </div>
+
             {/* {errorMessage && (
           <p className="my-4 text-sm text-center">{errorMessage}</p>
         )} */}
