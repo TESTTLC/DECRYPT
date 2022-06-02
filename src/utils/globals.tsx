@@ -156,8 +156,13 @@ export const Polygon_wTLC_ChildTokenContractAddress =
 export const Polygon_wLSO_ChildTokenContractAddress =
   '0x76Ad20159F8BaeeB986d1A8792d6A3aeD750885c';
 
+//devnet
+// export const ELROND_LOCK_SC_ADDRESS =
+//   'erd1qqqqqqqqqqqqqpgqx98hk5hncut4awe5cgxsufqhger208ssyfjsa464c6';
+
+//mainnet
 export const ELROND_LOCK_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqx98hk5hncut4awe5cgxsufqhger208ssyfjsa464c6';
+  'erd1qqqqqqqqqqqqqpgqd2yfvy7l2mx7588a86ap66uav630suej4a3qa9tg6g';
 
 export const ELROND_TLC_SC_ADDRESS =
   'erd1qqqqqqqqqqqqqpgqezar0x8gfm50jyyzpqdz49kt5fy9ndwgyfjsk3unx6';
