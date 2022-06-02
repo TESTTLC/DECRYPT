@@ -11,7 +11,6 @@ import {
   useGetLoginInfo,
   useGetNetworkConfig,
   useGetPendingTransactions,
-  useGetTransactionDisplayInfo,
 } from '@elrondnetwork/dapp-core';
 import {
   Address,
@@ -19,17 +18,8 @@ import {
   AbiRegistry,
   SmartContractAbi,
   SmartContract,
-  ProxyProvider,
   DefaultSmartContractController,
   BigUIntValue,
-  ApiNetworkProvider,
-  Transaction,
-  TransactionPayload,
-  Balance,
-  TransactionWatcher,
-  BytesValue,
-  GasLimit,
-  ArgSerializer,
 } from '@elrondnetwork/erdjs';
 import { useEffect, useMemo, useState } from 'react';
 import SideBridgeEGLD from 'src/contracts/SideBridgeEGLD.json';
@@ -42,7 +32,7 @@ import {
   ELROND_TOKEN_SC_NAME,
   modalChains,
   modalCoins,
-  TLChain_wEGLD_ChildTokenContractAddress,
+  TLChain_wEGLD_SideBridgeContractAddress,
 } from 'src/utils/globals';
 import TLVAbi from 'src/contracts/ElrondTLV.json';
 import { convertEsdtToWei, convertWeiToEsdt } from 'src/utils/functions/utils';
@@ -202,7 +192,7 @@ const Elrond: React.FC = () => {
         const finalAmount = Number(amount) + fee;
 
         const sideContract = new ethers.Contract(
-          TLChain_wEGLD_ChildTokenContractAddress,
+          TLChain_wEGLD_SideBridgeContractAddress,
           SideBridgeEGLD.abi,
           ethProvider.getSigner(),
         );

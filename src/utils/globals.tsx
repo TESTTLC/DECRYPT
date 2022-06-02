@@ -217,7 +217,7 @@ export const bridgeAddresses = {
       },
       ELROND: {
         //sidebridge
-        address: TLChain_wEGLD_ChildTokenContractAddress,
+        address: TLChain_wEGLD_SideBridgeContractAddress,
       },
     },
   },
@@ -227,10 +227,10 @@ export const bridgeAddresses = {
     },
     child: {
       TLC: {
-        address: TLChain_wEGLD_ChildTokenContractAddress,
+        address: TLChain_wEGLD_SideBridgeContractAddress,
       },
       ELROND: {
-        address: TLChain_wEGLD_ChildTokenContractAddress,
+        address: TLChain_wEGLD_SideBridgeContractAddress,
       },
     },
   },

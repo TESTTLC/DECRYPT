@@ -16,9 +16,7 @@ import store from './redux/store';
 
 const environment = 'devnet';
 const {
-  TransactionsToastList,
   SignTransactionsModals,
-  NotificationModal,
   DappCorePages: { UnlockPage },
 } = DappUI;
 
@@ -41,17 +39,10 @@ ReactDOM.render(
     >
       <Provider store={store}>
         <CookiesProvider>
-          {/* <ThirdwebProvider
-          desiredChainId={ChainId.TLChain}
-          sdkOptions={{
-            gasSettings: { maxPriceInGwei: 500, speed: 'fast' },
-          }}
-        > */}
           <BrowserRouter>
             <SignTransactionsModals className="custom-class-for-modals" />
             <App />
           </BrowserRouter>
-          {/* </ThirdwebProvider> */}
         </CookiesProvider>
       </Provider>
     </DappProvider>
