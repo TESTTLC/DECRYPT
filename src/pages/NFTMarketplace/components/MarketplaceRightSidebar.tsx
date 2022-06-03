@@ -103,7 +103,11 @@ const MarketplaceRightSidebar: React.FC = () => {
           {creatorsData?.creators.map((creator) => (
             <div className="flex space-x-2">
               <img
-                src={creator.profileImageUri || defaultUserImage}
+                src={
+                  creator.profileImageUri
+                    ? getImageBucketUrl(creator.profileImageUri)
+                    : defaultUserImage
+                }
                 className="bg-gray-500 rounded-full h-10 w-10"
               />
               <div>
