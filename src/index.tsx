@@ -14,7 +14,9 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import store from './redux/store';
 
-const environment = 'devnet';
+// const environment = 'devnet';
+const environment = 'mainnet';
+
 const {
   SignTransactionsModals,
   DappCorePages: { UnlockPage },

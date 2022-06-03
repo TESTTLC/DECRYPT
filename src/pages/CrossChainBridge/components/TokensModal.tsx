@@ -68,7 +68,7 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
   };
 
   useEffect(() => {
-    if (bridgeState.token === 'EGLD') {
+    if (bridgeState.token === 'EGLD' && chainType === 'EVM') {
       changeToken('LSO');
     }
   }, []);
@@ -162,15 +162,15 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
   };
 
   const changeToken = (token: string) => {
-    if (chainType === 'EVM') {
-      console.log('EVM here with token: ', token);
-      updateState({ token });
-      //   if (bridgeState.token === 'TLC') {
-      //     updateState({ ...bridgeState, token: 'LSO' });
-      //   } else {
-      //     updateState({ ...bridgeState, token: 'TLC' });
-      //   }
-    }
+    // if (chainType === 'EVM') {
+    console.log('EVM here with token: ', token);
+    updateState({ token });
+    //   if (bridgeState.token === 'TLC') {
+    //     updateState({ ...bridgeState, token: 'LSO' });
+    //   } else {
+    //     updateState({ ...bridgeState, token: 'TLC' });
+    //   }
+    // }
   };
 
   return (

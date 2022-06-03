@@ -11,6 +11,7 @@ import {
 
 import MainBridge from '../contracts/MainBridge.json';
 import MainBridgeMainToken from '../contracts/MainBridgeMainToken.json';
+import MainBridgeTLCToEGLD from '../contracts/MainBridgeTLCToEGLD.json';
 import SideBridge from '../contracts/SideBridge.json';
 import TokenErc721 from '../contracts/LuxandiaToken.json';
 import { bridgeAddresses, LussoTokenContractAddress } from '../utils/globals';
@@ -80,8 +81,12 @@ export const useBridgeContracts = (
     try {
       if (provider) {
         let mainContract;
-        if (toChain === 'ELROND') {
-          mainContract = undefined;
+        if (toChain === 'ELROND' && coinTag === 'TLC') {
+          mainContract = new ethers.Contract(
+            mainBridgeAddress,
+            MainBridgeTLCToEGLD,
+            provider.getSigner(),
+          );
         } else {
           mainContract = new ethers.Contract(
             mainBridgeAddress,

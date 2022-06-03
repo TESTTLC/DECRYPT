@@ -4,6 +4,7 @@ import { promises } from 'fs';
 
 import {
   DappUI,
+  getAccountProvider,
   getProxyProvider,
   refreshAccount,
   sendTransactions,
@@ -20,6 +21,11 @@ import {
   SmartContract,
   DefaultSmartContractController,
   BigUIntValue,
+  ArgSerializer,
+  GasLimit,
+  BytesValue,
+  Egld,
+  U64Value,
 } from '@elrondnetwork/erdjs';
 import { useEffect, useMemo, useState } from 'react';
 import SideBridgeEGLD from 'src/contracts/SideBridgeEGLD.json';
@@ -73,6 +79,8 @@ const Elrond: React.FC = () => {
     (state) => state.bridge,
   );
   const { isLoggedIn: isMaiarLoggedIn } = useGetLoginInfo();
+  const maiarProvider = getAccountProvider();
+
   const { network } = useGetNetworkConfig();
   const { address } = useGetAccountInfo();
   const {
@@ -93,12 +101,11 @@ const Elrond: React.FC = () => {
   const [approveDone, setApproveDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const { tokenContract } = useContracts('EGLD');
-
+  const { tokenContract } = useContracts(bridgeState.token);
   const { mainBridgeContract, sideBridgeContract } = useBridgeContracts(
-    'EGLD',
-    'TLC',
-    'ELROND',
+    bridgeState.token,
+    bridgeState.fromChain,
+    bridgeState.toChain,
   );
 
   useEffect(() => {
@@ -106,7 +113,6 @@ const Elrond: React.FC = () => {
   }, [bridgeState.token, bridgeState.fromChain, bridgeState.toChain]);
 
   const deposit = async () => {
-    console.log('HOW MANY TIMES DEPOSIT?');
     const pingTransaction = {
       value: new BigUIntValue(convertEsdtToWei(Number(amount))),
       data: 'deposit',
@@ -125,6 +131,41 @@ const Elrond: React.FC = () => {
       redirectAfterSign: false,
     });
 
+    if (sessionId) {
+      setTxSessionId(sessionId);
+    }
+  };
+
+  const burn = async () => {
+    console.log('Jere?');
+    const tokenIdArg = BytesValue.fromUTF8(ELROND_TLC_TOKEN_ID);
+    const nonceArg = new U64Value(amount);
+    const burnAmountArg = new BigUIntValue(Egld(amount).valueOf());
+    console.log('Jere?2');
+    const args = [tokenIdArg, nonceArg, burnAmountArg];
+    const { argumentsString } = new ArgSerializer().valuesToString(args);
+    const data = `burn@${argumentsString}`;
+
+    console.log('Jere3');
+    const tx = {
+      receiver: ELROND_TLC_SC_ADDRESS,
+      gasLimit: new GasLimit(10000000),
+      data: data,
+    };
+    await refreshAccount();
+
+    console.log('Jere4');
+
+    const { sessionId, error } = await sendTransactions({
+      transactions: tx,
+      transactionsDisplayInfo: {
+        processingMessage: 'Processing Ping transaction',
+        errorMessage: 'An error has occured during Ping',
+        successMessage: 'Ping transaction successful',
+      },
+      redirectAfterSign: false,
+    });
+    console.log('Jere5');
     if (sessionId) {
       setTxSessionId(sessionId);
     }
@@ -159,7 +200,6 @@ const Elrond: React.FC = () => {
   const approveSide = async () => {
     try {
       setErrorMessage(undefined);
-
       if (Number(amount) > 0) {
         setIsLoading(true);
         const finalAmount = Number(amount) + fee;
@@ -178,10 +218,9 @@ const Elrond: React.FC = () => {
     }
   };
 
-  console.log('Address: ', address);
-
   const returnTokens = async () => {
     try {
+      setErrorMessage(undefined);
       if (Number(amount) > 0 && ethProvider) {
         setIsLoading(true);
         console.log(
@@ -191,13 +230,13 @@ const Elrond: React.FC = () => {
 
         const finalAmount = Number(amount) + fee;
 
-        const sideContract = new ethers.Contract(
-          TLChain_wEGLD_SideBridgeContractAddress,
-          SideBridgeEGLD.abi,
-          ethProvider.getSigner(),
-        );
+        // const sideContract = new ethers.Contract(
+        //   TLChain_wEGLD_SideBridgeContractAddress,
+        //   SideBridgeEGLD.abi,
+        //   ethProvider.getSigner(),
+        // );
 
-        const tx = await sideContract.returnTokens(
+        const tx = await sideBridgeContract?.returnTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
           address,
         );
@@ -209,6 +248,74 @@ const Elrond: React.FC = () => {
       setIsLoading(false);
       setErrorMessage('Something went wrong');
       console.log('Err on returnTokens: ', error);
+    }
+  };
+
+  const approveMain = async () => {
+    try {
+      setErrorMessage(undefined);
+      if (Number(amount) > 0) {
+        setIsLoading(true);
+        const finalAmount = Number(amount) + fee;
+        const tx = await tokenContract?.functions.approve(
+          mainBridgeContract?.address,
+          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+        );
+        await tx.wait();
+        setIsLoading(false);
+        setApproveDone(true);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log('Err on approve: ', error);
+    }
+  };
+
+  const receiveTokens = async () => {
+    try {
+      console.log('On Receive TOKENS');
+      setErrorMessage(undefined);
+      if (Number(amount) > 0 && ethProvider) {
+        setIsLoading(true);
+        console.log(
+          'Side Bridge Contract on receiveTokens: ',
+          sideBridgeContract?.address,
+        );
+        console.log(
+          'Main Bridge Contract on receiveTokens: ',
+          mainBridgeContract?.address,
+        );
+        const finalAmount = Number(amount) + fee;
+        let tx;
+
+        if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
+          const overrides = {
+            value: ethers.utils.parseEther(finalAmount.toString()),
+          };
+
+          tx = await mainBridgeContract?.receiveTokens(address, overrides);
+        } else {
+          tx = await mainBridgeContract?.receiveTokens(
+            ethers.utils.parseEther(finalAmount.toString()),
+            address,
+          );
+        }
+        await tx.wait();
+        setIsLoading(false);
+        setApproveDone(false);
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setIsLoading(false);
+
+      if (error.message.includes('whitelist')) {
+        setErrorMessage('You are not whitelisted');
+      } else if (error.message.includes('denied')) {
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Something went wrong');
+      }
+      console.log('Err on receiveTokens: ', error);
     }
   };
 
@@ -248,19 +355,34 @@ const Elrond: React.FC = () => {
   }, [contractInteractor, hasPendingTransactions, address]);
 
   const send = () => {
-    if (bridgeState.fromChain === 'TLC') {
-      if (approveDone) {
-        returnTokens();
+    if (bridgeState.token === 'TLC') {
+      if (bridgeState.fromChain === 'TLC') {
+        receiveTokens();
+        // if (approveDone) {
+        // receiveTokens();
+        // } else {
+        //   approveMain();
+        // }
       } else {
-        approveSide();
+        //TODO: Transfer to wTLC on Elrond Chain
+        // deposit();
+        burn();
       }
     } else {
-      deposit();
+      if (bridgeState.fromChain === 'TLC') {
+        if (approveDone) {
+          returnTokens();
+        } else {
+          approveSide();
+        }
+      } else {
+        deposit();
+      }
     }
   };
 
   const buttonText = useMemo(() => {
-    if (bridgeState.fromChain === 'TLC') {
+    if (bridgeState.fromChain === 'TLC' && bridgeState.token === 'EGLD') {
       if (approveDone) {
         return 'Send';
       } else {
@@ -269,7 +391,7 @@ const Elrond: React.FC = () => {
     } else {
       return 'Send';
     }
-  }, [approveDone, bridgeState.fromChain]);
+  }, [approveDone, bridgeState.fromChain, bridgeState.token]);
 
   return (
     <div className="flex">
@@ -278,13 +400,22 @@ const Elrond: React.FC = () => {
       <div className="relative items-center w-[44rem] xs:w-[22rem] min-h-[23rem] px-8 py-8 xs:px-4 rounded-lg bg-black bg-opacity-60">
         {!isMaiarLoggedIn ? (
           <div className="w-full flex items-center justify-center">
-            <ExtensionLoginButton
-              callbackRoute={'/crosschainbridge'}
-              loginButtonText={'Connect with MAIAR'}
-            />
+            <div className="bg-black px-4 py-2 rounded-lg">
+              <ExtensionLoginButton
+                callbackRoute={'/crosschainbridge'}
+                loginButtonText={'Connect with MAIAR'}
+              />
+            </div>
           </div>
         ) : (
           <>
+            {/* <button
+              onClick={() =>
+                maiarProvider.logout({ callbackUrl: window.location.href })
+              }
+            >
+              disconnect
+            </button> */}
             <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
               <div className="flex w-1/2 flex-col h-full">
                 <p className="text-gray-400 font-medium font-poppins text-sm">
@@ -304,7 +435,7 @@ const Elrond: React.FC = () => {
                   TLC: modalChains.TLC,
                   ELROND: modalChains.ELROND,
                 }}
-                coins={{ EGLD: modalCoins.EGLD }}
+                coins={{ EGLD: modalCoins.EGLD, TLC: modalCoins.TLC }}
                 // chains={{ TLC: modalChains.TLC }}
                 type="from"
                 chainType="ELROND"
@@ -333,16 +464,16 @@ const Elrond: React.FC = () => {
                   ELROND: modalChains.ELROND,
                   TLC: modalChains.TLC,
                 }}
-                coins={{ EGLD: modalCoins.EGLD }}
+                coins={{ EGLD: modalCoins.EGLD, TLC: modalCoins.TLC }}
                 // chains={{ BSC: modalChains.BSC }}
                 type="to"
                 chainType="ELROND"
               />
             </div>
             <p className="my-4 text-sm">
-              You will spend{' '}
-              <span className="text-green-400">{depositedAmount}</span> + {fee}
-              (fee) as a total of {depositedAmount} EGLD
+              You will spend <span className="text-green-400">{amount}</span> +{' '}
+              {fee}
+              (fee) as a total of {amount} EGLD
               {/* {bridgeState.token} */}
             </p>
             <div className="flex w-full space-x-8">

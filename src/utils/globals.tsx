@@ -107,6 +107,9 @@ export const Polygon_wLSO_SideBridgeContractAddress =
 export const TLC_MainBridgeContractAddress =
   '0x295993595620231fa5afc04c5c7ee21ad3b55b8A';
 
+export const TLC_EGLD_MainBridgeContractAddress =
+  '0x53656E9a47A2e875a38a6CBcabD31EaD4f2b812d';
+
 export const LSO_MainBridgeContractAddress =
   '0x41982760519299703d5bD9d138cFF15CBEE3db43';
 
@@ -165,11 +168,11 @@ export const ELROND_LOCK_SC_ADDRESS =
   'erd1qqqqqqqqqqqqqpgqd2yfvy7l2mx7588a86ap66uav630suej4a3qa9tg6g';
 
 export const ELROND_TLC_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqezar0x8gfm50jyyzpqdz49kt5fy9ndwgyfjsk3unx6';
+  'erd1qqqqqqqqqqqqqpgqhpfuglkwyhhwxvpg8jwd2e2gx0g9kvhf4a3qvl7ezq';
 
 export const ELROND_TOKEN_SC_ABI = 'abi/elrond-token-manager.abi.json';
 export const ELROND_TOKEN_SC_NAME = 'Bridge';
-export const ELROND_TLC_TOKEN_ID = 'TLV-8ac90e';
+export const ELROND_TLC_TOKEN_ID = 'TLC-eb6f2e';
 
 export const TIMEOUT = 6000;
 
@@ -203,6 +206,7 @@ export const bridgeAddresses = {
   TLC: {
     main: {
       address: TLC_MainBridgeContractAddress,
+      addressForELROND: TLC_EGLD_MainBridgeContractAddress,
     },
     child: {
       TLC: {
@@ -222,7 +226,7 @@ export const bridgeAddresses = {
       },
       ELROND: {
         //sidebridge
-        address: TLChain_wEGLD_SideBridgeContractAddress,
+        address: ELROND_LOCK_SC_ADDRESS,
       },
     },
   },

@@ -334,6 +334,7 @@ export const getBridgeAddresses = (
 
   if (token === 'TLC') {
     mainBridgeAddress = bridgeAddresses.TLC.main.address;
+
     if (toChain === 'TLC') {
       if (fromChain === 'BSC') {
         sideBridgeAddress = bridgeAddresses.TLC.child.BSC.address;
@@ -347,6 +348,9 @@ export const getBridgeAddresses = (
       if (fromChain === 'MATIC') {
         sideBridgeAddress = bridgeAddresses.TLC.child.MATIC.address;
       }
+      if (fromChain === 'ELROND') {
+        sideBridgeAddress = bridgeAddresses.TLC.child.ELROND.address;
+      }
     }
     if (toChain === 'BSC') {
       sideBridgeAddress = bridgeAddresses.TLC.child.BSC.address;
@@ -359,6 +363,10 @@ export const getBridgeAddresses = (
     }
     if (toChain === 'MATIC') {
       sideBridgeAddress = bridgeAddresses.TLC.child.MATIC.address;
+    }
+    if (toChain === 'ELROND') {
+      mainBridgeAddress = bridgeAddresses.TLC.main.addressForELROND;
+      sideBridgeAddress = bridgeAddresses.TLC.child.ELROND.address;
     }
   }
 

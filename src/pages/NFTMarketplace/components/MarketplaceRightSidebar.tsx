@@ -13,6 +13,10 @@ import { useGetLatestCollectionsQuery } from 'src/redux/modules/collections/quer
 import { ellipsizeAddress } from 'src/utils/functions/utils';
 import { getImageBucketUrl } from 'src/utils/functions/Image';
 import { useGetTopCreatorsQuery } from 'src/redux/modules/nfts/queries';
+import { useNavigate } from 'react-router-dom';
+import { routes } from 'src/utils/routes';
+import { AccountState, StoreState } from 'src/utils/storeTypes';
+import { useSelector } from 'react-redux';
 
 const MarketplaceRightSidebar: React.FC = () => {
   const {
@@ -28,20 +32,39 @@ const MarketplaceRightSidebar: React.FC = () => {
     // isSuccess,
   } = useGetTopCreatorsQuery();
 
+  const account = useSelector<StoreState, AccountState>(
+    (state) => state.account,
+  );
+
   //   useEffect(() => {
 
   //   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <div className="col-span-2 lg:col-span-10 md:col-span-10 sm:col-span-10 xs:col-span-10 space-y-2 grid-rows-none">
       {/* First */}
-      <div className="w-full text-center rounded-xl bg-black bg-opacity-70 px-3 py-2">
-        <p className="uppercase text-blue-500 text-sm">Wallet Holders</p>
-        <div className="flex space-x-2 items-center justify-center mt-4">
-          <FaWallet size={20} color="#02a2fd" />
-          <p className="uppercase text-lg">$10,512,343</p>
-        </div>
-      </div>
+      {account.isLoggedIn && (
+        <button
+          className="w-full text-center rounded-xl bg-black bg-opacity-70 px-3 py-2"
+          onClick={() => navigate('/nftmarketplace/profile')}
+        >
+          <p className="uppercase text-blue-500 text-sm">My Account</p>
+          <div className="flex space-x-2 items-center justify-center mt-4">
+            {/* <FaWallet size={20} color="#02a2fd" /> */}
+
+            {/* <p className="uppercase text-lg">
+              {account.apiStatus || 0} collections
+            </p> */}
+          </div>
+          {account.username ? (
+            <p className="text-sm">@{account.username}</p>
+          ) : (
+            <p>{account.email}</p>
+          )}
+        </button>
+      )}
       {/* End First */}
 
       {/* Second */}
@@ -54,7 +77,7 @@ const MarketplaceRightSidebar: React.FC = () => {
         </div>
       </div> */}
 
-      <div className="w-full relative flex flex-col justify-center items-center text-center rounded-xl bg-black bg-opacity-70 space-y-2 px-4 py-2">
+      {/* <div className="w-full relative flex flex-col justify-center items-center text-center rounded-xl bg-black bg-opacity-70 space-y-2 px-4 py-2">
         <div className="flex w-full items-center justify-between">
           <p>$4,435</p>
           <ChipIcon />
@@ -70,7 +93,7 @@ const MarketplaceRightSidebar: React.FC = () => {
           </p>
           <VisaIcon />
         </div>
-      </div>
+      </div> */}
       {/* End Second */}
 
       {/* Third */}
@@ -78,7 +101,14 @@ const MarketplaceRightSidebar: React.FC = () => {
         <p className="uppercase text-blue-500 text-sm">Latest Collections</p>
         {collectionsData?.collections?.map((collection) => (
           <div className="flex items-center justify-between space-x-4 mt-4">
-            <div className="flex space-x-2">
+            <button
+              className="flex space-x-2"
+              onClick={() =>
+                navigate(
+                  `${routes.nftMarketplaceViewCollection.url}/${collection.contractAddress}`,
+                )
+              }
+            >
               <img
                 src={getImageBucketUrl(collection.logoImageUri || '')}
                 className="bg-gray-500 rounded-full h-10 w-10"
@@ -89,7 +119,7 @@ const MarketplaceRightSidebar: React.FC = () => {
                   {ellipsizeAddress(collection.contractAddress, 10)}
                 </p>
               </div>
-            </div>
+            </button>
             <BookmarkIcon />
           </div>
         ))}
