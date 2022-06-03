@@ -1,0 +1,164 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.63.0-nightly",
+            "commitHash": "12cd71f4d3ea6df9c2093781d55134cd9651d754",
+            "commitDate": "2022-06-01",
+            "channel": "Nightly",
+            "short": "rustc 1.63.0-nightly (12cd71f4d 2022-06-01)"
+        },
+        "contractCrate": {
+            "name": "elornd-bridge-sc",
+            "version": "0.0.0",
+            "git_version": "921e8aa"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.31.1"
+        }
+    },
+    "docs": [
+        "One of the simplest smart contracts possible,",
+        "it holds a single variable in storage, which anyone can increment."
+    ],
+    "name": "Bridge",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "fee_amount",
+                "type": "BigUint"
+            },
+            {
+                "name": "tlc_token",
+                "type": "TokenIdentifier"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "docs": [
+                "User sends a fixed amount tokens to be locked in the contract .",
+                "Optional `_data` argument is ignored."
+            ],
+            "name": "deposit",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "User can take back funds from the contract but only the admin can send a withdraw request."
+            ],
+            "name": "withdraw",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                },
+                {
+                    "name": "withdraw_amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "withdrawFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "opt_destination_address",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "mintTlcToken",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "userAddress",
+                    "type": "Address"
+                },
+                {
+                    "name": "mint_amount",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "burnTlcToken",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "getAcceptedPaymentToken",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        },
+        {
+            "name": "getFeeAmount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "getUserDeposit",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "totalFeeAmount",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "BigUint"
+                }
+            ]
+        },
+        {
+            "name": "tlcTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {}
+}

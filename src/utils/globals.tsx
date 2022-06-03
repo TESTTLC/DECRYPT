@@ -165,14 +165,14 @@ export const Polygon_wLSO_ChildTokenContractAddress =
 
 //mainnet
 export const ELROND_LOCK_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqd2yfvy7l2mx7588a86ap66uav630suej4a3qa9tg6g';
+  'erd1qqqqqqqqqqqqqpgqj9yk605fvqsp88qj0h98lafpf066m9dt4a3qqer3zq';
 
 export const ELROND_TLC_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqhpfuglkwyhhwxvpg8jwd2e2gx0g9kvhf4a3qvl7ezq';
+  'erd1qqqqqqqqqqqqqpgqj9yk605fvqsp88qj0h98lafpf066m9dt4a3qqer3zq';
 
-export const ELROND_TOKEN_SC_ABI = 'abi/elrond-token-manager.abi.json';
+export const ELROND_TOKEN_SC_ABI = 'elrond-token-manager.abi.json';
 export const ELROND_TOKEN_SC_NAME = 'Bridge';
-export const ELROND_TLC_TOKEN_ID = 'TLC-eb6f2e';
+export const ELROND_TLC_TOKEN_ID = 'TLC-4a28fb';
 
 export const TIMEOUT = 6000;
 

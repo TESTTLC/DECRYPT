@@ -138,20 +138,27 @@ const Elrond: React.FC = () => {
 
   const burn = async () => {
     console.log('Jere?');
+
+    if(amount == 0) return;
+
     const tokenIdArg = BytesValue.fromUTF8(ELROND_TLC_TOKEN_ID);
-    const nonceArg = new U64Value(amount);
+    const nonceArg = new U64Value(0);
     const burnAmountArg = new BigUIntValue(Egld(amount).valueOf());
+
     console.log('Jere?2');
+
     const args = [tokenIdArg, nonceArg, burnAmountArg];
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `burn@${argumentsString}`;
 
     console.log('Jere3');
+
     const tx = {
       receiver: ELROND_TLC_SC_ADDRESS,
-      gasLimit: new GasLimit(10000000),
+      gasLimit: new GasLimit(60000000),
       data: data,
     };
+
     await refreshAccount();
 
     console.log('Jere4');
@@ -165,7 +172,9 @@ const Elrond: React.FC = () => {
       },
       redirectAfterSign: false,
     });
+
     console.log('Jere5');
+
     if (sessionId) {
       setTxSessionId(sessionId);
     }
