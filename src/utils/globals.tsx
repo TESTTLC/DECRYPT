@@ -164,10 +164,11 @@ export const Polygon_wLSO_ChildTokenContractAddress =
 //   'erd1qqqqqqqqqqqqqpgqx98hk5hncut4awe5cgxsufqhger208ssyfjsa464c6';
 
 //mainnet
-export const ELROND_LOCK_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqj9yk605fvqsp88qj0h98lafpf066m9dt4a3qqer3zq';
 
-export const ELROND_TLC_SC_ADDRESS =
+export const ELROND_EGLD_LOCK_SC_ADDRESS =
+  'erd1qqqqqqqqqqqqqpgqd2yfvy7l2mx7588a86ap66uav630suej4a3qa9tg6g';
+
+export const ELROND_TLC_LOCK_TOKEN_SC_ADDRESS =
   'erd1qqqqqqqqqqqqqpgqj9yk605fvqsp88qj0h98lafpf066m9dt4a3qqer3zq';
 
 export const ELROND_TOKEN_SC_ABI = 'elrond-token-manager.abi.json';
@@ -226,13 +227,13 @@ export const bridgeAddresses = {
       },
       ELROND: {
         //sidebridge
-        address: ELROND_LOCK_SC_ADDRESS,
+        address: ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
       },
     },
   },
   EGLD: {
     main: {
-      address: ELROND_LOCK_SC_ADDRESS,
+      address: ELROND_EGLD_LOCK_SC_ADDRESS,
     },
     child: {
       TLC: {

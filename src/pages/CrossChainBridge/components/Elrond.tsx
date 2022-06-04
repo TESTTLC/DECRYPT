@@ -31,8 +31,8 @@ import { useEffect, useMemo, useState } from 'react';
 import SideBridgeEGLD from 'src/contracts/SideBridgeEGLD.json';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import {
-  ELROND_LOCK_SC_ADDRESS,
-  ELROND_TLC_SC_ADDRESS,
+  ELROND_EGLD_LOCK_SC_ADDRESS,
+  ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
   ELROND_TLC_TOKEN_ID,
   ELROND_TOKEN_SC_ABI,
   ELROND_TOKEN_SC_NAME,
@@ -65,7 +65,7 @@ interface IContractInteractor {
   controller: DefaultSmartContractController;
 }
 
-const fee = 0.01;
+// const fee = 1;
 
 const Elrond: React.FC = () => {
   const walletAddress = useSelector<StoreState, string | undefined>(
@@ -90,9 +90,11 @@ const Elrond: React.FC = () => {
   } = useGetPendingTransactions();
   const [depositedAmount, setDepositedAmount] = useState(0);
   const provider = getProxyProvider();
-  const [contractInteractor, setContractInteractor] = useState<
-    IContractInteractor | undefined
-  >();
+
+  //   const [contractInteractor, setContractInteractor] = useState<
+  //     IContractInteractor | undefined
+  //   >();
+
   const [txSessionId, setTxSessionId] = useState<string>();
   const [currentTxHash, setCurrentTxHash] = useState<string>();
   const [amount, setAmount] = useState('0');
@@ -100,6 +102,16 @@ const Elrond: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [approveDone, setApproveDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+
+  const [fee, setFee] = useState(0.01);
+
+  useEffect(() => {
+    if (bridgeState.token === 'EGLD') {
+      setFee(0.01);
+    } else {
+      setFee(1);
+    }
+  }, [bridgeState.token]);
 
   const { tokenContract } = useContracts(bridgeState.token);
   const { mainBridgeContract, sideBridgeContract } = useBridgeContracts(
@@ -116,7 +128,7 @@ const Elrond: React.FC = () => {
     const pingTransaction = {
       value: new BigUIntValue(convertEsdtToWei(Number(amount))),
       data: 'deposit',
-      receiver: ELROND_LOCK_SC_ADDRESS,
+      receiver: ELROND_EGLD_LOCK_SC_ADDRESS,
     };
 
     await refreshAccount();
@@ -137,24 +149,20 @@ const Elrond: React.FC = () => {
   };
 
   const burn = async () => {
-    console.log('Jere?');
-
-    if(amount == 0) return;
+    if (Number(amount) === 0) return;
 
     const tokenIdArg = BytesValue.fromUTF8(ELROND_TLC_TOKEN_ID);
     const nonceArg = new U64Value(0);
-    const burnAmountArg = new BigUIntValue(Egld(amount).valueOf());
-
-    console.log('Jere?2');
+    const burnAmountArg = new BigUIntValue(
+      Egld(Number(amount) + fee).valueOf(),
+    );
 
     const args = [tokenIdArg, nonceArg, burnAmountArg];
     const { argumentsString } = new ArgSerializer().valuesToString(args);
     const data = `burn@${argumentsString}`;
 
-    console.log('Jere3');
-
     const tx = {
-      receiver: ELROND_TLC_SC_ADDRESS,
+      receiver: ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
       gasLimit: new GasLimit(60000000),
       data: data,
     };
@@ -239,13 +247,13 @@ const Elrond: React.FC = () => {
 
         const finalAmount = Number(amount) + fee;
 
-        // const sideContract = new ethers.Contract(
-        //   TLChain_wEGLD_SideBridgeContractAddress,
-        //   SideBridgeEGLD.abi,
-        //   ethProvider.getSigner(),
-        // );
+        const sideContract = new ethers.Contract(
+          TLChain_wEGLD_SideBridgeContractAddress,
+          SideBridgeEGLD.abi,
+          ethProvider.getSigner(),
+        );
 
-        const tx = await sideBridgeContract?.returnTokens(
+        const tx = await sideContract?.returnTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
           address,
         );
@@ -328,40 +336,40 @@ const Elrond: React.FC = () => {
     }
   };
 
-  // set contract interactor
-  useEffect(() => {
-    (async () => {
-      const registry = await AbiRegistry.load({ urls: [ELROND_TOKEN_SC_ABI] });
-      const abi = new SmartContractAbi(registry, [ELROND_TOKEN_SC_NAME]);
-      const contract = new SmartContract({
-        address: new Address(ELROND_LOCK_SC_ADDRESS),
-        abi: abi,
-      });
-      const controller = new DefaultSmartContractController(abi, provider);
+  //   // set contract interactor
+  //   useEffect(() => {
+  //     (async () => {
+  //       const registry = await AbiRegistry.load({ urls: [ELROND_TOKEN_SC_ABI] });
+  //       const abi = new SmartContractAbi(registry, [ELROND_TOKEN_SC_NAME]);
+  //       const contract = new SmartContract({
+  //         address: new Address(ELROND_TLC_LOCK_TOKEN_SC_ADDRESS),
+  //         abi: abi,
+  //       });
+  //       const controller = new DefaultSmartContractController(abi, provider);
 
-      setContractInteractor({
-        contract,
-        controller,
-      });
-    })();
-  }, []);
+  //       setContractInteractor({
+  //         contract,
+  //         controller,
+  //       });
+  //     })();
+  //   }, []);
 
-  useEffect(() => {
-    (async () => {
-      if (!contractInteractor) return;
+  //   useEffect(() => {
+  //     (async () => {
+  //       if (!contractInteractor) return;
 
-      const args = [new AddressValue(new Address(address))];
-      const interaction =
-        contractInteractor.contract.methods.getDepositAmount(args);
-      const res = await contractInteractor.controller.query(interaction);
+  //       const args = [new AddressValue(new Address(address))];
+  //       const interaction =
+  //         contractInteractor.contract.methods.getDepositAmount(args);
+  //       const res = await contractInteractor.controller.query(interaction);
 
-      if (!res || !res.returnCode.isSuccess() || res === undefined) return;
+  //       if (!res || !res.returnCode.isSuccess() || res === undefined) return;
 
-      const value = res.firstValue!.valueOf().toNumber();
+  //       const value = res.firstValue!.valueOf().toNumber();
 
-      setDepositedAmount(convertWeiToEsdt(value));
-    })();
-  }, [contractInteractor, hasPendingTransactions, address]);
+  //       setDepositedAmount(convertWeiToEsdt(value));
+  //     })();
+  //   }, [contractInteractor, hasPendingTransactions, address]);
 
   const send = () => {
     if (bridgeState.token === 'TLC') {
@@ -482,7 +490,7 @@ const Elrond: React.FC = () => {
             <p className="my-4 text-sm">
               You will spend <span className="text-green-400">{amount}</span> +{' '}
               {fee}
-              (fee) as a total of {amount} EGLD
+              (fee) as a total of {Number(amount) + fee} {bridgeState.token}
               {/* {bridgeState.token} */}
             </p>
             <div className="flex w-full space-x-8">

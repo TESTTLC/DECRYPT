@@ -28,7 +28,7 @@ const ElrondWrap: React.FC = () => {
   //     const data = `ESDTTransfer@${argumentsString}`;
 
   //     const tx = {
-  //       receiver: ELROND_TLC_SC_ADDRESS,
+  //       receiver: ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
   //       gasLimit: new GasLimit(10000000),
   //       data: data,
   //     };
