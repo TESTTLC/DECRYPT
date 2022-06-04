@@ -169,7 +169,7 @@ export const ELROND_EGLD_LOCK_SC_ADDRESS =
   'erd1qqqqqqqqqqqqqpgqd2yfvy7l2mx7588a86ap66uav630suej4a3qa9tg6g';
 
 export const ELROND_TLC_LOCK_TOKEN_SC_ADDRESS =
-  'erd1qqqqqqqqqqqqqpgqj9yk605fvqsp88qj0h98lafpf066m9dt4a3qqer3zq';
+  'erd1qqqqqqqqqqqqqpgqry944vhhdryacaulas04rqwuxxc7d44v4a3q905ncw';
 
 export const ELROND_TOKEN_SC_ABI = 'elrond-token-manager.abi.json';
 export const ELROND_TOKEN_SC_NAME = 'Bridge';
