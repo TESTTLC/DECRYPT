@@ -40,6 +40,7 @@ import {
   modalCoins,
   TLChain_wEGLD_SideBridgeContractAddress,
 } from 'src/utils/globals';
+import { getChainId } from 'src/utils/functions/Contracts';
 import TLVAbi from 'src/contracts/ElrondTLV.json';
 import { convertEsdtToWei, convertWeiToEsdt } from 'src/utils/functions/utils';
 import { sendTxHashToBackend } from 'src/api';
@@ -151,16 +152,14 @@ const Elrond: React.FC = () => {
   const burn = async () => {
     if (Number(amount) === 0) return;
 
+    const finalAmount = Number(amount) + fee;
+
     const tokenIdArg = BytesValue.fromUTF8(ELROND_TLC_TOKEN_ID);
-    const nonceArg = new U64Value(0);
-    const burnAmountArg = new BigUIntValue(
-      Egld((Number(amount) + fee).toString()).valueOf(),
-    );
+    const burnAmountArg = new BigUIntValue(Egld(finalAmount).valueOf());
+    const args = [tokenIdArg, burnAmountArg];
 
-    const args = [tokenIdArg, nonceArg, burnAmountArg];
     const { argumentsString } = new ArgSerializer().valuesToString(args);
-    const data = `burn@${argumentsString}`;
-
+    const data = `burnTlcToken@${argumentsString}`;
     const tx = {
       receiver: ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
       gasLimit: new GasLimit(60000000),
@@ -178,6 +177,13 @@ const Elrond: React.FC = () => {
       },
       redirectAfterSign: false,
     });
+
+    console.log('sessionId', sessionId);
+    console.log('error', error);
+
+    if (error) {
+      setErrorMessage(error);
+    }
 
     if (sessionId) {
       setTxSessionId(sessionId);
@@ -331,6 +337,17 @@ const Elrond: React.FC = () => {
       console.log('Err on receiveTokens: ', error);
     }
   };
+
+  //   const chainError = useMemo(() => {
+  //     const neededChainId = getChainId('TLC');
+  //     if (bridgeState.fromChain === 'TLC'){
+
+  //     }
+
+  //     if (currentChainId !== neededChainId) {
+  //       return `You are on the another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
+  //     }
+  //   }, [currentChainId, bridgeState.fromChain]);
 
   //   // set contract interactor
   //   useEffect(() => {
@@ -512,9 +529,9 @@ const Elrond: React.FC = () => {
               )}
             </div>
 
-            {/* {errorMessage && (
-          <p className="my-4 text-sm text-center">{errorMessage}</p>
-        )} */}
+            {errorMessage && (
+              <p className="my-4 text-sm text-center">{errorMessage}</p>
+            )}
           </>
         )}
       </div>
