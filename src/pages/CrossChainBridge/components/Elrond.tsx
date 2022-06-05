@@ -127,7 +127,7 @@ const Elrond: React.FC = () => {
 
   const deposit = async () => {
     const pingTransaction = {
-      value: new BigUIntValue(convertEsdtToWei(Number(amount))),
+      value: new BigUIntValue(convertEsdtToWei(Number(amount) + fee)),
       data: 'deposit',
       receiver: ELROND_EGLD_LOCK_SC_ADDRESS,
     };
@@ -156,10 +156,11 @@ const Elrond: React.FC = () => {
 
     const tokenIdArg = BytesValue.fromUTF8(ELROND_TLC_TOKEN_ID);
     const burnAmountArg = new BigUIntValue(Egld(finalAmount).valueOf());
-    const args = [tokenIdArg, burnAmountArg];
+    const burnFunctionArg = BytesValue.fromUTF8('burnTlcToken');
+    const args = [tokenIdArg, burnAmountArg, burnFunctionArg];
 
     const { argumentsString } = new ArgSerializer().valuesToString(args);
-    const data = `burnTlcToken@${argumentsString}`;
+    const data = `ESDTTransfer@${argumentsString}`;
     const tx = {
       receiver: ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
       gasLimit: new GasLimit(60000000),
