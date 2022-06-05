@@ -154,7 +154,7 @@ const Elrond: React.FC = () => {
     const tokenIdArg = BytesValue.fromUTF8(ELROND_TLC_TOKEN_ID);
     const nonceArg = new U64Value(0);
     const burnAmountArg = new BigUIntValue(
-      Egld(Number(amount) + fee).valueOf(),
+      Egld((Number(amount) + fee).toString()).valueOf(),
     );
 
     const args = [tokenIdArg, nonceArg, burnAmountArg];
@@ -169,8 +169,6 @@ const Elrond: React.FC = () => {
 
     await refreshAccount();
 
-    console.log('Jere4');
-
     const { sessionId, error } = await sendTransactions({
       transactions: tx,
       transactionsDisplayInfo: {
@@ -180,8 +178,6 @@ const Elrond: React.FC = () => {
       },
       redirectAfterSign: false,
     });
-
-    console.log('Jere5');
 
     if (sessionId) {
       setTxSessionId(sessionId);

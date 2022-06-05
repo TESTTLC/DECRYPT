@@ -173,7 +173,8 @@ export const ELROND_TLC_LOCK_TOKEN_SC_ADDRESS =
 
 export const ELROND_TOKEN_SC_ABI = 'elrond-token-manager.abi.json';
 export const ELROND_TOKEN_SC_NAME = 'Bridge';
-export const ELROND_TLC_TOKEN_ID = 'TLC-4a28fb';
+// export const ELROND_TLC_TOKEN_ID = 'TLC-4a28fb';
+export const ELROND_TLC_TOKEN_ID = 'TLC-1a2357';
 
 export const TIMEOUT = 6000;
 
