@@ -6,6 +6,7 @@ import thunk from 'redux-thunk';
 import { collectionsApi } from './modules/collections/queries';
 import { likesApi } from './modules/likes/queries';
 import { nftsApi } from './modules/nfts/queries';
+import { globalsApi } from './modules/globals/queries';
 import rootReducer from './rootReducer';
 
 const logger = createLogger({
@@ -22,6 +23,7 @@ const store = configureStore({
     collectionsApi.middleware,
     nftsApi.middleware,
     likesApi.middleware,
+    globalsApi.middleware,
   ],
 });
 
