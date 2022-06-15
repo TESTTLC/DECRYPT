@@ -6,6 +6,7 @@ import globalReducer from './modules/globals/globalsSlice';
 import bridgeReducer from './modules/bridge/bridgeSlice';
 import { nftsApi } from './modules/nfts/queries';
 import { likesApi } from './modules/likes/queries';
+import { globalsApi } from './modules/globals/queries';
 
 export default combineReducers({
   account: accountReducer,
@@ -14,4 +15,5 @@ export default combineReducers({
   [collectionsApi.reducerPath]: collectionsApi.reducer,
   [nftsApi.reducerPath]: nftsApi.reducer,
   [likesApi.reducerPath]: likesApi.reducer,
+  [globalsApi.reducerPath]: globalsApi.reducer,
 });

@@ -6,6 +6,21 @@ import { ImRocket } from 'react-icons/im';
 import { BiDevices } from 'react-icons/bi';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
+import AreaChartComponent from 'src/components/AreaChartComponent';
+import { useGetAddressesHistoryQuery } from 'src/redux/modules/globals/queries';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ReferenceLine,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import { NgxNewstickerAlbeModule } from 'ngx-newsticker-albe';
+import Ticker from 'react-ticker';
+import LoadingSpinner from 'src/components/LoadingSpinner';
 
 import BigButton from '../components/BigButton';
 import stakingImage from '../assets/images/staking_1.png';
@@ -19,27 +34,126 @@ import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.j
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { data: history, isLoading, isSuccess } = useGetAddressesHistoryQuery();
 
   const metaverseRef = useRef<HTMLAnchorElement>(null);
   const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
+  let count = 0;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dataHistory: any[] = [];
+
+  history?.transactionsHistory.forEach((tx) => {
+    history?.addressesHistory.forEach((addr) => {
+      const date1 = new Date(addr.day).toDateString();
+      const date2 = new Date(tx.day).toDateString();
+      if (date1.toString() === date2.toString()) {
+        count = count + 1;
+        dataHistory.push({
+          name: new Date(addr.day).toLocaleString(),
+          txTotal: tx.total,
+          addrTotal: addr.total,
+        });
+      }
+    });
+  });
+
+  const events = [
+    {
+      title:
+        " The Luxury Bank Raises $10 Million for the Luxury Ecosystem From Dubai's ICICB Group, Giving a Boost to the Development of Luxandia.",
+      url: 'https://finance.yahoo.com/news/luxury-bank-raises-10-million-130000551.html',
+    },
+    {
+      title:
+        // 'The Luxury Bank won The Disruptor of The Year award at Tech Innovation Awards 2021 presented by Entrepreneur Middle East, which recognizes key players in the MENA tech business ecosystem.',
+        'The Luxury Bank won The Disruptor of The Year award at Tech Innovation Awards 2021 presented by Entrepreneur Middle East',
+      url: 'https://twitter.com/EntMagazineME/status/1445807523404161024',
+    },
+  ];
+
   return (
     <div className="w-full flex flex-col">
+      <div className="bg-black bg-opacity-50 py-2 border-2 border-gray-500 border-opacity-25 rounded-md mb-4">
+        <Ticker speed={14} mode="chain" offset={'run-in'}>
+          {
+            ({ index }) =>
+              index % 2 === 0 ? (
+                // events.map((item, i) => (
+                <div className="flex items-center mx-4">
+                  <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
+                  <a
+                    href={events[0].url}
+                    target={'_blank'}
+                    className="mr-10 ml-2 text-sm whitespace-nowrap"
+                  >
+                    {events[0].title}
+                  </a>
+                </div>
+              ) : (
+                <div className="flex items-center mx-4">
+                  <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
+                  <a
+                    href={events[1].url}
+                    target={'_blank'}
+                    className="mr-10 ml-2 text-sm whitespace-nowrap"
+                  >
+                    {events[1].title}
+                  </a>
+                </div>
+              )
+            // ))
+          }
+        </Ticker>
+      </div>
       <div className="w-full grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1">
-        <div className="col-span-4 mb-4">
-          <p className="text-white font-bold font-poppins text-2xl">
+        <div className="col-span-3 xs:col-span-4 sm:col-span-4 md:col-span-4 px-2 xs:px-0 sm:px-0 mb-2">
+          {isSuccess && (
+            <>
+              <p className="text-white font-bold font-poppins text-2xl mb-3">
+                User Adoption
+              </p>
+              <div className="w-full grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
+                <div className="w-full mb-2">
+                  <AreaChartComponent
+                    data={dataHistory}
+                    //   dataKey={'total'}
+                    showTransactionsArea={false}
+                    first={'Total Addresses'}
+                    second={'Total Transactions'}
+                  />
+                </div>
+                <div className="w-full mb-2">
+                  <AreaChartComponent
+                    data={dataHistory}
+                    //   dataKey={'total'}
+                    showAddressesArea={false}
+                    first={'Total Addresses'}
+                    second={'Total Transactions'}
+                  />
+                </div>
+
+                {/* <div className="w-full mt-10 mb-32">
+              <ResponsiveContainer width={'100%'} height={100}>
+                <AreaChartComponent
+                  data={txHistory}
+                  dataKey={'total'}
+                  name={'Total Transactions'}
+                />
+              </ResponsiveContainer>
+            </div> */}
+              </div>
+            </>
+          )}
+          {isLoading && (
+            <div className="w-full flex items-center justify-center my-10">
+              <LoadingSpinner height={24} width={24} />
+            </div>
+          )}
+          <p className="text-white font-bold font-poppins text-2xl mb-3">
             Ecosystem
           </p>
-          {/* <Link
-            key={routes.launchpad.title}
-            to={{ pathname: routes.launchpad.url }}
-          >
-            <span className="text-white font-bold text-md underline">
-              View all upcoming projects &rarr;
-            </span>
-          </Link> */}
-        </div>
-        <div className="col-span-3 xs:col-span-4 sm:col-span-4 md:col-span-4 px-2 xs:px-0 sm:px-0 mb-4">
           <div className="grid gap-x-6 gap-y-6 2xl:grid-cols-4 grid-cols-2 xs:grid-cols-1 justify-center items-center">
             <div className="flex h-52 justify-center items-center">
               <BigButton
@@ -166,6 +280,7 @@ const Home: React.FC = () => {
               />
             </div>
           </div>
+
           <p className="text-white font-bold font-poppins text-2xl mt-6">
             Extended Ecosystem
           </p>
@@ -263,7 +378,7 @@ const Home: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="w-full mt-10 xs:mt-0 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0 2xl:mt-10">
+          <div className="w-full mt-10 xs:mt-0 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
             <div className="w-full min-h-[18rem] bg-black bg-opacity-70 rounded-lg py-4 px-6 lg:px-4">
               <p className="font-semibold text-md">Upcoming Releases</p>
               <div className="flex items-center mt-4">

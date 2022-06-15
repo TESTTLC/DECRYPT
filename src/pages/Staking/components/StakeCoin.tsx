@@ -89,6 +89,11 @@ const StakeCoin: React.FC = () => {
     }
   };
 
+  const getNumberOfAccounts = async () => {
+    const countAccounts = provider?.listAccounts.length;
+    console.log('countAccounts: ', countAccounts);
+  };
+
   const getLaunchpadRegistration = useCallback(async () => {
     if (coinTag === 'LSO' && walletAddress) {
       const isRegisteredInLaunchpad = await getLSOLaunchpadRegistration(
@@ -101,8 +106,13 @@ const StakeCoin: React.FC = () => {
   useEffect(() => {
     chainChange();
     getLaunchpadRegistration();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getNumberOfAccounts();
+  }, [provider]);
 
   useEffect(() => {
     if (currentChainId === ChainsIds.TLC) {
