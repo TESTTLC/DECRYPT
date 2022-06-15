@@ -4,6 +4,7 @@ export const changeChain = async (chainId: string) => {
   //BSC-> 56 - 0x38
   try {
     if (window.ethereum) {
+      //@ts-ignore
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId }],

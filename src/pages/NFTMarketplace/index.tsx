@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
 import { epochToDate } from 'src/utils/functions/utils';
 import { formatEther } from 'ethers/lib/utils';
-import { MarketplaceFilter } from '@thirdweb-dev/sdk/dist/types/marketplace/MarketPlaceFilter';
+// import { MarketplaceFilter } from '@thirdweb-dev/sdk/dist/types/marketplace/MarketPlaceFilter';
 import { TailSpin } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import { routes } from 'src/utils/routes';
 import { ChainsIds } from 'src/utils/types';
+import { MarketplaceFilter } from 'thirdweb-dev/sdk/types/marketplace/MarketPlaceFilter';
 
 import {
   AuctionListing,

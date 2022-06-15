@@ -1,17 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ethers } from 'ethers';
-import MarketplaceJSON from 'src/contracts/Marketplace.json';
-import { MarketplaceFilter } from '@thirdweb-dev/sdk/dist/types/marketplace/MarketPlaceFilter';
-import { formatEther } from 'ethers/lib/utils';
-import { useCreateNFTMutation } from 'src/redux/modules/nfts/queries';
 import TokenERC721 from 'src/contracts/TokenERC721.json';
-import { EtherscanProvider, Web3Provider } from '@ethersproject/providers';
-import {
-  marketplaceAddress,
-  nativeTLCAddress,
-  TLLPTokenContractAddress,
-  TLNFTTokenContractAddress,
-} from 'src/utils/globals';
+import { Web3Provider } from '@ethersproject/providers';
 import { StoreState } from 'src/utils/storeTypes';
 import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';

@@ -84,6 +84,7 @@ export const useWalletConnector = () => {
   const enableWindowEthereum = async () => {
     if (window.ethereum) {
       try {
+        //@ts-ignore
         const ethAccounts = await window.ethereum.request({
           method: 'eth_requestAccounts',
         });

@@ -75,37 +75,40 @@ const Home: React.FC = () => {
 
   return (
     <div className="w-full flex flex-col">
-      <div className="bg-black bg-opacity-50 py-2 border-2 border-gray-500 border-opacity-25 rounded-md mb-4">
-        <Ticker speed={14} mode="chain" offset={'run-in'}>
-          {
-            ({ index }) =>
-              index % 2 === 0 ? (
-                // events.map((item, i) => (
-                <div className="flex items-center mx-4">
-                  <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
-                  <a
-                    href={events[0].url}
-                    target={'_blank'}
-                    className="mr-10 ml-2 text-sm whitespace-nowrap"
-                  >
-                    {events[0].title}
-                  </a>
-                </div>
-              ) : (
-                <div className="flex items-center mx-4">
-                  <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
-                  <a
-                    href={events[1].url}
-                    target={'_blank'}
-                    className="mr-10 ml-2 text-sm whitespace-nowrap"
-                  >
-                    {events[1].title}
-                  </a>
-                </div>
-              )
-            // ))
-          }
-        </Ticker>
+      <div className="flex w-full items-center justify-start">
+        {/* <p className="bg-black px-2 py-1 text-white">NEWS</p> */}
+        <div className="w-full bg-black bg-opacity-50 py-2 border-2  border-gray-500 border-opacity-25 rounded-md mb-4">
+          <Ticker speed={14} mode="chain" offset={'run-in'}>
+            {
+              ({ index }) =>
+                index % 2 === 0 ? (
+                  // events.map((item, i) => (
+                  <div className="flex items-center mx-4">
+                    <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
+                    <a
+                      href={events[0].url}
+                      target={'_blank'}
+                      className="mr-10 ml-2 text-sm whitespace-nowrap"
+                    >
+                      {events[0].title}
+                    </a>
+                  </div>
+                ) : (
+                  <div className="flex items-center mx-4">
+                    <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
+                    <a
+                      href={events[1].url}
+                      target={'_blank'}
+                      className="mr-10 ml-2 text-sm whitespace-nowrap"
+                    >
+                      {events[1].title}
+                    </a>
+                  </div>
+                )
+              // ))
+            }
+          </Ticker>
+        </div>
       </div>
       <div className="w-full grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1">
         <div className="col-span-3 xs:col-span-4 sm:col-span-4 md:col-span-4 px-2 xs:px-0 sm:px-0 mb-2">

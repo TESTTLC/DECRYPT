@@ -27,6 +27,7 @@ export const useWalletConnector = () => {
 
   const checkIfWalletConnected = async () => {
     if (window.ethereum && localStorage.getItem('walletAddress')) {
+      //@ts-ignore
       const accounts = await window.ethereum.request({
         method: 'eth_accounts',
       });
@@ -46,6 +47,7 @@ export const useWalletConnector = () => {
 
       return;
     }
+    //@ts-ignore
     const accounts = await window.ethereum.request({
       method: 'eth_requestAccounts',
     });

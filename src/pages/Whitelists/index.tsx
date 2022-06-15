@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useMarketplaceSDK } from 'src/hooks/useMarketplaceSDK';
 import { createMerkleTree, epochToDate } from 'src/utils/functions/utils';
 import { formatEther, keccak256 } from 'ethers/lib/utils';
-import { MarketplaceFilter } from '@thirdweb-dev/sdk/dist/types/marketplace/MarketPlaceFilter';
 import { TailSpin } from 'react-loader-spinner';
 import { useNavigate } from 'react-router-dom';
 import { routes } from 'src/utils/routes';
