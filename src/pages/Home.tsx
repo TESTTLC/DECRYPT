@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaWallet, FaUser, FaTicketAlt } from 'react-icons/fa';
 import { IoRocketSharp } from 'react-icons/io5';
@@ -38,6 +38,19 @@ const Home: React.FC = () => {
   const metaverseRef = useRef<HTMLAnchorElement>(null);
   const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
+  useEffect(() => {
+    // const widgetContainer = document.getElementById('coinmarket-widget');
+    // let widget = document.getElementById('coinmarketcap-widget-marquee');
+    // if (widget) {
+    //   widgetContainer?.appendChild(widget);
+    // } else {
+    //   widget = document.getElementById('coinmarketcap-widget-marquee');
+    //   if (widget) {
+    //     widgetContainer?.appendChild(widget);
+    //   }
+    // }
+  }, []);
+
   let count = 0;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,17 +71,19 @@ const Home: React.FC = () => {
     });
   });
 
-  const events = [
+  const news = [
     {
-      title:
-        " The Luxury Bank Raises $10 Million for the Luxury Ecosystem From Dubai's ICICB Group, Giving a Boost to the Development of Luxandia.",
-      url: 'https://finance.yahoo.com/news/luxury-bank-raises-10-million-130000551.html',
+      title: 'TLChain Announces Token Bridge for Major Blockchain Networks',
+      url: 'https://blog.tlchain.network/tlchain-announces-token-bridge-for-major-blockchain-networks-f4b369a74087',
     },
     {
       title:
-        // 'The Luxury Bank won The Disruptor of The Year award at Tech Innovation Awards 2021 presented by Entrepreneur Middle East, which recognizes key players in the MENA tech business ecosystem.',
-        'The Luxury Bank won The Disruptor of The Year award at Tech Innovation Awards 2021 presented by Entrepreneur Middle East',
-      url: 'https://twitter.com/EntMagazineME/status/1445807523404161024',
+        'TLChain Network is now a founding member of the newly launched global blockchain hub Decryption',
+      url: 'https://blog.tlchain.network/tlchain-network-is-now-a-founding-member-of-the-newly-launched-global-blockchain-hub-decryption-3ea5e52ed78e',
+    },
+    {
+      title: 'Launch a project on Decryption now!',
+      url: 'https://medium.com/tlchain-blog/launch-a-project-on-decryption-now-a434f1dbdd09',
     },
   ];
 
@@ -77,35 +92,48 @@ const Home: React.FC = () => {
       <div className="flex w-full items-center justify-start">
         {/* <p className="bg-black px-2 py-1 text-white">NEWS</p> */}
         <div className="w-full bg-black bg-opacity-50 py-2 border-2  border-gray-500 border-opacity-25 rounded-md mb-4">
-          <Ticker speed={14} mode="chain" offset={'run-in'}>
-            {
-              ({ index }) =>
-                index % 2 === 0 ? (
-                  // events.map((item, i) => (
+          <Ticker speed={13} mode="chain" offset={'run-in'}>
+            {({ index }) => (
+              <>
+                <div className="flex items-center mx-4">
+                  <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
+                  <a
+                    href={news[index % news.length].url}
+                    target={'_blank'}
+                    className="mr-10 ml-2 text-sm whitespace-nowrap"
+                  >
+                    {news[index % news.length].title}
+                  </a>
+                </div>
+
+                {/* {index % 2 === 0.5 && (
                   <div className="flex items-center mx-4">
                     <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
                     <a
-                      href={events[0].url}
+                      href={news[1].url}
                       target={'_blank'}
                       className="mr-10 ml-2 text-sm whitespace-nowrap"
                     >
-                      {events[0].title}
+                      {news[1].title}
                     </a>
                   </div>
-                ) : (
+                )}
+
+                {index % 3 === 1 && (
                   <div className="flex items-center mx-4">
                     <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
                     <a
-                      href={events[1].url}
+                      href={news[2].url}
                       target={'_blank'}
                       className="mr-10 ml-2 text-sm whitespace-nowrap"
                     >
-                      {events[1].title}
+                      {news[2].title}
                     </a>
                   </div>
-                )
-              // ))
-            }
+                )} */}
+                {/* {(index = index % news.length)} */}
+              </>
+            )}
           </Ticker>
         </div>
       </div>
@@ -114,7 +142,7 @@ const Home: React.FC = () => {
           {isSuccess && (
             <>
               <p className="text-white font-bold font-poppins text-2xl mb-3">
-                User Adoption
+                Growth
               </p>
               <div className="w-full grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
                 <div className="w-full mb-2">
@@ -283,6 +311,8 @@ const Home: React.FC = () => {
             </div>
           </div>
 
+          {/* <div id="coinmarket-widget" className="mt-10" /> */}
+
           <p className="text-white font-bold font-poppins text-2xl mt-6">
             Extended Ecosystem
           </p>
@@ -355,8 +385,8 @@ const Home: React.FC = () => {
             </div>
           </div>
           <div className="w-full bg-black bg-opacity-70 rounded-lg py-4 px-6 lg:px-4 min-h-[13rem]">
-            <p className="font-semibold text-md">Upcoming events</p>
-            <p className="text-xs text-gray-400">Online/Offline Events</p>
+            <p className="font-semibold text-md">Upcoming news</p>
+            <p className="text-xs text-gray-400">Online/Offline news</p>
             <div className="flex items-center mt-4">
               <div className="flex items-center justify-center bg-gradient-to-br from-green-500 to-blue-500 min-w-[2.5rem] min-h-[2.5rem] rounded-lg">
                 <IoRocketSharp size={20} />
@@ -365,7 +395,7 @@ const Home: React.FC = () => {
                 <p className="font-semibold text-sm">
                   $TLC Listing | DEX Release
                 </p>
-                <p className="text-xs text-gray-400">May 2022</p>
+                <p className="text-xs text-gray-400">Jun 2022</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -376,7 +406,7 @@ const Home: React.FC = () => {
                 <p className="font-semibold text-sm">
                   $TLC | $LSO | Bridges release
                 </p>
-                <p className="text-xs text-gray-400">May 2022</p>
+                <p className="text-xs text-gray-400">Jun 2022</p>
               </div>
             </div>
           </div>

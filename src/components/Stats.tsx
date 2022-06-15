@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
+import { formatEther, parseEther } from 'ethers/lib/utils';
 
 import * as contracts from '../utils/functions/Contracts';
 import { useContracts } from '../hooks/useContracts';
@@ -37,6 +38,8 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
     try {
       if (stakeContract) {
         const total = await contracts.getTotalValueLocked(stakeContract);
+        const rewards = await stakeContract.getTotalRewards();
+        console.log('Rewards: ', formatEther(rewards.toString()));
         setTotalStaked(total);
       }
     } catch (error) {}

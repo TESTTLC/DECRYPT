@@ -51,16 +51,16 @@ const AreaChartComponent: React.FC<Props> = ({
           <stop offset="95%" stopColor="#ff003e" stopOpacity={0} />
         </linearGradient> */}
         </defs>
-        <XAxis dataKey="name" fontSize={0} />
-        <YAxis />
+        <XAxis dataKey="name" fontSize={0} stroke={'#dedede'} />
+        <YAxis overlineThickness={'red'} stroke={'#dedede'} />
         {/* <CartesianGrid strokeDasharray="3 3" /> */}
         <Tooltip labelStyle={{ color: 'gray' }} />
         {showAddressesArea && (
           <Area
-            type="monotone"
+            // type="monotone"
             dataKey={'addrTotal'}
             stroke="#2edcff"
-            colorProfile="red"
+            // stroke="#ff006d"
             fillOpacity={0.2}
             // fill={`url(${'#color' + dataKey})`}
             name={first}
@@ -69,10 +69,9 @@ const AreaChartComponent: React.FC<Props> = ({
         )}
         {showTransactionsArea && (
           <Area
-            type="monotone"
+            // type="monotone"
             dataKey={'txTotal'}
             stroke="#00ef54"
-            colorProfile="red"
             fillOpacity={0.2}
             // fill={`url(${'#color' + dataKey})`}
             name={second}
