@@ -117,7 +117,7 @@ const Sidebar: React.FC = () => {
             >
               <img src={ticketsIcon} className="w-10 h-10" />
 
-              <a className="mx-4 font-medium font-oswald uppercase">Tickets</a>
+              <p className="mx-4 font-medium font-oswald uppercase">Tickets</p>
             </a>
             <a
               href="https://discord.gg/tlchain"
