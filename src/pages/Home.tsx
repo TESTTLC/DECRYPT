@@ -18,7 +18,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { NgxNewstickerAlbeModule } from 'ngx-newsticker-albe';
 import Ticker from 'react-ticker';
 import LoadingSpinner from 'src/components/LoadingSpinner';
 

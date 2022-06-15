@@ -1,5 +1,4 @@
 /* eslint-disable no-nested-ternary */
-import React, { useEffect, useLayoutEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AiFillLock } from 'react-icons/ai';
