@@ -20,7 +20,7 @@ export const globalsApi = createApi({
   reducerPath: 'globalsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: `${baseUrl}/stats`,
-    credentials: 'include', // for cookies
+    // credentials: 'include', // for cookies
   }),
   tagTypes: ['AddressesHistory'],
   endpoints: (builder) => ({
