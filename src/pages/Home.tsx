@@ -39,16 +39,12 @@ const Home: React.FC = () => {
   const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
-    // const widgetContainer = document.getElementById('coinmarket-widget');
-    // let widget = document.getElementById('coinmarketcap-widget-marquee');
-    // if (widget) {
-    //   widgetContainer?.appendChild(widget);
-    // } else {
-    //   widget = document.getElementById('coinmarketcap-widget-marquee');
-    //   if (widget) {
-    //     widgetContainer?.appendChild(widget);
-    //   }
-    // }
+    const script = document.createElement('script');
+    script.src =
+      'https://widgets.coingecko.com/coingecko-coin-price-marquee-widget.js';
+    script.async = true;
+
+    document.body.appendChild(script);
   }, []);
 
   let count = 0;
@@ -312,7 +308,16 @@ const Home: React.FC = () => {
           </div>
 
           {/* <div id="coinmarket-widget" className="mt-10" /> */}
-
+          <div className="bg-black bg-opacity-50 mt-10">
+            {/* @ts-ignore */}
+            <coingecko-coin-price-marquee-widget
+              coin-ids="bitcoin,ethereum,elrond-erd-2,avalanche-2,fantom,matic-wormhole,binance-coin-wormhole"
+              currency="usd"
+              background-color="transparent"
+              locale="en"
+              font-color="#999999"
+            />
+          </div>
           <p className="text-white font-bold font-poppins text-2xl mt-6">
             Extended Ecosystem
           </p>

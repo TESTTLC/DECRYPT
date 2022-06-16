@@ -80,7 +80,7 @@
   "scripts": {
     "start": "craco start",
     "devHTTPS": "TAILWIND_MODE=watch HTTPS=true SSL_CRT_FILE=./.cert/cert.pem SSL_KEY_FILE=./.cert/key.pem craco start",
-    "dev": "FAST_REFRESH=false TAILWIND_MODE=watch craco start",
+    "dev": "TAILWIND_MODE=watch craco start",
     "check-types": "tsc",
     "lint": "eslint --fix --ext .ts,.tsx .",
     "build": "GENERATE_SOURCEMAP=false craco build",
