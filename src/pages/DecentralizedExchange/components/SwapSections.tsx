@@ -80,7 +80,7 @@ export const fromModalTokens: any[] = [
   //   },
 ];
 
-const minimumAmount = 200;
+const minimumAmount = 500;
 const TLCValue = 0.2; // USDT
 const TLLPValue = 0.2; // USDT
 

@@ -297,24 +297,17 @@ const EVM: React.FC = () => {
     if (bridgeState.toChain === 'TLC' && bridgeState.fromChain === 'TLC') {
       return;
     } else {
-      console.log('1');
       if (bridgeState.toChain === 'TLC') {
-        console.log('2');
         if (isStableCoin(bridgeState.token)) {
-          console.log('3');
           receiveTokens();
         } else {
           returnTokens();
-          console.log('4');
         }
       } else {
-        console.log('5');
         if (isStableCoin(bridgeState.token)) {
-          console.log('6');
           returnTokens();
         } else {
           receiveTokens();
-          console.log('7');
         }
       }
     }

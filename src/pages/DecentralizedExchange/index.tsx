@@ -125,7 +125,7 @@ const DecentralizedExchange: React.FC = () => {
               Trade Coin In An Instant
             </p>
             <p className="text-xs items-center justify-between w-[37rem] xs:w-[22rem] text-center">
-              We would like to remind you that starting on April 26th 2022, you
+              We would like to remind you that starting on June 26th 2022, you
               will be able to withdraw your liquidity together with the reward
               and exchange it back into USDT.
             </p>
