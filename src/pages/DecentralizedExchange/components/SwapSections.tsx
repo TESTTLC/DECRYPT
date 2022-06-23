@@ -108,8 +108,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
-  const [txType, setTxType] = useState<string>('');
   const [toToken, setToToken] = useState(toModalTokens[0].tag);
+  const [txType, setTxType] = useState<string>(
+    `${fromModalTokens[0].tag}_${toModalTokens[0].tag}`,
+  );
   const [toUsdtAddress, setToUsdtAddress] = useState<string | undefined>(
     TLC_OwnerAddress,
   );
@@ -163,11 +165,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           USDTToken.abi,
           provider.getSigner(),
         );
-        console.log('provider: ', provider);
 
         const usdts = ethers.utils.parseUnits(amountToSwap.toString(), 18);
         const tx = await contract.transfer(toUsdtAddress, usdts);
-
         const res = await fetch(
           `${process.env.REACT_APP_API_BACKEND_EXCHANGE}/api/claim`,
           {

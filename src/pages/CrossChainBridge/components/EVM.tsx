@@ -267,10 +267,20 @@ const EVM: React.FC = () => {
         setIsLoading(false);
         setApproveDone(false);
       }
-    } catch (error) {
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       setIsLoading(false);
-      setErrorMessage('Something went wrong');
+
       console.log('Err on returnTokens: ', error);
+      if (error.message.includes('whitelist')) {
+        setErrorMessage('You are not whitelisted');
+      } else if (error.message.includes('denied')) {
+        setErrorMessage('');
+      } else {
+        setErrorMessage('Something went wrong');
+      }
+      console.log('Err on receiveTokens: ', error);
     }
   };
 
