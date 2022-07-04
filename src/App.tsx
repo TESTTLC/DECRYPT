@@ -107,6 +107,12 @@ const App = () => {
             >
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/dex" element={<DecentralizedExchange />} />
+                <Route
+                  path="/crosschainbridge"
+                  element={<CrossChainBridge />}
+                />
+
                 <Route
                   element={
                     <RequireAuth
@@ -124,11 +130,7 @@ const App = () => {
                     path="/launchpad/:coinTag"
                     element={<LaunchpadProjectDetails />}
                   />
-                  <Route
-                    path="/crosschainbridge"
-                    element={<CrossChainBridge />}
-                  />
-                  <Route path="/dex" element={<DecentralizedExchange />} />
+
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/privacypolicy" element={<PrivacyPolicy />} />
                   <Route path="/termsofuse" element={<TermsOfUse />} />
