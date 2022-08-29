@@ -81,8 +81,8 @@ export const fromModalTokens: any[] = [
 ];
 
 const minimumAmount = 500;
-const TLCValue = 0.2; // USDT
-const TLLPValue = 0.2; // USDT
+const TLCValue = 4.89; // USDT
+const TLLPValue = 4.89; // USDT
 
 export const toModalTokens: Project[] = [
   {

@@ -20,6 +20,7 @@ import {
 } from 'recharts';
 import Ticker from 'react-ticker';
 import LoadingSpinner from 'src/components/LoadingSpinner';
+import { prices } from 'src/utils/globals';
 
 import BigButton from '../components/BigButton';
 import stakingImage from '../assets/images/staking_1.png';
@@ -373,7 +374,7 @@ const Home: React.FC = () => {
               <p className="font-semibold mt-2 text-center">TLC</p>
               <p className="text-xs text-gray-400 text-center">TLChain</p>
               <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
-              <p className="font-semibold mt-2">$0.20</p>
+              <p className="font-semibold mt-2">${prices.TLC}</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
               <div className="flex items-center justify-center  bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
