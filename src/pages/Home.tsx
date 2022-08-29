@@ -401,7 +401,7 @@ const Home: React.FC = () => {
                 <p className="font-semibold text-sm">
                   $TLC Listing | DEX Release
                 </p>
-                <p className="text-xs text-gray-400">Jun 2022</p>
+                <p className="text-xs text-gray-400">Aug 2022</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -412,7 +412,7 @@ const Home: React.FC = () => {
                 <p className="font-semibold text-sm">
                   $TLC | $LSO | Bridges release
                 </p>
-                <p className="text-xs text-gray-400">Jun 2022</p>
+                <p className="text-xs text-gray-400">Aug 2022</p>
               </div>
             </div>
           </div>
