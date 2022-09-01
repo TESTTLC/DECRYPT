@@ -5,7 +5,9 @@ import { IoRocketSharp } from 'react-icons/io5';
 import { ImRocket } from 'react-icons/im';
 import { BiDevices } from 'react-icons/bi';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
+import tlxLogo from 'src/assets/images/TLX-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
+import csyLogo from 'src/assets/images/CSY-logo.png';
 import AreaChartComponent from 'src/components/AreaChartComponent';
 import { useGetAddressesHistoryQuery } from 'src/redux/modules/globals/queries';
 import {
@@ -136,7 +138,7 @@ const Home: React.FC = () => {
       </div>
       <div className="w-full grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1">
         <div className="col-span-3 xs:col-span-4 sm:col-span-4 md:col-span-4 px-2 xs:px-0 sm:px-0 mb-2">
-          {isSuccess && (
+          {/* {isSuccess && (
             <>
               <p className="text-white font-bold font-poppins text-2xl mb-3">
                 Growth
@@ -160,16 +162,6 @@ const Home: React.FC = () => {
                     second={'Total Transactions'}
                   />
                 </div>
-
-                {/* <div className="w-full mt-10 mb-32">
-              <ResponsiveContainer width={'100%'} height={100}>
-                <AreaChartComponent
-                  data={txHistory}
-                  dataKey={'total'}
-                  name={'Total Transactions'}
-                />
-              </ResponsiveContainer>
-            </div> */}
               </div>
             </>
           )}
@@ -177,7 +169,7 @@ const Home: React.FC = () => {
             <div className="w-full flex items-center justify-center my-10">
               <LoadingSpinner height={24} width={24} />
             </div>
-          )}
+          )} */}
           <p className="text-white font-bold font-poppins text-2xl mb-3">
             Ecosystem
           </p>
@@ -389,9 +381,37 @@ const Home: React.FC = () => {
               <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
               <p className="font-semibold mt-2">$0.10</p>
             </div>
+            <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2 mt-4">
+              <div className="flex items-center justify-center bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
+                <img
+                  //   src={tlcLogo}
+                  src={tlxLogo}
+                  className="w-8 h-8 p-0
+                  "
+                />
+              </div>
+              <p className="font-semibold mt-2 text-center">TLX</p>
+              <p className="text-xs text-gray-400 text-center">The Luxury</p>
+              <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
+              <p className="font-semibold mt-2">${prices.TLX}</p>
+            </div>
+            <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2 mt-4">
+              <div className="flex items-center justify-center bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
+                <img
+                  //   src={tlcLogo}
+                  src={csyLogo}
+                  className="w-8 h-8 p-0
+                  "
+                />
+              </div>
+              <p className="font-semibold mt-2 text-center">CSY</p>
+              <p className="text-xs text-gray-400 text-center">Coressy</p>
+              <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
+              <p className="font-semibold mt-2">${prices.CSY}</p>
+            </div>
           </div>
           <div className="w-full bg-black bg-opacity-70 rounded-lg py-4 px-6 lg:px-4 min-h-[13rem]">
-            <p className="font-semibold text-md">Upcoming news</p>
+            <p className="font-semibold text-md">Changelog</p>
             <p className="text-xs text-gray-400">Online/Offline news</p>
             <div className="flex items-center mt-4">
               <div className="flex items-center justify-center bg-gradient-to-br from-green-500 to-blue-500 min-w-[2.5rem] min-h-[2.5rem] rounded-lg">
@@ -399,9 +419,9 @@ const Home: React.FC = () => {
               </div>
               <div className="ml-2">
                 <p className="font-semibold text-sm">
-                  $TLC Listing | DEX Release
+                  TLChain Wallet Browser Extension
                 </p>
-                <p className="text-xs text-gray-400">Jun 2022</p>
+                <p className="text-xs text-gray-400">Mobile Sync Ready</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -409,10 +429,8 @@ const Home: React.FC = () => {
                 <ImRocket size={20} />
               </div>
               <div className="ml-2">
-                <p className="font-semibold text-sm">
-                  $TLC | $LSO | Bridges release
-                </p>
-                <p className="text-xs text-gray-400">Jun 2022</p>
+                <p className="font-semibold text-sm">$TLC | $LSO</p>
+                <p className="text-xs text-gray-400">Bridges release</p>
               </div>
             </div>
           </div>
@@ -425,9 +443,9 @@ const Home: React.FC = () => {
                 </div>
                 <div className="ml-2">
                   <p className="font-semibold text-sm">
-                    TLChain Wallet Browser Extension
+                    $TLC Listing | DEX Release
                   </p>
-                  <p className="text-xs text-gray-400">Mobile Sync Ready</p>
+                  <p className="text-xs text-gray-400">Sep 2022</p>
                 </div>
               </div>
               <div className="flex items-center mt-4">

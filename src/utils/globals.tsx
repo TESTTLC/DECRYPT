@@ -400,7 +400,8 @@ export const stakingRewards = {
 export const prices = {
   TLC: '4.89',
   LSO: '0.07',
-  TLX: 'Listing starts with $50',
+  TLX: '40',
+  CSY: '0.50',
   TLLP: '4.89',
 };
 

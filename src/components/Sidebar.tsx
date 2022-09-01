@@ -120,7 +120,7 @@ const Sidebar: React.FC = () => {
               <p className="mx-4 font-medium font-oswald uppercase">Tickets</p>
             </a>
             <a
-              href="https://discord.gg/tlchain"
+              href="https://community.decryption.com"
               target={'_blank'}
               className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >

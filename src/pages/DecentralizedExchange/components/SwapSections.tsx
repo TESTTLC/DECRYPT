@@ -62,14 +62,14 @@ export const fromModalTokens: any[] = [
     percentage1: 30,
     percentage2: 170,
   },
-  {
-    name: 'TLX',
-    tag: 'TLX',
-    image: tlxLogo,
-    iconBackground: '',
-    percentage1: 30,
-    percentage2: 170,
-  },
+  //   {
+  //     name: 'TLX',
+  //     tag: 'TLX',
+  //     image: tlxLogo,
+  //     iconBackground: '',
+  //     percentage1: 30,
+  //     percentage2: 170,
+  //   },
   //   {
   //     name: 'Atari Token',
   //     tag: 'ATRI',

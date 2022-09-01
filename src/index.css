@@ -38,8 +38,9 @@ body {
 }
 
 .bg-image {
-  background-image: url('./assets/images/blockchain2.jpeg');
+  background-image: url('./assets/images/main-background.jpg');
   filter: blur(25px);
+  opacity: 90%;
   right: 0;
   /* position: absolute; */
   position: fixed;
