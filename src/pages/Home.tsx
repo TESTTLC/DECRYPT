@@ -421,7 +421,10 @@ const Home: React.FC = () => {
                 <p className="font-semibold text-sm">
                   TLChain Wallet Browser Extension
                 </p>
+
                 <p className="text-xs text-gray-400">Mobile Sync Ready</p>
+
+                <p className="text-xs text-gray-400">Aug 2022</p>
               </div>
             </div>
             <div className="flex items-center mt-4">
@@ -431,6 +434,11 @@ const Home: React.FC = () => {
               <div className="ml-2">
                 <p className="font-semibold text-sm">$TLC | $LSO</p>
                 <p className="text-xs text-gray-400">Bridges release</p>
+
+                <p className="font-semibold text-sm">
+                  $TLC | $LSO | Bridges release
+                </p>
+                <p className="text-xs text-gray-400">Aug 2022</p>
               </div>
             </div>
           </div>
