@@ -90,7 +90,7 @@ const Home: React.FC = () => {
     <div className="w-full flex flex-col">
       <div className="flex w-full items-center justify-start">
         {/* <p className="bg-black px-2 py-1 text-white">NEWS</p> */}
-        <div className="w-full bg-black bg-opacity-50 py-2 border-2  border-gray-500 border-opacity-25 rounded-md mb-4">
+        <div className="w-full bg-black bg-opacity-70 py-2 border-2  border-gray-500 border-opacity-25 rounded-md mb-4">
           <Ticker speed={13} mode="chain" offset={'run-in'}>
             {({ index }) => (
               <>
@@ -301,7 +301,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* <div id="coinmarket-widget" className="mt-10" /> */}
-          <div className="bg-black bg-opacity-50 mt-10">
+          <div className="bg-black bg-opacity-70 mt-10">
             {/* @ts-ignore */}
             <coingecko-coin-price-marquee-widget
               coin-ids="bitcoin,ethereum,elrond-erd-2,avalanche-2,fantom,matic-wormhole,binance-coin-wormhole"

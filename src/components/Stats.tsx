@@ -96,7 +96,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
           Total Value locked
         </p>
         <div>
-          <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
+          <p className="text-white font-bold text-lg drop-shadow-2xl shadow-white">
             {walletAddress ? totalStaked : '-'} {coinTag}
           </p>
         </div>
@@ -110,7 +110,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
         <p className="text-white text-center text-sm font-oswald uppercase">
           Your Total Rewards
         </p>
-        <p className="text-green-500 font-bold text-lg drop-shadow-2xl shadow-white">
+        <p className="text-white font-bold text-lg drop-shadow-2xl shadow-white">
           {walletAddress ? totalRewards : '-'} {coinTag}
         </p>
       </div>
@@ -122,7 +122,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
         <p className="text-white text-center text-sm font-oswald uppercase">
           Your Balance
         </p>
-        <p className="text-indigo-500 font-bold text-lg drop-shadow-2xl shadow-white">
+        <p className="text-white font-bold text-lg drop-shadow-2xl shadow-white">
           {walletAddress ? balance : '-'} {coinTag}
         </p>
       </div>

@@ -8,6 +8,7 @@ import { closeSidebar } from 'src/redux/modules/globals/actions';
 import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
 
 import SMALL_LOGO from '../assets/images/logo.png';
+import Main_Logo from '../assets/images/Main-Logo.png';
 import ticketsIcon from '../assets/images/Tickets.png';
 import communityIcon from '../assets/images/Community.png';
 import { links } from '../utils/routes';
@@ -41,12 +42,19 @@ const Sidebar: React.FC = () => {
         >
           <HiX className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-semibold text-white">
-          Decryption{' '}
-          <span className="text-green-400 ml-1 drop-shadow-2xl shadow-white">
-            DeFi HUB
-          </span>
-        </h2>
+        <div className="flex">
+          <img
+            src={Main_Logo}
+            alt="avatar"
+            className="w-1/3 ml-4 mx-2 self-center mt-4 object-center object-cover"
+          />
+          {/* <h2 className="text-sm mt-20 font-semibold text-white">
+            Decryption{' '}
+            <span className="text-green-400 ml-1 drop-shadow-2xl shadow-white">
+              DeFi HUB
+            </span>
+          </h2> */}
+        </div>
 
         <div className="flex flex-col mt-6 justify-between flex-1">
           <nav className="text">
@@ -133,7 +141,7 @@ const Sidebar: React.FC = () => {
           </nav>
           <div className="flex items-center mt-5">
             <img
-              src={SMALL_LOGO}
+              src={Main_Logo}
               alt="avatar"
               className="h-6 w-6 mx-2 object-center object-cover rounded-full"
             />
