@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import { GoArrowDown } from 'react-icons/all';
 
@@ -11,11 +11,20 @@ interface Props {
   index?: number;
   tokens: Project[];
   onTokenChange: (token: string) => void;
+  defaultToken?: Project;
 }
 
-const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
+const SwapTokensModal: React.FC<Props> = ({
+  tokens,
+  onTokenChange,
+  defaultToken,
+}) => {
   const { isMobileSize } = useWindowSize();
   const [selectedToken, setSelectedToken] = useState(tokens[0]);
+
+  useEffect(() => {
+    setSelectedToken(tokens[0]);
+  }, [tokens]);
 
   const customStyles = {
     content: {
@@ -44,6 +53,13 @@ const SwapTokensModal: React.FC<Props> = ({ tokens, onTokenChange }) => {
   function closeModal() {
     setIsOpen(false);
   }
+
+  //   useEffect(() => {
+  //     if (defaultToken) {
+  //       setSelectedToken(defaultToken);
+  //     }
+  //   }, [defaultToken]);
+  //   console.log('defaultToken: ', defaultToken);
 
   return (
     <div className="flex flex-col h-full w-1/2 rounded-xl items-baseline justify-end">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
@@ -13,10 +13,15 @@ import egldLogo from 'src/assets/images/egld-coin.png';
 import { AiFillLock } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { Web3Provider } from '@ethersproject/providers';
-import { USDTContractAddress } from 'src/utils/globals';
+import {
+  USDTContractAddress,
+  WTLCTokenContractAddress,
+} from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
+import { formatEther, parseEther } from 'ethers/lib/utils';
+import wTLCToken from 'src/contracts/WTLC.json';
 
 import SwapTokensModal from './SwapTokensModal';
 import Categories from './Categories';
@@ -27,9 +32,12 @@ import { toModalTokes } from './LiquiditySections';
  */
 const TLC_OwnerAddress = process.env.REACT_APP_TLC_OWNER_ADDRESS;
 const TLLP_OwnerAddress = process.env.REACT_APP_TLLP_OWNER_ADDRESS;
+const minimumAmount = 10;
+const TLCValue = 4.89; // USDT
+const TLLPValue = 4.89; // USDT
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fromModalTokens: any[] = [
+export const fromBinanceModalTokens: any[] = [
   {
     name: 'USDC',
     tag: 'USDC',
@@ -62,32 +70,18 @@ export const fromModalTokens: any[] = [
     percentage1: 30,
     percentage2: 170,
   },
-  //   {
-  //     name: 'TLX',
-  //     tag: 'TLX',
-  //     image: tlxLogo,
-  //     iconBackground: '',
-  //     percentage1: 30,
-  //     percentage2: 170,
-  //   },
-  //   {
-  //     name: 'Atari Token',
-  //     tag: 'ATRI',
-  //     image: atriLogo,
-  //     iconBackground: '',
-  //     percentage1: 6.5,
-  //     percentage2: undefined,
-  //   },
 ];
 
-const minimumAmount = 10;
-const TLCValue = 4.89; // USDT
-const TLLPValue = 4.89; // USDT
-
-export const toModalTokens: Project[] = [
+export const fromBinanceToTLChainModalTokens: Project[] = [
   {
     name: 'TLC',
     tag: 'TLC',
+    image: tlcLogo,
+    value: TLCValue,
+  },
+  {
+    name: 'wTLC',
+    tag: 'wTLC',
     image: tlcLogo,
     value: TLCValue,
   },
@@ -99,13 +93,43 @@ export const toModalTokens: Project[] = [
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const fromTLChainModalTokens: any[] = [
+  {
+    name: 'TLC',
+    tag: 'TLC',
+    image: tlcLogo,
+    value: TLCValue,
+  },
+];
+
+export const fromTLChainToTLChainModalTokens: Project[] = [
+  {
+    name: 'wTLC',
+    tag: 'wTLC',
+    image: tlcLogo,
+    iconBackground: '',
+    // percentage1: 30,
+    // percentage2: 170,
+  },
+];
+
 interface Props {
   currentChainId: string;
 }
 const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const [sectionIndex, setSectionIndex] = useState(0);
+  const [chainSectionIndex, setChainSectionIndex] = useState(0);
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [fromModalTokens, setFromModalTokens] = useState(
+    fromBinanceModalTokens,
+  );
+  const [toModalTokens, setToModalTokens] = useState(
+    fromBinanceToTLChainModalTokens,
+  );
+  const [wTLCContract, setWTLCContract] = useState<Contract>();
+
   const [fromToken, setFromToken] = useState<string>(fromModalTokens[0].tag);
   const [toToken, setToToken] = useState(toModalTokens[0].tag);
   const [txType, setTxType] = useState<string>(
@@ -122,8 +146,48 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     (state) => state.account.walletAddress,
   );
 
+  useEffect(() => {
+    if (chainSectionIndex === 0) {
+      console.log('0');
+      setFromModalTokens(fromBinanceModalTokens);
+      setToModalTokens(fromBinanceToTLChainModalTokens);
+    } else if (chainSectionIndex === 1) {
+      console.log('1');
+      setFromModalTokens(fromTLChainModalTokens);
+      setToModalTokens(fromTLChainToTLChainModalTokens);
+    }
+  }, [chainSectionIndex]);
+
+  const connectToContracts = useCallback(() => {
+    const _wTLCContract = new Contract(
+      WTLCTokenContractAddress,
+      wTLCToken.abi,
+      provider?.getSigner(),
+    );
+    setWTLCContract(_wTLCContract);
+  }, [provider]);
+
+  useEffect(() => {
+    if (walletAddress) {
+      connectToContracts();
+    }
+  }, [connectToContracts, walletAddress]);
+
+  const swapTLCToWTLC = useCallback(async () => {
+    if (amountToSwap > 0) {
+      const tx = await provider?.getSigner().sendTransaction({
+        to: WTLCTokenContractAddress,
+        value: parseEther(amountToSwap.toString()),
+      });
+      const result = await tx?.wait();
+      console.log('Result: ', result);
+    }
+  }, [amountToSwap, provider]);
+
   const onFromTokenChange = (token: string) => {
-    console.log('Changing token: ', token);
+    if (token === 'TLC' && toToken === 'TLC') {
+      onToTokenChange('wTLC');
+    }
     setFromToken(token);
     setTxType(`${token}_${toToken}`);
   };
@@ -144,13 +208,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   };
 
   // Send USDT
-  const send = async () => {
-    console.log('provider: ', provider);
-    console.log('walletAddress: ', walletAddress);
-    console.log('amountToSwap: ', amountToSwap);
-    console.log('fromToken: ', fromToken);
-    console.log('currentChainId: ', currentChainId);
-    console.log('toToken: ', toToken);
+  const send = useCallback(async () => {
     if (
       provider &&
       walletAddress &&
@@ -191,7 +249,108 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         setIsLoading(false);
       }
     }
-  };
+  }, [
+    amountToSwap,
+    currentChainId,
+    fromToken,
+    provider,
+    toUsdtAddress,
+    txType,
+    walletAddress,
+  ]);
+
+  const shownTap = useMemo(() => {
+    if (chainSectionIndex === 1) {
+      if (walletAddress && currentChainId === ChainsIds.TLC) {
+        return (
+          <button
+            className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            onClick={async () => {
+              setIsLoading(true);
+              await swapTLCToWTLC();
+              setIsLoading(false);
+            }}
+            disabled={
+              isLoading || amountToSwap < minimumAmount
+              //   fromToken !== 'USDT'
+            }
+          >
+            {isLoading ? (
+              <>
+                {' '}
+                Exchange in progress &nbsp;
+                <TailSpin color="#fff" height={18} width={18} />
+              </>
+            ) : (
+              'Exchange'
+            )}
+          </button>
+        );
+      } else {
+        return (
+          <p className="text-red-400 leading-tight">
+            Please connect to TLChain Mainnet{' '}
+            {!walletAddress && 'and connect your wallet'}{' '}
+          </p>
+        );
+      }
+    } else if (chainSectionIndex === 0) {
+      if (walletAddress && currentChainId === ChainsIds.BSC) {
+        return (
+          <button
+            className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            onClick={() => {
+              if (
+                amountToSwap >= minimumAmount &&
+                fromToken === 'USDT' &&
+                currentChainId === ChainsIds.BSC
+              ) {
+                setIsLoading(true);
+                send();
+              }
+            }}
+            disabled={
+              isLoading || amountToSwap < minimumAmount || fromToken !== 'USDT'
+            }
+          >
+            {isLoading ? (
+              <>
+                {' '}
+                Exchange in progress &nbsp;
+                <TailSpin color="#fff" height={18} width={18} />
+              </>
+            ) : (
+              'Exchange'
+            )}
+          </button>
+        );
+      } else {
+        return (
+          <p className="text-red-400 leading-tight">
+            Please connect to Binance Smart Chain{' '}
+            {!walletAddress && 'and connect your wallet'}{' '}
+          </p>
+        );
+      }
+    }
+  }, [
+    amountToSwap,
+    chainSectionIndex,
+    currentChainId,
+    fromToken,
+    isLoading,
+    send,
+    swapTLCToWTLC,
+    walletAddress,
+  ]);
+
+  const value = useMemo(() => {
+    if (chainSectionIndex === 0) {
+      return amountToSwap / TLCValue;
+    } else if (chainSectionIndex === 1) {
+      return amountToSwap;
+    }
+  }, [amountToSwap, chainSectionIndex]);
 
   return (
     <div className="relative items-center w-[34rem] xs:w-[22rem] xs:px-4 rounded-lg bg-black bg-opacity-60 text-white font-poppins">
@@ -218,7 +377,25 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         </button>
       </div>
       <div className="relative items-center pb-8 px-8 xs:px-2 sm:px-4">
-        <Categories />
+        {/* <Categories /> */}
+        <div className="flex items-center space-x-6 mb-2">
+          <div
+            className={`${
+              chainSectionIndex === 0 ? 'bg-black bg-opacity-70' : ''
+            } px-4 py-2 rounded-lg cursor-pointer border-[1px] border-green-400`}
+            onClick={() => setChainSectionIndex(0)}
+          >
+            Binance - TLChain
+          </div>
+          <div
+            className={`${
+              chainSectionIndex === 1 ? 'bg-black bg-opacity-70' : ''
+            } px-4 py-2 rounded-lg cursor-pointer border-[1px] border-green-400`}
+            onClick={() => setChainSectionIndex(1)}
+          >
+            TLChain - TLChain
+          </div>
+        </div>
         {sectionIndex === 0 ? (
           <>
             <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
@@ -261,7 +438,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={amountToSwap / TLCValue}
+                  value={value}
                 ></input>
               </div>
               {/* <SwapTokensModal tokens={[]} type="to" /> */}
@@ -269,6 +446,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 <SwapTokensModal
                   tokens={toModalTokens}
                   onTokenChange={onToTokenChange}
+                  defaultToken={toModalTokens.find(
+                    (token) => token.tag === toToken,
+                  )}
                 />
                 {/* <img
                   className="text-white font-poppins w-6 h-6 mr-2 object-cover "
@@ -294,7 +474,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 </>
               ) : null}
             </div>
-            {walletAddress && currentChainId === ChainsIds.BSC ? (
+            {shownTap}
+            {/* {walletAddress &&
+            currentChainId === ChainsIds.BSC &&
+            chainSectionIndex === 0 ? (
               <button
                 className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
                 onClick={() => {
@@ -329,11 +512,40 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 {!walletAddress && 'and connect your wallet'}{' '}
               </p>
             )}
+            {walletAddress &&
+            currentChainId === ChainsIds.TLC &&
+            chainSectionIndex === 1 ? (
+              <button
+                className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+                onClick={() => {
+                  setIsLoading(true);
+                }}
+                disabled={
+                  isLoading || amountToSwap < minimumAmount
+                  //   fromToken !== 'USDT'
+                }
+              >
+                {isLoading ? (
+                  <>
+                    {' '}
+                    Exchange in progress &nbsp;
+                    <TailSpin color="#fff" height={18} width={18} />
+                  </>
+                ) : (
+                  'Exchange'
+                )}
+              </button>
+            ) : (
+              <p className="text-red-400 leading-tight">
+                Please connect to TLChain Mainnet{' '}
+                {!walletAddress && 'and connect your wallet'}{' '}
+              </p>
+            )} */}
           </>
         ) : (
           <>
             <div className="flex flex-col space-y-4">
-              {fromModalTokens.map((t, index) => {
+              {fromBinanceModalTokens.map((t, index) => {
                 const isOdd = index % 2 !== 0;
                 return (
                   <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center text-sm">
@@ -345,7 +557,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                         }`}
                       />
                       <img
-                        src={toModalTokens[0].image}
+                        src={fromBinanceToTLChainModalTokens[0].image}
                         className={`w-10 h-10 absolute left-11 bottom-2 rounded-full border-4 bg-gray-600 border-gray-800 p-[0.15rem] ${
                           isOdd ? 'z-20' : 'z-10'
                         }`}
@@ -353,7 +565,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                     </div>
                     <div className="flex-[0.3]">
                       <span>
-                        {t.tag}-{toModalTokens[0].tag}
+                        {t.tag}-{fromBinanceToTLChainModalTokens[0].tag}
                       </span>
                     </div>
                     <div className="flex-[0.5]">

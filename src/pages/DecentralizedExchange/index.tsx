@@ -77,7 +77,7 @@ const DecentralizedExchange: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   useEffect(() => {
-    chainChange();
+    // chainChange();
     getUsdtBalance();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -95,7 +95,7 @@ const DecentralizedExchange: React.FC = () => {
     if (currentChainId === ChainsIds.BSC) {
       getUsdtBalance();
     } else {
-      chainChange();
+      //   chainChange();
       getUsdtBalance();
     }
   }, [walletAddress, provider, currentChainId, getUsdtBalance]);
@@ -121,28 +121,28 @@ const DecentralizedExchange: React.FC = () => {
       <div className="flex flex-col items-center justify-center">
         <div className="flex justify-between">
           <div className="flex flex-col items-center justify-center">
-            <p className="font-bold text-gray-300 text-3xl mb-4">
+            <p className="font-bold text-white text-3xl mb-4">
               Trade Coin In An Instant
             </p>
-            <p className="text-xs items-center justify-between w-[37rem] xs:w-[22rem] text-center">
-              We would like to remind you that starting on June 26th 2022, you
-              will be able to withdraw your liquidity together with the reward
-              and exchange it back into USDT.
+            <p className="text-xs mb-2 items-center justify-between w-[37rem] xs:w-[22rem] text-center">
+              Discover the potential of your assets, in Decryption DEX Profit
+              gained every second that can be withdrawn at any time
             </p>
-
-            <div className="flex">
-              <p className="text-green-400 font-semibold text-lg mb-4">
-                {usdtBalance} USDT
-              </p>
-              <p className="text-white font-semibold text-lg mb-4">
-                &nbsp;available on BSC
-              </p>
-            </div>
+            {currentChainId === ChainsIds.BSC && (
+              <div className="flex">
+                <p className="text-green-400 font-semibold text-lg mb-4">
+                  {usdtBalance} USDT
+                </p>
+                <p className="text-white font-semibold text-lg mb-4">
+                  &nbsp;available on BSC
+                </p>
+              </div>
+            )}
           </div>
         </div>
-        {chainErrorMessage && (
+        {/* {chainErrorMessage && (
           <p className="mb-2 text-red-400">{chainErrorMessage}</p>
-        )}
+        )} */}
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-1 sm:grid-cols-1 xs:grid-cols-1 md:space-y-8 sm:space-y-8 xs:space-y-8 gap-x-8 mb-8">

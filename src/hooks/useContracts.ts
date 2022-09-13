@@ -16,6 +16,7 @@ import TheLuxuryLiquidityPoolStake from '../contracts/TheLuxuryLiquidityPoolStak
 import TheLuxuryNFT from '../contracts/TheLuxuryNFT.json';
 import TTXToken from '../contracts/TTX.json';
 import OldTLXToken from '../contracts/OldTLXToken.json';
+import WrappedTLC from '../contracts/WTLC.json';
 import {
   LussoStakeContractAddress,
   LussoTokenContractAddress,
@@ -30,6 +31,7 @@ import {
   TLNFTTokenContractAddress,
   TTXTokenContractAddress,
   TLChain_wEGLD_ChildTokenContractAddress,
+  WTLCTokenContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -100,6 +102,11 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setTokenAddress(TLChain_wEGLD_ChildTokenContractAddress);
       setStakeAddress('-');
       setTokenAbi(TTXToken.abi);
+      setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
+    } else if (coinTag === 'WTLC') {
+      setTokenAddress(WTLCTokenContractAddress);
+      setStakeAddress('-');
+      setTokenAbi(WrappedTLC.abi);
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
     }
   }, [coinTag, currentChainId]);

@@ -21,6 +21,9 @@ export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
+export const WTLCTokenContractAddress =
+  '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711';
+
 export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
 // /** Mainnet */
