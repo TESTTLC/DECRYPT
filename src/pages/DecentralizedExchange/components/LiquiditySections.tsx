@@ -126,6 +126,7 @@ const LiquiditySections: React.FC = () => {
     if (provider) {
       console.log('Provider here');
       try {
+        setIsLoading(true);
         const contract = new Contract(
           RouterContractAddress,
           Router.abi,
@@ -194,14 +195,16 @@ const LiquiditySections: React.FC = () => {
           firstToken.address,
           parseEther(amount2.toString()),
           parseEther(amount1.toString()),
-          parseEther(amountAMin.toString()),
           parseEther(amountBMin.toString()),
+          parseEther(amountAMin.toString()),
           walletAddress,
           timestamp,
         );
         console.log('result: ', result);
+        setIsLoading(false);
       } catch (error) {
         console.log('Error on addLiquidity: ', error);
+        setIsLoading(false);
       }
     }
   }, [
