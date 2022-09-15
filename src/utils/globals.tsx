@@ -18,6 +18,9 @@ export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 
 export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 
+export const RouterContractAddress =
+  '0x2539b8A418Ce37D57Ea05755603CEFA7f5c44446';
+
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 

@@ -31,6 +31,14 @@ export const epochToDate = (epochSeconds: number | string, type?: string) => {
   return date.toUTCString();
 };
 
+export const dateToTimestamp = (strDate: string) => {
+  return Date.parse(strDate);
+};
+
+export const addHours = (h: number) => {
+  return new Date().getTime() + h * 60 * 60 * 1000;
+};
+
 export const ellipsizeAddress = (str: string, maxLength: number) => {
   if (str && str.length > maxLength) {
     return str.slice(0, maxLength / 2) + '...' + str.slice(-maxLength / 2);

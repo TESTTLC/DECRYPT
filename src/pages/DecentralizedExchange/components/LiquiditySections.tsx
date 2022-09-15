@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
@@ -6,12 +6,23 @@ import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { Project } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
 import usdtLogo from 'src/assets/images/USDT-logo.png';
-import egldLogo from 'src/assets/images/egld-coin.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
-import lsoLogo from 'src/assets/images/LSO-logo.png';
-import tlxLogo from 'src/assets/images/TLX-logo.png';
-import atriLogo from 'src/assets/images/ATRI-logo.png';
 import { AiFillLock } from 'react-icons/ai';
+import {
+  RouterContractAddress,
+  TLChain_USDC_ChildTokenContractAddress,
+  TLChain_USDT_ChildTokenContractAddress,
+  WTLCTokenContractAddress,
+} from 'src/utils/globals';
+import { Contract, ethers } from 'ethers';
+import Router from 'src/contracts/Router.json';
+import ERC20 from 'src/contracts/ERC20.json';
+import TheLuxuryCoinToken from 'src/contracts/TheLuxuryCoinToken.json';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+import { Web3Provider } from '@ethersproject/providers';
+import { addHours, dateToTimestamp } from 'src/utils/functions/utils';
+import { parseEther, parseUnits } from 'ethers/lib/utils';
 
 import LiquidityTokensModal from './LiquidityTokensModal';
 import Categories from './Categories';
@@ -19,45 +30,47 @@ import Categories from './Categories';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const fromModalTokens: any[] = [
   {
-    name: 'USDC',
-    tag: 'USDC',
+    name: 'Wrapped USDC',
+    tag: 'wUSDC',
     image: usdcLogo,
     iconBackground: '',
     percentage1: 19,
     percentage2: 179,
+    address: TLChain_USDC_ChildTokenContractAddress,
   },
   {
-    name: 'USDT',
-    tag: 'USDT',
+    name: 'Wrapped USDT',
+    tag: 'wUSDT',
     image: usdtLogo,
     iconBackground: '',
     percentage1: 19,
     percentage2: 179,
+    address: TLChain_USDT_ChildTokenContractAddress,
   },
-  {
-    name: 'LSO',
-    tag: 'LSO',
-    image: lsoLogo,
-    iconBackground: 'white',
-    percentage1: 19,
-    percentage2: 120,
-  },
-  {
-    name: 'EGLD',
-    tag: 'EGLD',
-    image: egldLogo,
-    iconBackground: '',
-    percentage1: 30,
-    percentage2: 170,
-  },
-  {
-    name: 'TLX',
-    tag: 'TLX',
-    image: tlxLogo,
-    iconBackground: '',
-    percentage1: 30,
-    percentage2: 170,
-  },
+  //   {
+  //     name: 'LSO',
+  //     tag: 'LSO',
+  //     image: lsoLogo,
+  //     iconBackground: 'white',
+  //     percentage1: 19,
+  //     percentage2: 120,
+  //   },
+  //   {
+  //     name: 'EGLD',
+  //     tag: 'EGLD',
+  //     image: egldLogo,
+  //     iconBackground: '',
+  //     percentage1: 30,
+  //     percentage2: 170,
+  //   },
+  //   {
+  //     name: 'TLX',
+  //     tag: 'TLX',
+  //     image: tlxLogo,
+  //     iconBackground: '',
+  //     percentage1: 30,
+  //     percentage2: 170,
+  //   },
   //   {
   //     name: 'ATRI',
   //     tag: 'ATRI',
@@ -70,9 +83,10 @@ export const fromModalTokens: any[] = [
 
 export const toModalTokes: Project[] = [
   {
-    name: 'TLC',
-    tag: 'TLC',
+    name: 'Wrapped The Luxury Coin',
+    tag: 'wTLC',
     image: tlcLogo,
+    address: WTLCTokenContractAddress,
   },
 ];
 
@@ -80,21 +94,128 @@ const LiquiditySections: React.FC = () => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [fromToken, setFromToken] = useState(fromModalTokens[0].tag);
-  const [toToken, setToToken] = useState(toModalTokes[0].tag);
+  const [firstToken, setFirstToken] = useState(fromModalTokens[0]);
+  const [secondToken, setSecondToken] = useState(toModalTokes[0]);
 
-  const onFromTokenChange = (token: string) => {
-    setFromToken(token);
+  const provider = useSelector<StoreState, Web3Provider | undefined>(
+    (state) => state.globals.provider,
+  );
+
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress,
+  );
+
+  const onFirstTokenChange = (tag: string) => {
+    const token = fromModalTokens.find((item) => item.tag === tag);
+    console.log('T: ', token);
+    setFirstToken(token);
   };
 
-  const onToTokenChange = (token: string) => {
-    setToToken(token);
+  const onSecondTokenChange = (tag: string) => {
+    const token = toModalTokes.find((item) => item.tag === tag);
+    // setSecondToken(token);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAmountChange = (e: any) => {
     setAmountToSwap(e.target.value);
   };
+
+  const addLiquidity = useCallback(async () => {
+    console.log('Started addLiquidity');
+    if (provider) {
+      console.log('Provider here');
+      try {
+        const contract = new Contract(
+          RouterContractAddress,
+          Router.abi,
+          provider.getSigner(),
+        );
+        const wUSDTContract = new Contract(
+          TLChain_USDT_ChildTokenContractAddress,
+          ERC20.abi,
+          provider.getSigner(),
+        );
+        const wUSDCContract = new Contract(
+          TLChain_USDC_ChildTokenContractAddress,
+          ERC20.abi,
+          provider.getSigner(),
+        );
+        const wTLCContract = new Contract(
+          WTLCTokenContractAddress,
+          TheLuxuryCoinToken.abi,
+          provider.getSigner(),
+        );
+
+        console.log('Contract: ', contract);
+        const amount1 = amountToSwap; // wUSDT
+        const amount2 = amount1 / 4.89; // TLC
+        const amountAMin = amount1 - (0.5 / 100) * amount1; //amount1 - 0.5% slippage
+        const amountBMin = amount2 - (0.5 / 100) * amount2; //amount1 - 0.5% slippage
+        const deadline = addHours(1);
+
+        console.log('Deadline: ', deadline);
+
+        const blockNumber = await provider.getBlockNumber();
+        const block = await provider.getBlock(blockNumber);
+        const timestamp = block?.timestamp + 300;
+
+        console.log('blockNumber: ', blockNumber);
+        console.log('firstToken.address: ', firstToken.address);
+        console.log('secondToken.address: ', secondToken.address);
+
+        let approve1tx;
+        if (firstToken.tag === 'wUSDT') {
+          approve1tx = await wUSDTContract.approve(
+            RouterContractAddress,
+            parseEther(amount1.toString()),
+          );
+        } else {
+          approve1tx = await wUSDCContract.approve(
+            RouterContractAddress,
+            parseEther(amount1.toString()),
+          );
+        }
+
+        const approve1Result = await approve1tx.wait();
+        console.log('approve1tx: ', approve1tx);
+        console.log('approve1Result: ', approve1Result);
+
+        const approve2tx = await wTLCContract.approve(
+          RouterContractAddress,
+          parseEther(amount2.toString()),
+        );
+        const approve2Result = await approve2tx.wait();
+        console.log('approve2tx: ', approve2tx);
+        console.log('approve2Result: ', approve2Result);
+
+        const result = await contract.addLiquidity(
+          secondToken.address,
+          firstToken.address,
+          parseEther(amount2.toString()),
+          parseEther(amount1.toString()),
+          parseEther(amountAMin.toString()),
+          parseEther(amountBMin.toString()),
+          walletAddress,
+          timestamp,
+        );
+        console.log('result: ', result);
+      } catch (error) {
+        console.log('Error on addLiquidity: ', error);
+      }
+    }
+  }, [
+    amountToSwap,
+    firstToken.address,
+    firstToken.tag,
+    provider,
+    secondToken.address,
+    walletAddress,
+  ]);
+
+  //   useEffect(() => {
+  //     addLiquidity();
+  //   }, [addLiquidity]);
 
   return (
     <div className="relative items-center w-[34rem] xs:w-[22rem] xs:px-4 rounded-lg bg-black bg-opacity-60 text-white font-poppins">
@@ -127,7 +248,7 @@ const LiquiditySections: React.FC = () => {
             <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
               <div className="flex w-1/2 flex-col h-full">
                 <p className="text-gray-400 font-medium font-poppins text-sm">
-                  From
+                  {/* From */}
                 </p>
                 <input
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
@@ -146,7 +267,7 @@ const LiquiditySections: React.FC = () => {
              <p className="font-poppins text-md text-white">USDC</p> */}
                 <LiquidityTokensModal
                   tokens={fromModalTokens}
-                  onTokenChange={onFromTokenChange}
+                  onTokenChange={onFirstTokenChange}
                 />
               </div>
             </div>
@@ -159,13 +280,13 @@ const LiquiditySections: React.FC = () => {
             <div className="relative flex bg-black bg-opacity-60 w-full h-20 rounded-lg pt-1 px-6 items-center">
               <div className="flex w-1/2 flex-col h-full">
                 <p className="text-gray-400 font-medium font-poppins text-sm">
-                  To
+                  {/* To */}
                 </p>
                 <input
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={amountToSwap * 17}
+                  value={amountToSwap / 4.89}
                 ></input>
               </div>
               <div className="flex w-1/2 justify-end items-center mt-4">
@@ -174,11 +295,14 @@ const LiquiditySections: React.FC = () => {
                   src={tlchainImage}
                   alt="TLChain-Logo"
                 />
-                <p className="font-poppins text-md text-white">TLC</p>
+                <p className="font-poppins text-md text-white">wTLC</p>
               </div>
             </div>
             <div className="h-14 mt-2" />
-            <button className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
+            <button
+              onClick={addLiquidity}
+              className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            >
               {isLoading ? (
                 <>
                   {' '}
