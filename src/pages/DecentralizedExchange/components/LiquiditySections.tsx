@@ -127,7 +127,7 @@ const LiquiditySections: React.FC = () => {
       console.log('Provider here');
       try {
         setIsLoading(true);
-        const contract = new Contract(
+        const routerContract = new Contract(
           RouterContractAddress,
           Router.abi,
           provider.getSigner(),
@@ -148,7 +148,7 @@ const LiquiditySections: React.FC = () => {
           provider.getSigner(),
         );
 
-        console.log('Contract: ', contract);
+        console.log('Contract: ', routerContract);
         const amount1 = amountToSwap; // wUSDT
         const amount2 = amount1 / 4.89; // TLC
         const amountAMin = amount1 - (0.5 / 100) * amount1; //amount1 - 0.5% slippage
@@ -190,7 +190,7 @@ const LiquiditySections: React.FC = () => {
         console.log('approve2tx: ', approve2tx);
         console.log('approve2Result: ', approve2Result);
 
-        const result = await contract.addLiquidity(
+        const result = await routerContract.addLiquidity(
           secondToken.address,
           firstToken.address,
           parseEther(amount2.toString()),

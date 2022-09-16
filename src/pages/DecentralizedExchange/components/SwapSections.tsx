@@ -16,10 +16,17 @@ import { StoreState } from 'src/utils/storeTypes';
 import { Contract, ethers } from 'ethers';
 import { Web3Provider } from '@ethersproject/providers';
 import {
+  RouterContractAddress,
+  TLChain_USDC_ChildTokenContractAddress,
+  TLChain_USDT_ChildTokenContractAddress,
+  TLCTokenContractAddress,
   USDTContractAddress,
   WTLCTokenContractAddress,
 } from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
+import Router from 'src/contracts/Router.json';
+import ERC20 from 'src/contracts/ERC20.json';
+import TheLuxuryCoinToken from 'src/contracts/TheLuxuryCoinToken.json';
 import { formatEther, parseEther } from 'ethers/lib/utils';
 import wTLCToken from 'src/contracts/WTLC.json';
 
@@ -32,7 +39,7 @@ import { toModalTokes } from './LiquiditySections';
  */
 const TLC_OwnerAddress = process.env.REACT_APP_TLC_OWNER_ADDRESS;
 const TLLP_OwnerAddress = process.env.REACT_APP_TLLP_OWNER_ADDRESS;
-const minimumAmount = 10;
+const minimumAmount = 0;
 const TLCValue = 4.89; // USDT
 const TLLPValue = 4.89; // USDT
 
@@ -72,7 +79,8 @@ export const fromBinanceModalTokens: any[] = [
   },
 ];
 
-export const fromBinanceToTLChainModalTokens: Project[] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const fromBinanceToTLChainModalTokens: any[] = [
   {
     name: 'TLC',
     tag: 'TLC',
@@ -100,15 +108,32 @@ export const fromTLChainModalTokens: any[] = [
     tag: 'TLC',
     image: tlcLogo,
     value: TLCValue,
+    address: TLCTokenContractAddress,
+  },
+  {
+    name: 'wUSDT',
+    tag: 'wUSDT',
+    image: usdtLogo,
+    value: 1,
+    address: TLChain_USDT_ChildTokenContractAddress,
+  },
+  {
+    name: 'wUSDC',
+    tag: 'wUSDC',
+    image: usdcLogo,
+    value: 1,
+    address: TLChain_USDC_ChildTokenContractAddress,
   },
 ];
 
-export const fromTLChainToTLChainModalTokens: Project[] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const fromTLChainToTLChainModalTokens: any[] = [
   {
     name: 'wTLC',
     tag: 'wTLC',
     image: tlcLogo,
     iconBackground: '',
+    address: WTLCTokenContractAddress,
     // percentage1: 30,
     // percentage2: 170,
   },
@@ -151,10 +176,14 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       console.log('0');
       setFromModalTokens(fromBinanceModalTokens);
       setToModalTokens(fromBinanceToTLChainModalTokens);
+      setFromToken(fromBinanceModalTokens[0].tag);
+      setToToken(fromBinanceToTLChainModalTokens[0].tag);
     } else if (chainSectionIndex === 1) {
       console.log('1');
       setFromModalTokens(fromTLChainModalTokens);
       setToModalTokens(fromTLChainToTLChainModalTokens);
+      setFromToken(fromTLChainModalTokens[0].tag);
+      setToToken(fromTLChainToTLChainModalTokens[0].tag);
     }
   }, [chainSectionIndex]);
 
@@ -206,6 +235,81 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const handleAmountChange = (e: any) => {
     setAmountToSwap(e.target.value);
   };
+
+  const swapExactTokensForTokens = useCallback(async () => {
+    if (provider) {
+      try {
+        setIsLoading(true);
+        const address1 = fromTLChainModalTokens.find(
+          (token) => token.tag === fromToken,
+        ).address;
+        console.log('address1: ', address1);
+
+        const address2 = fromTLChainToTLChainModalTokens.find(
+          (token) => token.tag === toToken,
+        ).address;
+
+        console.log('address2: ', address2);
+
+        const routerContract = new Contract(
+          RouterContractAddress,
+          Router.abi,
+          provider?.getSigner(),
+        );
+        console.log('routerContractt: ', routerContract);
+
+        const wUSDTContract = new Contract(
+          TLChain_USDT_ChildTokenContractAddress,
+          ERC20.abi,
+          provider.getSigner(),
+        );
+        const wUSDCContract = new Contract(
+          TLChain_USDC_ChildTokenContractAddress,
+          ERC20.abi,
+          provider.getSigner(),
+        );
+
+        const blockNumber = await provider.getBlockNumber();
+        const block = await provider.getBlock(blockNumber);
+        const timestamp = block?.timestamp + 300;
+
+        console.log('blockNumber: ', blockNumber);
+        console.log('firstToken.address: ', address1);
+        console.log('secondToken.address: ', address2);
+        const amount1 = parseEther(amountToSwap.toString());
+
+        let approve1tx;
+        if (fromToken === 'wUSDT') {
+          approve1tx = await wUSDTContract.approve(
+            RouterContractAddress,
+            parseEther(amount1.toString()),
+          );
+        } else {
+          approve1tx = await wUSDCContract.approve(
+            RouterContractAddress,
+            parseEther(amount1.toString()),
+          );
+        }
+
+        const approve1Result = await approve1tx.wait();
+        console.log('approve1Result: ', approve1Result);
+
+        const tx = await routerContract.swapExactTokensForTokens(
+          amount1,
+          0,
+          [address1, address2],
+          walletAddress,
+          timestamp,
+        );
+        const swapResult = await tx.wait();
+        console.log('Swap Result is: ', swapResult);
+        setIsLoading(false);
+      } catch (error) {
+        console.log('Error on swapExactTokensForTokens: ', error);
+        setIsLoading(false);
+      }
+    }
+  }, [amountToSwap, fromToken, provider, toToken, walletAddress]);
 
   // Send USDT
   const send = useCallback(async () => {
@@ -266,9 +370,14 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           <button
             className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
             onClick={async () => {
-              setIsLoading(true);
-              await swapTLCToWTLC();
-              setIsLoading(false);
+              console.log('Here: ', fromToken, toToken);
+              if (fromToken !== 'TLC') {
+                await swapExactTokensForTokens();
+              } else {
+                setIsLoading(true);
+                await swapTLCToWTLC();
+                setIsLoading(false);
+              }
             }}
             disabled={
               isLoading || amountToSwap < minimumAmount
@@ -340,17 +449,23 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     fromToken,
     isLoading,
     send,
+    swapExactTokensForTokens,
     swapTLCToWTLC,
+    toToken,
     walletAddress,
   ]);
 
   const value = useMemo(() => {
+    console.log('fromToken is: ', fromToken);
+    console.log('toToken is: ', toToken);
     if (chainSectionIndex === 0) {
       return amountToSwap / TLCValue;
     } else if (chainSectionIndex === 1) {
-      return amountToSwap;
+      if (fromToken === 'TLC' && toToken === 'wTLC') {
+        return amountToSwap;
+      } else return amountToSwap / TLCValue;
     }
-  }, [amountToSwap, chainSectionIndex]);
+  }, [amountToSwap, chainSectionIndex, fromToken, toToken]);
 
   return (
     <div className="relative items-center w-[34rem] xs:w-[22rem] xs:px-4 rounded-lg bg-black bg-opacity-60 text-white font-poppins">
@@ -473,6 +588,18 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   </p>
                 </>
               ) : null}
+
+              {chainSectionIndex === 1 &&
+                (fromToken === 'wUSDT' || fromToken === 'wUSDC') && (
+                  <>
+                    <p className="font-poppins text-gray-300 h-4 text-sm mb-1">
+                      Price Impact
+                    </p>
+                    <p className="mb-2 font-poppins text-yellow-400 text-xs h-4 ">
+                      This swap has a price impact of at least 10%
+                    </p>
+                  </>
+                )}
             </div>
             {shownTap}
             {/* {walletAddress &&
