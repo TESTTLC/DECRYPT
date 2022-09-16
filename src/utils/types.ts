@@ -83,7 +83,7 @@ export type Project = {
   image: string;
   iconBackground?: string;
   value?: number;
-  address: string;
+  address?: string;
 };
 
 export enum ChainsIds {
