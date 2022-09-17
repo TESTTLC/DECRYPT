@@ -522,11 +522,22 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const value = useMemo(() => {
     console.log('fromToken is: ', fromToken);
     console.log('toToken is: ', toToken);
+    const from = fromBinanceToTLChainModalTokens.find(
+      (t) => t.tag === fromToken,
+    );
+    const to = fromBinanceToTLChainModalTokens.find((t) => t.tag === toToken);
     if (chainSectionIndex === 0) {
       return amountToSwap / TLCValue;
     } else if (chainSectionIndex === 1) {
-      if (fromToken === 'TLC' && toToken === 'wTLC') {
+      if (fromToken === toToken) {
         return amountToSwap;
+      } else if (
+        (fromToken === 'TLC' && toToken === 'wTLC') ||
+        (fromToken === 'wTLC' && toToken === 'TLC')
+      ) {
+        return amountToSwap;
+      } else if (fromToken === 'TLC' || fromToken === 'wTLC') {
+        return TLCValue / amountToSwap;
       } else return amountToSwap / TLCValue;
     }
   }, [amountToSwap, chainSectionIndex, fromToken, toToken]);
