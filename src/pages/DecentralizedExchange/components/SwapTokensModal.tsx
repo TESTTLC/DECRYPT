@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Modal from 'react-modal';
 import { GoArrowDown } from 'react-icons/all';
 
@@ -11,13 +11,17 @@ interface Props {
   index?: number;
   tokens: Project[];
   onTokenChange: (token: string) => void;
-  defaultToken?: Project;
+  fromToken: string;
+  toToken: string;
+  type: 'from' | 'to';
 }
 
 const SwapTokensModal: React.FC<Props> = ({
   tokens,
   onTokenChange,
-  defaultToken,
+  fromToken,
+  toToken,
+  type,
 }) => {
   const { isMobileSize } = useWindowSize();
   const [selectedToken, setSelectedToken] = useState(tokens[0]);
@@ -94,38 +98,40 @@ const SwapTokensModal: React.FC<Props> = ({
             <p className="font-poppins text-md mt-4 ">Switch to</p>
           </div>
           <ul className="flex flex-col w-full text-white font-poppins justify-center items-center">
-            {tokens.map((token, index) => (
-              <li
-                key={`${token.name}/${index}`}
-                className="w-full hover:bg-gray-800 "
-              >
-                <button
-                  className={`w-full flex ${
-                    index === 0 || index === tokens.length
-                      ? undefined
-                      : 'border-t-2'
-                  } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
-                  onClick={() => {
-                    setSelectedToken(token);
-                    onTokenChange(token.tag);
-                    closeModal();
-                  }}
+            {tokens
+              .filter((t) => t.tag !== fromToken)
+              .map((token, index) => (
+                <li
+                  key={`${token.name}/${index}`}
+                  className="w-full hover:bg-gray-800 "
                 >
-                  <img
-                    src={token.image}
-                    className={`${
-                      token.tag === 'TLLP'
-                        ? 'w-8 h-8 object-contain'
-                        : 'w-6 h-6 object-cover'
-                    }`}
-                    alt={`${token.name}`}
-                  />
-                  <p className="ml-2 text-xl font-semibold ">
-                    {token.tag} ({token.name})
-                  </p>
-                </button>
-              </li>
-            ))}
+                  <button
+                    className={`w-full flex ${
+                      index === 0 || index === tokens.length
+                        ? undefined
+                        : 'border-t-2'
+                    } border-opacity-70 border-gray-600 h-16 items-center justify-center text-center`}
+                    onClick={() => {
+                      setSelectedToken(token);
+                      onTokenChange(token.tag);
+                      closeModal();
+                    }}
+                  >
+                    <img
+                      src={token.image}
+                      className={`${
+                        token.tag === 'TLLP'
+                          ? 'w-8 h-8 object-contain'
+                          : 'w-6 h-6 object-cover'
+                      }`}
+                      alt={`${token.name}`}
+                    />
+                    <p className="ml-2 text-xl font-semibold ">
+                      {token.tag} ({token.name})
+                    </p>
+                  </button>
+                </li>
+              ))}
           </ul>
         </div>
       </Modal>
