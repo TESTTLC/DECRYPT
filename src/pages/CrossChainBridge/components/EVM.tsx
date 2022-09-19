@@ -195,7 +195,7 @@ const EVM: React.FC = () => {
       approveSide();
       console.log('approve - 1');
     } else {
-      if (isStableCoin(bridgeState.token) && bridgeState.fromChain !== 'TLC') {
+      if (isStableCoin(bridgeState.token) && bridgeState.fromChain === 'TLC') {
         console.log('approve - 2');
         approveSide();
       } else {
