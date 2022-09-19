@@ -174,6 +174,8 @@ const EVM: React.FC = () => {
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + fee;
+        console.log('finalAmount approveSIde: ', finalAmount);
+
         const tx = await tokenContract?.functions.approve(
           sideBridgeContract?.address,
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
@@ -191,10 +193,13 @@ const EVM: React.FC = () => {
   const approve = () => {
     if (bridgeState.token === 'TLC') {
       approveSide();
+      console.log('approve - 1');
     } else {
-      if (isStableCoin(bridgeState.token)) {
+      if (isStableCoin(bridgeState.token) && bridgeState.fromChain !== 'TLC') {
+        console.log('approve - 2');
         approveSide();
       } else {
+        console.log('approve - 3');
         approveMain();
       }
     }
@@ -203,7 +208,6 @@ const EVM: React.FC = () => {
 
   const receiveTokens = async () => {
     try {
-      console.log('On Receive TOKENS');
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
@@ -215,12 +219,16 @@ const EVM: React.FC = () => {
           const overrides = {
             value: ethers.utils.parseEther(finalAmount.toString()),
           };
-
+          console.log('0: ', mainBridgeContract?.address);
+          console.log('1: ', sideBridgeContract?.address);
           tx = await mainBridgeContract?.receiveTokens(
             sideBridgeContract?.address,
             overrides,
           );
         } else {
+          console.log('2: ', mainBridgeContract?.address);
+          console.log('3: ', sideBridgeContract?.address);
+          console.log('FinalAmount: ', finalAmount);
           tx = await mainBridgeContract?.receiveTokens(
             ethers.utils.parseEther(finalAmount.toString()),
             sideBridgeContract?.address,

@@ -399,27 +399,31 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   ]);
 
   const messageValue = useMemo(() => {
-    if (
-      (fromToken !== 'TLC' && fromToken === 'wUSDC' && toToken === 'wTLC') ||
-      (fromToken === 'wUSDT' && toToken === 'wTLC') ||
-      (fromToken === 'wTLC' && toToken === 'wUSDC') ||
-      (fromToken === 'wTLC' && toToken === 'wUSDT')
-    ) {
-      return 'Exchange';
-    } else if (
-      (fromToken === 'TLC' && toToken === 'wTLC') ||
-      (fromToken === 'wTLC' && toToken === 'TLC')
-    ) {
-      return 'Exchange';
-    } else if (
-      (fromToken === 'TLC' && toToken === 'wTLC') ||
-      (fromToken === 'wTLC' && toToken === 'TLC')
-    ) {
-      return 'Exchange';
+    if (chainSectionIndex === 1) {
+      if (
+        (fromToken !== 'TLC' && fromToken === 'wUSDC' && toToken === 'wTLC') ||
+        (fromToken === 'wUSDT' && toToken === 'wTLC') ||
+        (fromToken === 'wTLC' && toToken === 'wUSDC') ||
+        (fromToken === 'wTLC' && toToken === 'wUSDT')
+      ) {
+        return 'Exchange';
+      } else if (
+        (fromToken === 'TLC' && toToken === 'wTLC') ||
+        (fromToken === 'wTLC' && toToken === 'TLC')
+      ) {
+        return 'Exchange';
+      } else if (
+        (fromToken === 'TLC' && toToken === 'wTLC') ||
+        (fromToken === 'wTLC' && toToken === 'TLC')
+      ) {
+        return 'Exchange';
+      } else {
+        return 'Not possible yet';
+      }
     } else {
-      return 'Not possible yet';
+      return 'Exchange';
     }
-  }, [fromToken, toToken]);
+  }, [chainSectionIndex, fromToken, toToken]);
 
   const shownTap = useMemo(() => {
     if (chainSectionIndex === 1) {
