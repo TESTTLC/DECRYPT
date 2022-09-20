@@ -200,7 +200,6 @@ const LiquiditySections: React.FC = () => {
           walletAddress,
           timestamp,
         );
-        console.log('result: ', result);
         setIsLoading(false);
       } catch (error) {
         console.log('Error on addLiquidity: ', error);

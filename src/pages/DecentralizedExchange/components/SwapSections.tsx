@@ -234,6 +234,25 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     }
   }, [amountToSwap, provider]);
 
+  const swapWTLCToTLC = useCallback(async () => {
+    if (amountToSwap > 0 && provider) {
+      //   const tx = await provider?.getSigner().sendTransaction({
+      //     to: WTLCTokenContractAddress,
+      //     value: parseEther(amountToSwap.toString()),
+      //   });
+      const wTLCContract = new Contract(
+        WTLCTokenContractAddress,
+        wTLCToken.abi,
+        provider.getSigner(),
+      );
+      const finalAmount = parseEther(amountToSwap.toString());
+
+      const tx = await wTLCContract.withdraw(finalAmount);
+      const result = await tx?.wait();
+      console.log('Result: ', result);
+    }
+  }, [amountToSwap, provider]);
+
   const onFromTokenChange = (token: string) => {
     if (token === 'TLC' && toToken === 'TLC') {
       onToTokenChange('wTLC');
@@ -444,9 +463,15 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 (fromToken === 'TLC' && toToken === 'wTLC') ||
                 (fromToken === 'wTLC' && toToken === 'TLC')
               ) {
-                setIsLoading(true);
-                await swapTLCToWTLC();
-                setIsLoading(false);
+                if (fromToken === 'TLC' && toToken === 'wTLC') {
+                  setIsLoading(true);
+                  await swapTLCToWTLC();
+                  setIsLoading(false);
+                } else if (fromToken === 'wTLC' && toToken === 'TLC') {
+                  setIsLoading(true);
+                  swapWTLCToTLC();
+                  setIsLoading(false);
+                }
               }
             }}
             disabled={isLoading || amountToSwap < minimumAmount}
