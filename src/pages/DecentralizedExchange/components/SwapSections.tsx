@@ -541,7 +541,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       ) {
         return amountToSwap;
       } else if (fromToken === 'TLC' || fromToken === 'wTLC') {
-        return TLCValue / amountToSwap;
+        return amountToSwap * TLCValue;
       } else return amountToSwap / TLCValue;
     }
   }, [amountToSwap, chainSectionIndex, fromToken, toToken]);
