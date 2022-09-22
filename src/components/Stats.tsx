@@ -8,7 +8,7 @@ import { useContracts } from '../hooks/useContracts';
 import SNXStatBackground from '../assets/svg/snx-stat-background.svg';
 
 interface Props {
-  coinTag: 'TLX' | 'TLC' | 'LSO' | 'TLLP';
+  coinTag: 'TLX' | 'TLC' | 'LSO' | 'CSY';
   totalRewards: number;
 }
 

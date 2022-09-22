@@ -95,12 +95,14 @@ export const webStake = async (
     const price = ethers.utils.parseUnits(amount.toString(), 'ether');
     let result;
     if (coinTag !== 'TLC') {
-      result = await tokenContract.functions.approve(
+      const tx = await tokenContract.functions.approve(
         stakeContractAddress,
         price,
       );
+      result = await tx.wait();
     } else {
-      result = await stakeContract.approve(stakeContractAddress, price);
+      const tx = await stakeContract.approve(stakeContractAddress, price);
+      result = await tx.wait();
     }
     if (result) {
       await stakeContract.stakeTokens(price, stakingDuration);

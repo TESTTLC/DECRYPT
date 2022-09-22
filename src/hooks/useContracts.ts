@@ -11,8 +11,9 @@ import TheLuxuryCoinToken from '../contracts/TheLuxuryCoinToken.json';
 import LuxandiaToken from '../contracts/LuxandiaToken.json';
 import LuxandiaStake from '../contracts/LuxandiaStake.json';
 import LuxandiaFreeze from '../contracts/LuxandiaFreeze.json';
-import TheLuxuryLiquidityPoolToken from '../contracts/TheLuxuryLiquidityPoolToken.json';
 import TheLuxuryLiquidityPoolStake from '../contracts/TheLuxuryLiquidityPoolStake.json';
+import CSYStake from '../contracts/CSYStake.json';
+import CSYToken from '../contracts/CSYToken.json';
 import TheLuxuryNFT from '../contracts/TheLuxuryNFT.json';
 import TTXToken from '../contracts/TTX.json';
 import OldTLXToken from '../contracts/OldTLXToken.json';
@@ -26,12 +27,12 @@ import {
   TLCTokenContractAddress,
   OldTLXTokenContractAddress,
   LussoFreezeContractAddress,
-  TLLPTokenContractAddress,
-  TLLPStakeContractAddress,
   TLNFTTokenContractAddress,
   TTXTokenContractAddress,
   TLChain_wEGLD_ChildTokenContractAddress,
   WTLCTokenContractAddress,
+  CSYTokenContractAddress,
+  CSYStakeContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string, currentChainId?: string) => {
@@ -83,11 +84,11 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setStakeAddress(TLXStakeContractAddress);
       setTokenAbi(OldTLXToken.abi);
       setStakeAbi(TheLuxuryBankStake.abi);
-    } else if (coinTag === 'TLLP') {
-      setTokenAddress(TLLPTokenContractAddress);
-      setStakeAddress(TLLPStakeContractAddress);
-      setTokenAbi(TheLuxuryLiquidityPoolToken.abi);
-      setStakeAbi(TheLuxuryLiquidityPoolStake.abi);
+    } else if (coinTag === 'CSY') {
+      setTokenAddress(CSYTokenContractAddress);
+      setStakeAddress(CSYStakeContractAddress);
+      setTokenAbi(CSYToken.abi);
+      setStakeAbi(CSYStake.abi);
     } else if (coinTag === 'TLNFT') {
       setTokenAddress(TLNFTTokenContractAddress);
       setStakeAddress('-');
@@ -155,7 +156,6 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       stakeAddress &&
       !alreadyConnectedToContracts
     ) {
-      console.log('got here');
       connectToContracts();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

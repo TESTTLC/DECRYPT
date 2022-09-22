@@ -41,6 +41,11 @@ export const TLXTokenContractAddress =
 export const TLXStakeContractAddress =
   '0x492eeF5e03024879444E46F3c57A5fBe5F793d32';
 
+export const CSYTokenContractAddress =
+  '0x5d68D2c43e7E1F761deA6EB6353f14F622D5c664';
+export const CSYStakeContractAddress =
+  '0xD4B08abe828a78C4947d274968e0958d34EF758E';
+
 export const LussoTokenContractAddress =
   '0xD62052Cea41E22fb2B97835b53f41190Fe219001';
 export const LussoStakeContractAddress =
@@ -392,6 +397,13 @@ export const stakingRewards = {
     six_months: '18.80% APY - 6 months ',
     one_year: '19.26% APY - 12 months ',
     three_years: '63.58% APY - 36 months ',
+  },
+  CSY: {
+    one_month: '12.19% APY - 1 months ',
+    three_months: '17.32% APY - 3 months ',
+    six_months: '19.27% APY - 6 months ',
+    one_year: '51.25% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
   },
   TLLP: {
     one_month: '12.19% APY - 1 months ',

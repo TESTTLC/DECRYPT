@@ -44,7 +44,7 @@ import RequireAuth from './pages/RequireAuth';
 import NFTDetails from './pages/NFTDetails';
 import WhiteLists from './pages/Whitelists';
 
-export const coinsTags = ['TLX', 'TLC', 'LSO', 'TLLP'];
+export const coinsTags = ['TLX', 'TLC', 'LSO', 'CSY'];
 export const marketplaceRoutes = ['categories', 'collections'];
 
 const App = () => {

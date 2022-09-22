@@ -7,6 +7,7 @@ import { getLSOLaunchpadRegistration } from 'src/api/launchpad';
 import { stakingRewards } from 'src/utils/globals';
 import testContract from 'src/contracts/MainBridgeMainToken.json';
 import { Web3Provider } from '@ethersproject/providers';
+import LoadingSpinner from 'src/components/LoadingSpinner';
 
 import GlowingButton from '../../../components/GlowingButton';
 import SelectDropdown from '../../../components/SelectDropdown';
@@ -27,7 +28,7 @@ import {
 import lso_1x from '../../../assets/images/lso_1x.png';
 import tlc_1x from '../../../assets/images/tlc_1x.png';
 import tlx_1x from '../../../assets/images/tlx_1x.png';
-import tllp_1x from '../../../assets/images/TLLP_COIN.png';
+import CSY_1x from '../../../assets/images/CSY-logo.png';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import * as contracts from '../../../utils/functions/Contracts';
 import NotFound from '../../NotFound';
@@ -36,6 +37,7 @@ import { changeChain } from '../../../utils/functions/MetaMask';
 
 const StakeCoin: React.FC = () => {
   const { coinTag = 'TLX' } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
 
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
@@ -78,6 +80,7 @@ const StakeCoin: React.FC = () => {
       setBalance(TLCBalance);
     }
   }, [walletAddress]);
+
   const chainChange = async () => {
     await changeChain(ChainsIds.TLC);
     //@ts-ignore
@@ -154,11 +157,12 @@ const StakeCoin: React.FC = () => {
 
   const getUserTLXBalance = useCallback(async () => {
     if (walletAddress) {
+      console.log('1111: ');
       const result =
-        coinTag === 'LSO'
+        coinTag === 'LSO' || coinTag === 'CSY'
           ? await contracts.getBalance(tokenContract, walletAddress)
           : await contracts.getActualBalanceOf(tokenContract, walletAddress);
-
+      console.log('RESULT: ', result);
       setBalance(result);
     }
   }, [coinTag, tokenContract, walletAddress]);
@@ -175,7 +179,7 @@ const StakeCoin: React.FC = () => {
               coinTag === 'TLX' ||
               coinTag === 'TLC' ||
               coinTag === 'LSO' ||
-              coinTag === 'TLLP'
+              coinTag === 'CSY'
             ) {
               totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
             }
@@ -228,7 +232,7 @@ const StakeCoin: React.FC = () => {
                   ? tlc_1x
                   : coinTag === 'TLX'
                   ? tlx_1x
-                  : tllp_1x
+                  : CSY_1x
               }
               alt="TLX-Logo"
             />
@@ -253,33 +257,28 @@ const StakeCoin: React.FC = () => {
                     </p>
                     <p className="text-gray-400">
                       {
-                        stakingRewards[
-                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
-                        ].one_month
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
+                          .one_month
                       }
                       <br />
                       {
-                        stakingRewards[
-                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
-                        ].three_months
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
+                          .three_months
                       }
                       <br />
                       {
-                        stakingRewards[
-                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
-                        ].six_months
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
+                          .six_months
                       }
                       <br />
                       {
-                        stakingRewards[
-                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
-                        ].one_year
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
+                          .one_year
                       }
                       <br />
                       {
-                        stakingRewards[
-                          coinTag as 'TLX' | 'TLC' | 'LSO' | 'TLLP'
-                        ].three_years
+                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
+                          .three_years
                       }
                     </p>
                   </>
@@ -338,56 +337,68 @@ const StakeCoin: React.FC = () => {
                       />
                     </div>
 
-                    <div className="my-2 mr-2 flex ">
-                      <GlowingButton
-                        text={`Stake ${stakeAmount || 0}`}
-                        onClick={() => {
-                          if (
-                            coinTag &&
-                            coinTag !== 'TLC' &&
-                            coinTag !== 'LSO' &&
-                            stakeContract &&
-                            parseFloat(stakeAmount) > 0
-                          ) {
-                            webStake(
-                              tokenContract,
-                              stakeContract,
-                              stakeAddress,
-                              walletAddress,
-                              parseFloat(stakeAmount),
-                              duration,
-                              coinTag,
-                            );
-                          } else if (
-                            coinTag &&
-                            coinTag === 'TLC' &&
-                            stakeContract &&
-                            parseFloat(stakeAmount) > 0
-                          ) {
-                            contracts.tlcStake(
-                              stakeContract,
-                              parseFloat(stakeAmount),
-                              duration,
-                            );
-                          } else if (
-                            coinTag &&
-                            coinTag === 'LSO' &&
-                            stakeContract &&
-                            isRegisteredInLSOLaunchpad &&
-                            parseFloat(stakeAmount) > 0
-                          ) {
-                            webStake(
-                              tokenContract,
-                              stakeContract,
-                              stakeAddress,
-                              walletAddress,
-                              parseFloat(stakeAmount),
-                              duration,
-                              coinTag,
-                            );
-                          }
-                        }}
-                      />
+                    <div className="my-2 mr-2 flex items-center justify-center ">
+                      {isLoading ? (
+                        <div className="items-center justify-center ml-4">
+                          <LoadingSpinner height={20} width={20} />
+                        </div>
+                      ) : (
+                        <GlowingButton
+                          text={`Stake ${stakeAmount || 0}`}
+                          onClick={async () => {
+                            if (
+                              coinTag &&
+                              coinTag !== 'TLC' &&
+                              coinTag !== 'LSO' &&
+                              stakeContract &&
+                              parseFloat(stakeAmount) > 0
+                            ) {
+                              setIsLoading(true);
+                              await webStake(
+                                tokenContract,
+                                stakeContract,
+                                stakeAddress,
+                                walletAddress,
+                                parseFloat(stakeAmount),
+                                duration,
+                                coinTag,
+                              );
+                              setIsLoading(false);
+                            } else if (
+                              coinTag &&
+                              coinTag === 'TLC' &&
+                              stakeContract &&
+                              parseFloat(stakeAmount) > 0
+                            ) {
+                              setIsLoading(true);
+                              await contracts.tlcStake(
+                                stakeContract,
+                                parseFloat(stakeAmount),
+                                duration,
+                              );
+                              setIsLoading(false);
+                            } else if (
+                              coinTag &&
+                              coinTag === 'LSO' &&
+                              stakeContract &&
+                              isRegisteredInLSOLaunchpad &&
+                              parseFloat(stakeAmount) > 0
+                            ) {
+                              setIsLoading(true);
+                              await webStake(
+                                tokenContract,
+                                stakeContract,
+                                stakeAddress,
+                                walletAddress,
+                                parseFloat(stakeAmount),
+                                duration,
+                                coinTag,
+                              );
+                              setIsLoading(false);
+                            }
+                          }}
+                        />
+                      )}
                     </div>
                   </span>
                 </div>

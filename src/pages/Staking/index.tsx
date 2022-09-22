@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import TheLuxuryCoin from '../../assets/images/staking_tlc_1.png';
 import TheLuxuryBank from '../../assets/images/staking_tlx_1.png';
 import LSO from '../../assets/images/staking_lso_1.png';
-import TLLP from '../../assets/images/staking_tllp_1.png';
+import CSY from '../../assets/images/staking_csy_1.png';
 import { routes } from '../../utils/routes';
 
 import Item from './components/Item';
@@ -60,12 +60,11 @@ const Stake: React.FC = () => {
           {/* </GlowingWrapper> */}
           {/* <GlowingWrapper> */}
           <Item
-            coinTag="TLLP"
-            title="TLLP Token"
-            subtitle="A secure, fast, and highly scalable blockchain liquidity pool token."
-            onClick={() => navigate(`/staking/TLLP`)}
-            imageSource={TLLP}
-            // showTopText
+            coinTag="CSY"
+            title="Coressy"
+            subtitle="Coressy  offers a special staking program to community members in preparation for Global Coressy Delivery App."
+            onClick={() => navigate(`/staking/CSY`)}
+            imageSource={CSY}
           />
           {/* </GlowingWrapper> */}
         </div>
