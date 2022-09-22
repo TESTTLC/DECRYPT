@@ -58,3 +58,7 @@ body {
   z-index: 99999;
   background-color: rgba(108, 122, 137, 0.6);
 }
+
+.m-px{
+  margin: 1px;
+}

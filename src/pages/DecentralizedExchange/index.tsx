@@ -155,12 +155,12 @@ const DecentralizedExchange: React.FC = () => {
       </div>
 
       <button
-        className="flex w-30 h-8 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+        className="flex w-30 h-8 mt-2 mb-4 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
         onClick={() => navigate('/dexdisclaimer')}
       >
         See Exchange Disclaimer
       </button>
-      <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-4 rounded-lg bg-black bg-opacity-60 text-white text-center my-4">
+      {/* <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-4 rounded-lg bg-black bg-opacity-60 text-white text-center my-4">
         <div className="flex flex-col items-center justify-center text-sm">
           <span>Total Value Locked on Staking</span>
           <span>$12,945,870</span>
@@ -171,10 +171,10 @@ const DecentralizedExchange: React.FC = () => {
           <span>TLX price = {prices.TLX}</span>
           <span>Est. Weekly Rewards: $1,165,128</span>
         </div>
-      </div>
+      </div> */}
 
       <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 text-white text-sm">
-        <Farms />
+        <Farms currentChainId={currentChainId ?? ''} />
       </div>
     </div>
   );
