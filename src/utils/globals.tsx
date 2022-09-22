@@ -21,6 +21,12 @@ export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 export const RouterContractAddress =
   '0x2539b8A418Ce37D57Ea05755603CEFA7f5c44446';
 
+export const MasterchefContractAddress =
+  '0x301fED8b42e8515B64D695f5b07c643a53023844';
+
+export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6';
+export const TempUsdc = '0x284ad65F779Ca1d8f52e710EE6728638FB3BAfa9';
+
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
