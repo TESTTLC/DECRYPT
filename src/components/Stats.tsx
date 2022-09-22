@@ -48,7 +48,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const getUserTLXBalance = useCallback(async () => {
     if (walletAddress && coinTag !== 'TLC') {
       const result =
-        coinTag === 'LSO'
+        coinTag === 'LSO' || coinTag === 'CSY'
           ? await contracts.getBalance(tokenContract, walletAddress)
           : await contracts.getActualBalanceOf(tokenContract, walletAddress);
       setBalance(result);
