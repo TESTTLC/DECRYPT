@@ -16,7 +16,7 @@ import {
   TLChain_USDT_ChildTokenContractAddress,
   WTLCTokenContractAddress,
 } from 'src/utils/globals';
-import { Contract } from 'ethers';
+import { Contract, ethers, FixedNumber } from 'ethers';
 import Router from 'src/contracts/Router.json';
 import ERC20 from 'src/contracts/ERC20.json';
 import Pair from 'src/contracts/Pair.json';
@@ -206,7 +206,10 @@ const LiquiditySections: React.FC = () => {
         console.log('blockNumber: ', blockNumber);
         console.log('firstToken.address: ', firstToken.address);
         console.log('secondToken.address: ', secondToken.address);
-
+        console.log(
+          'amount2: ',
+          ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(6)), 18),
+        );
         let approve1tx;
         if (firstToken.tag === 'wUSDT') {
           approve1tx = await wUSDTContract.approve(
@@ -226,17 +229,16 @@ const LiquiditySections: React.FC = () => {
 
         const approve2tx = await wTLCContract.approve(
           RouterContractAddress,
-          parseEther(amount2.toString()),
+          parseEther(amount2.toFixed(10)),
         );
         const approve2Result = await approve2tx.wait();
         console.log('approve2tx: ', approve2tx);
         console.log('approve2Result: ', approve2Result);
-
         const result = await routerContract.addLiquidity(
           firstToken.address,
           secondToken.address,
           parseEther(amount1.toString()),
-          parseEther(amount2.toString()),
+          parseEther(amount2.toFixed(10)),
           parseEther(amountAMin.toString()),
           parseEther(amountBMin.toString()),
           walletAddress,
