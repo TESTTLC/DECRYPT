@@ -87,7 +87,7 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
         setUsdcPoolUserInfo(usdcPool);
 
         const usdtPending = await masterChef_cont.pendingTLC(0, walletAddress);
-        const usdcPending = await masterChef_cont.pendingTLC(0, walletAddress);
+        const usdcPending = await masterChef_cont.pendingTLC(1, walletAddress);
         // console.log('usdtPending', usdtPending);
         setUsdtPendingRewards(usdtPending);
         setUsdcPendingRewards(usdcPending);
