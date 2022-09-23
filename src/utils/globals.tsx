@@ -20,6 +20,8 @@ export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 
 export const RouterContractAddress =
   '0xbd45968046F24bd1AD46F93A60a0bff558c8821a';
+export const FactoryContractAddress =
+  '0x9BBCf500583062f3FE3D70F6cFa0cE2542927760';
 
 export const MasterchefContractAddress =
   '0x301fED8b42e8515B64D695f5b07c643a53023844';

@@ -10,19 +10,22 @@ import tlcLogo from 'src/assets/images/TLC-logo.png';
 import { AiFillLock } from 'react-icons/ai';
 import {
   RouterContractAddress,
+  TempUsdc,
+  TempUsdt,
   TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
   WTLCTokenContractAddress,
 } from 'src/utils/globals';
-import { Contract, ethers } from 'ethers';
+import { Contract } from 'ethers';
 import Router from 'src/contracts/Router.json';
 import ERC20 from 'src/contracts/ERC20.json';
+import Pair from 'src/contracts/Pair.json';
 import TheLuxuryCoinToken from 'src/contracts/TheLuxuryCoinToken.json';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
-import { addHours, dateToTimestamp } from 'src/utils/functions/utils';
-import { parseEther, parseUnits } from 'ethers/lib/utils';
+import { addHours } from 'src/utils/functions/utils';
+import { parseEther } from 'ethers/lib/utils';
 
 import LiquidityTokensModal from './LiquidityTokensModal';
 import Categories from './Categories';
@@ -96,6 +99,7 @@ const LiquiditySections: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [firstToken, setFirstToken] = useState(fromModalTokens[0]);
   const [secondToken, setSecondToken] = useState(toModalTokes[0]);
+  const [secondAmount, setSecondAmount] = useState(0);
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
@@ -120,6 +124,44 @@ const LiquiditySections: React.FC = () => {
   const handleAmountChange = (e: any) => {
     setAmountToSwap(e.target.value);
   };
+
+  const calculateInputAmount = useCallback(async () => {
+    let pairAddress = TempUsdc;
+    if (firstToken.address === TLChain_USDT_ChildTokenContractAddress) {
+      pairAddress = TempUsdt;
+    }
+
+    const pairContract = new Contract(
+      pairAddress,
+      Pair.abi,
+      provider?.getSigner(),
+    );
+
+    console.log('PairContract: ', pairContract);
+    // const reservesResult = await pairContract.getReserves(
+    //   FactoryContractAddress,
+    //   firstToken.address,
+    //   secondToken.address,
+    // );
+    const reservesResult = await pairContract.getReserves();
+    console.log(
+      'Reserves result: ',
+      reservesResult[0].toString(),
+      reservesResult[1].toString(),
+    );
+
+    const ratio = reservesResult[1].toString() / reservesResult[0].toString();
+    console.log('ratio: ', ratio);
+    const finalSecondInput = amountToSwap * ratio;
+    setSecondAmount(finalSecondInput);
+    console.log('FinalSecondInput: ', finalSecondInput);
+  }, [firstToken.address, amountToSwap, provider]);
+
+  useEffect(() => {
+    if (provider && walletAddress) {
+      calculateInputAmount();
+    }
+  }, [provider, walletAddress, amountToSwap, calculateInputAmount]);
 
   const addLiquidity = useCallback(async () => {
     console.log('Started addLiquidity');
@@ -191,12 +233,12 @@ const LiquiditySections: React.FC = () => {
         console.log('approve2Result: ', approve2Result);
 
         const result = await routerContract.addLiquidity(
-          secondToken.address,
           firstToken.address,
-          parseEther(amount2.toString()),
+          secondToken.address,
           parseEther(amount1.toString()),
-          parseEther(amountBMin.toString()),
+          parseEther(amount2.toString()),
           parseEther(amountAMin.toString()),
+          parseEther(amountBMin.toString()),
           walletAddress,
           timestamp,
         );
@@ -288,7 +330,8 @@ const LiquiditySections: React.FC = () => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={amountToSwap / 4.89}
+                  //   value={amountToSwap / 4.89}
+                  value={secondAmount}
                 ></input>
               </div>
               <div className="flex w-1/2 justify-end items-center mt-4">

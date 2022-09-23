@@ -2,12 +2,11 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
-import { ChainsIds, Project } from 'src/utils/types';
+import { ChainsIds } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
 import usdtLogo from 'src/assets/images/tether.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
-import tlxLogo from 'src/assets/images/TLX-logo.png';
 import tlLpLogo from 'src/assets/images/TLLP_COIN.png';
 import egldLogo from 'src/assets/images/egld-coin.png';
 import { AiFillLock } from 'react-icons/ai';
@@ -26,12 +25,10 @@ import {
 import USDTToken from 'src/contracts/USDT.json';
 import Router from 'src/contracts/Router.json';
 import ERC20 from 'src/contracts/ERC20.json';
-import TheLuxuryCoinToken from 'src/contracts/TheLuxuryCoinToken.json';
-import { formatEther, parseEther } from 'ethers/lib/utils';
 import wTLCToken from 'src/contracts/WTLC.json';
+import { formatUnits, parseEther } from 'ethers/lib/utils';
 
 import SwapTokensModal from './SwapTokensModal';
-import Categories from './Categories';
 import { toModalTokes } from './LiquiditySections';
 
 /** Two Addreses because we have 1 for sending USDT to the TLLP address and
@@ -206,6 +203,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
+  const [amountsOut, setAmountsOut] = useState(0);
 
   useEffect(() => {
     if (chainSectionIndex === 0) {
@@ -544,13 +542,44 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     send,
     swapExactTokensForTokens,
     swapTLCToWTLC,
+    swapWTLCToTLC,
     toToken,
     walletAddress,
   ]);
 
+  const getAmountsOut = useCallback(async () => {
+    let out = 0;
+    try {
+      const routerC = new Contract(
+        RouterContractAddress,
+        Router.abi,
+        provider?.getSigner(),
+      );
+      console.log('router: ', routerC);
+
+      const from = fromTLChainToTLChainModalTokens.find(
+        (t) => t.tag === fromToken,
+      );
+      const to = fromTLChainToTLChainModalTokens.find((t) => t.tag === toToken);
+
+      if (from?.address && to?.address) {
+        const result = await routerC.getAmountsOut(
+          parseEther(amountToSwap.toString()),
+          [from.address, to.address],
+        );
+
+        setAmountsOut(Number(formatUnits(result[1].toString())));
+        out = Number(formatUnits(result[1].toString()));
+      }
+    } catch (error) {
+      console.log('Error o getAmountsOut: ', error);
+      setAmountsOut(0);
+    }
+    return out;
+  }, [amountToSwap, fromToken, provider, toToken]);
+
   const value = useMemo(() => {
-    console.log('fromToken is: ', fromToken);
-    console.log('toToken is: ', toToken);
+    getAmountsOut();
     const from = fromBinanceToTLChainModalTokens.find(
       (t) => t.tag === fromToken,
     );
@@ -566,10 +595,18 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       ) {
         return amountToSwap;
       } else if (fromToken === 'TLC' || fromToken === 'wTLC') {
-        return amountToSwap * TLCValue;
-      } else return amountToSwap / TLCValue;
+        // return amountToSwap * TLCValue;
+        return amountsOut;
+      } else return amountsOut;
     }
-  }, [amountToSwap, chainSectionIndex, fromToken, toToken]);
+  }, [
+    getAmountsOut,
+    fromToken,
+    toToken,
+    chainSectionIndex,
+    amountToSwap,
+    amountsOut,
+  ]);
 
   return (
     <div className="relative items-center w-[34rem] xs:w-[22rem] xs:px-4 rounded-lg bg-black bg-opacity-60 text-white font-poppins">
