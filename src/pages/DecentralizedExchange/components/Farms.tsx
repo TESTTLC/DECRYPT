@@ -363,9 +363,10 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
             <div>10%/R/131%</div> */}
             <div>My earned TLC</div>
             <div>
-              {usdtPendingRewards === ''
+              {/* {usdtPendingRewards === ''
                 ? '-'
-                : parseFloat(formatEther(usdtPendingRewards)).toFixed(2)}
+                : parseFloat(formatEther(usdtPendingRewards)).toFixed(2)} */}
+              -
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -375,9 +376,10 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
           <div className="flex flex-col items-center">
             <div>Liquidity</div>
             <div>
-              {usdtPoolUser === ''
+              {/* {usdtPoolUser === ''
                 ? '-'
-                : parseFloat(formatEther(usdtPoolUser[0])).toFixed(2)}{' '}
+                : parseFloat(formatEther(usdtPoolUser[0])).toFixed(2)}{' '} */}
+              -
             </div>
           </div>
           {walletAddress ? (
@@ -455,9 +457,10 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
           <div className="flex flex-col items-center">
             <div>Liquidity</div>
             <div>
-              {usdcPoolUser === ''
+              {/* {usdcPoolUser === ''
                 ? '-'
-                : parseFloat(formatEther(usdcPoolUser[0])).toFixed(2)}
+                : parseFloat(formatEther(usdcPoolUser[0])).toFixed(2)} */}
+              -
             </div>
           </div>
           {walletAddress ? (
