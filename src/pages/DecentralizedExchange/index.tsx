@@ -15,6 +15,7 @@ import { ChainsIds, Project } from '../../utils/types';
 import SwapSections from './components/SwapSections';
 import LiquiditySections from './components/LiquiditySections';
 import Farms from './components/Farms';
+import ChartSection from './components/ChartSection';
 
 export const localModalTokens: Project[] = [
   {
@@ -160,6 +161,13 @@ const DecentralizedExchange: React.FC = () => {
       >
         See Exchange Disclaimer
       </button>
+      <div
+        id="chartContainer"
+        className="self-center flex items-center justify-center my-6 rounded-md"
+      >
+        <ChartSection />
+      </div>
+
       {/* <div className="relative flex items-center justify-between w-[36rem] xs:w-[22rem] min-h-20 px-8 xs:px-2 sm:px-4 py-4 rounded-lg bg-black bg-opacity-60 text-white text-center my-4">
         <div className="flex flex-col items-center justify-center text-sm">
           <span>Total Value Locked on Staking</span>
