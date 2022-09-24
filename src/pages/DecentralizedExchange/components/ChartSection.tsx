@@ -131,14 +131,10 @@ export const CandleStickChart = (props: any) => {
     }
   }, [backgroundColor, lineColor, textColor, areaTopColor, switcherElement]);
 
-  console.log('switcherElement: ', switcherElement);
-  const returnSwithcer = () => {
-    return switcherElement;
-  };
   return (
     <>
       <div ref={chartContainerRef} />
-      {switcherElement}
+      {/* {switcherElement} */}
     </>
   );
 };
