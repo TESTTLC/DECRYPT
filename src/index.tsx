@@ -37,6 +37,7 @@ ReactDOM.render(
     <DappProvider
       environment={environment}
       customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
+      //@ts-ignore
       completedTransactionsDelay={200}
     >
       <Provider store={store}>

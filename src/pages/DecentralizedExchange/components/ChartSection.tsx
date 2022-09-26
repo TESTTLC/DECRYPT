@@ -37,16 +37,10 @@ function createSimpleSwitcher(items, activeItem, activeItemChangedCallback) {
 }
 
 export const CandleStickChart = (props: any) => {
-  const { isMobileDevice } = useDeviceInfo();
   //   const { data=[], volumeData=[] } = props;
-  const backgroundColor = 'white',
-    areaTopColor = '#cc001f',
-    textColor = 'black',
-    lineColor = '#cc001f';
-  //   areaBottomColor = lineColor;
-  //   const data = candleStickData;
+
   const chartContainerRef = useRef<HTMLDivElement>(null);
-  const [switcherElement, setSwitcherElement] = useState<HTMLDivElement>(null);
+  const [switcherElement, setSwitcherElement] = useState<HTMLDivElement>();
 
   useEffect(() => {
     if (chartContainerRef.current) {
@@ -92,7 +86,7 @@ export const CandleStickChart = (props: any) => {
 
       chart.timeScale().fitContent();
 
-      let areaSeries = null;
+      let areaSeries;
 
       areaSeries = chart.addAreaSeries({
         topColor: 'rgba(76, 175, 80, 0.56)',
@@ -101,7 +95,7 @@ export const CandleStickChart = (props: any) => {
         lineWidth: 2,
       });
 
-      const syncToInterval = (interval) => {
+      const syncToInterval = (interval: string) => {
         // if (areaSeries) {
         //   //   chart.removeSeries(areaSeries);
         //   areaSeries = null;
@@ -112,6 +106,7 @@ export const CandleStickChart = (props: any) => {
           lineColor: 'rgba(76, 175, 80, 1)',
           lineWidth: 2,
         });
+        //@ts-ignore
         areaSeries.setData(seriesesData.get(interval));
       };
 

@@ -19,11 +19,14 @@ import {
   AbiRegistry,
   SmartContractAbi,
   SmartContract,
+  //@ts-ignore
   DefaultSmartContractController,
   BigUIntValue,
   ArgSerializer,
+  //@ts-ignore
   GasLimit,
   BytesValue,
+  //@ts-ignore
   Egld,
   U64Value,
 } from '@elrondnetwork/erdjs';

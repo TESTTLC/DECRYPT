@@ -44,7 +44,7 @@ const globalsSlice = createSlice({
     });
 
     builder.addCase(login.rejected, (state, action) => {
-      let showActivationForm = undefined;
+      let showActivationForm;
       if (isErrorPayload(action.payload)) {
         const { message } = action.payload;
         if (message.includes('403')) {
