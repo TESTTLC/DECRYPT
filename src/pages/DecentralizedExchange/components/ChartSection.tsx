@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createChart, ColorType, CrosshairMode } from 'lightweight-charts';
 import React, { createRef, useEffect, useRef, useState } from 'react';
+import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
 
 function createSimpleSwitcher(items, activeItem, activeItemChangedCallback) {
   const switcherElement = document.createElement('div');
@@ -36,6 +37,7 @@ function createSimpleSwitcher(items, activeItem, activeItemChangedCallback) {
 }
 
 export const CandleStickChart = (props: any) => {
+  const { isMobileDevice } = useDeviceInfo();
   //   const { data=[], volumeData=[] } = props;
   const backgroundColor = 'white',
     areaTopColor = '#cc001f',
@@ -52,13 +54,16 @@ export const CandleStickChart = (props: any) => {
         chart.applyOptions({ width: chartContainerRef.current?.clientWidth });
       };
 
+      window.addEventListener('resize', handleResize);
+
       chartContainerRef.current.style.display = 'flex';
       chartContainerRef.current.style.flexDirection = 'column';
       chartContainerRef.current.style.width = '100%';
       chartContainerRef.current.style.alignSelf = 'center';
 
       const chart = createChart(chartContainerRef.current, {
-        width: 1120,
+        // width: isMobileDevice ? 300 : 1120,
+        width: chartContainerRef.current?.clientWidth,
         height: 300,
         layout: {
           backgroundColor: '#000000',
@@ -87,10 +92,6 @@ export const CandleStickChart = (props: any) => {
 
       chart.timeScale().fitContent();
 
-      chart.timeScale().fitContent();
-
-      window.addEventListener('resize', handleResize);
-
       let areaSeries = null;
 
       areaSeries = chart.addAreaSeries({
@@ -101,10 +102,10 @@ export const CandleStickChart = (props: any) => {
       });
 
       const syncToInterval = (interval) => {
-        if (areaSeries) {
-          //   chart.removeSeries(areaSeries);
-          areaSeries = null;
-        }
+        // if (areaSeries) {
+        //   //   chart.removeSeries(areaSeries);
+        //   areaSeries = null;
+        // }
         areaSeries = chart.addAreaSeries({
           topColor: 'rgba(76, 175, 80, 0.56)',
           bottomColor: 'rgba(76, 175, 80, 0.04)',
@@ -129,7 +130,7 @@ export const CandleStickChart = (props: any) => {
         chart.remove();
       };
     }
-  }, [backgroundColor, lineColor, textColor, areaTopColor, switcherElement]);
+  }, []);
 
   return (
     <>
