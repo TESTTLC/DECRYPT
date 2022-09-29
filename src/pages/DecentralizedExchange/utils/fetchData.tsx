@@ -24,7 +24,7 @@ export function useSwapTrans() {
     // check the collection address is available
     axios({
       method: 'GET',
-      url: `${API_URL}?module=logs&action=getLogs&fromBlock=7000000&toBlock=8000000&address=0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6&topic0=0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822`,
+      url: `${API_URL}?module=logs&action=getLogs&fromBlock=7490000&toBlock=9000000&address=0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6&topic0=0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822`,
       headers: {
         'Content-Type': 'application/json',
       },
