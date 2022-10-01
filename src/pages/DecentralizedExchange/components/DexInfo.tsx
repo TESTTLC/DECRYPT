@@ -20,26 +20,110 @@ import {
   MasterchefContractAddress,
 } from 'src/utils/globals';
 
-import { useTrans } from '../utils/fetchData';
+import { useUsdtTrans, useUsdcTrans } from '../utils/fetchVolume';
 
 export const DexInfo = (prop: any) => {
   const [tlcPrice, setTlcPrice] = useState('0');
   const [tvl, setTvl] = useState('0.0');
+  // Dex volume
   const [currentBlock, setCurrentBlock] = useState(0);
-
-  const [trans, setTrans] = useTrans(currentBlock);
+  const [usdtVolume, setUsdtVolume] = useState(0);
+  const [usdcVolume, setUsdcVolume] = useState(0);
+  const [usdtTrans, setUsdtTrans] = useUsdtTrans(currentBlock);
+  const [usdcTrans, setUsdcTrans] = useUsdcTrans(currentBlock);
   const url = 'https://mainnet-rpc.tlxscan.com/';
 
   const getBlock = async () => {
     const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
     const cBlock = await customHttpProvider.getBlockNumber();
-    console.log('current block', cBlock);
     setCurrentBlock(cBlock);
   };
 
   useEffect(() => {
     getBlock();
   }, [currentBlock]);
+
+  useEffect(() => {
+    async function usdtTransactionFetch() {
+      if (usdtTrans) {
+        const data = usdtTrans;
+        let usdtTransAmount = 0;
+        for (let i = 0; i < data.length; i++) {
+          const { index, swapData, path, timeStamp, transactionHash } = data[i];
+          const temp = swapData.slice(2);
+          const ori = formatEther(
+            parseInt(temp.slice(0, 64), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const d2 = formatEther(
+            parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const d3 = formatEther(
+            parseInt(temp.slice(128, 192), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const des = formatEther(
+            parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const wtlc = WTLCTokenContractAddress.slice(2);
+          if (wtlc.toLocaleLowerCase() === path[0].toLocaleLowerCase()) {
+            usdtTransAmount += parseFloat(d3);
+          } else {
+            usdtTransAmount += parseFloat(ori);
+          }
+        }
+        setUsdtVolume(usdtTransAmount);
+      }
+    }
+    usdtTransactionFetch();
+  }, [usdtTrans]);
+
+  useEffect(() => {
+    async function usdcTransactionFetch() {
+      if (usdcTrans) {
+        const data = usdcTrans;
+        let usdcTransAmount = 0;
+        for (let i = 0; i < data.length; i++) {
+          const { swapData, path } = data[i];
+          const temp = swapData.slice(2);
+          const ori = formatEther(
+            parseInt(temp.slice(0, 64), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const d2 = formatEther(
+            parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const d3 = formatEther(
+            parseInt(temp.slice(128, 192), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const des = formatEther(
+            parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          );
+          const wtlc = WTLCTokenContractAddress.slice(2);
+          if (wtlc.toLocaleLowerCase() === path[0].toLocaleLowerCase()) {
+            usdcTransAmount += parseFloat(d3);
+          } else {
+            usdcTransAmount += parseFloat(ori);
+          }
+        }
+        setUsdcVolume(usdcTransAmount);
+      }
+    }
+    usdcTransactionFetch();
+  }, [usdcTrans]);
 
   useEffect(() => {
     async function fetchData() {
@@ -170,10 +254,10 @@ export const DexInfo = (prop: any) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log('hello world');
-    console.log(trans);
-  }, [trans]);
+  // useEffect(() => {
+  //   console.log('hello world');
+  //   console.log(trans);
+  // }, [trans]);
 
   return (
     <>
@@ -185,8 +269,8 @@ export const DexInfo = (prop: any) => {
         </div>
         <div className="w-[1px] bg-gray-400 h-16 mx-3"></div>
         <div className="flex flex-col items-center justify-center text-sm">
-          <span>Volume</span>
-          <span>$3500</span>
+          <span>Trading Volume</span>
+          <span>${(usdtVolume + usdcVolume).toFixed(4)}</span>
         </div>
       </div>
     </>
