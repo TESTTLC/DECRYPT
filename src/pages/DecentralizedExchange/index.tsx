@@ -16,7 +16,7 @@ import SwapSections from './components/SwapSections';
 import LiquiditySections from './components/LiquiditySections';
 import Farms from './components/Farms';
 import ChartSection from './components/ChartSection';
-
+import DexInfo from './components/DexInfo';
 export const localModalTokens: Project[] = [
   {
     name: 'Tether',
@@ -158,6 +158,9 @@ const DecentralizedExchange: React.FC = () => {
       >
         See Exchange Disclaimer
       </button>
+
+      <DexInfo />
+
       <div
         id="chartContainer"
         className="self-center flex items-center justify-center my-6 rounded-md xs:w-[22rem] md:w-[39rem] lg:w-[50rem] w-[70rem]"
