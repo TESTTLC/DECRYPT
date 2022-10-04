@@ -15,6 +15,7 @@ import {
   nativeTLCAddress,
   TLLPTokenContractAddress,
   TLNFTTokenContractAddress,
+  WTLCTokenContractAddress,
 } from 'src/utils/globals';
 import { CollectionMetadata, NFT } from 'src/utils/storeTypes';
 import { ListingProperties } from 'src/utils/types';
@@ -64,7 +65,7 @@ const validationSchema = Yup.object().shape({
     .typeError('Must be a number'),
 
   price: Yup.number()
-    .min(0.1, 'Price must be at least 0.1 TLNFT')
+    .min(0.1, 'Price must be at least 0.1 WTLC')
     .required('Required')
     .typeError('Must be a number'),
 });
@@ -268,7 +269,8 @@ const NFTDetails: React.FC = () => {
           startTimeInSeconds: 1,
           listingDurationInSeconds: 3600 * parseFloat(duration), // duration is represented in hours
           quantity: 1,
-          currencyContractAddress: TLNFTTokenContractAddress,
+          // currencyContractAddress: TLNFTTokenContractAddress,
+          currencyContractAddress: WTLCTokenContractAddress,
           buyoutPricePerToken: price.toString(),
         };
 
@@ -536,7 +538,7 @@ const NFTDetails: React.FC = () => {
                   </p>
                   <div className="mb-3 w-[22rem] flex flex-col space-y-4">
                     <div>
-                      <p>Price (TLNFT)</p>
+                      <p>Price (WTLC)</p>
                       <FormField
                         name="price"
                         className={inputClass}

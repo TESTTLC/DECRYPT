@@ -73,7 +73,7 @@ const ListingSaleDetails: React.FC<Listing> = ({
             alt="TLChain-Logo"
           />
           <p className="text-3xl font-semibold">
-            {formatEther(listing.buyoutPrice)} TLNFT
+            {formatEther(listing.buyoutPrice)} WTLC
           </p>
         </div>
         <div className="flex mt-2 space-x-4">
