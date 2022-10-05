@@ -22,10 +22,19 @@ const Launchpad: React.FC = () => {
         Upcoming Projects
       </p>
       <div className="grid gap-4 grid-cols-4 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 xs:grid-cols-1">
-        <div className="flex" onClick={() => navigate('/launchpad/LSO')}>
+        {/* <div className="flex" onClick={() => navigate('/launchpad/LSO')}>
           <ProjectElement coinTag={'LSO'} showHoverAnimation />
+        </div> */}
+        <div className="flex" onClick={() => navigate('/launchpad/EPIC')}>
+          <ProjectElement coinTag={'EPIC'} showHoverAnimation />
         </div>
-        <div className="flex">
+        <div className="flex" onClick={() => navigate('/launchpad/TPS')}>
+          <ProjectElement coinTag={'TPS'} showHoverAnimation />
+        </div>
+        <div className="flex" onClick={() => navigate('/launchpad/BRSK')}>
+          <ProjectElement coinTag={'BRSK'} showHoverAnimation />
+        </div>
+        {/* <div className="flex">
           <GlowingWrapper>
             <ProjectItem coinTag={'default'} />
           </GlowingWrapper>
@@ -39,7 +48,7 @@ const Launchpad: React.FC = () => {
           <GlowingWrapper customStyles="">
             <ProjectItem coinTag={'default'} />
           </GlowingWrapper>
-        </div>
+        </div> */}
       </div>
       <p className="text-white text-center font-poppins mt-16 font-bold text-md">
         Want to launch your project on Decryption? Apply to Launchpad

@@ -41,6 +41,10 @@ export interface LaunchpadProject {
   imageSource: string;
   moreDetails: ReactElement;
   website: string;
+  startTime_Year?: number;
+  startTime_Month?: number;
+  startTime_Day?: number;
+  startTime_Hour?: number;
 }
 
 export interface AssetTokenizationProject {
