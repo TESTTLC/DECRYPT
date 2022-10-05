@@ -353,6 +353,9 @@ export const getBridgeAddresses = (
       if (fromChain === 'ELROND') {
         sideBridgeAddress = bridgeAddresses.TLC.child.ELROND.address;
       }
+      if (fromChain === 'ETH') {
+        sideBridgeAddress = bridgeAddresses.TLC.child.ETHEREUM.address;
+      }
     }
     if (toChain === 'BSC') {
       sideBridgeAddress = bridgeAddresses.TLC.child.BSC.address;
@@ -369,6 +372,9 @@ export const getBridgeAddresses = (
     if (toChain === 'ELROND') {
       mainBridgeAddress = bridgeAddresses.TLC.main.addressForELROND;
       sideBridgeAddress = bridgeAddresses.TLC.child.ELROND.address;
+    }
+    if (toChain === 'ETH') {
+      sideBridgeAddress = bridgeAddresses.TLC.child.ETHEREUM.address;
     }
   }
 
@@ -419,6 +425,8 @@ export const getTokenAddress = (token: string, fromChain: string) => {
       tokenAddress = Avalance_TLC_ChildTokenContractAddress;
     } else if (fromChain === 'MATIC') {
       tokenAddress = Polygon_wTLC_ChildTokenContractAddress;
+    } else if (fromChain === 'ETH') {
+      tokenAddress = Polygon_wTLC_ChildTokenContractAddress;
     }
   }
 
@@ -431,7 +439,7 @@ export const getTokenAddress = (token: string, fromChain: string) => {
       tokenAddress = Fantom_LSO_ChildTokenContractAddress;
     } else if (fromChain === 'AVAX') {
       tokenAddress = Avalance_LSO_ChildTokenContractAddress;
-    } else if (fromChain === 'Matic') {
+    } else if (fromChain === 'MATIC') {
       tokenAddress = Polygon_wLSO_ChildTokenContractAddress;
     }
   }
@@ -475,6 +483,8 @@ export const getChain = (chainId: string) => {
     chain = 'FTM';
   } else if (chainId === ChainsIds.AVAX) {
     chain = 'AVAX';
+  } else if (chainId === ChainsIds.ETH) {
+    chain = 'ETH';
   }
 
   return chain;

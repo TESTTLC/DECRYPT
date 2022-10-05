@@ -18,21 +18,6 @@ const CrossChainBridge: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showBridge, setShowBridge] = useState(true);
 
-  //   const onPwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     if (e.target.value === process.env.REACT_APP_BRIDGE_PASSWORD) {
-  //       setShowBridge(true);
-  //       localStorage.setItem('bpt', e.target.value);
-  //     } else {
-  //       setShowBridge(false);
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     if (localStorage.getItem('bpt') === process.env.REACT_APP_BRIDGE_PASSWORD) {
-  //       setShowBridge(true);
-  //     }
-  //   }, [localStorage]);
-
   return (
     <div className="flex flex-col flex-1 items-center">
       {/* {!showBridge && (

@@ -297,7 +297,7 @@ const EVM: React.FC = () => {
     console.log('currentChainId: ', currentChainId);
     console.log('neededChainId: ', neededChainId);
     if (currentChainId !== neededChainId) {
-      return `You are on the another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
+      return `You are on another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
     }
   }, [currentChainId, bridgeState.fromChain]);
 
@@ -359,6 +359,7 @@ const EVM: React.FC = () => {
               FTM: modalChains.FTM,
               AVAX: modalChains.AVAX,
               MATIC: modalChains.MATIC,
+              ETH: modalChains.ETH,
             }}
             coins={{
               TLC: modalCoins.TLC,
@@ -394,6 +395,7 @@ const EVM: React.FC = () => {
               FTM: modalChains.FTM,
               AVAX: modalChains.AVAX,
               MATIC: modalChains.MATIC,
+              ETH: modalChains.ETH,
             }}
             coins={{
               TLC: modalCoins.TLC,

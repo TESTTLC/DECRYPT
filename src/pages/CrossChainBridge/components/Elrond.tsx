@@ -349,7 +349,7 @@ const Elrond: React.FC = () => {
   //     }
 
   //     if (currentChainId !== neededChainId) {
-  //       return `You are on the another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
+  //       return `You are on another chain. Please change your chain to ${bridgeState.fromChain} according to your "from" selection`;
   //     }
   //   }, [currentChainId, bridgeState.fromChain]);
 

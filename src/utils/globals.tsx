@@ -1,8 +1,8 @@
 import ftmBridgeImage from '../assets/images/ftm-bridge.png';
-import ethBridgeImage from '../assets/images/eth-bridge.png';
 import bscBridgeImage from '../assets/images/bsc-bridge.png';
 import solBridgeImage from '../assets/images/sol-bridge.png';
 import tlcBridgeImage from '../assets/images/tlc-bridge.png';
+import ethBridgeImage from '../assets/images/eth-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
 import avaxBridgeImage from '../assets/images/avax-token.png';
 import usdtCoinImage from '../assets/images/USDT-logo.png';
@@ -121,6 +121,10 @@ export const Polygon_wTLC_SideBridgeContractAddress =
 export const Polygon_wLSO_SideBridgeContractAddress =
   '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
 
+//Ethereum
+export const Ethereum_wTLC_SideBridgeContractAddress =
+  '0xF0A8Bb6F6b2018Ec2063B9f149bfFd96c01Eb3f1';
+
 /** MainBridges */
 
 export const TLC_MainBridgeContractAddress =
@@ -180,6 +184,9 @@ export const Polygon_wTLC_ChildTokenContractAddress =
 
 export const Polygon_wLSO_ChildTokenContractAddress =
   '0x76Ad20159F8BaeeB986d1A8792d6A3aeD750885c';
+
+export const Ethereum_wTLC_ChildTokenContractAddress =
+  '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
 
 //devnet
 // export const ELROND_LOCK_SC_ADDRESS =
@@ -251,6 +258,9 @@ export const bridgeAddresses = {
       ELROND: {
         //sidebridge
         address: ELROND_TLC_LOCK_TOKEN_SC_ADDRESS,
+      },
+      ETHEREUM: {
+        address: Ethereum_wTLC_SideBridgeContractAddress,
       },
     },
   },
@@ -327,6 +337,11 @@ export const modalChains = {
     tag: 'ELROND',
     image: elrondCoinImage,
   },
+  ETH: {
+    name: 'Ethereum',
+    tag: 'ETH',
+    image: ethBridgeImage,
+  },
 
   // {
   //   name: 'Ethereum',
@@ -375,6 +390,11 @@ export const modalCoins = {
     name: 'Elrond',
     tag: 'EGLD',
     image: elrondCoinImage,
+  },
+  ETH: {
+    name: 'Ethereum',
+    tag: 'ETH',
+    image: ethBridgeImage,
   },
 };
 

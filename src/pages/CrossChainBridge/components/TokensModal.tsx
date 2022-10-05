@@ -90,6 +90,8 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
       setImageUsed(avaxBridgeImage);
     } else if (selectedChain === 'ELROND') {
       setImageUsed(elrondCoinImage);
+    } else if (selectedChain === 'ETH') {
+      setImageUsed(ethBridgeImage);
     }
 
     if (bridgeState.token === 'TLC') {
@@ -117,21 +119,9 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
 
   const updateState = (params: { chain?: string; token?: string }) => {
     if (type === 'from') {
-      //   let { toChain } = bridgeState;
-      //   if (params.chain === 'TLC') {
-      //     toChain = bridgeState.fromChain;
-      //   } else {
-      //     toChain = 'TLC';
-      //   }
+      console.log('CHAIN: ', params.chain);
       dispatch(
         updateBridgeState({
-          // ...(params.chain !== 'TLC' && {
-          //   toChain: 'TLC',
-          // }),
-          // ...(params.chain === bridgeState.toChain && {
-          //   toChain: bridgeState.fromChain,
-          // }),
-          // ...(params.chain && { toChain }),
           ...(params.chain &&
             params.chain !== 'TLC' && {
               toChain: 'TLC',
@@ -143,13 +133,6 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
     } else if (type === 'to') {
       dispatch(
         updateBridgeState({
-          // ...(params.chain !== 'TLC' && {
-          //   fromChain: 'TLC',
-          // }),
-          // ...(params.chain === bridgeState.fromChain && {
-          //   fromChain: bridgeState.toChain,
-          // }),
-          // ...(params.chain && { fromChain }),
           ...(params.chain &&
             params.chain !== 'TLC' && {
               fromChain: 'TLC',
@@ -162,15 +145,8 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
   };
 
   const changeToken = (token: string) => {
-    // if (chainType === 'EVM') {
     console.log('EVM here with token: ', token);
     updateState({ token });
-    //   if (bridgeState.token === 'TLC') {
-    //     updateState({ ...bridgeState, token: 'LSO' });
-    //   } else {
-    //     updateState({ ...bridgeState, token: 'TLC' });
-    //   }
-    // }
   };
 
   return (
