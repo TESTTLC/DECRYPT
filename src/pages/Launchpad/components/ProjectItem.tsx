@@ -22,6 +22,12 @@ const ProjectItem: React.FC<Props> = ({ coinTag }) => {
       setProjectItem(launchpadProjects.LSO);
     } else if (coinTag === 'default') {
       setProjectItem(launchpadProjects.DEFAULT);
+    } else if (coinTag === 'EPIC') {
+      setProjectItem(launchpadProjects.EPIC);
+    } else if (coinTag === 'TPS') {
+      setProjectItem(launchpadProjects.TPS);
+    } else if (coinTag === 'BRSK') {
+      setProjectItem(launchpadProjects.BRSK);
     }
   }, [coinTag]);
 

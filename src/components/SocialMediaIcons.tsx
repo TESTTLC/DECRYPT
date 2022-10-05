@@ -29,7 +29,8 @@ const SocialMediaIcons: React.FC<Props> = ({
         <a
           target={'_blank'}
           rel="noreferrer"
-          href="https://www.facebook.com/Luxandia/"
+          // href="https://www.facebook.com/Luxandia/"
+          href="https://decryption.com"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 mr-1"
         >
           <svg
@@ -53,7 +54,8 @@ const SocialMediaIcons: React.FC<Props> = ({
         <a
           target={'_blank'}
           rel="noreferrer"
-          href="https://discord.gg/tlchain"
+          // href="https://discord.gg/tlchain"
+          href="https://decryption.com"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 my-1 "
         >
           <svg
@@ -72,7 +74,8 @@ const SocialMediaIcons: React.FC<Props> = ({
         <a
           target={'_blank'}
           rel="noreferrer"
-          href="https://twitter.com/Luxandia1"
+          // href="https://twitter.com/Luxandia1"
+          href="https://decryption.com"
           className="rounded-full border-2 border-white text-white leading-normal uppercase hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out w-9 h-9 m-1"
         >
           <svg

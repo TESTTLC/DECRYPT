@@ -30,9 +30,22 @@ const ProjectElement: React.FC<Props> = ({
       setProject(launchpadProjects.LSO);
     } else if (coinTag === 'default') {
       setProject(launchpadProjects.DEFAULT);
+    } else if (coinTag === 'EPIC') {
+      setProject(launchpadProjects.EPIC);
+    } else if (coinTag === 'TPS') {
+      setProject(launchpadProjects.TPS);
+    } else if (coinTag === 'BRSK') {
+      setProject(launchpadProjects.BRSK);
     }
   }, [coinTag]);
-  const utcDate = new Date(Date.UTC(2022, 1, 7));
+  // const utcDate = new Date(Date.UTC(2022, 10, 7));
+  const utcDate = new Date(
+    Date.UTC(
+      project.startTime_Year ? project.startTime_Year : 2022,
+      project?.startTime_Month ? project?.startTime_Month - 1 : 9,
+      project?.startTime_Day,
+    ),
+  );
 
   const renderer = ({
     days,
@@ -77,6 +90,7 @@ const ProjectElement: React.FC<Props> = ({
             hideGoogle
             hideInstagram
             hideLinkedIn
+            hideMedium
             customStyles={'my-1'}
           />
         </div>
@@ -98,23 +112,24 @@ const ProjectElement: React.FC<Props> = ({
         <div className="flex-[0.3] w-full px-4">
           <div className="flex justify-between items-center font-poppins">
             <p className="text-gray-200">Total Raise</p>
-            <p className="text-green-400 text-2xl">$10,000,000</p>
+            {/* <p className="text-green-400 text-2xl">$10,000,000</p> */}
+            <p className="text-green-400 text-2xl">$0</p>
           </div>
-          <div className="flex justify-between items-center font-poppins mt-1">
+          {/* <div className="flex justify-between items-center font-poppins mt-1">
             <p className="text-gray-200">Starts</p>
             <p className="text-green-400 text-md text-right">
               16 September 2022, 09:00 AM UTC
             </p>
-          </div>
+          </div> */}
 
           <div className="flex flex-col font-poppins mt-3">
             <Countdown date={utcDate} renderer={renderer} />
             <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-              <div className="bg-indigo-500 h-2.5 rounded-full w-[20%]"></div>
+              {/* <div className="bg-indigo-500 h-2.5 rounded-full w-[20%]"></div> */}
             </div>
             <div className="flex flex-col items-end w-full mt-4">
-              <p className="text-gray-200">Listing Time</p>
-              <p className="text-green-400">24 September 2022</p>
+              {/* <p className="text-gray-200">Listing Time</p>
+              <p className="text-green-400">24 September 2022</p> */}
             </div>
           </div>
           {showStakingButton ? (

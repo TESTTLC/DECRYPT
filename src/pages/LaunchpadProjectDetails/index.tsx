@@ -13,10 +13,14 @@ const LaunchpadProjectDetails: React.FC = () => {
       setProject(launchpadProjects.TLX);
     } else if (coinTag === 'TLC') {
       setProject(launchpadProjects.TLC);
-    } else if (coinTag === 'LSO') {
-      setProject(launchpadProjects.LSO);
     } else if (coinTag === 'default') {
       setProject(launchpadProjects.DEFAULT);
+    } else if (coinTag === 'EPIC') {
+      setProject(launchpadProjects.EPIC);
+    } else if (coinTag === 'TPS') {
+      setProject(launchpadProjects.TPS);
+    } else if (coinTag === 'BRSK') {
+      setProject(launchpadProjects.BRSK);
     }
   }, [coinTag]);
 
@@ -49,7 +53,7 @@ const LaunchpadProjectDetails: React.FC = () => {
           <p className="text-gray-300 text-md font-poppins mt-4">
             {project.moreDetails}
           </p>
-          <div className="mt-10">
+          {/* <div className="mt-10">
             <p className="uppercase font-oswald text-2xl text-white">
               Pool Details
             </p>
@@ -129,7 +133,7 @@ const LaunchpadProjectDetails: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
