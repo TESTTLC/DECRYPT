@@ -100,7 +100,7 @@ export const launchpadProjects = {
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">FCFS Opens:</p>
-                <p className="text-green-400 text-md">25 Oct 6:40pm UTC</p>
+                <p className="text-green-400 text-md">25 Oct at 6:40pm UTC</p>
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">Swap Rate:</p>
@@ -193,7 +193,7 @@ export const launchpadProjects = {
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">FCFS Opens:</p>
-                <p className="text-green-400 text-md">10 Nov t 6:40pm UTC</p>
+                <p className="text-green-400 text-md">10 Nov at 6:40pm UTC</p>
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">Swap Rate:</p>
@@ -262,7 +262,7 @@ export const launchpadProjects = {
     website: 'https://biorblock/',
     startTime_Year: 2022,
     startTime_Month: 10,
-    startTime_Day: 7,
+    startTime_Day: 11,
     startTime_Hour: 11,
     moreDetails: (
       <>
@@ -275,18 +275,18 @@ export const launchpadProjects = {
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">Start/End:</p>
                 <p className="text-green-400 text-md">
-                  10 Oct 11am UTC – 7pm UTC
+                  14 Oct 11am UTC-7pm UTC
                 </p>
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">Registration:</p>
                 <p className="text-green-400 text-md">
-                  7 Oct 11am UTC –9 Oct 8pm UTC
+                  11 Oct 11am UTC-13 Oct 8pm UTC
                 </p>
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">FCFS Opens:</p>
-                <p className="text-green-400 text-md">10 Nov t 6:40pm UTC</p>
+                <p className="text-green-400 text-md">14 Oct at 6:40pm UTC</p>
               </div>
               <div className="mb-2 flex justify-between items-center space-x-5 font-poppins mt-1">
                 <p className="text-gray-200">Swap Rate:</p>

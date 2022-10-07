@@ -25,15 +25,16 @@ const Launchpad: React.FC = () => {
         {/* <div className="flex" onClick={() => navigate('/launchpad/LSO')}>
           <ProjectElement coinTag={'LSO'} showHoverAnimation />
         </div> */}
+        <div className="flex" onClick={() => navigate('/launchpad/BRSK')}>
+          <ProjectElement coinTag={'BRSK'} showHoverAnimation />
+        </div>
         <div className="flex" onClick={() => navigate('/launchpad/EPIC')}>
           <ProjectElement coinTag={'EPIC'} showHoverAnimation />
         </div>
         <div className="flex" onClick={() => navigate('/launchpad/TPS')}>
           <ProjectElement coinTag={'TPS'} showHoverAnimation />
         </div>
-        <div className="flex" onClick={() => navigate('/launchpad/BRSK')}>
-          <ProjectElement coinTag={'BRSK'} showHoverAnimation />
-        </div>
+
         {/* <div className="flex">
           <GlowingWrapper>
             <ProjectItem coinTag={'default'} />
