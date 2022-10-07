@@ -448,30 +448,30 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         return (
           <button
             className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            onClick={async () => {
-              if (
-                fromToken !== 'TLC' &&
-                ((fromToken === 'wUSDC' && toToken === 'wTLC') ||
-                  (fromToken === 'wUSDT' && toToken === 'wTLC') ||
-                  (fromToken === 'wTLC' && toToken === 'wUSDC') ||
-                  (fromToken === 'wTLC' && toToken === 'wUSDT'))
-              ) {
-                await swapExactTokensForTokens();
-              } else if (
-                (fromToken === 'TLC' && toToken === 'wTLC') ||
-                (fromToken === 'wTLC' && toToken === 'TLC')
-              ) {
-                if (fromToken === 'TLC' && toToken === 'wTLC') {
-                  setIsLoading(true);
-                  await swapTLCToWTLC();
-                  setIsLoading(false);
-                } else if (fromToken === 'wTLC' && toToken === 'TLC') {
-                  setIsLoading(true);
-                  swapWTLCToTLC();
-                  setIsLoading(false);
-                }
-              }
-            }}
+            // onClick={async () => {
+            //   if (
+            //     fromToken !== 'TLC' &&
+            //     ((fromToken === 'wUSDC' && toToken === 'wTLC') ||
+            //       (fromToken === 'wUSDT' && toToken === 'wTLC') ||
+            //       (fromToken === 'wTLC' && toToken === 'wUSDC') ||
+            //       (fromToken === 'wTLC' && toToken === 'wUSDT'))
+            //   ) {
+            //     await swapExactTokensForTokens();
+            //   } else if (
+            //     (fromToken === 'TLC' && toToken === 'wTLC') ||
+            //     (fromToken === 'wTLC' && toToken === 'TLC')
+            //   ) {
+            //     if (fromToken === 'TLC' && toToken === 'wTLC') {
+            //       setIsLoading(true);
+            //       await swapTLCToWTLC();
+            //       setIsLoading(false);
+            //     } else if (fromToken === 'wTLC' && toToken === 'TLC') {
+            //       setIsLoading(true);
+            //       swapWTLCToTLC();
+            //       setIsLoading(false);
+            //     }
+            //   }
+            // }}
             disabled={isLoading || amountToSwap < minimumAmount}
           >
             {isLoading ? (
@@ -498,16 +498,16 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         return (
           <button
             className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            onClick={() => {
-              if (
-                amountToSwap >= minimumAmount &&
-                fromToken === 'USDT' &&
-                currentChainId === ChainsIds.BSC
-              ) {
-                setIsLoading(true);
-                send();
-              }
-            }}
+            // onClick={() => {
+            //   if (
+            //     amountToSwap >= minimumAmount &&
+            //     fromToken === 'USDT' &&
+            //     currentChainId === ChainsIds.BSC
+            //   ) {
+            //     setIsLoading(true);
+            //     send();
+            //   }
+            // }}
             disabled={
               isLoading || amountToSwap < minimumAmount || fromToken !== 'USDT'
             }
