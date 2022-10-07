@@ -265,6 +265,15 @@ const Header: React.FC = () => {
               <span className="leading-[12px]">Add TLC Network</span>
             </button>
           )}
+          <a
+            href="https://wallet.decryption.com"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+              <span className="leading-[12px]">TLChain Wallet</span>
+            </button>
+          </a>
         </div>
       </div>
       {/* <div
