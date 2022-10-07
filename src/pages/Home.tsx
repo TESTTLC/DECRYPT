@@ -292,7 +292,10 @@ const Home: React.FC = () => {
                 imageStyle="object-top"
                 title="FUTURE PROJECTS"
                 subtitle="Become a modern investor and learn more about the ecosystem & benefits of tokenization."
-                onClick={() => navigate('/tokenization')}
+                // onClick={() => navigate('/tokenization')}
+                onClick={() =>
+                  window.open('https://www.tlchain.group/directory', '_blank')
+                }
                 imageSource={lendingAndBorrowingImage}
                 titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
@@ -446,7 +449,7 @@ const Home: React.FC = () => {
                   <p className="font-semibold text-sm">
                     $TLC Listing | DEX Release
                   </p>
-                  <p className="text-xs text-gray-400">Sep 2022</p>
+                  <p className="text-xs text-gray-400">Oct 2022</p>
                 </div>
               </div>
               <div className="flex items-center mt-4">
