@@ -88,7 +88,8 @@ export const links = [
 
   {
     id: 8,
-    url: '/tokenization',
+    // url: '/tokenization',
+    url: 'https://www.tlchain.group/directory',
     text: 'Asset Tokenization',
     icon: '',
     imageSource: assetTokenizationIcon,
