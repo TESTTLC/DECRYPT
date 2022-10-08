@@ -18,16 +18,25 @@ export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 
 export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 
+//TLChain
+// export const RouterContractAddress =
+//   '0xbd45968046F24bd1AD46F93A60a0bff558c8821a';
+// export const FactoryContractAddress =
+//   '0x9BBCf500583062f3FE3D70F6cFa0cE2542927760';
+// export const MasterchefContractAddress =
+//   '0x301fED8b42e8515B64D695f5b07c643a53023844';
+// export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6';
+// export const TempUsdc = '0x284ad65F779Ca1d8f52e710EE6728638FB3BAfa9';
+
+//Ethereum
 export const RouterContractAddress =
-  '0xbd45968046F24bd1AD46F93A60a0bff558c8821a';
+  '0x48500D88430B37E33237dD47948A8D02df660473';
 export const FactoryContractAddress =
-  '0x9BBCf500583062f3FE3D70F6cFa0cE2542927760';
-
+  '0xd887f0837949310C0D174989b7145B83636fE731';
 export const MasterchefContractAddress =
-  '0x301fED8b42e8515B64D695f5b07c643a53023844';
-
-export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6';
-export const TempUsdc = '0x284ad65F779Ca1d8f52e710EE6728638FB3BAfa9';
+  '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
+export const TempUsdt = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+export const TempUsdc = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
