@@ -148,149 +148,149 @@ const EVM: React.FC = () => {
     }
   };
 
-  const approveMain = async () => {
-    try {
-      setErrorMessage(undefined);
-      if (parseFloat(amountToSend) > 0) {
-        setIsLoading(true);
-        const finalAmount = parseFloat(amountToSend) + fee;
-        const tx = await tokenContract?.functions.approve(
-          mainBridgeContract?.address,
-          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
-        );
-        await tx.wait();
-        setIsLoading(false);
-        setApproveDone(true);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.log('Err on approve: ', error);
-    }
-  };
+  //   const approveMain = async () => {
+  //     try {
+  //       setErrorMessage(undefined);
+  //       if (parseFloat(amountToSend) > 0) {
+  //         setIsLoading(true);
+  //         const finalAmount = parseFloat(amountToSend) + fee;
+  //         const tx = await tokenContract?.functions.approve(
+  //           mainBridgeContract?.address,
+  //           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+  //         );
+  //         await tx.wait();
+  //         setIsLoading(false);
+  //         setApproveDone(true);
+  //       }
+  //     } catch (error) {
+  //       setIsLoading(false);
+  //       console.log('Err on approve: ', error);
+  //     }
+  //   };
 
-  const approveSide = async () => {
-    try {
-      setErrorMessage(undefined);
-      if (parseFloat(amountToSend) > 0) {
-        setIsLoading(true);
-        const finalAmount = parseFloat(amountToSend) + fee;
-        console.log('finalAmount approveSIde: ', finalAmount);
+  //   const approveSide = async () => {
+  //     try {
+  //       setErrorMessage(undefined);
+  //       if (parseFloat(amountToSend) > 0) {
+  //         setIsLoading(true);
+  //         const finalAmount = parseFloat(amountToSend) + fee;
+  //         console.log('finalAmount approveSIde: ', finalAmount);
 
-        const tx = await tokenContract?.functions.approve(
-          sideBridgeContract?.address,
-          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
-        );
-        await tx.wait();
-        setIsLoading(false);
-        setApproveDone(true);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.log('Err on approveSide: ', error);
-    }
-  };
+  //         const tx = await tokenContract?.functions.approve(
+  //           sideBridgeContract?.address,
+  //           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+  //         );
+  //         await tx.wait();
+  //         setIsLoading(false);
+  //         setApproveDone(true);
+  //       }
+  //     } catch (error) {
+  //       setIsLoading(false);
+  //       console.log('Err on approveSide: ', error);
+  //     }
+  //   };
 
-  const approve = () => {
-    if (bridgeState.token === 'TLC') {
-      approveSide();
-      console.log('approve - 1');
-    } else {
-      if (isStableCoin(bridgeState.token) && bridgeState.fromChain === 'TLC') {
-        console.log('approve - 2');
-        approveSide();
-      } else {
-        console.log('approve - 3');
-        approveMain();
-      }
-    }
-    // bridgeState.toChain === 'TLC' ? approveSide : approveMain;
-  };
+  //   const approve = () => {
+  //     if (bridgeState.token === 'TLC') {
+  //       approveSide();
+  //       console.log('approve - 1');
+  //     } else {
+  //       if (isStableCoin(bridgeState.token) && bridgeState.fromChain === 'TLC') {
+  //         console.log('approve - 2');
+  //         approveSide();
+  //       } else {
+  //         console.log('approve - 3');
+  //         approveMain();
+  //       }
+  //     }
+  //     // bridgeState.toChain === 'TLC' ? approveSide : approveMain;
+  //   };
 
-  const receiveTokens = async () => {
-    try {
-      setErrorMessage(undefined);
-      if (parseFloat(amountToSend) > 0) {
-        setIsLoading(true);
-        console.log('ssss: ', sideBridgeContract?.address);
-        const finalAmount = parseFloat(amountToSend) + fee;
-        let tx;
+  //   const receiveTokens = async () => {
+  //     try {
+  //       setErrorMessage(undefined);
+  //       if (parseFloat(amountToSend) > 0) {
+  //         setIsLoading(true);
+  //         console.log('ssss: ', sideBridgeContract?.address);
+  //         const finalAmount = parseFloat(amountToSend) + fee;
+  //         let tx;
 
-        if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
-          const overrides = {
-            value: ethers.utils.parseEther(finalAmount.toString()),
-          };
-          console.log('0: ', mainBridgeContract?.address);
-          console.log('1: ', sideBridgeContract?.address);
-          tx = await mainBridgeContract?.receiveTokens(
-            sideBridgeContract?.address,
-            overrides,
-          );
-        } else {
-          console.log('2: ', mainBridgeContract?.address);
-          console.log('3: ', sideBridgeContract?.address);
-          console.log('FinalAmount: ', finalAmount);
-          tx = await mainBridgeContract?.receiveTokens(
-            ethers.utils.parseEther(finalAmount.toString()),
-            sideBridgeContract?.address,
-          );
-        }
-        await tx.wait();
-        setIsLoading(false);
-        setApproveDone(false);
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setIsLoading(false);
+  //         if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
+  //           const overrides = {
+  //             value: ethers.utils.parseEther(finalAmount.toString()),
+  //           };
+  //           console.log('0: ', mainBridgeContract?.address);
+  //           console.log('1: ', sideBridgeContract?.address);
+  //           tx = await mainBridgeContract?.receiveTokens(
+  //             sideBridgeContract?.address,
+  //             overrides,
+  //           );
+  //         } else {
+  //           console.log('2: ', mainBridgeContract?.address);
+  //           console.log('3: ', sideBridgeContract?.address);
+  //           console.log('FinalAmount: ', finalAmount);
+  //           tx = await mainBridgeContract?.receiveTokens(
+  //             ethers.utils.parseEther(finalAmount.toString()),
+  //             sideBridgeContract?.address,
+  //           );
+  //         }
+  //         await tx.wait();
+  //         setIsLoading(false);
+  //         setApproveDone(false);
+  //       }
+  //       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //     } catch (error: any) {
+  //       setIsLoading(false);
 
-      if (error.message.includes('whitelist')) {
-        setErrorMessage('You are not whitelisted');
-      } else if (error.message.includes('denied')) {
-        setErrorMessage('');
-      } else {
-        setErrorMessage('Something went wrong');
-      }
-      console.log('Err on receiveTokens: ', error);
-    }
-  };
+  //       if (error.message.includes('whitelist')) {
+  //         setErrorMessage('You are not whitelisted');
+  //       } else if (error.message.includes('denied')) {
+  //         setErrorMessage('');
+  //       } else {
+  //         setErrorMessage('Something went wrong');
+  //       }
+  //       console.log('Err on receiveTokens: ', error);
+  //     }
+  //   };
 
-  const returnTokens = async () => {
-    try {
-      if (parseFloat(amountToSend) > 0) {
-        setIsLoading(true);
-        console.log(
-          'sideBridgeContract?.address: ',
-          sideBridgeContract?.address,
-        );
-        // console.log(
-        //   'allowance: ',
-        //   await sideBridgeContract?.allowance(walletAddress),
-        // );
-        console.log('side: ', sideBridgeContract);
-        const finalAmount = parseFloat(amountToSend) + fee;
-        const tx = await sideBridgeContract?.returnTokens(
-          ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
-          mainBridgeContract?.address,
-        );
-        await tx.wait();
-        setIsLoading(false);
-        setApproveDone(false);
-      }
+  //   const returnTokens = async () => {
+  //     try {
+  //       if (parseFloat(amountToSend) > 0) {
+  //         setIsLoading(true);
+  //         console.log(
+  //           'sideBridgeContract?.address: ',
+  //           sideBridgeContract?.address,
+  //         );
+  //         // console.log(
+  //         //   'allowance: ',
+  //         //   await sideBridgeContract?.allowance(walletAddress),
+  //         // );
+  //         console.log('side: ', sideBridgeContract);
+  //         const finalAmount = parseFloat(amountToSend) + fee;
+  //         const tx = await sideBridgeContract?.returnTokens(
+  //           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
+  //           mainBridgeContract?.address,
+  //         );
+  //         await tx.wait();
+  //         setIsLoading(false);
+  //         setApproveDone(false);
+  //       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setIsLoading(false);
+  //       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //     } catch (error: any) {
+  //       setIsLoading(false);
 
-      console.log('Err on returnTokens: ', error);
-      if (error.message.includes('whitelist')) {
-        setErrorMessage('You are not whitelisted');
-      } else if (error.message.includes('denied')) {
-        setErrorMessage('');
-      } else {
-        setErrorMessage('Something went wrong');
-      }
-      console.log('Err on receiveTokens: ', error);
-    }
-  };
+  //       console.log('Err on returnTokens: ', error);
+  //       if (error.message.includes('whitelist')) {
+  //         setErrorMessage('You are not whitelisted');
+  //       } else if (error.message.includes('denied')) {
+  //         setErrorMessage('');
+  //       } else {
+  //         setErrorMessage('Something went wrong');
+  //       }
+  //       console.log('Err on receiveTokens: ', error);
+  //     }
+  //   };
 
   const chainError = useMemo(() => {
     const neededChainId = getChainId(bridgeState.fromChain);
@@ -301,35 +301,35 @@ const EVM: React.FC = () => {
     }
   }, [currentChainId, bridgeState.fromChain]);
 
-  const showApproveButton = useMemo(() => {
-    if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
-      return false;
-    } else if (!approveDone) {
-      return true;
-    } else {
-      return false;
-    }
-  }, [approveDone, bridgeState.token, bridgeState.fromChain]);
+  //   const showApproveButton = useMemo(() => {
+  //     if (bridgeState.token === 'TLC' && bridgeState.fromChain === 'TLC') {
+  //       return false;
+  //     } else if (!approveDone) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }, [approveDone, bridgeState.token, bridgeState.fromChain]);
 
-  const send = () => {
-    if (bridgeState.toChain === 'TLC' && bridgeState.fromChain === 'TLC') {
-      return;
-    } else {
-      if (bridgeState.toChain === 'TLC') {
-        if (isStableCoin(bridgeState.token)) {
-          receiveTokens();
-        } else {
-          returnTokens();
-        }
-      } else {
-        if (isStableCoin(bridgeState.token)) {
-          returnTokens();
-        } else {
-          receiveTokens();
-        }
-      }
-    }
-  };
+  //   const send = () => {
+  //     if (bridgeState.toChain === 'TLC' && bridgeState.fromChain === 'TLC') {
+  //       return;
+  //     } else {
+  //       if (bridgeState.toChain === 'TLC') {
+  //         if (isStableCoin(bridgeState.token)) {
+  //           receiveTokens();
+  //         } else {
+  //           returnTokens();
+  //         }
+  //       } else {
+  //         if (isStableCoin(bridgeState.token)) {
+  //           returnTokens();
+  //         } else {
+  //           receiveTokens();
+  //         }
+  //       }
+  //     }
+  //   };
 
   return (
     <>
@@ -408,13 +408,15 @@ const EVM: React.FC = () => {
             chainType="EVM"
           />
         </div>
-        <p className="my-4 text-sm">
+        {/* <p className="my-4 text-sm">
           You will spend <span className="text-green-400">{amountToSend}</span>{' '}
           + {fee} (fee) as a total of {parseFloat(amountToSend) + fee}{' '}
           {bridgeState.token}
+        </p> */}
+        <p className="mt-8 text-lg text-center">
+          The bridge is currently deactivated
         </p>
-        <div className="flex w-full space-x-8">
-          {/* {currentChainId === getChainId(bridgeState.fromChain) ? ( */}
+        {/* <div className="flex w-full space-x-8">
           {showApproveButton ? (
             <button
               onClick={approve}
@@ -450,12 +452,12 @@ const EVM: React.FC = () => {
               )}
             </button>
           )}
-          {/* ) : (
+        </div> */}
+        {/* ) : (
               <p className="w-full text-center">
                 Please connect to Selected "From" Chain
               </p>
             )} */}
-        </div>
         {errorMessage && (
           <p className="my-4 text-sm text-center">{errorMessage}</p>
         )}
