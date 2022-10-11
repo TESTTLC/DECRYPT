@@ -37,6 +37,12 @@ export const MasterchefContractAddress =
   '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
 export const TempUsdt = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
 export const TempUsdc = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
+// Eth-Main
+export const wtlc_eth = '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
+export const usdc_eth = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
+export const usdt_eth = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
+export const usdt_tlc_pool_eth = '0x002043eAD35D81B1F5847D8Aad1D18DDEf20389A';
+export const usdc_tlc_pool_eth = '0xFd432595DCff5783C1acAb91971daF4ad383219F';
 
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';

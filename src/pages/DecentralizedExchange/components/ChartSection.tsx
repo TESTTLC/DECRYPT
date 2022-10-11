@@ -14,11 +14,13 @@ import { StoreState } from 'src/utils/storeTypes';
 import ERC20 from 'src/contracts/ERC20.json';
 import WBNB from 'src/contracts/WTLC.json';
 import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
-import { formatEther, parseEther } from 'ethers/lib/utils';
+import { formatEther, parseEther, formatUnits } from 'ethers/lib/utils';
 import {
   WTLCTokenContractAddress,
-  TempUsdt,
   TLChain_USDT_ChildTokenContractAddress,
+  wtlc_eth,
+  usdt_eth,
+  usdt_tlc_pool_eth,
 } from 'src/utils/globals';
 
 import { useSwapTrans } from '../utils/fetchData';
@@ -176,7 +178,6 @@ export const CandleStickChart = (props: any) => {
     async function fetchData() {
       if (swapTrans) {
         const data = swapTrans;
-        // console.log('chart data', data);
         // console.log('chart data length', data.length);
         const chartData: any = [];
         for (let i = 0; i < data.length; i++) {
@@ -188,30 +189,52 @@ export const CandleStickChart = (props: any) => {
               useGrouping: false,
             }),
           );
-          const d2 = formatEther(
+          // const d2 = formatEther(
+          //   parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          // );
+          const d2 = formatUnits(
             parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
+            6,
           );
           const d3 = formatEther(
             parseInt(temp.slice(128, 192), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
           );
-          const des = formatEther(
+          // const des = formatEther(
+          //   parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          // );
+          const des = formatUnits(
             parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
+            6,
           );
 
-          const wtlc = WTLCTokenContractAddress.slice(2);
+          // console.log('ori', ori);
+          // console.log('d2', d2);
+          // console.log('d3', d3);
+          // console.log('des', des);
+          // console.log('path', path);
+          //const wtlc = WTLCTokenContractAddress.slice(2);
+          const wtlc = wtlc_eth.slice(2);
           let ratio = 4.89;
-          if (wtlc.toLocaleLowerCase() === path[0].toLocaleLowerCase()) {
+          /* if (wtlc.toLocaleLowerCase() === path[0].toLocaleLowerCase()) {
             ratio = parseFloat(d3) / parseFloat(d2);
           } else {
             ratio = parseFloat(ori) / parseFloat(des);
+          } */
+          if (wtlc.toLocaleLowerCase() === path[1].toLocaleLowerCase()) {
+            ratio = parseFloat(d2) / parseFloat(d3);
+          } else {
+            ratio = parseFloat(des) / parseFloat(ori);
           }
-
           // console.log('ori', ori);
           // console.log('d2', d2);
           // console.log('d3', d3);
@@ -220,11 +243,12 @@ export const CandleStickChart = (props: any) => {
           // console.log('time', timeStamp);
           // console.log('date', date);
           // chartData[index] = { time: date, value: ratio };
-          chartData[index] = { time: parseInt(timeStamp), value: ratio };
+          // chartData[index] = { time: parseInt(timeStamp), value: ratio };
+          chartData[index] = { time: parseInt(timeStamp, 16), value: ratio };
         }
         // console.log('chartData', chartData);
         // get current ratio
-        const url = 'https://mainnet-rpc.tlxscan.com/';
+        /*const url = 'https://mainnet-rpc.tlxscan.com/';
         const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
         const tlc_usdt_cont = new Contract(
           TLChain_USDT_ChildTokenContractAddress,
@@ -239,6 +263,26 @@ export const CandleStickChart = (props: any) => {
               useGrouping: false,
             }),
           ),
+        ); */
+
+        const url =
+          'https://mainnet.infura.io/v3/7f7f3d56bbbb45389554ccbaf12df8e3';
+        const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+        const tlc_usdt_cont = new Contract(
+          usdt_eth,
+          ERC20.abi,
+          customHttpProvider,
+        );
+
+        const usdt_amount = await tlc_usdt_cont.balanceOf(usdt_tlc_pool_eth);
+
+        const usdt_amount_fl = parseFloat(
+          formatUnits(
+            usdt_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+            6,
+          ),
         );
         // console.log(
         //   'amount',
@@ -249,12 +293,25 @@ export const CandleStickChart = (props: any) => {
         //   ),
         // );
         // wbnb amount
-        const tlc_wbnb_cont = new Contract(
+        /*const tlc_wbnb_cont = new Contract(
           WTLCTokenContractAddress,
           WBNB.abi,
           customHttpProvider,
         );
         const wbnb_amount = await tlc_wbnb_cont.balanceOf(TempUsdt);
+        const wbnb_amount_fl = parseFloat(
+          formatEther(
+            wbnb_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          ),
+        ); */
+        const tlc_wbnb_cont = new Contract(
+          wtlc_eth,
+          WBNB.abi,
+          customHttpProvider,
+        );
+        const wbnb_amount = await tlc_wbnb_cont.balanceOf(usdt_tlc_pool_eth);
         const wbnb_amount_fl = parseFloat(
           formatEther(
             wbnb_amount.toLocaleString('fullwide', {

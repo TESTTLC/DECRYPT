@@ -10,7 +10,7 @@ import React, {
 import { Contract, ethers } from 'ethers';
 import ERC20 from 'src/contracts/ERC20.json';
 import WBNB from 'src/contracts/WTLC.json';
-import { formatEther, parseEther } from 'ethers/lib/utils';
+import { formatEther, parseEther, formatUnits } from 'ethers/lib/utils';
 import {
   WTLCTokenContractAddress,
   TempUsdt,
@@ -18,6 +18,11 @@ import {
   TLChain_USDT_ChildTokenContractAddress,
   TLChain_USDC_ChildTokenContractAddress,
   MasterchefContractAddress,
+  wtlc_eth,
+  usdc_eth,
+  usdt_eth,
+  usdt_tlc_pool_eth,
+  usdc_tlc_pool_eth,
 } from 'src/utils/globals';
 
 import { useUsdtTrans, useUsdcTrans } from '../utils/fetchVolume';
@@ -31,7 +36,8 @@ export const DexInfo = (prop: any) => {
   const [usdcVolume, setUsdcVolume] = useState(0);
   const [usdtTrans, setUsdtTrans] = useUsdtTrans(currentBlock);
   const [usdcTrans, setUsdcTrans] = useUsdcTrans(currentBlock);
-  const url = 'https://mainnet-rpc.tlxscan.com/';
+  // const url = 'https://mainnet-rpc.tlxscan.com/';
+  const url = 'https://mainnet.infura.io/v3/7f7f3d56bbbb45389554ccbaf12df8e3';
 
   const getBlock = async () => {
     const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
@@ -56,26 +62,40 @@ export const DexInfo = (prop: any) => {
               useGrouping: false,
             }),
           );
-          const d2 = formatEther(
+          // const d2 = formatEther(
+          //   parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          // );
+          const d2 = formatUnits(
             parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
+            6,
           );
           const d3 = formatEther(
             parseInt(temp.slice(128, 192), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
           );
-          const des = formatEther(
+          // const des = formatEther(
+          //   parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          // );
+          const des = formatUnits(
             parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
+            6,
           );
-          const wtlc = WTLCTokenContractAddress.slice(2);
-          if (wtlc.toLocaleLowerCase() === path[0].toLocaleLowerCase()) {
-            usdtTransAmount += parseFloat(d3);
+          // const wtlc = WTLCTokenContractAddress.slice(2);
+          const wtlc = wtlc_eth.slice(2);
+
+          if (wtlc.toLocaleLowerCase() === path[1].toLocaleLowerCase()) {
+            usdtTransAmount += parseFloat(d2);
           } else {
-            usdtTransAmount += parseFloat(ori);
+            usdtTransAmount += parseFloat(des);
           }
         }
         setUsdtVolume(usdtTransAmount);
@@ -97,26 +117,39 @@ export const DexInfo = (prop: any) => {
               useGrouping: false,
             }),
           );
-          const d2 = formatEther(
+          // const d2 = formatEther(
+          //   parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          // );
+          const d2 = formatUnits(
             parseInt(temp.slice(64, 128), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
+            6,
           );
           const d3 = formatEther(
             parseInt(temp.slice(128, 192), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
           );
-          const des = formatEther(
+          // const des = formatEther(
+          //   parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          // );
+          const des = formatUnits(
             parseInt(temp.slice(192, 256), 16).toLocaleString('fullwide', {
               useGrouping: false,
             }),
+            6,
           );
-          const wtlc = WTLCTokenContractAddress.slice(2);
-          if (wtlc.toLocaleLowerCase() === path[0].toLocaleLowerCase()) {
-            usdcTransAmount += parseFloat(d3);
+          // const wtlc = WTLCTokenContractAddress.slice(2);
+          const wtlc = wtlc_eth.slice(2);
+          if (wtlc.toLocaleLowerCase() === path[1].toLocaleLowerCase()) {
+            usdcTransAmount += parseFloat(d2);
           } else {
-            usdcTransAmount += parseFloat(ori);
+            usdcTransAmount += parseFloat(des);
           }
         }
         setUsdcVolume(usdcTransAmount);
@@ -131,30 +164,38 @@ export const DexInfo = (prop: any) => {
 
       const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
       const tlc_usdc_cont = new Contract(
-        TLChain_USDC_ChildTokenContractAddress,
+        // TLChain_USDC_ChildTokenContractAddress,
+        usdc_eth,
         ERC20.abi,
         customHttpProvider,
       );
       const tlc_usdt_cont = new Contract(
-        TLChain_USDT_ChildTokenContractAddress,
+        // TLChain_USDT_ChildTokenContractAddress,
+        usdt_eth,
         ERC20.abi,
         customHttpProvider,
       );
-      const usdt_amount = await tlc_usdt_cont.balanceOf(TempUsdt);
+      const usdt_amount = await tlc_usdt_cont.balanceOf(usdt_tlc_pool_eth);
       const usdt_amount_fl = parseFloat(
-        formatEther(
+        // formatEther(
+        //   usdt_amount.toLocaleString('fullwide', {
+        //     useGrouping: false,
+        //   }),
+        // ),
+        formatUnits(
           usdt_amount.toLocaleString('fullwide', {
             useGrouping: false,
           }),
+          6,
         ),
       );
 
       const tlc_wbnb_cont = new Contract(
-        WTLCTokenContractAddress,
+        wtlc_eth,
         WBNB.abi,
         customHttpProvider,
       );
-      const wbnb_amount = await tlc_wbnb_cont.balanceOf(TempUsdt);
+      const wbnb_amount = await tlc_wbnb_cont.balanceOf(usdt_tlc_pool_eth);
       const wbnb_amount_fl = parseFloat(
         formatEther(
           wbnb_amount.toLocaleString('fullwide', {
@@ -168,7 +209,8 @@ export const DexInfo = (prop: any) => {
       //Get TVL
       // get the locked amount on masterchef from 2 pools
       const tlc_usdt_pool = new Contract(
-        TempUsdt,
+        // TempUsdt,
+        usdt_tlc_pool_eth,
         ERC20.abi,
         customHttpProvider,
       );
@@ -188,7 +230,9 @@ export const DexInfo = (prop: any) => {
         ),
       );
       //   console.log('locked tlc usdt', tlc_usdt_locked_fl);
-      const tlc_usdt_pool_usdt = await tlc_usdt_cont.balanceOf(TempUsdt);
+      const tlc_usdt_pool_usdt = await tlc_usdt_cont.balanceOf(
+        usdt_tlc_pool_eth,
+      );
       const tlc_usdt_pool_usdt_fl = parseFloat(
         formatEther(
           tlc_usdt_pool_usdt.toLocaleString('fullwide', { useGrouping: false }),
@@ -202,7 +246,8 @@ export const DexInfo = (prop: any) => {
       //   console.log('tvl usdt', tvl_tlc_usdt);
 
       const tlc_usdc_pool = new Contract(
-        TempUsdc,
+        // TempUdc,
+        usdc_tlc_pool_eth,
         ERC20.abi,
         customHttpProvider,
       );
@@ -222,7 +267,9 @@ export const DexInfo = (prop: any) => {
         ),
       );
       //   console.log('locked tlc usdc', tlc_usdc_locked_fl);
-      const tlc_usdc_pool_usdc = await tlc_usdc_cont.balanceOf(TempUsdc);
+      const tlc_usdc_pool_usdc = await tlc_usdc_cont.balanceOf(
+        usdc_tlc_pool_eth,
+      );
       const tlc_usdc_pool_usdc_fl = parseFloat(
         formatEther(
           tlc_usdc_pool_usdc.toLocaleString('fullwide', { useGrouping: false }),
@@ -235,14 +282,15 @@ export const DexInfo = (prop: any) => {
         ((2 * tlc_usdc_locked_fl) / tlc_usdc_total_fl) * tlc_usdc_pool_usdc_fl;
       //   console.log('tvl usdc', tvl_tlc_usdc);
 
+      const customHttpProviderTlc = new ethers.providers.JsonRpcProvider(
+        'https://mainnet-rpc.tlxscan.com/',
+      );
       // staking balance
-      const stakingBal = await customHttpProvider.getBalance(
+      const stakingBal = await customHttpProviderTlc.getBalance(
         '0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832',
       );
       const staking_fl = parseFloat(formatEther(stakingBal));
       const tvl_staking = staking_fl * price;
-
-      console.log('staking fl', staking_fl);
 
       const total_tvl = (tvl_tlc_usdc + tvl_tlc_usdt + tvl_staking).toFixed(2);
 

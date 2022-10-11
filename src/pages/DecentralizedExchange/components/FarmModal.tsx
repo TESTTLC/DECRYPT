@@ -9,6 +9,8 @@ import {
   MasterchefContractAddress,
   TempUsdt,
   TempUsdc,
+  usdt_tlc_pool_eth,
+  usdc_tlc_pool_eth,
 } from 'src/utils/globals';
 import { Web3Provider } from '@ethersproject/providers';
 import MasterChef from 'src/contracts/Masterchef.json';
@@ -91,7 +93,7 @@ const FarmModal: React.FC<Props> = ({
         if (stakingType) {
           if (poolId == 0) {
             const tlc_usdt_cont = new Contract(
-              TempUsdt,
+              usdt_tlc_pool_eth,
               ERC20.abi,
               provider.getSigner(),
             );
@@ -99,7 +101,7 @@ const FarmModal: React.FC<Props> = ({
             setBal(formatEther(amount.toString()));
           } else {
             const tlc_usdc_cont = new Contract(
-              TempUsdc,
+              usdc_tlc_pool_eth,
               ERC20.abi,
               provider.getSigner(),
             );

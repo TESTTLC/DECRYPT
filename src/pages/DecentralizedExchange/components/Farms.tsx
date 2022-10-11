@@ -8,6 +8,8 @@ import {
   MasterchefContractAddress,
   TempUsdt,
   TempUsdc,
+  usdt_tlc_pool_eth,
+  usdc_tlc_pool_eth,
 } from 'src/utils/globals';
 import MasterChef from 'src/contracts/Masterchef.json';
 import ERC20 from 'src/contracts/ERC20.json';
@@ -60,12 +62,12 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
           provider.getSigner(),
         );
         const tlc_usdt_cont = new Contract(
-          TempUsdt,
+          usdt_tlc_pool_eth,
           ERC20.abi,
           provider.getSigner(),
         );
         const tlc_usdc_cont = new Contract(
-          TempUsdc,
+          usdc_tlc_pool_eth,
           ERC20.abi,
           provider.getSigner(),
         );
@@ -109,7 +111,7 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
       // console.log('here working');
       if (param === 0) {
         const tlc_usdt_cont = new Contract(
-          TempUsdt,
+          usdt_tlc_pool_eth,
           ERC20.abi,
           provider.getSigner(),
         );
@@ -120,7 +122,7 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
         // console.log('approve', result);
       } else if (param === 1) {
         const tlc_usdc_cont = new Contract(
-          TempUsdc,
+          usdc_tlc_pool_eth,
           ERC20.abi,
           provider.getSigner(),
         );
