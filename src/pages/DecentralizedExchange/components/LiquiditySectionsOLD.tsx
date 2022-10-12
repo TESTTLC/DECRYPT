@@ -9,9 +9,6 @@ import usdtLogo from 'src/assets/images/USDT-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import { AiFillLock } from 'react-icons/ai';
 import {
-  Ethereum_USDC_TokenContractAddress,
-  Ethereum_USDT_TokenContractAddress,
-  Ethereum_wTLC_ChildTokenContractAddress,
   RouterContractAddress,
   TempUsdc,
   TempUsdt,
@@ -28,10 +25,64 @@ import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { addHours } from 'src/utils/functions/utils';
-import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils';
+import { parseEther } from 'ethers/lib/utils';
 
 import LiquidityTokensModal from './LiquidityTokensModal';
 import Categories from './Categories';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const fromModalTokens: any[] = [
+  {
+    name: 'Wrapped USDC',
+    tag: 'wUSDC',
+    image: usdcLogo,
+    iconBackground: '',
+    percentage1: 19,
+    percentage2: 179,
+    address: TLChain_USDC_ChildTokenContractAddress,
+  },
+  {
+    name: 'Wrapped USDT',
+    tag: 'wUSDT',
+    image: usdtLogo,
+    iconBackground: '',
+    percentage1: 19,
+    percentage2: 179,
+    address: TLChain_USDT_ChildTokenContractAddress,
+  },
+  //   {
+  //     name: 'LSO',
+  //     tag: 'LSO',
+  //     image: lsoLogo,
+  //     iconBackground: 'white',
+  //     percentage1: 19,
+  //     percentage2: 120,
+  //   },
+  //   {
+  //     name: 'EGLD',
+  //     tag: 'EGLD',
+  //     image: egldLogo,
+  //     iconBackground: '',
+  //     percentage1: 30,
+  //     percentage2: 170,
+  //   },
+  //   {
+  //     name: 'TLX',
+  //     tag: 'TLX',
+  //     image: tlxLogo,
+  //     iconBackground: '',
+  //     percentage1: 30,
+  //     percentage2: 170,
+  //   },
+  //   {
+  //     name: 'ATRI',
+  //     tag: 'ATRI',
+  //     image: atriLogo,
+  //     iconBackground: '',
+  //     percentage1: 6.5,
+  //     percentage2: undefined,
+  //   },
+];
 
 export const toModalTokes: Project[] = [
   {
@@ -42,66 +93,7 @@ export const toModalTokes: Project[] = [
   },
 ];
 
-interface Props {
-  usdtTlcApr: string;
-  usdcTlcApr: string;
-}
-
-const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const fromModalTokens: any[] = [
-    {
-      name: 'Wrapped USDC',
-      tag: 'wUSDC',
-      image: usdcLogo,
-      iconBackground: '',
-      percentage1: usdtTlcApr,
-      // percentage2: 179,
-      address: TLChain_USDC_ChildTokenContractAddress,
-    },
-    {
-      name: 'Wrapped USDT',
-      tag: 'wUSDT',
-      image: usdtLogo,
-      iconBackground: '',
-      percentage1: usdcTlcApr,
-      // percentage2: 179,
-      address: TLChain_USDT_ChildTokenContractAddress,
-    },
-    //   {
-    //     name: 'LSO',
-    //     tag: 'LSO',
-    //     image: lsoLogo,
-    //     iconBackground: 'white',
-    //     percentage1: 19,
-    //     percentage2: 120,
-    //   },
-    //   {
-    //     name: 'EGLD',
-    //     tag: 'EGLD',
-    //     image: egldLogo,
-    //     iconBackground: '',
-    //     percentage1: 30,
-    //     percentage2: 170,
-    //   },
-    //   {
-    //     name: 'TLX',
-    //     tag: 'TLX',
-    //     image: tlxLogo,
-    //     iconBackground: '',
-    //     percentage1: 30,
-    //     percentage2: 170,
-    //   },
-    //   {
-    //     name: 'ATRI',
-    //     tag: 'ATRI',
-    //     image: atriLogo,
-    //     iconBackground: '',
-    //     percentage1: 6.5,
-    //     percentage2: undefined,
-    //   },
-  ];
-
+const LiquiditySections: React.FC = () => {
   const [sectionIndex, setSectionIndex] = useState(0);
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -158,28 +150,11 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
       reservesResult[1].toString(),
     );
 
-    // it looks like reserves are reversed in the LP Contracts
-    let reserve1 = 0;
-    let reserve2 = 0;
-    if (pairAddress === TempUsdt) {
-      reserve1 = reservesResult[1].toString() * 1000000000000;
-      reserve2 = reservesResult[0].toString();
-    } else {
-      reserve1 = reservesResult[0].toString();
-      reserve2 = reservesResult[1].toString() * 100000000000;
-    }
-    const ratio = reserve1 / reserve2;
-
+    const ratio = reservesResult[1].toString() / reservesResult[0].toString();
     console.log('ratio: ', ratio);
-    console.log(
-      'parseFloat(ratio.toFixed(8)',
-      parseFloat(ratio.toString()).toFixed(8),
-    );
     const finalSecondInput = amountToSwap * ratio;
-
-    console.log('finalSecondInput: ', finalSecondInput);
-
     setSecondAmount(finalSecondInput);
+    console.log('FinalSecondInput: ', finalSecondInput);
   }, [firstToken.address, amountToSwap, provider]);
 
   useEffect(() => {
@@ -200,26 +175,26 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
           provider.getSigner(),
         );
         const wUSDTContract = new Contract(
-          Ethereum_USDT_TokenContractAddress,
+          TLChain_USDT_ChildTokenContractAddress,
           ERC20.abi,
           provider.getSigner(),
         );
         const wUSDCContract = new Contract(
-          Ethereum_USDC_TokenContractAddress,
+          TLChain_USDC_ChildTokenContractAddress,
           ERC20.abi,
           provider.getSigner(),
         );
         const wTLCContract = new Contract(
-          Ethereum_wTLC_ChildTokenContractAddress,
-          ERC20.abi,
+          WTLCTokenContractAddress,
+          TheLuxuryCoinToken.abi,
           provider.getSigner(),
         );
 
         console.log('Contract: ', routerContract);
         const amount1 = amountToSwap; // wUSDT
         const amount2 = amount1 / 4.89; // TLC
-        // const amountAMin = amount1 - (0.5 / 100) * amount1; //amount1 - 0.5% slippage
-        // const amountBMin = amount2 - (0.5 / 100) * amount2; //amount1 - 0.5% slippage
+        const amountAMin = amount1 - (0.5 / 100) * amount1; //amount1 - 0.5% slippage
+        const amountBMin = amount2 - (0.5 / 100) * amount2; //amount1 - 0.5% slippage
         const deadline = addHours(1);
 
         console.log('Deadline: ', deadline);
@@ -239,12 +214,12 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
         if (firstToken.tag === 'wUSDT') {
           approve1tx = await wUSDTContract.approve(
             RouterContractAddress,
-            parseUnits(amount1.toString(), 6),
+            parseEther(amount1.toString()),
           );
         } else {
           approve1tx = await wUSDCContract.approve(
             RouterContractAddress,
-            parseUnits(amount1.toString(), 6),
+            parseEther(amount1.toString()),
           );
         }
 
@@ -254,7 +229,7 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
 
         const approve2tx = await wTLCContract.approve(
           RouterContractAddress,
-          ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
+          parseEther(amount2.toFixed(18)),
         );
         const approve2Result = await approve2tx.wait();
         console.log('approve2tx: ', approve2tx);
@@ -262,10 +237,8 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
         const result = await routerContract.addLiquidity(
           firstToken.address,
           secondToken.address,
-          //   parseEther(amount1.toString()),
-          parseUnits(amount1.toString(), 6),
-          ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
-          //   parseEther(amount2.toFixed(18)),
+          parseEther(amount1.toString()),
+          parseEther(amount2.toFixed(18)),
           0,
           0,
           //   parseEther(amountAMin.toString()),
@@ -420,8 +393,8 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
                     </div>
                     <div className="flex-[0.5]">
                       <span className="flex justify-end">
-                        {t.percentage1}
-                        {/* {t.percentage2 ? (
+                        {t.percentage1}%
+                        {t.percentage2 ? (
                           <>
                             /
                             <AiFillLock size={20} color={'yellow'} />
@@ -429,7 +402,7 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
                           </>
                         ) : (
                           ''
-                        )} */}
+                        )}
                       </span>
                     </div>
                   </div>
