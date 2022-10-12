@@ -28,7 +28,12 @@ import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { addHours } from 'src/utils/functions/utils';
-import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils';
+import {
+  formatEther,
+  formatUnits,
+  parseEther,
+  parseUnits,
+} from 'ethers/lib/utils';
 
 import LiquidityTokensModal from './LiquidityTokensModal';
 import Categories from './Categories';
@@ -162,11 +167,13 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
     let reserve1 = 0;
     let reserve2 = 0;
     if (pairAddress === TempUsdt) {
-      reserve1 = reservesResult[1].toString() * 1000000000000;
-      reserve2 = reservesResult[0].toString();
+      //   reserve1 = reservesResult[1].toString() * 1000000000000;
+      reserve2 = Number(formatEther(reservesResult[0].toString()));
+      reserve1 = Number(formatUnits(reservesResult[1], 6));
     } else {
-      reserve1 = reservesResult[0].toString();
-      reserve2 = reservesResult[1].toString() * 100000000000;
+      reserve1 = Number(formatUnits(reservesResult[0], 6));
+      reserve2 = Number(formatEther(reservesResult[1].toString()));
+      //   reserve1 = reservesResult[0].toString();
     }
     const ratio = reserve1 / reserve2;
 
