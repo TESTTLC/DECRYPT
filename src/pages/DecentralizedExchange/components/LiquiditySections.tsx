@@ -30,60 +30,6 @@ import { parseEther } from 'ethers/lib/utils';
 import LiquidityTokensModal from './LiquidityTokensModal';
 import Categories from './Categories';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fromModalTokens: any[] = [
-  {
-    name: 'Wrapped USDC',
-    tag: 'wUSDC',
-    image: usdcLogo,
-    iconBackground: '',
-    percentage1: 19,
-    percentage2: 179,
-    address: TLChain_USDC_ChildTokenContractAddress,
-  },
-  {
-    name: 'Wrapped USDT',
-    tag: 'wUSDT',
-    image: usdtLogo,
-    iconBackground: '',
-    percentage1: 19,
-    percentage2: 179,
-    address: TLChain_USDT_ChildTokenContractAddress,
-  },
-  //   {
-  //     name: 'LSO',
-  //     tag: 'LSO',
-  //     image: lsoLogo,
-  //     iconBackground: 'white',
-  //     percentage1: 19,
-  //     percentage2: 120,
-  //   },
-  //   {
-  //     name: 'EGLD',
-  //     tag: 'EGLD',
-  //     image: egldLogo,
-  //     iconBackground: '',
-  //     percentage1: 30,
-  //     percentage2: 170,
-  //   },
-  //   {
-  //     name: 'TLX',
-  //     tag: 'TLX',
-  //     image: tlxLogo,
-  //     iconBackground: '',
-  //     percentage1: 30,
-  //     percentage2: 170,
-  //   },
-  //   {
-  //     name: 'ATRI',
-  //     tag: 'ATRI',
-  //     image: atriLogo,
-  //     iconBackground: '',
-  //     percentage1: 6.5,
-  //     percentage2: undefined,
-  //   },
-];
-
 export const toModalTokes: Project[] = [
   {
     name: 'Wrapped The Luxury Coin',
@@ -93,7 +39,66 @@ export const toModalTokes: Project[] = [
   },
 ];
 
-const LiquiditySections: React.FC = () => {
+interface Props {
+  usdtTlcApr: string;
+  usdcTlcApr: string;
+}
+
+const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fromModalTokens: any[] = [
+    {
+      name: 'Wrapped USDC',
+      tag: 'wUSDC',
+      image: usdcLogo,
+      iconBackground: '',
+      percentage1: usdtTlcApr,
+      // percentage2: 179,
+      address: TLChain_USDC_ChildTokenContractAddress,
+    },
+    {
+      name: 'Wrapped USDT',
+      tag: 'wUSDT',
+      image: usdtLogo,
+      iconBackground: '',
+      percentage1: usdcTlcApr,
+      // percentage2: 179,
+      address: TLChain_USDT_ChildTokenContractAddress,
+    },
+    //   {
+    //     name: 'LSO',
+    //     tag: 'LSO',
+    //     image: lsoLogo,
+    //     iconBackground: 'white',
+    //     percentage1: 19,
+    //     percentage2: 120,
+    //   },
+    //   {
+    //     name: 'EGLD',
+    //     tag: 'EGLD',
+    //     image: egldLogo,
+    //     iconBackground: '',
+    //     percentage1: 30,
+    //     percentage2: 170,
+    //   },
+    //   {
+    //     name: 'TLX',
+    //     tag: 'TLX',
+    //     image: tlxLogo,
+    //     iconBackground: '',
+    //     percentage1: 30,
+    //     percentage2: 170,
+    //   },
+    //   {
+    //     name: 'ATRI',
+    //     tag: 'ATRI',
+    //     image: atriLogo,
+    //     iconBackground: '',
+    //     percentage1: 6.5,
+    //     percentage2: undefined,
+    //   },
+  ];
+
   const [sectionIndex, setSectionIndex] = useState(0);
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -393,8 +398,8 @@ const LiquiditySections: React.FC = () => {
                     </div>
                     <div className="flex-[0.5]">
                       <span className="flex justify-end">
-                        {t.percentage1}%
-                        {t.percentage2 ? (
+                        {t.percentage1}
+                        {/* {t.percentage2 ? (
                           <>
                             /
                             <AiFillLock size={20} color={'yellow'} />
@@ -402,7 +407,7 @@ const LiquiditySections: React.FC = () => {
                           </>
                         ) : (
                           ''
-                        )}
+                        )} */}
                       </span>
                     </div>
                   </div>

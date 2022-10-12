@@ -1,13 +1,25 @@
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import React, { useCallback, useEffect, useState } from 'react';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { prices, USDTContractAddress } from 'src/utils/globals';
+import {
+  prices,
+  USDTContractAddress,
+  MasterchefContractAddress,
+  usdt_tlc_pool_eth,
+  usdc_tlc_pool_eth,
+  usdt_eth,
+  usdc_eth,
+  wtlc_eth,
+} from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
 import { getBalance } from 'src/utils/functions/Contracts';
 import { StoreState } from 'src/utils/storeTypes';
 import { Web3Provider } from '@ethersproject/providers';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import ERC20 from 'src/contracts/ERC20.json';
+import { formatEther, parseEther, formatUnits } from 'ethers/lib/utils';
+import useRefresh from 'src/redux/useRefresh';
 
 import { changeChain } from '../../utils/functions/MetaMask';
 import { ChainsIds, Project } from '../../utils/types';
@@ -17,6 +29,7 @@ import LiquiditySections from './components/LiquiditySections';
 import Farms from './components/Farms';
 import ChartSection from './components/ChartSection';
 import DexInfo from './components/DexInfo';
+
 export const localModalTokens: Project[] = [
   {
     name: 'Tether',
@@ -50,7 +63,135 @@ const DecentralizedExchange: React.FC = () => {
   const [chainErrorMessage, setChainErrorMessage] = useState<
     string | undefined
   >(undefined);
+  const { fastRefresh, slowRefresh } = useRefresh();
+  // apr logic
+  const [usdtTlcApr, setUsdtTlcApr] = useState('-');
+  const [usdcTlcApr, setUsdcTlcApr] = useState('-');
+  useEffect(() => {
+    async function getApr() {
+      /**
+       * APY calculation
+       * block count per year: 3600s * 24h * 365d / 12s = 2628000
+       * tlc per block: 360000000000000000 => 0.36 tlc
+       * allocation point: 200, 200
+       **/
+      try {
+        const url =
+          'https://mainnet.infura.io/v3/7f7f3d56bbbb45389554ccbaf12df8e3';
+        const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+        const usdt_cont = new Contract(usdt_eth, ERC20.abi, customHttpProvider);
+        const usdc_cont = new Contract(usdc_eth, ERC20.abi, customHttpProvider);
+        const tlc_cont = new Contract(wtlc_eth, ERC20.abi, customHttpProvider);
+        ///////////////// current USDT-TLC lp locked amount in farming pools start//////////////////////////////////////
+        // usdt-tlc lp locked price
+        const tlc_usdt_cont = new Contract(
+          usdt_tlc_pool_eth,
+          ERC20.abi,
+          customHttpProvider,
+        );
+        const tlc_usdt_total_supply = await tlc_usdt_cont.totalSupply();
+        console.log(
+          'tlc_usdt_total_supply',
+          formatEther(tlc_usdt_total_supply.toString()),
+        );
+        const locked_tlc_usdt = await tlc_usdt_cont.balanceOf(
+          MasterchefContractAddress,
+        );
+        console.log('locked_tlc_usdt', formatEther(locked_tlc_usdt.toString()));
+        // usdt-tlc lp usdt
+        const usdt_amount = await usdt_cont.balanceOf(usdt_tlc_pool_eth);
+        const usdt_amount_fl = parseFloat(
+          formatUnits(
+            usdt_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+            6,
+          ),
+        );
+        console.log('usdt tlc lp usdt amount', usdt_amount_fl);
+        // locked usdt-tlc lp price
+        const locked_usdt_tlc_lp_price =
+          (2 * usdt_amount_fl * locked_tlc_usdt) / tlc_usdt_total_supply;
+        console.log('usdt tlc price', locked_usdt_tlc_lp_price);
+        // CURRENT TLC PRICE
+        const tlc_amount = await tlc_cont.balanceOf(usdt_tlc_pool_eth);
+        const tlc_amount_fl = parseFloat(
+          formatEther(
+            tlc_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          ),
+        );
+        console.log('tlc amount at tlc-usdt lp', tlc_amount_fl);
+        const current_tlc_price = usdt_amount_fl / tlc_amount_fl;
+        console.log('current tlc price', current_tlc_price);
+        // usdt-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
+        let usdt_tlc_apr = 500;
+        if (locked_usdt_tlc_lp_price < 10) {
+          usdt_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) / 10) * 100;
+        } else {
+          usdt_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) /
+              locked_usdt_tlc_lp_price) *
+            100;
+        }
+        console.log('usdt tlc apr', usdt_tlc_apr);
+        ///////////////// current USDT-TLC lp locked amount in farming pools end//////////////////////////////////////
 
+        ///////////////// current USDC-TLC lp locked amount in farming pools start//////////////////////////////////////
+        // usdc-tlc lp locked price
+        const tlc_usdc_cont = new Contract(
+          usdc_tlc_pool_eth,
+          ERC20.abi,
+          customHttpProvider,
+        );
+        const tlc_usdc_total_supply = await tlc_usdc_cont.totalSupply();
+        console.log(
+          'tlc_usdc_total_supply',
+          formatEther(tlc_usdc_total_supply.toString()),
+        );
+        const locked_tlc_usdc = await tlc_usdc_cont.balanceOf(
+          MasterchefContractAddress,
+        );
+        console.log('locked_tlc_usdc', formatEther(locked_tlc_usdc.toString()));
+        // usdc-tlc lp usdc
+        const usdc_amount = await usdc_cont.balanceOf(usdc_tlc_pool_eth);
+        const usdc_amount_fl = parseFloat(
+          formatUnits(
+            usdc_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+            6,
+          ),
+        );
+        console.log('usdc tlc lp usdc amount', usdc_amount_fl);
+        // locked usdc-tlc lp price
+        const locked_usdc_tlc_lp_price =
+          (2 * usdc_amount_fl * locked_tlc_usdc) / tlc_usdc_total_supply;
+        console.log('usdc tlc price', locked_usdc_tlc_lp_price);
+
+        // usdc-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
+        let usdc_tlc_apr = 500;
+        if (locked_usdc_tlc_lp_price < 10) {
+          usdc_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) / 10) * 100;
+        } else {
+          usdc_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) /
+              locked_usdc_tlc_lp_price) *
+            100;
+        }
+        console.log('usdc tlc apr', usdc_tlc_apr);
+        setUsdcTlcApr(usdc_tlc_apr.toFixed(2).toString() + '%');
+        setUsdtTlcApr(usdt_tlc_apr.toFixed(2).toString() + '%');
+        ///////////////// current USDC-TLC lp locked amount in farming pools end//////////////////////////////////////
+      } catch (err) {
+        console.log('calc apr error', err);
+      }
+    }
+    getApr();
+  }, [walletAddress, slowRefresh]);
   const chainChange = async () => {
     await changeChain(ChainsIds.BSC);
   };
@@ -148,7 +289,7 @@ const DecentralizedExchange: React.FC = () => {
           <SwapSections currentChainId={currentChainId ?? ''} />
         </div>
         <div className="">
-          <LiquiditySections />
+          <LiquiditySections usdtTlcApr={usdtTlcApr} usdcTlcApr={usdcTlcApr} />
         </div>
       </div>
 
@@ -169,7 +310,11 @@ const DecentralizedExchange: React.FC = () => {
       </div>
 
       <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 text-white text-sm">
-        <Farms currentChainId={currentChainId ?? ''} />
+        <Farms
+          currentChainId={currentChainId ?? ''}
+          usdtTlcApr={usdtTlcApr}
+          usdcTlcApr={usdcTlcApr}
+        />
       </div>
     </div>
   );

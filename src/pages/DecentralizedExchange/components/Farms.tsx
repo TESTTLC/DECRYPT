@@ -10,10 +10,13 @@ import {
   TempUsdc,
   usdt_tlc_pool_eth,
   usdc_tlc_pool_eth,
+  usdt_eth,
+  usdc_eth,
+  wtlc_eth,
 } from 'src/utils/globals';
 import MasterChef from 'src/contracts/Masterchef.json';
 import ERC20 from 'src/contracts/ERC20.json';
-import { formatEther, parseEther } from 'ethers/lib/utils';
+import { formatEther, parseEther, formatUnits } from 'ethers/lib/utils';
 import tlxLogo from 'src/assets/images/TLX-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import tlcUsdt from 'src/assets/images/tlc-usdt.png';
@@ -28,16 +31,18 @@ import Categories from './Categories';
 
 interface Props {
   currentChainId: string;
+  usdtTlcApr: string;
+  usdcTlcApr: string;
 }
 
-const Farms: React.FC<Props> = ({ currentChainId }) => {
+const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
   );
-  const { fastRefresh } = useRefresh();
+  const { fastRefresh, slowRefresh } = useRefresh();
   const [modalOpen, setModalOpen] = useState(false);
   const [stakingType, setStakingType] = useState(true); //true: deposit, false: withdraw
   const [modalTitle, setModalTitle] = useState('');
@@ -51,7 +56,9 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
   const [usdcPendingRewards, setUsdcPendingRewards] = useState('');
 
   const { connectWallet } = useWalletConnector();
+
   // console.log('usdtPendingRewards', usdtPendingRewards);
+
   useEffect(() => {
     async function fetchData() {
       if (provider) {
@@ -205,7 +212,7 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
           </div>
           <div className="flex flex-col items-center">
             <div>APR</div>
-            <div>{walletAddress ? '500%' : '-'}</div>
+            <div>{walletAddress ? usdtTlcApr : '-'}</div>
           </div>
           <div className="flex flex-col items-center">
             <div>Liquidity</div>
@@ -284,7 +291,7 @@ const Farms: React.FC<Props> = ({ currentChainId }) => {
           </div>
           <div className="flex flex-col items-center">
             <div>APR</div>
-            <div>{walletAddress ? '500%' : '-'}</div>
+            <div>{walletAddress ? usdcTlcApr : '-'}</div>
           </div>
           <div className="flex flex-col items-center">
             <div>Liquidity</div>
