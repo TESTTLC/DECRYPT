@@ -444,7 +444,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   const shownTap = useMemo(() => {
     if (chainSectionIndex === 1) {
-      if (walletAddress && currentChainId === ChainsIds.TLC) {
+      if (walletAddress && currentChainId === ChainsIds.ETH) {
         return (
           <button
             className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
@@ -488,7 +488,8 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       } else {
         return (
           <p className="text-red-400 leading-tight">
-            Please connect to TLChain Mainnet{' '}
+            {/* Please connect to TLChain Mainnet{' '} */}
+            Please connect to Ethereum Mainnet{' '}
             {!walletAddress && 'and connect your wallet'}{' '}
           </p>
         );
@@ -649,7 +650,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
             } px-4 py-2 rounded-lg cursor-pointer border-[1px] border-green-400`}
             onClick={() => setChainSectionIndex(1)}
           >
-            TLChain - TLChain
+            Ethereum - Ethereum
           </div>
         </div>
         {sectionIndex === 0 ? (

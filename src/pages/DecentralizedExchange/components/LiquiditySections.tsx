@@ -175,7 +175,7 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
       'parseFloat(ratio.toFixed(8)',
       parseFloat(ratio.toString()).toFixed(8),
     );
-    const finalSecondInput = amountToSwap * ratio;
+    const finalSecondInput = amountToSwap / ratio;
 
     console.log('finalSecondInput: ', finalSecondInput);
 
