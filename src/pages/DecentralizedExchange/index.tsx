@@ -90,14 +90,14 @@ const DecentralizedExchange: React.FC = () => {
           customHttpProvider,
         );
         const tlc_usdt_total_supply = await tlc_usdt_cont.totalSupply();
-        console.log(
-          'tlc_usdt_total_supply',
-          formatEther(tlc_usdt_total_supply.toString()),
-        );
+        // console.log(
+        //   'tlc_usdt_total_supply',
+        //   formatEther(tlc_usdt_total_supply.toString()),
+        // );
         const locked_tlc_usdt = await tlc_usdt_cont.balanceOf(
           MasterchefContractAddress,
         );
-        console.log('locked_tlc_usdt', formatEther(locked_tlc_usdt.toString()));
+        // console.log('locked_tlc_usdt', formatEther(locked_tlc_usdt.toString()));
         // usdt-tlc lp usdt
         const usdt_amount = await usdt_cont.balanceOf(usdt_tlc_pool_eth);
         const usdt_amount_fl = parseFloat(
@@ -108,11 +108,11 @@ const DecentralizedExchange: React.FC = () => {
             6,
           ),
         );
-        console.log('usdt tlc lp usdt amount', usdt_amount_fl);
+        // console.log('usdt tlc lp usdt amount', usdt_amount_fl);
         // locked usdt-tlc lp price
         const locked_usdt_tlc_lp_price =
           (2 * usdt_amount_fl * locked_tlc_usdt) / tlc_usdt_total_supply;
-        console.log('usdt tlc price', locked_usdt_tlc_lp_price);
+        // console.log('usdt tlc price', locked_usdt_tlc_lp_price);
         // CURRENT TLC PRICE
         const tlc_amount = await tlc_cont.balanceOf(usdt_tlc_pool_eth);
         const tlc_amount_fl = parseFloat(
@@ -122,9 +122,9 @@ const DecentralizedExchange: React.FC = () => {
             }),
           ),
         );
-        console.log('tlc amount at tlc-usdt lp', tlc_amount_fl);
+        // console.log('tlc amount at tlc-usdt lp', tlc_amount_fl);
         const current_tlc_price = usdt_amount_fl / tlc_amount_fl;
-        console.log('current tlc price', current_tlc_price);
+        // console.log('current tlc price', current_tlc_price);
         // usdt-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
         let usdt_tlc_apr = 500;
         if (locked_usdt_tlc_lp_price < 10) {
@@ -136,7 +136,7 @@ const DecentralizedExchange: React.FC = () => {
               locked_usdt_tlc_lp_price) *
             100;
         }
-        console.log('usdt tlc apr', usdt_tlc_apr);
+        // console.log('usdt tlc apr', usdt_tlc_apr);
         ///////////////// current USDT-TLC lp locked amount in farming pools end//////////////////////////////////////
 
         ///////////////// current USDC-TLC lp locked amount in farming pools start//////////////////////////////////////
@@ -147,14 +147,9 @@ const DecentralizedExchange: React.FC = () => {
           customHttpProvider,
         );
         const tlc_usdc_total_supply = await tlc_usdc_cont.totalSupply();
-        console.log(
-          'tlc_usdc_total_supply',
-          formatEther(tlc_usdc_total_supply.toString()),
-        );
         const locked_tlc_usdc = await tlc_usdc_cont.balanceOf(
           MasterchefContractAddress,
         );
-        console.log('locked_tlc_usdc', formatEther(locked_tlc_usdc.toString()));
         // usdc-tlc lp usdc
         const usdc_amount = await usdc_cont.balanceOf(usdc_tlc_pool_eth);
         const usdc_amount_fl = parseFloat(
@@ -165,11 +160,9 @@ const DecentralizedExchange: React.FC = () => {
             6,
           ),
         );
-        console.log('usdc tlc lp usdc amount', usdc_amount_fl);
         // locked usdc-tlc lp price
         const locked_usdc_tlc_lp_price =
           (2 * usdc_amount_fl * locked_tlc_usdc) / tlc_usdc_total_supply;
-        console.log('usdc tlc price', locked_usdc_tlc_lp_price);
 
         // usdc-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
         let usdc_tlc_apr = 500;
@@ -182,7 +175,6 @@ const DecentralizedExchange: React.FC = () => {
               locked_usdc_tlc_lp_price) *
             100;
         }
-        console.log('usdc tlc apr', usdc_tlc_apr);
         setUsdcTlcApr(usdc_tlc_apr.toFixed(2).toString() + '%');
         setUsdtTlcApr(usdt_tlc_apr.toFixed(2).toString() + '%');
         ///////////////// current USDC-TLC lp locked amount in farming pools end//////////////////////////////////////
