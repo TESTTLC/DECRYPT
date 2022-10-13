@@ -38,7 +38,7 @@ body {
 }
 
 .bg-image {
-  background-image: url('./assets/images/main-background.jpg');
+  background-image: url('./assets/images/main-background-2.jpg');
   filter: blur(25px);
   opacity: 0.85;
   right: 0;
