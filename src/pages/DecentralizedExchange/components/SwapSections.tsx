@@ -321,13 +321,21 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         console.log('blockNumber: ', blockNumber);
         console.log('firstToken.address: ', address1);
         console.log('secondToken.address: ', address2);
-        const amount1 = parseEther(amountToSwap.toString());
+        let amount1;
+        if (fromToken === 'wUSDT' || fromToken === 'wUSDC') {
+          amount1 = parseUnits(amountToSwap.toString(), 6);
+        } else {
+          amount1 = parseEther(amountToSwap.toString());
+        }
 
         let approve1tx;
         if (fromToken === 'wUSDT') {
           approve1tx = await wUSDTContract.approve(
             RouterContractAddress,
             amount1,
+            {
+              gasLimit: 250000,
+            },
           );
           const approve1Result = await approve1tx.wait();
           console.log('approve1Result: ', approve1Result);
@@ -335,6 +343,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           approve1tx = await wUSDCContract.approve(
             RouterContractAddress,
             amount1,
+            {
+              gasLimit: 250000,
+            },
           );
           const approve1Result = await approve1tx.wait();
           console.log('approve1Result: ', approve1Result);
@@ -342,6 +353,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           approve1tx = await wTLCContract.approve(
             RouterContractAddress,
             amount1,
+            {
+              gasLimit: 250000,
+            },
           );
           const approve1Result = await approve1tx.wait();
           console.log('approve1Result: ', approve1Result);
