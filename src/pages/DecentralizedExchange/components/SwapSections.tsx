@@ -469,7 +469,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 ((fromToken === 'wUSDC' && toToken === 'wTLC') ||
                   (fromToken === 'wUSDT' && toToken === 'wTLC') ||
                   (fromToken === 'wTLC' && toToken === 'wUSDC') ||
-                  (fromToken === 'gigitwTLC' && toToken === 'wUSDT'))
+                  (fromToken === 'wTLC' && toToken === 'wUSDT'))
               ) {
                 await swapExactTokensForTokens();
               } else if (
