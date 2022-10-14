@@ -18,10 +18,9 @@ import {
   RouterContractAddress,
   TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
+  TLCTokenContractAddress,
   USDTContractAddress,
-  usdc_eth,
-  usdt_eth,
-  wtlc_eth,
+  WTLCTokenContractAddress,
 } from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
 import Router from 'src/contracts/Router.json';
@@ -78,7 +77,7 @@ export const fromBinanceModalTokens: any[] = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fromBinanceToEthereumhainModalTokens: any[] = [
+export const fromBinanceToTLChainModalTokens: any[] = [
   {
     name: 'TLC',
     tag: 'TLC',
@@ -100,68 +99,68 @@ export const fromBinanceToEthereumhainModalTokens: any[] = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fromEthereumChainModalTokens: any[] = [
-  //   {
-  //     name: 'TLC',
-  //     tag: 'TLC',
-  //     image: tlcLogo,
-  //     value: TLCValue,
-  //     address: wtlc_eth,
-  //   },
+export const fromTLChainModalTokens: any[] = [
+  {
+    name: 'TLC',
+    tag: 'TLC',
+    image: tlcLogo,
+    value: TLCValue,
+    address: TLCTokenContractAddress,
+  },
   {
     name: 'wTLC',
     tag: 'wTLC',
     image: tlcLogo,
     iconBackground: '',
     value: TLCValue,
-    address: wtlc_eth,
+    address: WTLCTokenContractAddress,
   },
   {
     name: 'wUSDT',
     tag: 'wUSDT',
     image: usdtLogo,
     value: 1,
-    address: usdt_eth,
+    address: TLChain_USDT_ChildTokenContractAddress,
   },
   {
     name: 'wUSDC',
     tag: 'wUSDC',
     image: usdcLogo,
     value: 1,
-    address: usdc_eth,
+    address: TLChain_USDC_ChildTokenContractAddress,
   },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fromEthereumChainToEthereumChainModalTokens: any[] = [
+export const fromTLChainToTLChainModalTokens: any[] = [
   {
     name: 'wTLC',
     tag: 'wTLC',
     image: tlcLogo,
     iconBackground: '',
     value: TLCValue,
-    address: wtlc_eth,
+    address: WTLCTokenContractAddress,
   },
-  //   {
-  //     name: 'TLC',
-  //     tag: 'TLC',
-  //     image: tlcLogo,
-  //     value: TLCValue,
-  //     address: wtlc_eth,
-  //   },
+  {
+    name: 'TLC',
+    tag: 'TLC',
+    image: tlcLogo,
+    value: TLCValue,
+    address: TLCTokenContractAddress,
+  },
   {
     name: 'wUSDT',
     tag: 'wUSDT',
     image: usdtLogo,
     value: 1,
-    address: usdt_eth,
+    address: TLChain_USDT_ChildTokenContractAddress,
   },
   {
     name: 'wUSDC',
     tag: 'wUSDC',
     image: usdcLogo,
     value: 1,
-    address: usdc_eth,
+    address: TLChain_USDC_ChildTokenContractAddress,
   },
 ];
 
@@ -186,7 +185,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     fromBinanceModalTokens,
   );
   const [toModalTokens, setToModalTokens] = useState(
-    fromBinanceToEthereumhainModalTokens,
+    fromBinanceToTLChainModalTokens,
   );
 
   const [fromToken, setFromToken] = useState<string>(defaultToken.tag);
@@ -210,22 +209,22 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     if (chainSectionIndex === 0) {
       console.log('0');
       setFromModalTokens(fromBinanceModalTokens);
-      setToModalTokens(fromBinanceToEthereumhainModalTokens);
+      setToModalTokens(fromBinanceToTLChainModalTokens);
       setFromToken(fromBinanceModalTokens[0].tag);
-      setToToken(fromBinanceToEthereumhainModalTokens[0].tag);
+      setToToken(fromBinanceToTLChainModalTokens[0].tag);
     } else if (chainSectionIndex === 1) {
       console.log('1');
-      setFromModalTokens(fromEthereumChainModalTokens);
-      setToModalTokens(fromEthereumChainToEthereumChainModalTokens);
-      setFromToken(fromEthereumChainModalTokens[0].tag);
-      setToToken(fromEthereumChainToEthereumChainModalTokens[0].tag);
+      setFromModalTokens(fromTLChainModalTokens);
+      setToModalTokens(fromTLChainToTLChainModalTokens);
+      setFromToken(fromTLChainModalTokens[0].tag);
+      setToToken(fromTLChainToTLChainModalTokens[0].tag);
     }
   }, [chainSectionIndex]);
 
   const swapTLCToWTLC = useCallback(async () => {
     if (amountToSwap > 0) {
       const tx = await provider?.getSigner().sendTransaction({
-        to: wtlc_eth,
+        to: WTLCTokenContractAddress,
         value: parseEther(amountToSwap.toString()),
       });
       const result = await tx?.wait();
@@ -236,11 +235,11 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   const swapWTLCToTLC = useCallback(async () => {
     if (amountToSwap > 0 && provider) {
       //   const tx = await provider?.getSigner().sendTransaction({
-      //     to: wtlc_eth,
+      //     to: WTLCTokenContractAddress,
       //     value: parseEther(amountToSwap.toString()),
       //   });
       const wTLCContract = new Contract(
-        wtlc_eth,
+        WTLCTokenContractAddress,
         wTLCToken.abi,
         provider.getSigner(),
       );
@@ -279,12 +278,12 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     if (provider) {
       try {
         setIsLoading(true);
-        const address1 = fromEthereumChainModalTokens.find(
+        const address1 = fromTLChainModalTokens.find(
           (token) => token.tag === fromToken,
         ).address;
         console.log('address1: ', address1);
 
-        const address2 = fromEthereumChainToEthereumChainModalTokens.find(
+        const address2 = fromTLChainToTLChainModalTokens.find(
           (token) => token.tag === toToken,
         ).address;
 
@@ -298,19 +297,19 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         console.log('routerContractt: ', routerContract);
 
         const wUSDTContract = new Contract(
-          usdt_eth,
+          TLChain_USDT_ChildTokenContractAddress,
           ERC20.abi,
           provider.getSigner(),
         );
         const wUSDCContract = new Contract(
-          usdc_eth,
+          TLChain_USDC_ChildTokenContractAddress,
           ERC20.abi,
           provider.getSigner(),
         );
 
         const wTLCContract = new Contract(
-          wtlc_eth,
-          ERC20.abi,
+          WTLCTokenContractAddress,
+          wTLCToken.abi,
           provider.getSigner(),
         );
 
@@ -449,30 +448,30 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         return (
           <button
             className="flex w-full h-10 xs:mt-3 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
-            onClick={async () => {
-              if (
-                fromToken !== 'TLC' &&
-                ((fromToken === 'wUSDC' && toToken === 'wTLC') ||
-                  (fromToken === 'wUSDT' && toToken === 'wTLC') ||
-                  (fromToken === 'wTLC' && toToken === 'wUSDC') ||
-                  (fromToken === 'wTLC' && toToken === 'wUSDT'))
-              ) {
-                await swapExactTokensForTokens();
-              } else if (
-                (fromToken === 'TLC' && toToken === 'wTLC') ||
-                (fromToken === 'wTLC' && toToken === 'TLC')
-              ) {
-                if (fromToken === 'TLC' && toToken === 'wTLC') {
-                  setIsLoading(true);
-                  await swapTLCToWTLC();
-                  setIsLoading(false);
-                } else if (fromToken === 'wTLC' && toToken === 'TLC') {
-                  setIsLoading(true);
-                  swapWTLCToTLC();
-                  setIsLoading(false);
-                }
-              }
-            }}
+            // onClick={async () => {
+            //   if (
+            //     fromToken !== 'TLC' &&
+            //     ((fromToken === 'wUSDC' && toToken === 'wTLC') ||
+            //       (fromToken === 'wUSDT' && toToken === 'wTLC') ||
+            //       (fromToken === 'wTLC' && toToken === 'wUSDC') ||
+            //       (fromToken === 'wTLC' && toToken === 'wUSDT'))
+            //   ) {
+            //     await swapExactTokensForTokens();
+            //   } else if (
+            //     (fromToken === 'TLC' && toToken === 'wTLC') ||
+            //     (fromToken === 'wTLC' && toToken === 'TLC')
+            //   ) {
+            //     if (fromToken === 'TLC' && toToken === 'wTLC') {
+            //       setIsLoading(true);
+            //       await swapTLCToWTLC();
+            //       setIsLoading(false);
+            //     } else if (fromToken === 'wTLC' && toToken === 'TLC') {
+            //       setIsLoading(true);
+            //       swapWTLCToTLC();
+            //       setIsLoading(false);
+            //     }
+            //   }
+            // }}
             disabled={isLoading || amountToSwap < minimumAmount}
           >
             {isLoading ? (
@@ -559,22 +558,19 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       );
       console.log('router: ', routerC);
 
-      const from = fromEthereumChainToEthereumChainModalTokens.find(
+      const from = fromTLChainToTLChainModalTokens.find(
         (t) => t.tag === fromToken,
       );
-      const to = fromEthereumChainToEthereumChainModalTokens.find(
-        (t) => t.tag === toToken,
-      );
+      const to = fromTLChainToTLChainModalTokens.find((t) => t.tag === toToken);
 
       if (from?.address && to?.address) {
         const result = await routerC.getAmountsOut(
           parseEther(amountToSwap.toString()),
           [from.address, to.address],
         );
-        console.log('RESULT is: ', result);
 
-        setAmountsOut(Number(formatUnits(result[1].toString(), 6)));
-        out = Number(formatUnits(result[1].toString(), 6));
+        setAmountsOut(Number(formatUnits(result[1].toString())));
+        out = Number(formatUnits(result[1].toString()));
       }
     } catch (error) {
       console.log('Error o getAmountsOut: ', error);
@@ -583,14 +579,12 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     return out;
   }, [amountToSwap, fromToken, provider, toToken]);
 
-  const secondAmount = useMemo(() => {
+  const value = useMemo(() => {
     getAmountsOut();
-    const from = fromBinanceToEthereumhainModalTokens.find(
+    const from = fromBinanceToTLChainModalTokens.find(
       (t) => t.tag === fromToken,
     );
-    const to = fromBinanceToEthereumhainModalTokens.find(
-      (t) => t.tag === toToken,
-    );
+    const to = fromBinanceToTLChainModalTokens.find((t) => t.tag === toToken);
     if (chainSectionIndex === 0) {
       return amountToSwap / TLCValue;
     } else if (chainSectionIndex === 1) {
@@ -704,7 +698,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="number"
                   disabled
-                  value={secondAmount}
+                  value={value}
                 ></input>
               </div>
               {/* <SwapTokensModal tokens={[]} type="to" /> */}
@@ -769,7 +763,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                         }`}
                       />
                       <img
-                        src={fromBinanceToEthereumhainModalTokens[0].image}
+                        src={fromBinanceToTLChainModalTokens[0].image}
                         className={`w-10 h-10 absolute left-11 bottom-2 rounded-full border-4 bg-gray-600 border-gray-800 p-[0.15rem] ${
                           isOdd ? 'z-20' : 'z-10'
                         }`}
@@ -777,7 +771,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                     </div>
                     <div className="flex-[0.3]">
                       <span>
-                        {t.tag}-{fromBinanceToEthereumhainModalTokens[0].tag}
+                        {t.tag}-{fromBinanceToTLChainModalTokens[0].tag}
                       </span>
                     </div>
                     <div className="flex-[0.5]">
