@@ -455,7 +455,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 ((fromToken === 'wUSDC' && toToken === 'wTLC') ||
                   (fromToken === 'wUSDT' && toToken === 'wTLC') ||
                   (fromToken === 'wTLC' && toToken === 'wUSDC') ||
-                  (fromToken === 'wTLC' && toToken === 'wUSDT'))
+                  (fromToken === 'gigitwTLC' && toToken === 'wUSDT'))
               ) {
                 await swapExactTokensForTokens();
               } else if (
@@ -541,7 +541,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     fromToken,
     isLoading,
     messageValue,
-    send,
     swapExactTokensForTokens,
     swapTLCToWTLC,
     swapWTLCToTLC,
@@ -573,8 +572,13 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         );
         console.log('RESULT is: ', result);
 
-        setAmountsOut(Number(formatUnits(result[1].toString(), 6)));
-        out = Number(formatUnits(result[1].toString(), 6));
+        if (fromToken === 'wUSDT' || fromToken === 'wUSDC') {
+          setAmountsOut(Number(formatUnits(result[1].toString())));
+          out = Number(formatUnits(result[1].toString()));
+        } else {
+          setAmountsOut(Number(formatUnits(result[1].toString(), 6)));
+          out = Number(formatUnits(result[1].toString(), 6));
+        }
       }
     } catch (error) {
       console.log('Error o getAmountsOut: ', error);
@@ -604,7 +608,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       } else if (fromToken === 'TLC' || fromToken === 'wTLC') {
         // return amountToSwap * TLCValue;
         return amountsOut;
-      } else return amountsOut;
+      } else {
+        console.log('Here: ', amountsOut);
+        return amountsOut;
+      }
     }
   }, [
     getAmountsOut,
