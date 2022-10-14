@@ -238,20 +238,32 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
         console.log('blockNumber: ', blockNumber);
         console.log('firstToken.address: ', firstToken.address);
         console.log('secondToken.address: ', secondToken.address);
+        console.log('secondAmount: ', secondAmount);
         console.log(
-          'amount2: ',
-          ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18)), 18),
+          'ethers.FixedNumber.fromValue(parseEther(secondAmount.toFixed(18)))',
+          parseEther(
+            formatEther(parseEther(secondAmount.toString())),
+          ).toString(),
         );
+
         let approve1tx;
         if (firstToken.tag === 'wUSDT') {
+          console.log('Here1');
           approve1tx = await wUSDTContract.approve(
             RouterContractAddress,
             parseUnits(amount1.toString(), 6),
+            {
+              gasLimit: 250000,
+            },
           );
         } else {
+          console.log('Here');
           approve1tx = await wUSDCContract.approve(
             RouterContractAddress,
             parseUnits(amount1.toString(), 6),
+            {
+              gasLimit: 250000,
+            },
           );
         }
 
@@ -261,7 +273,9 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
 
         const approve2tx = await wTLCContract.approve(
           RouterContractAddress,
-          ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
+          //   parseEther(secondAmount.toString()),
+          parseEther(formatEther(parseEther(secondAmount.toString()))),
+          //   ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
         );
         const approve2Result = await approve2tx.wait();
         console.log('approve2tx: ', approve2tx);
@@ -271,7 +285,8 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
           secondToken.address,
           //   parseEther(amount1.toString()),
           parseUnits(amount1.toString(), 6),
-          ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
+          parseEther(formatEther(parseEther(secondAmount.toString()))),
+          // ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
           //   parseEther(amount2.toFixed(18)),
           0,
           0,
@@ -291,8 +306,8 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
   }, [
     amountToSwap,
     firstToken.address,
-    firstToken.tag,
     provider,
+    secondAmount,
     secondToken.address,
     walletAddress,
   ]);

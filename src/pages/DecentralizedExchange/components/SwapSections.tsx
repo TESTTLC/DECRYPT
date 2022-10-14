@@ -27,7 +27,7 @@ import USDTToken from 'src/contracts/USDT.json';
 import Router from 'src/contracts/Router.json';
 import ERC20 from 'src/contracts/ERC20.json';
 import wTLCToken from 'src/contracts/WTLC.json';
-import { formatUnits, parseEther } from 'ethers/lib/utils';
+import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils';
 
 import SwapTokensModal from './SwapTokensModal';
 import { toModalTokes } from './LiquiditySections';
@@ -566,11 +566,26 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       );
 
       if (from?.address && to?.address) {
-        const result = await routerC.getAmountsOut(
-          parseEther(amountToSwap.toString()),
-          [from.address, to.address],
-        );
+        let result;
+        if (fromToken === 'wUSDT' || fromToken === 'wUSDC') {
+          result = await routerC.getAmountsOut(
+            parseUnits(amountToSwap.toString(), 6),
+            [from.address, to.address],
+          );
+        } else {
+          result = await routerC.getAmountsOut(
+            parseEther(amountToSwap.toString()),
+            [from.address, to.address],
+          );
+        }
+
         console.log('RESULT is: ', result);
+        console.log(
+          'parseEther(amountToSwap.toString()) is: ',
+          parseEther(amountToSwap.toString()),
+        );
+        console.log('from.address: ', from.address);
+        console.log('to.address: ', to.address);
 
         if (fromToken === 'wUSDT' || fromToken === 'wUSDC') {
           setAmountsOut(Number(formatUnits(result[1].toString())));
