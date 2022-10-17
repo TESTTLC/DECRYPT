@@ -5,7 +5,7 @@ import { modalChains } from 'src/utils/globals';
 import { updateBridgeState } from './actions';
 
 const initialState: BridgeState = {
-  token: 'LSO',
+  token: 'TLC',
   //   fromToken: 'LSO',
   //   toToken: 'LSO',
   fromChain: modalChains.TLC.tag,

@@ -360,6 +360,14 @@ const EVM: React.FC = () => {
               AVAX: modalChains.AVAX,
               MATIC: modalChains.MATIC,
               ETH: modalChains.ETH,
+              CRONOS: modalChains.CRONOS,
+              OKB: modalChains.OKB,
+              HARMONY: modalChains.HARMONY,
+              AURORA: modalChains.AURORA,
+              KAVA: modalChains.KAVA,
+              IOTEX: modalChains.IOTEX,
+              KLAY: modalChains.KLAY,
+              COSMOS: modalChains.COSMOS,
             }}
             coins={{
               TLC: modalCoins.TLC,
@@ -396,6 +404,14 @@ const EVM: React.FC = () => {
               AVAX: modalChains.AVAX,
               MATIC: modalChains.MATIC,
               ETH: modalChains.ETH,
+              CRONOS: modalChains.CRONOS,
+              OKB: modalChains.OKB,
+              HARMONY: modalChains.HARMONY,
+              AURORA: modalChains.AURORA,
+              KAVA: modalChains.KAVA,
+              IOTEX: modalChains.IOTEX,
+              KLAY: modalChains.KLAY,
+              COSMOS: modalChains.COSMOS,
             }}
             coins={{
               TLC: modalCoins.TLC,

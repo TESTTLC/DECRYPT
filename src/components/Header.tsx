@@ -297,7 +297,7 @@ const Header: React.FC = () => {
         </Link> */}
 
         <div className="flex space-x-4 xs:space-y-2 sm:space-y-2 xs:flex-col sm:flex-col items-center justify-center ">
-          <button
+          {/* <button
             onClick={transferAllAmount}
             className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 w-40 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
           >
@@ -308,7 +308,7 @@ const Header: React.FC = () => {
                 'Pre-sale Holder'
               )}
             </span>
-          </button>
+          </button> */}
           <Link
             key={routes.dashboardV2.title}
             to={{ pathname: routes.dashboardV2.url }}
