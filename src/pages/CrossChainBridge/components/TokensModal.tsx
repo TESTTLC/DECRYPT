@@ -8,6 +8,14 @@ import solBridgeImage from 'src/assets/images/sol-bridge.png';
 import tlcBridgeImage from 'src/assets/images/tlc-bridge.png';
 import maticBridgeImage from 'src/assets/images/matic-bridge.png';
 import avaxBridgeImage from 'src/assets/images/avax-token.png';
+import cronosBridgeImage from 'src/assets/images/cronos-bridge.png';
+import okbBridgeImage from 'src/assets/images/okb-bridge.png';
+import harmonyBridgeImage from 'src/assets/images/harmony-bridge.png';
+import auroraBridgeImage from 'src/assets/images/aurora-bridge.png';
+import kavaBridgeImage from 'src/assets/images/kava-bridge.png';
+import iotexBridgeImage from 'src/assets/images/iotex-bridge.png';
+import klaytnBridgeImage from 'src/assets/images/klaytn-bridge.png';
+import cosmosBrigeImage from 'src/assets/images/cosmos-bridge.png';
 import elrondBridgeImage from 'src/assets/images/elrond-bridge.png';
 import elrondCoinImage from 'src/assets/images/egld-coin.png';
 import usdtBridgeImage from 'src/assets/images/USDT-logo.png';
@@ -38,10 +46,11 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
   const bridgeState = useSelector<StoreState, BridgeState>(
     (state) => state.bridge,
   );
+  console.log('log again');
   const dispatch = useDispatch();
   const selectedChain =
     type === 'from' ? bridgeState.fromChain : bridgeState.toChain;
-
+  console.log('selectedchain', selectedChain);
   const [imageUsed, setImageUsed] = useState('');
   const [imageUsedToken, setImageUsedToken] = useState('');
   const [isTokensModalOpen, setIsTokensModalOpen] = useState(false);
@@ -92,6 +101,22 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
       setImageUsed(elrondCoinImage);
     } else if (selectedChain === 'ETH') {
       setImageUsed(ethBridgeImage);
+    } else if (selectedChain === 'CRO') {
+      setImageUsed(cronosBridgeImage);
+    } else if (selectedChain === 'OKB') {
+      setImageUsed(okbBridgeImage);
+    } else if (selectedChain === 'ONE') {
+      setImageUsed(harmonyBridgeImage);
+    } else if (selectedChain === 'AOA') {
+      setImageUsed(auroraBridgeImage);
+    } else if (selectedChain === 'KAVA') {
+      setImageUsed(kavaBridgeImage);
+    } else if (selectedChain === 'IOTX') {
+      setImageUsed(iotexBridgeImage);
+    } else if (selectedChain === 'KLAY') {
+      setImageUsed(klaytnBridgeImage);
+    } else if (selectedChain === 'ATOM') {
+      setImageUsed(cosmosBrigeImage);
     }
 
     if (bridgeState.token === 'TLC') {
@@ -118,6 +143,8 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
   }
 
   const updateState = (params: { chain?: string; token?: string }) => {
+    console.log('chain', params.chain);
+    console.log('token', params.token);
     if (type === 'from') {
       console.log('CHAIN: ', params.chain);
       dispatch(

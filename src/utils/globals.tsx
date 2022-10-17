@@ -5,11 +5,30 @@ import tlcBridgeImage from '../assets/images/tlc-bridge.png';
 import ethBridgeImage from '../assets/images/eth-bridge.png';
 import maticBridgeImage from '../assets/images/matic-bridge.png';
 import avaxBridgeImage from '../assets/images/avax-token.png';
+import cronosBridgeImage from '../assets/images/cronos-bridge.png';
+import okbBridgeImage from '../assets/images/okb-bridge.png';
+import harmonyBridgeImage from '../assets/images/harmony-bridge.png';
+import auroraBridgeImage from '../assets/images/aurora-bridge.png';
+import kavaBridgeImage from '../assets/images/kava-bridge.png';
+import iotexBridgeImage from '../assets/images/iotex-bridge.png';
+import klaytnBridgeImage from '../assets/images/klaytn-bridge.png';
+import cosmosBrigeImage from '../assets/images/cosmos-bridge.png';
 import usdtCoinImage from '../assets/images/USDT-logo.png';
 import usdcCoinImage from '../assets/images/USDC-logo.png';
 import lsoCoinImage from '../assets/images/LSO-logo.png';
 import elrondCoinImage from '../assets/images/egld-coin.png';
+/**
+ * 
+ * CRO=>cronos
+OKB=>okb
+ONE=>harmony
+AOA=>aurora
+KAVA=>KAVA
+IOTX=>iotex
+KLAY=>Klaytn
+ATOM=> cosmos
 
+ */
 export const stableCoins = ['USDT', 'USDC'];
 
 export const nativeTLCAddress = '0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6';
@@ -362,6 +381,46 @@ export const modalChains = {
     name: 'Ethereum',
     tag: 'ETH',
     image: ethBridgeImage,
+  },
+  CRONOS: {
+    name: 'Cronos',
+    tag: 'CRO',
+    image: cronosBridgeImage,
+  },
+  OKB: {
+    name: 'OKB',
+    tag: 'OKB',
+    image: okbBridgeImage,
+  },
+  HARMONY: {
+    name: 'Harmony',
+    tag: 'ONE',
+    image: harmonyBridgeImage,
+  },
+  AURORA: {
+    name: 'Aurora',
+    tag: 'AOA',
+    image: auroraBridgeImage,
+  },
+  KAVA: {
+    name: 'KAVA',
+    tag: 'KAVA',
+    image: kavaBridgeImage,
+  },
+  IOTEX: {
+    name: 'IoTex',
+    tag: 'IOTX',
+    image: iotexBridgeImage,
+  },
+  KLAY: {
+    name: 'Klaytn',
+    tag: 'KLAY',
+    image: klaytnBridgeImage,
+  },
+  COSMOS: {
+    name: 'Cosmos',
+    tag: 'ATOM',
+    image: cosmosBrigeImage,
   },
 
   // {
