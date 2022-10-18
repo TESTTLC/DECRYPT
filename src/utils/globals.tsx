@@ -13,6 +13,7 @@ import kavaBridgeImage from '../assets/images/kava-bridge.png';
 import iotexBridgeImage from '../assets/images/iotex-bridge.png';
 import klaytnBridgeImage from '../assets/images/klaytn-bridge.png';
 import cosmosBrigeImage from '../assets/images/cosmos-bridge.png';
+import evmosBridgeImage from '../assets/images/evmos_bridge.png';
 import usdtCoinImage from '../assets/images/USDT-logo.png';
 import usdcCoinImage from '../assets/images/USDC-logo.png';
 import lsoCoinImage from '../assets/images/LSO-logo.png';
@@ -27,7 +28,7 @@ KAVA=>KAVA
 IOTX=>iotex
 KLAY=>Klaytn
 ATOM=> cosmos
-
+evmos => Evmos
  */
 export const stableCoins = ['USDT', 'USDC'];
 
@@ -421,6 +422,11 @@ export const modalChains = {
     name: 'Cosmos',
     tag: 'ATOM',
     image: cosmosBrigeImage,
+  },
+  EVMOS: {
+    name: 'Evmos',
+    tag: 'evmos',
+    image: evmosBridgeImage,
   },
 
   // {

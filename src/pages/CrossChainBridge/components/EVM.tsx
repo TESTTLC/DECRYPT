@@ -368,6 +368,7 @@ const EVM: React.FC = () => {
               IOTEX: modalChains.IOTEX,
               KLAY: modalChains.KLAY,
               COSMOS: modalChains.COSMOS,
+              EVMOS: modalChains.EVMOS,
             }}
             coins={{
               TLC: modalCoins.TLC,
@@ -412,6 +413,7 @@ const EVM: React.FC = () => {
               IOTEX: modalChains.IOTEX,
               KLAY: modalChains.KLAY,
               COSMOS: modalChains.COSMOS,
+              EVMOS: modalChains.EVMOS,
             }}
             coins={{
               TLC: modalCoins.TLC,
