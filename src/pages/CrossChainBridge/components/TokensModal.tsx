@@ -16,6 +16,7 @@ import kavaBridgeImage from 'src/assets/images/kava-bridge.png';
 import iotexBridgeImage from 'src/assets/images/iotex-bridge.png';
 import klaytnBridgeImage from 'src/assets/images/klaytn-bridge.png';
 import cosmosBrigeImage from 'src/assets/images/cosmos-bridge.png';
+import evmosBridgeImage from 'src/assets/images/evmos_bridge.png';
 import elrondBridgeImage from 'src/assets/images/elrond-bridge.png';
 import elrondCoinImage from 'src/assets/images/egld-coin.png';
 import usdtBridgeImage from 'src/assets/images/USDT-logo.png';
@@ -117,6 +118,8 @@ const TokensModal: React.FC<Props> = ({ chains, type, chainType, coins }) => {
       setImageUsed(klaytnBridgeImage);
     } else if (selectedChain === 'ATOM') {
       setImageUsed(cosmosBrigeImage);
+    } else if (selectedChain === 'evmos') {
+      setImageUsed(evmosBridgeImage);
     }
 
     if (bridgeState.token === 'TLC') {
