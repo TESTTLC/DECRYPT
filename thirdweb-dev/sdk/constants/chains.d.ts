@@ -11,7 +11,7 @@ export declare enum ChainId {
     xDai = 100,
     Polygon = 137,
     Moonriver = 1285,
-    TLChain = 5177,
+    TLChain = 1221,
     Mumbai = 80001,
     Harmony = 1666600000,
     Localhost = 1337,

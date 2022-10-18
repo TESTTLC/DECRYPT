@@ -14,7 +14,7 @@ const providerOptions: IProviderOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        5177: 'https://mainnet-rpc.tlxscan.com/',
+        1221: 'https://mainnet-rpc.tlchain.live/',
       },
     },
   },

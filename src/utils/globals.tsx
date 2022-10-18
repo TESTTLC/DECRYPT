@@ -72,8 +72,10 @@ export const Ethereum_USDC_TokenContractAddress =
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
+// export const OLDWTLCTokenContractAddress =
+//   '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711';
 export const WTLCTokenContractAddress =
-  '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711';
+  '0x04BFed9B1bC8FE6bA02e1A99bd99c78b2de3662a';
 
 export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
