@@ -274,6 +274,15 @@ const Header: React.FC = () => {
               <span className="leading-[12px]">TLChain Wallet</span>
             </button>
           </a>
+          <a
+            href="https://explorer.tlchain.live/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+              <span className="leading-[12px]">TLChain Explorer</span>
+            </button>
+          </a>
         </div>
       </div>
       {/* <div
@@ -285,7 +294,7 @@ const Header: React.FC = () => {
       > */}
       <div
         className={`flex space-x-4 items-center justify-center ${
-          isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
+          isSidebarOpen ? 'ml-30 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
         {/* <Link
@@ -309,6 +318,17 @@ const Header: React.FC = () => {
               )}
             </span>
           </button> */}
+          <a href="#" target="_blank" rel="noreferrer">
+            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+              <span className="leading-[12px]">Staking Validators</span>
+            </button>
+          </a>
+          <a href="#" target="_blank" rel="noreferrer">
+            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+              <span className="leading-[12px]">Claim Vesting</span>
+            </button>
+          </a>
+
           <Link
             key={routes.dashboardV2.title}
             to={{ pathname: routes.dashboardV2.url }}
