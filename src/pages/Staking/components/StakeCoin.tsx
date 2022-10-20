@@ -118,6 +118,7 @@ const StakeCoin: React.FC = () => {
   }, [provider]);
 
   useEffect(() => {
+    console.log('currentChainId: ', currentChainId);
     if (currentChainId === ChainsIds.TLC) {
       setChainErrorMessage(undefined);
     } else {

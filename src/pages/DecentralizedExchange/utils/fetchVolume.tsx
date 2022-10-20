@@ -7,7 +7,7 @@ import Router from 'src/contracts/Router.json';
 
 export function useUsdtTrans(currentBlock: number) {
   const [value, setValue] = useState([]);
-  // const API_URL = 'https://tlxscan.com/api';
+  // const API_URL = 'https://explorer.tlchain.live/api';
   const API_URL = 'https://api.etherscan.io/api';
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +79,7 @@ export function useUsdtTrans(currentBlock: number) {
 
 export function useUsdcTrans(currentBlock: number) {
   const [value, setValue] = useState([]);
-  // const API_URL = 'https://tlxscan.com/api';
+  // const API_URL = 'https://explorer.tlchain.live/api';
   const API_URL = 'https://api.etherscan.io/api';
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const temp_arr: any = [];

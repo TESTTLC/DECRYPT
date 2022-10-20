@@ -218,7 +218,7 @@ const NFTMarketplaceProfile: React.FC = () => {
               </p>
             )}
             {/* @ts-ignore */}
-            {window.ethereum?.networkVersion !== '1221' && (
+            {window.ethereum?.networkVersion !== '2224' && (
               <p className="self-center col-span-full text-center mt-8 text-lg">
                 Please switch your wallet to TLChain Mainnet to have access to
                 your profile <b>{selectedCategory}</b> section

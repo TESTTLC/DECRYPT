@@ -81,7 +81,7 @@ export declare const defaultSupportedChains: (
       ];
     }
   | {
-      readonly id: 1221;
+      readonly id: 2224;
       readonly name: 'TLChain Mainnet';
       readonly nativeCurrency: {
         readonly name: 'TLChain';
@@ -92,7 +92,7 @@ export declare const defaultSupportedChains: (
       readonly blockExplorers: readonly [
         {
           readonly name: 'TLXScan';
-          readonly url: 'https://tlxscan.com/';
+          readonly url: 'https://explorer.tlchain.live/';
         },
       ];
     }
