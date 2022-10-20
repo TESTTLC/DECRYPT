@@ -93,7 +93,8 @@ export type Project = {
 export enum ChainsIds {
   BSC = '0x38',
   BSC_TESTNET = '0x61', //97
-  TLC = '0x1439',
+  // TLC = '0x1439' // 5177,
+  TLC = '0x4c5', // 1221
   FTM = '0xfa',
   AVAX = '0xa86a',
   MATIC = '0x89',

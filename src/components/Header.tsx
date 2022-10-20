@@ -104,7 +104,7 @@ const addNetwork = () => {
         symbol: 'TLC',
         decimals: 18,
       },
-      rpcUrls: ['https://mainnet-rpc.tlxscan.com/'],
+      rpcUrls: ['https://mainnet-rpc.tlchain.live/'],
       blockExplorerUrls: ['https://tlxscan.com/'],
     } as AddEthereumChainParameter,
   ];
