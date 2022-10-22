@@ -540,6 +540,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
     fromToken,
     isLoading,
     messageValue,
+    swapExactTokensForTokens,
+    swapTLCToWTLC,
+    swapWTLCToTLC,
+    toToken,
     walletAddress,
   ]);
 
@@ -557,7 +561,11 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         (t) => t.tag === fromToken,
       );
       const to = fromTLChainToTLChainModalTokens.find((t) => t.tag === toToken);
-
+      console.log(
+        'parseEther(amountToSwap.toString()): ',
+        parseEther(amountToSwap.toString()),
+      );
+      console.log('[from.address, to.address]: ', [from.address, to.address]);
       if (from?.address && to?.address) {
         const result = await routerC.getAmountsOut(
           parseEther(amountToSwap.toString()),

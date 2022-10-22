@@ -294,7 +294,8 @@ const Header: React.FC = () => {
       > */}
       <div
         className={`flex space-x-4 items-center justify-center ${
-          isSidebarOpen ? 'ml-30 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
+          isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
+          //   isSidebarOpen ? 'ml-30 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
       >
         {/* <Link

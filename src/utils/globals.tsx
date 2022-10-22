@@ -82,17 +82,17 @@ export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
 // /** Mainnet */
 export const TLXTokenContractAddress =
-  '0xB8B538C5dD46d8D691f0A972754365be8c9DC20b';
+  '0xFc9FEC6BD719F32aC632bDd3b3c15995dd6c89d9';
 export const TLXStakeContractAddress =
   '0x492eeF5e03024879444E46F3c57A5fBe5F793d32';
 
 export const CSYTokenContractAddress =
-  '0x5d68D2c43e7E1F761deA6EB6353f14F622D5c664';
+  '0x19A2d259aB78BE740444730dc8Dbe2B86E703ba4';
 export const CSYStakeContractAddress =
   '0xD4B08abe828a78C4947d274968e0958d34EF758E';
 
 export const LussoTokenContractAddress =
-  '0xD62052Cea41E22fb2B97835b53f41190Fe219001';
+  '0x6876aC856E91de18C94560012aDb83c33B440148';
 export const LussoStakeContractAddress =
   '0xe1A6E5f4BcFB9bC39c8f68B2b84BA41ca5681B36';
 export const LussoFreezeContractAddress =
@@ -130,11 +130,17 @@ export const BSCBridgeContractAddress =
 
 //TLChain
 
+export const TLChain_Cronos_SideBridgeContractAddress =
+  '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
+export const TLChain_Klatyn_SideBridgeContractAddress =
+  '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
 export const TLChain_USDC_SideBridgeContractAddress =
-  '0x2e4f445b25cbC24B2f1ab1b8B0C39763674142B5';
+  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
 
 export const TLChain_USDT_SideBridgeContractAddress =
-  '0xCDdd421bdead917Da8EC2626B92Bc38D5C2061a1';
+  '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
 
 export const TLChain_wEGLD_SideBridgeContractAddress =
   '0x51ecC0062002808B9e632D57A207be5F1850F118';
@@ -144,24 +150,24 @@ export const Binance_LSO_SideBridgeContractAddress =
   '0x25C6330D43445985f564285f3735600c8A94b74a';
 
 export const Binance_TLC_SideBridgeContractAddress =
-  '0xbBcdB8C8E0D17b76F5ED2B9FC36A60154c2142F2';
+  '0x6aeefD1DD025862a80543e6A39c013cE0Ba3DE64';
 
 //Fantom
 export const Fantom_LSO_SideBridgeContractAddress =
   '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
 
 export const Fantom_TLC_SideBridgeContractAddress =
-  '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
+  '0xCd6a8C968F6820f7163e7fb41F75048b92E4318D';
 
 //Avalanche
 export const Avalanche_LSO_SideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
 export const Avalanche_TLC_SideBridgeContractAddress =
-  '0x160d97B05a7E7D249f8FcEb47b2A35170f3eF949';
+  '0x67a77E761b2cd031593a9a8BE87FDca35Ec1b677';
 
 //Polygon
 export const Polygon_wTLC_SideBridgeContractAddress =
-  '0xd97136B7caB42058F75E05e3D8C5C87CceaC8Bc3';
+  '0x7E47c9Be6Ea658C12E3EB3bEa1dDec42e9BA5224';
 
 export const Polygon_wLSO_SideBridgeContractAddress =
   '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
@@ -173,7 +179,7 @@ export const Ethereum_wTLC_SideBridgeContractAddress =
 /** MainBridges */
 
 export const TLC_MainBridgeContractAddress =
-  '0x295993595620231fa5afc04c5c7ee21ad3b55b8A';
+  '0x04BFed9B1bC8FE6bA02e1A99bd99c78b2de3662a';
 
 export const TLC_EGLD_MainBridgeContractAddress =
   '0x53656E9a47A2e875a38a6CBcabD31EaD4f2b812d';
@@ -194,44 +200,52 @@ export const Binance_USDT_MainBridgeContractAddress =
 
 // TLChain
 export const TLChain_USDC_ChildTokenContractAddress =
-  '0x1a39bC1940058fF4626E1E79fb2C093AEe27105A';
+  '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
 
 export const TLChain_USDT_ChildTokenContractAddress =
-  '0x537C0Ea12C8D50d2D7c608a4b981638bF64e03c6';
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 export const TLChain_wEGLD_ChildTokenContractAddress =
   '0xBABfCD8324b2457c091B643CD6DC46B25577B253';
 
 // Avalanche
 export const Avalance_TLC_ChildTokenContractAddress =
-  '0xd97136B7caB42058F75E05e3D8C5C87CceaC8Bc3';
+  '0xcdc137aC87D7028E13185FfBbdAe58f6e89dd4eA';
 
 export const Avalance_LSO_ChildTokenContractAddress =
   '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 // Binance
 export const Binance_TLC_ChildTokenContractAddress =
-  '0xCd6a8C968F6820f7163e7fb41F75048b92E4318D';
+  '0x9079b1FbA7eB0B28991471d316A3772290EE81ae';
 
 export const Binance_LSO_ChildTokenContractAddress =
   '0x56F0878AE8F02E30d08B2D8D540ec59ffFa9e06e';
 
 //Fantom
 export const Fantom_TLC_ChildTokenContractAddress =
-  '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
+  '0x7E47c9Be6Ea658C12E3EB3bEa1dDec42e9BA5224';
 
 export const Fantom_LSO_ChildTokenContractAddress =
   '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
 
 //Polygon
 export const Polygon_wTLC_ChildTokenContractAddress =
-  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
+  '0x9D1A776BFC15382Ae3b8f791f62ED93F6A83bAB1';
 
 export const Polygon_wLSO_ChildTokenContractAddress =
   '0x76Ad20159F8BaeeB986d1A8792d6A3aeD750885c';
 
 export const Ethereum_wTLC_ChildTokenContractAddress =
   '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
+
+//Klaytn
+export const Klaytn_wTLC_ChildTokenContractAddress =
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
+
+//Klatyn
+export const Cronos_wTLC_ChildTokenContractAddress =
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 //devnet
 // export const ELROND_LOCK_SC_ADDRESS =
