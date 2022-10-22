@@ -162,6 +162,7 @@ export const Fantom_TLC_SideBridgeContractAddress =
 //Avalanche
 export const Avalanche_LSO_SideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
 export const Avalanche_TLC_SideBridgeContractAddress =
   '0x67a77E761b2cd031593a9a8BE87FDca35Ec1b677';
 
