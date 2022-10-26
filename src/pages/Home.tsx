@@ -55,15 +55,12 @@ const Home: React.FC = () => {
     document.body.appendChild(script);
   }, []);
   const getNews = useCallback(async () => {
-    const newsurl = 'https://cryptopanic.com/api/v1/posts/';
+    const newsurl =
+      'https://safechain-api.netlify.app/.netlify/functions/api/news/';
     try {
       axios({
         method: 'GET',
         url: newsurl,
-        params: {
-          auth_token: '5353a0b4784ea1efb07c808d2456301e0fc2c9de',
-          kind: 'news',
-        },
       }).then((res) => {
         const data = res.data.results;
         setCryptoNews(data);
