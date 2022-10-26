@@ -9,7 +9,7 @@ import { setProvider } from 'src/redux/modules/globals/actions';
 import { StoreState } from 'src/utils/storeTypes';
 
 import { useWindowSize } from './useWindowSize';
-
+// wallet connection
 const providerOptions: IProviderOptions = {
   walletconnect: {
     package: WalletConnectProvider,
