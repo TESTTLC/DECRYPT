@@ -9,7 +9,8 @@ import { getDefaultProvider, Web3Provider } from '@ethersproject/providers';
 import { formatEther, parseEther } from 'ethers/lib/utils';
 import { TailSpin } from 'react-loader-spinner';
 
-import { useWalletConnector } from '../hooks/useWalletConnector';
+// import { useWalletConnector } from '../hooks/useWalletConnector';
+import { useWalletConnector } from '../hooks/useWalletConnectorWithoutMetaMask';
 import SMALL_LOGO from '../assets/images/logo.png';
 import { routes } from '../utils/routes';
 
@@ -131,7 +132,7 @@ const Header: React.FC = () => {
     connectWallet,
     disconnectWallet,
     isMobileSize,
-    isMobileDevice,
+    // isMobileDevice,
   } = useWalletConnector();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
@@ -318,7 +319,11 @@ const Header: React.FC = () => {
               )}
             </span>
           </button> */}
-          <a href="https://staking.tlchain.live/" target="_blank" rel="noreferrer">
+          <a
+            href="https://staking.tlchain.live/"
+            target="_blank"
+            rel="noreferrer"
+          >
             <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
               <span className="leading-[12px]">Staking Validators</span>
             </button>
@@ -346,7 +351,8 @@ const Header: React.FC = () => {
                 walletAddress={walletAddress}
                 connectWallet={connectWallet}
                 disconnectWallet={disconnectWallet}
-                isMobileDevice={isMobileDevice}
+                // isMobileDevice={isMobileDevice}
+                isMobileDevice={true}
               />
             </div>
           </div>

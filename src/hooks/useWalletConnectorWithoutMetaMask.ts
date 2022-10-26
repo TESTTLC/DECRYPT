@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Web3Modal, { IProviderOptions } from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
+import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import { ethers } from 'ethers';
 import { useDispatch, useSelector } from 'react-redux';
 import { setWalletAddress } from 'src/redux/modules/account/actions';
@@ -14,7 +15,17 @@ const providerOptions: IProviderOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        5177: 'https://mainnet-rpc.tlxscan.com/',
+        2321: 'https://mainnet-rpc.tlchain.live/',
+      },
+    },
+  },
+
+  coinbasewallet: {
+    package: CoinbaseWalletSDK,
+    options: {
+      appName: 'Web 3 Modal Demo',
+      rpc: {
+        2321: 'https://mainnet-rpc.tlchain.live/',
       },
     },
   },
@@ -31,7 +42,7 @@ export const useWalletConnector = () => {
   const web3Modal = new Web3Modal({
     cacheProvider: true, // optional
     providerOptions, // required
-    theme: 'dark',
+    theme: 'light',
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -83,6 +94,7 @@ export const useWalletConnector = () => {
 
   const enableWindowEthereum = async () => {
     if (window.ethereum) {
+      console.log('window.ethereum', window.ethereum);
       try {
         //@ts-ignore
         const ethAccounts = await window.ethereum.request({
@@ -117,6 +129,7 @@ export const useWalletConnector = () => {
       }
     } else {
       const ethEnabled = await enableWindowEthereum();
+
       if (ethEnabled) {
         const connection = await web3Modal.connect();
         const p = new ethers.providers.Web3Provider(connection);
