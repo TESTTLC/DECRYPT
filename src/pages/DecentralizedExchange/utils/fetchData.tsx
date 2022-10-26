@@ -18,7 +18,7 @@ interface TransData {
 
 export function useSwapTrans() {
   const [value, setValue] = useState([]);
-  // const API_URL = 'https://tlxscan.com/api';
+  // const API_URL = 'https://explorer.tlchain.live/api';
   const API_URL = 'https://api.etherscan.io/api';
   //   const moralisAPI = 'https://deep-index.moralis.io/api/v2/'
   //   axios({

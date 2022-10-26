@@ -259,7 +259,7 @@ export const getBalance = async (tokenContract: any, account: string) => {
 };
 
 export const getTLCBalance = async (account: string) => {
-  const api = `https://tlxscan.com/api?module=account&action=balance&address=${account}`;
+  const api = `https://explorer.tlchain.live/api?module=account&action=balance&address=${account}`;
   let balance = '0';
   await fetch(api)
     .then((response) => response.json())
@@ -283,7 +283,7 @@ export const determinePowerForStake = (
 
 export const getTotalNumberOfTxByAddress = async (addressHash: string) => {
   try {
-    const url = `https://tlxscan.com/api?module=account&action=txlist&address=${addressHash}&sort=asc`;
+    const url = `https://explorer.tlchain.live/api?module=account&action=txlist&address=${addressHash}&sort=asc`;
     const res = await fetch(url);
     const result = await res.json();
     const totalNumber = result.result.length;

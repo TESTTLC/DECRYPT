@@ -93,7 +93,8 @@ export type Project = {
 export enum ChainsIds {
   BSC = '0x38',
   BSC_TESTNET = '0x61', //97
-  TLC = '0x1439',
+  // TLC = '0x1439' // 5177,
+  TLC = '0x08b0', // 2224
   FTM = '0xfa',
   AVAX = '0xa86a',
   MATIC = '0x89',
@@ -111,7 +112,8 @@ export const defaultPowers = {
 export const stakeRewards = {
   // all values are represented as percentage
   TLX: [15.34, 21.25, 29.68, 40.56, 112],
-  TLC: [11.25, 15.56, 18.8, 19.26, 63.58],
+  //   TLC: [11.25, 15.56, 18.8, 19.26, 63.58],
+  TLC: [1.8, 5.42, 11, 22.1, 66],
   LSO: [12.19, 17.32, 19.27, 51.25, 112],
   CSY: [12.19, 17.32, 19.27, 51.25, 112],
 };

@@ -39,22 +39,22 @@ export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 
 //TLChain
-// export const RouterContractAddress =
-//   '0xbd45968046F24bd1AD46F93A60a0bff558c8821a';
-// export const FactoryContractAddress =
-//   '0x9BBCf500583062f3FE3D70F6cFa0cE2542927760';
-// export const MasterchefContractAddress =
-//   '0x301fED8b42e8515B64D695f5b07c643a53023844';
-// export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6';
-// export const TempUsdc = '0x284ad65F779Ca1d8f52e710EE6728638FB3BAfa9';
+export const RouterContractAddress =
+  '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
+export const FactoryContractAddress =
+  '0x48500D88430B37E33237dD47948A8D02df660473';
+export const MasterchefContractAddress =
+  '0x088C8ED82231DEcC2a13F6367c551a7d35361f67';
+export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6';
+export const TempUsdc = '0x284ad65F779Ca1d8f52e710EE6728638FB3BAfa9';
 
 //Ethereum
-export const RouterContractAddress =
-  '0x48500D88430B37E33237dD47948A8D02df660473';
-export const FactoryContractAddress =
-  '0xd887f0837949310C0D174989b7145B83636fE731';
-export const MasterchefContractAddress =
-  '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
+// export const RouterContractAddress =
+//   '0x48500D88430B37E33237dD47948A8D02df660473';
+// export const FactoryContractAddress =
+//   '0xd887f0837949310C0D174989b7145B83636fE731';
+// export const MasterchefContractAddress =
+//   '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
 
 // Eth-Main
 export const wtlc_eth = '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
@@ -62,8 +62,8 @@ export const usdc_eth = '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48';
 export const usdt_eth = '0xdAC17F958D2ee523a2206206994597C13D831ec7';
 export const usdt_tlc_pool_eth = '0x002043eAD35D81B1F5847D8Aad1D18DDEf20389A';
 export const usdc_tlc_pool_eth = '0xFd432595DCff5783C1acAb91971daF4ad383219F';
-export const TempUsdt = '0x002043ead35d81b1f5847d8aad1d18ddef20389a';
-export const TempUsdc = '0xfd432595dcff5783c1acab91971daf4ad383219f';
+// export const TempUsdt = '0x002043ead35d81b1f5847d8aad1d18ddef20389a';
+// export const TempUsdc = '0xfd432595dcff5783c1acab91971daf4ad383219f';
 
 export const Ethereum_USDT_TokenContractAddress =
   '0xdAC17F958D2ee523a2206206994597C13D831ec7';
@@ -73,24 +73,26 @@ export const Ethereum_USDC_TokenContractAddress =
 export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
+// export const OLDWTLCTokenContractAddress =
+//   '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711';
 export const WTLCTokenContractAddress =
-  '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711';
+  '0xd887f0837949310C0D174989b7145B83636fE731';
 
 export const OldTLXTokenContractAddress =
   '0xea255909e46a54d54255219468991c69ca0e659d';
 // /** Mainnet */
 export const TLXTokenContractAddress =
-  '0xB8B538C5dD46d8D691f0A972754365be8c9DC20b';
+  '0xFc9FEC6BD719F32aC632bDd3b3c15995dd6c89d9';
 export const TLXStakeContractAddress =
   '0x492eeF5e03024879444E46F3c57A5fBe5F793d32';
 
 export const CSYTokenContractAddress =
-  '0x5d68D2c43e7E1F761deA6EB6353f14F622D5c664';
+  '0x19A2d259aB78BE740444730dc8Dbe2B86E703ba4';
 export const CSYStakeContractAddress =
   '0xD4B08abe828a78C4947d274968e0958d34EF758E';
 
 export const LussoTokenContractAddress =
-  '0xD62052Cea41E22fb2B97835b53f41190Fe219001';
+  '0x6876aC856E91de18C94560012aDb83c33B440148';
 export const LussoStakeContractAddress =
   '0xe1A6E5f4BcFB9bC39c8f68B2b84BA41ca5681B36';
 export const LussoFreezeContractAddress =
@@ -99,7 +101,9 @@ export const LussoFreezeContractAddress =
 export const TLCTokenContractAddress =
   '0xb058f92410181368138279f13948b7ded15b0d4f';
 export const TLCStakeContractAddress =
-  '0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832';
+  '0x755D6ACCdACe4171BA2655781089c17b92270eB1';
+// export const TLCStakeContractAddress =
+//   '0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832';
 
 export const TLLPTokenContractAddress =
   '0xd887f0837949310C0D174989b7145B83636fE731';
@@ -126,11 +130,17 @@ export const BSCBridgeContractAddress =
 
 //TLChain
 
+export const TLChain_Cronos_SideBridgeContractAddress =
+  '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
+export const TLChain_Klatyn_SideBridgeContractAddress =
+  '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
 export const TLChain_USDC_SideBridgeContractAddress =
-  '0x2e4f445b25cbC24B2f1ab1b8B0C39763674142B5';
+  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
 
 export const TLChain_USDT_SideBridgeContractAddress =
-  '0xCDdd421bdead917Da8EC2626B92Bc38D5C2061a1';
+  '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
 
 export const TLChain_wEGLD_SideBridgeContractAddress =
   '0x51ecC0062002808B9e632D57A207be5F1850F118';
@@ -140,24 +150,25 @@ export const Binance_LSO_SideBridgeContractAddress =
   '0x25C6330D43445985f564285f3735600c8A94b74a';
 
 export const Binance_TLC_SideBridgeContractAddress =
-  '0xbBcdB8C8E0D17b76F5ED2B9FC36A60154c2142F2';
+  '0x6aeefD1DD025862a80543e6A39c013cE0Ba3DE64';
 
 //Fantom
 export const Fantom_LSO_SideBridgeContractAddress =
   '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
 
 export const Fantom_TLC_SideBridgeContractAddress =
-  '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
+  '0xCd6a8C968F6820f7163e7fb41F75048b92E4318D';
 
 //Avalanche
 export const Avalanche_LSO_SideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
+
 export const Avalanche_TLC_SideBridgeContractAddress =
-  '0x160d97B05a7E7D249f8FcEb47b2A35170f3eF949';
+  '0x67a77E761b2cd031593a9a8BE87FDca35Ec1b677';
 
 //Polygon
 export const Polygon_wTLC_SideBridgeContractAddress =
-  '0xd97136B7caB42058F75E05e3D8C5C87CceaC8Bc3';
+  '0x7E47c9Be6Ea658C12E3EB3bEa1dDec42e9BA5224';
 
 export const Polygon_wLSO_SideBridgeContractAddress =
   '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
@@ -169,7 +180,7 @@ export const Ethereum_wTLC_SideBridgeContractAddress =
 /** MainBridges */
 
 export const TLC_MainBridgeContractAddress =
-  '0x295993595620231fa5afc04c5c7ee21ad3b55b8A';
+  '0x04BFed9B1bC8FE6bA02e1A99bd99c78b2de3662a';
 
 export const TLC_EGLD_MainBridgeContractAddress =
   '0x53656E9a47A2e875a38a6CBcabD31EaD4f2b812d';
@@ -190,44 +201,52 @@ export const Binance_USDT_MainBridgeContractAddress =
 
 // TLChain
 export const TLChain_USDC_ChildTokenContractAddress =
-  '0x1a39bC1940058fF4626E1E79fb2C093AEe27105A';
+  '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
 
 export const TLChain_USDT_ChildTokenContractAddress =
-  '0x537C0Ea12C8D50d2D7c608a4b981638bF64e03c6';
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 export const TLChain_wEGLD_ChildTokenContractAddress =
   '0xBABfCD8324b2457c091B643CD6DC46B25577B253';
 
 // Avalanche
 export const Avalance_TLC_ChildTokenContractAddress =
-  '0xd97136B7caB42058F75E05e3D8C5C87CceaC8Bc3';
+  '0xcdc137aC87D7028E13185FfBbdAe58f6e89dd4eA';
 
 export const Avalance_LSO_ChildTokenContractAddress =
   '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 // Binance
 export const Binance_TLC_ChildTokenContractAddress =
-  '0xCd6a8C968F6820f7163e7fb41F75048b92E4318D';
+  '0x9079b1FbA7eB0B28991471d316A3772290EE81ae';
 
 export const Binance_LSO_ChildTokenContractAddress =
   '0x56F0878AE8F02E30d08B2D8D540ec59ffFa9e06e';
 
 //Fantom
 export const Fantom_TLC_ChildTokenContractAddress =
-  '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
+  '0x7E47c9Be6Ea658C12E3EB3bEa1dDec42e9BA5224';
 
 export const Fantom_LSO_ChildTokenContractAddress =
   '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
 
 //Polygon
 export const Polygon_wTLC_ChildTokenContractAddress =
-  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
+  '0x9D1A776BFC15382Ae3b8f791f62ED93F6A83bAB1';
 
 export const Polygon_wLSO_ChildTokenContractAddress =
   '0x76Ad20159F8BaeeB986d1A8792d6A3aeD750885c';
 
 export const Ethereum_wTLC_ChildTokenContractAddress =
   '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
+
+//Klaytn
+export const Klaytn_wTLC_ChildTokenContractAddress =
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
+
+//Klatyn
+export const Cronos_wTLC_ChildTokenContractAddress =
+  '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 
 //devnet
 // export const ELROND_LOCK_SC_ADDRESS =
@@ -500,11 +519,11 @@ export const stakingRewards = {
     three_years: '112% APY - 36 months ',
   },
   TLC: {
-    one_month: '11.25% APY - 1 months ',
-    three_months: '15.56% APY - 3 months ',
-    six_months: '18.80% APY - 6 months ',
-    one_year: '19.26% APY - 12 months ',
-    three_years: '63.58% APY - 36 months ',
+    one_month: '1.8% APY - 1 months ',
+    three_months: '5.42% APY - 3 months ',
+    six_months: '11% APY - 6 months ',
+    one_year: '22.10% APY - 12 months ',
+    three_years: '66% APY - 36 months ',
   },
   CSY: {
     one_month: '12.19% APY - 1 months ',

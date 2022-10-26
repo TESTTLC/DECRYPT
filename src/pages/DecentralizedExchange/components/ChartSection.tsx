@@ -248,7 +248,7 @@ export const CandleStickChart = (props: any) => {
         }
         // console.log('chartData', chartData);
         // get current ratio
-        /*const url = 'https://mainnet-rpc.tlxscan.com/';
+        /*const url = 'https://mainnet-rpc.tlxscan.com/ https://mainnet-rpc.tlchain.live/';
         const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
         const tlc_usdt_cont = new Contract(
           TLChain_USDT_ChildTokenContractAddress,

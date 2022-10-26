@@ -118,6 +118,7 @@ const StakeCoin: React.FC = () => {
   }, [provider]);
 
   useEffect(() => {
+    console.log('currentChainId: ', currentChainId);
     if (currentChainId === ChainsIds.TLC) {
       setChainErrorMessage(undefined);
     } else {
@@ -576,7 +577,7 @@ const StakeCoin: React.FC = () => {
           </div>
         </div>
       </div>
-      {(coinTag === 'TLX' || coinTag === 'LSO') && walletAddress && (
+      {/* {(coinTag === 'TLX' || coinTag === 'LSO') && walletAddress && (
         <div className="flex w-full items-center justify-center mt-4">
           <button
             className="flex h-10 mt-2 text-sm items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
@@ -585,7 +586,7 @@ const StakeCoin: React.FC = () => {
             Unfreeze {coinTag}
           </button>
         </div>
-      )}
+      )} */}
 
       {renderTable()}
     </div>

@@ -81,18 +81,18 @@ export declare const defaultSupportedChains: (
       ];
     }
   | {
-      readonly id: 5177;
+      readonly id: 2224;
       readonly name: 'TLChain Mainnet';
       readonly nativeCurrency: {
         readonly name: 'TLChain';
         readonly symbol: 'TLC';
         readonly decimals: 18;
       };
-      readonly rpcUrls: readonly ['https://mainnet-rpc.tlxscan.com/'];
+      readonly rpcUrls: readonly ['https://mainnet-rpc.tlchain.live/'];
       readonly blockExplorers: readonly [
         {
           readonly name: 'TLXScan';
-          readonly url: 'https://tlxscan.com/';
+          readonly url: 'https://explorer.tlchain.live/';
         },
       ];
     }
