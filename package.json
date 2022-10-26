@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.9.0",
+    "@coinbase/wallet-sdk": "^3.5.3",
     "@elrondnetwork/dapp-core": "^1.0.45",
     "@elrondnetwork/erdjs": "^10.0.0-beta.3",
     "@elrondnetwork/erdjs-walletcore": "^1.0.0",
