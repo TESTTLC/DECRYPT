@@ -266,24 +266,26 @@ const Header: React.FC = () => {
               <span className="leading-[12px]">Add TLC Network</span>
             </button>
           )}
-          <a
-            href="https://wallet.decryption.com"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
-              <span className="leading-[12px]">TLChain Wallet</span>
-            </button>
-          </a>
-          <a
-            href="https://explorer.tlchain.live/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
-              <span className="leading-[12px]">TLChain Explorer</span>
-            </button>
-          </a>
+          <div className="flex space-x-4">
+            <a
+              href="https://wallet.decryption.com"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+                <span className="leading-[12px]">TLChain Wallet</span>
+              </button>
+            </a>
+            <a
+              href="https://explorer.tlchain.live/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+                <span className="leading-[12px]">TLChain Explorer</span>
+              </button>
+            </a>
+          </div>
         </div>
       </div>
       {/* <div
@@ -294,7 +296,7 @@ const Header: React.FC = () => {
         }`}
       > */}
       <div
-        className={`flex space-x-4 items-center justify-center ${
+        className={`flex space-x-4 items-center justify-center md:flex-row xs:flex-col ${
           isSidebarOpen ? 'ml-60 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
           //   isSidebarOpen ? 'ml-30 xs:ml-0 sm:ml-0' : 'ml-20 xs:ml-0 sm:ml-0'
         }`}
@@ -306,34 +308,24 @@ const Header: React.FC = () => {
         >
           <span className="text-center font-poppins text-sm">Dashboard</span>
         </Link> */}
-
-        <div className="flex space-x-4 xs:space-y-2 sm:space-y-2 xs:flex-col sm:flex-col items-center justify-center ">
-          {/* <button
-            onClick={transferAllAmount}
-            className="xs:col-span-2 sm:col-span-2 md:col-span-2 flex h-8 w-40 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
-          >
-            <span className="text-center font-poppins text-sm">
-              {isLoading ? (
-                <TailSpin color="#fff" height={18} width={18} />
-              ) : (
-                'Pre-sale Holder'
-              )}
-            </span>
-          </button> */}
+        <div className="flex space-x-2">
           <a
             href="https://staking.tlchain.live/"
             target="_blank"
             rel="noreferrer"
           >
-            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-1 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
               <span className="leading-[12px]">Staking Validators</span>
             </button>
           </a>
           <a href="#" target="_blank" rel="noreferrer">
-            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
+            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-1 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
               <span className="leading-[12px]">Claim Vesting</span>
             </button>
           </a>
+        </div>
+        {/* <div className="flex space-x-4 xs:space-y-2 sm:space-y-2 xs:flex-col sm:flex-col items-center justify-center ">
+          
 
           <Link
             key={routes.dashboardV2.title}
@@ -342,9 +334,17 @@ const Header: React.FC = () => {
           >
             <span className="text-center font-poppins text-sm">Dashboard</span>
           </Link>
-        </div>
+        </div> */}
 
-        <div className="flex space-x-4 xs:space-y-2 sm:space-y-2 xs:flex-col sm:flex-col items-center justify-center ">
+        {/* <div className="flex space-x-4 xs:space-y-2 sm:space-y-2 xs:flex-col sm:flex-col items-center justify-center "> */}
+        <div className="flex space-x-4 xs:space-y-2 sm:space-y-2  items-center justify-center ">
+          <Link
+            key={routes.dashboardV2.title}
+            to={{ pathname: routes.dashboardV2.url }}
+            className="xs:col-span-2 sm:col-span-2 md:col-span-2 xs:mt-2 flex h-8 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+          >
+            <span className="text-center font-poppins text-sm">Dashboard</span>
+          </Link>
           <div className="xs:col-span-2 sm:col-span-2 md:col-span-2 items-center justify-center">
             <div className="relative">
               <div className="absolute -inset-0 bg-gradient-to-r from-green-400 to-blue-600 rounded-lg blur-sm opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt "></div>
