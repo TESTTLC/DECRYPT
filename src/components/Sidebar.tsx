@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HiTicket, HiX } from 'react-icons/hi';
 import { MdSettings } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
@@ -20,11 +20,18 @@ import { links } from '../utils/routes';
 
 const Sidebar: React.FC = () => {
   const { isMobileDevice } = useDeviceInfo();
+  console.log('isMobile', isMobileDevice);
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
   );
   const location = useLocation();
+  useEffect(() => {
+    const { innerWidth, innerHeight } = window;
+    if (innerWidth < 600) {
+      dispatch(closeSidebar());
+    }
+  }, []);
 
   return (
     <div
