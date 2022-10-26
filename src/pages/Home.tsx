@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaWallet, FaUser, FaTicketAlt } from 'react-icons/fa';
 import { IoRocketSharp } from 'react-icons/io5';
@@ -21,6 +21,7 @@ import {
   YAxis,
 } from 'recharts';
 import Ticker from 'react-ticker';
+import axios from 'axios';
 import LoadingSpinner from 'src/components/LoadingSpinner';
 import { prices } from 'src/utils/globals';
 
@@ -33,7 +34,10 @@ import exchangeImage from '../assets/images/exchange_1.png';
 import nftMarketplaceImage from '../assets/images/nft_1.png';
 import metaverseImage from '../assets/images/metaverse_1.jpeg';
 import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.jpeg';
-
+interface CryptoProps {
+  title: string;
+  url: string;
+}
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const { data: history, isLoading, isSuccess } = useGetAddressesHistoryQuery();
@@ -41,6 +45,7 @@ const Home: React.FC = () => {
   const metaverseRef = useRef<HTMLAnchorElement>(null);
   const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
+  const [cryptoNews, setCryptoNews] = useState([]);
   useEffect(() => {
     const script = document.createElement('script');
     script.src =
@@ -48,6 +53,27 @@ const Home: React.FC = () => {
     script.async = true;
 
     document.body.appendChild(script);
+  }, []);
+  const getNews = useCallback(async () => {
+    const newsurl = 'https://cryptopanic.com/api/v1/posts/';
+    try {
+      axios({
+        method: 'GET',
+        url: newsurl,
+        params: {
+          auth_token: '5353a0b4784ea1efb07c808d2456301e0fc2c9de',
+          kind: 'news',
+        },
+      }).then((res) => {
+        const data = res.data.results;
+        setCryptoNews(data);
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+  useEffect(() => {
+    getNews();
   }, []);
 
   let count = 0;
@@ -134,6 +160,26 @@ const Home: React.FC = () => {
               </>
             )}
           </Ticker>
+          {cryptoNews.length > 0 ? (
+            <Ticker speed={13} mode="chain" offset={'run-in'}>
+              {({ index }) => (
+                <>
+                  <div className="flex items-center mx-4">
+                    <div className="rounded-full bg-green-400 h-2 w-2 ml-10" />
+                    <a
+                      href={cryptoNews[index % cryptoNews.length]['url']}
+                      target={'_blank'}
+                      className="mr-10 ml-2 text-sm whitespace-nowrap"
+                    >
+                      {cryptoNews[index % cryptoNews.length]['title']}
+                    </a>
+                  </div>
+                </>
+              )}
+            </Ticker>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className="w-full grid grid-cols-4 xs:grid-cols-1 sm:grid-cols-1">
