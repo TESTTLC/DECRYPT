@@ -95,6 +95,7 @@ export enum ChainsIds {
   BSC_TESTNET = '0x61', //97
   // TLC = '0x1439' // 5177,
   TLC = '0x08b0', // 2224
+  //   TLC = '0x911', // 2321
   FTM = '0xfa',
   AVAX = '0xa86a',
   MATIC = '0x89',
