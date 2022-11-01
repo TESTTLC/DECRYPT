@@ -106,10 +106,10 @@ export const LussoFreezeContractAddress =
 
 export const TLCTokenContractAddress =
   '0xb058f92410181368138279f13948b7ded15b0d4f';
-export const TLCStakeContractAddress =
-  '0x755D6ACCdACe4171BA2655781089c17b92270eB1';
 // export const TLCStakeContractAddress =
-//   '0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832';
+//   '0x755D6ACCdACe4171BA2655781089c17b92270eB1';
+export const TLCStakeContractAddress =
+  '0xf71147E5cD6AB7b3d2Ae43256733Dff24231e832';
 
 export const TLLPTokenContractAddress =
   '0xd887f0837949310C0D174989b7145B83636fE731';
