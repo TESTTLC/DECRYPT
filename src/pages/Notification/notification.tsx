@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { GoArrowDown } from 'react-icons/all';
+import { AiOutlineClose } from 'react-icons/ai';
 import ftmBridgeImage from 'src/assets/images/ftm-bridge.png';
 import ethBridgeImage from 'src/assets/images/eth-bridge.png';
 import bscBridgeImage from 'src/assets/images/bsc-bridge.png';
@@ -98,9 +98,16 @@ const NotificationModal: React.FC = () => {
           overlayClassName="Overlay"
           preventScroll={false}
         >
-          <div className="z-50 flex flex-1 flex-col items-center h-full w-full relative px-6 pt-2 pb-4">
+          <span
+            onClick={() => setIsNotificationModalOpen(false)}
+            className="absolute cursor-pointer z-50"
+            style={{ right: '10px', top: '10px' }}
+          >
+            <AiOutlineClose style={{ color: 'white', fontSize: '30px' }} />
+          </span>
+          <div className="z-40 flex flex-1 flex-col items-center h-full w-full relative px-6 pt-2 pb-4">
             <div className="flex flex-col h-20 w-full text-white font-poppins">
-              <p className="font-poppins  mt-4 font-bold">
+              <p className="font-poppins mt-4 font-bold">
                 Soon, V3 decryption will be fully released
               </p>
               <p>
