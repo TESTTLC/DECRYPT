@@ -43,7 +43,7 @@ import { getHeaderPayloadFromLocalStorage } from './utils/functions/LocalStorage
 import RequireAuth from './pages/RequireAuth';
 import NFTDetails from './pages/NFTDetails';
 import WhiteLists from './pages/Whitelists';
-
+import NotificationModal from './pages/Notification/notification';
 export const coinsTags = ['TLX', 'TLC', 'LSO', 'CSY'];
 export const marketplaceRoutes = ['categories', 'collections'];
 
@@ -81,6 +81,7 @@ const App = () => {
 
   return (
     <>
+      <NotificationModal></NotificationModal>
       <div className="bg-image"></div>
       <div className="z-10 flex flex-col font-poppins text-white">
         {/* {localStorage.getItem('user') ? ( */}
