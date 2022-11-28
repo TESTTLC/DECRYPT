@@ -170,7 +170,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
     setModalOpen(true);
   };
   return (
-    <>
+    <div>
       <FarmModal
         title={modalTitle}
         modalIsOpen={modalOpen}
@@ -515,7 +515,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

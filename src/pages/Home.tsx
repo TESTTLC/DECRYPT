@@ -23,7 +23,24 @@ import {
 import Ticker from 'react-ticker';
 import axios from 'axios';
 import LoadingSpinner from 'src/components/LoadingSpinner';
-import { prices } from 'src/utils/globals';
+import { DefaultPlayer as Video } from 'react-html5video';
+import 'react-html5video/dist/styles.css';
+import {
+  prices,
+  USDTContractAddress,
+  MasterchefContractAddress,
+  usdt_tlc_pool_eth,
+  usdc_tlc_pool_eth,
+  usdt_eth,
+  usdc_eth,
+  wtlc_eth,
+} from 'src/utils/globals';
+import ERC20 from 'src/contracts/ERC20.json';
+import { formatEther, parseEther, formatUnits } from 'ethers/lib/utils';
+import { Contract, ethers } from 'ethers';
+import { useSelector } from 'react-redux';
+import { StoreState } from 'src/utils/storeTypes';
+import useRefresh from 'src/redux/useRefresh';
 
 import BigButton from '../components/BigButton';
 import stakingImage from '../assets/images/staking_1.png';
@@ -34,6 +51,9 @@ import exchangeImage from '../assets/images/exchange_1.png';
 import nftMarketplaceImage from '../assets/images/nft_1.png';
 import metaverseImage from '../assets/images/metaverse_1.jpeg';
 import lendingAndBorrowingImage from '../assets/images/lending_and_borrowing_1.jpeg';
+
+import Farms from './DecentralizedExchange/components/Farms';
+// import myvideo from '../assets/video/video.mp4';
 interface CryptoProps {
   title: string;
   url: string;
@@ -46,6 +66,157 @@ const Home: React.FC = () => {
   const createYourTokenRef = useRef<HTMLAnchorElement>(null);
 
   const [cryptoNews, setCryptoNews] = useState([]);
+
+  // apr logic
+  const [usdtTlcApr, setUsdtTlcApr] = useState('-');
+  const [usdcTlcApr, setUsdcTlcApr] = useState('-');
+  const { fastRefresh, slowRefresh } = useRefresh();
+
+  const walletAddress = useSelector<StoreState, string | undefined>(
+    (state) => state.account.walletAddress,
+  );
+  const [currentChainId, setCurrentChainId] = useState(
+    //@ts-ignore
+    window.ethereum?.networkVersion
+      ? //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10))
+      : undefined,
+  );
+
+  useEffect(() => {
+    if (window.ethereum) {
+      //@ts-ignore
+      window.ethereum.on('chainChanged', (chainId: string) => {
+        setCurrentChainId(chainId);
+        window.location.reload();
+      });
+      setCurrentChainId(
+        //@ts-ignore
+        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
+      );
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window.ethereum]);
+
+  useEffect(() => {
+    async function getApr() {
+      /**
+       * APY calculation
+       * block count per year: 3600s * 24h * 365d / 12s = 2628000
+       * tlc per block: 360000000000000000 => 0.36 tlc
+       * allocation point: 200, 200
+       **/
+      try {
+        const url =
+          'https://mainnet.infura.io/v3/7f7f3d56bbbb45389554ccbaf12df8e3';
+        const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+        const usdt_cont = new Contract(usdt_eth, ERC20.abi, customHttpProvider);
+        const usdc_cont = new Contract(usdc_eth, ERC20.abi, customHttpProvider);
+        const tlc_cont = new Contract(wtlc_eth, ERC20.abi, customHttpProvider);
+        ///////////////// current USDT-TLC lp locked amount in farming pools start//////////////////////////////////////
+        // usdt-tlc lp locked price
+        const tlc_usdt_cont = new Contract(
+          usdt_tlc_pool_eth,
+          ERC20.abi,
+          customHttpProvider,
+        );
+        const tlc_usdt_total_supply = await tlc_usdt_cont.totalSupply();
+        // console.log(
+        //   'tlc_usdt_total_supply',
+        //   formatEther(tlc_usdt_total_supply.toString()),
+        // );
+        const locked_tlc_usdt = await tlc_usdt_cont.balanceOf(
+          MasterchefContractAddress,
+        );
+        // console.log('locked_tlc_usdt', formatEther(locked_tlc_usdt.toString()));
+        // usdt-tlc lp usdt
+        const usdt_amount = await usdt_cont.balanceOf(usdt_tlc_pool_eth);
+        const usdt_amount_fl = parseFloat(
+          formatUnits(
+            usdt_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+            6,
+          ),
+        );
+        // console.log('usdt tlc lp usdt amount', usdt_amount_fl);
+        // locked usdt-tlc lp price
+        const locked_usdt_tlc_lp_price =
+          (2 * usdt_amount_fl * locked_tlc_usdt) / tlc_usdt_total_supply;
+        // console.log('usdt tlc price', locked_usdt_tlc_lp_price);
+        // CURRENT TLC PRICE
+        const tlc_amount = await tlc_cont.balanceOf(usdt_tlc_pool_eth);
+        const tlc_amount_fl = parseFloat(
+          formatEther(
+            tlc_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+          ),
+        );
+        // console.log('tlc amount at tlc-usdt lp', tlc_amount_fl);
+        const current_tlc_price = usdt_amount_fl / tlc_amount_fl;
+        // console.log('current tlc price', current_tlc_price);
+        // usdt-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
+        let usdt_tlc_apr = 500;
+        if (locked_usdt_tlc_lp_price < 10) {
+          usdt_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) / 10) * 100;
+        } else {
+          usdt_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) /
+              locked_usdt_tlc_lp_price) *
+            100;
+        }
+        // console.log('usdt tlc apr', usdt_tlc_apr);
+        ///////////////// current USDT-TLC lp locked amount in farming pools end//////////////////////////////////////
+
+        ///////////////// current USDC-TLC lp locked amount in farming pools start//////////////////////////////////////
+        // usdc-tlc lp locked price
+        const tlc_usdc_cont = new Contract(
+          usdc_tlc_pool_eth,
+          ERC20.abi,
+          customHttpProvider,
+        );
+        const tlc_usdc_total_supply = await tlc_usdc_cont.totalSupply();
+        const locked_tlc_usdc = await tlc_usdc_cont.balanceOf(
+          MasterchefContractAddress,
+        );
+        // usdc-tlc lp usdc
+        const usdc_amount = await usdc_cont.balanceOf(usdc_tlc_pool_eth);
+        const usdc_amount_fl = parseFloat(
+          formatUnits(
+            usdc_amount.toLocaleString('fullwide', {
+              useGrouping: false,
+            }),
+            6,
+          ),
+        );
+        // locked usdc-tlc lp price
+        const locked_usdc_tlc_lp_price =
+          (2 * usdc_amount_fl * locked_tlc_usdc) / tlc_usdc_total_supply;
+
+        // usdc-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
+        let usdc_tlc_apr = 500;
+        if (locked_usdc_tlc_lp_price < 10) {
+          usdc_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) / 10) * 100;
+        } else {
+          usdc_tlc_apr =
+            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) /
+              locked_usdc_tlc_lp_price) *
+            100;
+        }
+        setUsdcTlcApr(usdc_tlc_apr.toFixed(2).toString() + '%');
+        setUsdtTlcApr(usdt_tlc_apr.toFixed(2).toString() + '%');
+        ///////////////// current USDC-TLC lp locked amount in farming pools end//////////////////////////////////////
+      } catch (err) {
+        console.log('calc apr error', err);
+      }
+    }
+    getApr();
+  }, [walletAddress, slowRefresh]);
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src =
@@ -223,8 +394,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="STAKING"
-                subtitle="Research Platform for Proof of Stake assets."
+                // title="STAKING"
+                title="X Boost"
+                // subtitle="Research Platform for Proof of Stake assets."
+                subtitle="By embracing innovation, you can grow your assets"
                 onClick={() => navigate('/staking')}
                 imageSource={stakingImage}
                 titleStyle={'text-lg'}
@@ -235,8 +408,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="LAUNCHPAD"
-                subtitle="Raise funds, build a community, deliver technology."
+                // title="LAUNCHPAD"
+                title="LaunchX"
+                // subtitle="Raise funds, build a community, deliver technology."
+                subtitle="Empower blockchain projects to raise liquidity, distribute tokens and assist the launching"
                 onClick={() => navigate('/launchpad')}
                 imageSource={launchpadImage}
                 titleStyle={'text-lg'}
@@ -247,8 +422,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="CROSS CHAIN BRIDGE"
-                subtitle="DeFi Innovations created for traders and retail users."
+                // title="CROSS CHAIN BRIDGE"
+                title="X Bridges"
+                // subtitle="DeFi Innovations created for traders and retail users."
+                subtitle="Unlock the potential of united blockchains. Join an interoperable Web3 with TLChain"
                 onClick={() => navigate('/crosschainbridge')}
                 imageSource={crossChainBridgeImage}
                 titleStyle={'text-lg'}
@@ -259,8 +436,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="NFT MARKETPLACE"
-                subtitle="Create, Buy, Sell NFTs."
+                // title="NFT MARKETPLACE"
+                title="X NFT"
+                // subtitle="Create, Buy, Sell NFTs."
+                subtitle="It is our goal to bridge the gap between physical & digital products of high-value brands"
                 onClick={() => navigate('/nftmarketplace')}
                 // onClick={() => {
                 //   nftMarketplaceRef.current?.click();
@@ -281,8 +460,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="METAVERSE"
-                subtitle="Self-Sovereign identity ledgers on the Metaverse Blockchain."
+                // title="METAVERSE"
+                title="X Station"
+                // subtitle="Move beyond a single-universe experience with us!"
+                subtitle="Move beyond a single-universe experience with us!"
                 onClick={() => {
                   metaverseRef.current?.click();
                 }}
@@ -302,8 +483,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="DECENTRALIZED EXCHANGE"
-                subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
+                // title="DECENTRALIZED EXCHANGE"
+                title="IChangeX"
+                // subtitle="Securely swap between crypto assets with extremely low slippage and minimal fees."
+                subtitle="Discover IChangeX, the leading DEX on TLChain plus innovation!"
                 onClick={() => navigate('/dex')}
                 imageSource={exchangeImage}
                 titleStyle={'text-lg'}
@@ -314,8 +497,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="CREATE YOUR TOKEN"
-                subtitle="It’s Time to Build. Mint Your Own Digital Token."
+                // title="CREATE YOUR TOKEN"
+                title="X Factory"
+                // subtitle="It’s Time to Build. Mint Your Own Digital Token."
+                subtitle="Easy to build fungible TL20 tokens, define their functionality, and control their lifecycle."
                 onClick={() => {
                   createYourTokenRef.current?.click();
                 }}
@@ -335,8 +520,10 @@ const Home: React.FC = () => {
               <BigButton
                 imageContainerStyle="h-3/5"
                 imageStyle="object-top"
-                title="FUTURE PROJECTS"
-                subtitle="Become a modern investor and learn more about the ecosystem & benefits of tokenization."
+                // title="FUTURE PROJECTS"
+                title="VIP Access"
+                // subtitle="Become a modern investor and learn more about the ecosystem & benefits of tokenization."
+                subtitle="Access is granted by users connecting their crypto wallets and verifying their ownership of designated membership NFT"
                 // onClick={() => navigate('/tokenization')}
                 onClick={() =>
                   window.open('https://www.tlchain.group/directory', '_blank')
@@ -359,7 +546,15 @@ const Home: React.FC = () => {
               font-color="#999999"
             />
           </div>
-          <p className="text-white font-bold font-poppins text-2xl mt-6">
+          <div className="w-full mt-10">
+            <Farms
+              currentChainId={currentChainId ?? ''}
+              usdtTlcApr={usdtTlcApr}
+              usdcTlcApr={usdcTlcApr}
+            />
+          </div>
+
+          {/* <p className="text-white font-bold font-poppins text-2xl mt-6">
             Extended Ecosystem
           </p>
           <div className="grid grid-cols-2 items-center w-full gap-x-4 mt-2">
@@ -399,9 +594,32 @@ const Home: React.FC = () => {
                 Registration Opens Soon
               </a>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="col-span-1 xs:col-span-4 sm:col-span-4 md:col-span-4 gap-y-6 flex flex-col pl-4 xs:px-0 sm:px-0 md:px-2">
+          <Video
+            autoPlay
+            loop
+            muted
+            controls={['PlayPause', 'Seek', 'Time', 'Volume', 'Fullscreen']}
+            poster="http://sourceposter.jpg"
+            onCanPlayThrough={() => {
+              // Do stuff
+            }}
+          >
+            <source
+              src="https://gateway.pinata.cloud/ipfs/QmZmgiGEe3i4tichCAmxVBmbkY6gyAQCD3NqmobP88HkgN/"
+              type="video/mp4"
+            />
+            <track
+              label="English"
+              kind="subtitles"
+              srcLang="en"
+              src="http://source.vtt"
+              default
+            />
+          </Video>
+          <div className="w-full grid grid-col-4"></div>
           <div className="w-full grid grid-cols-2 gap-x-4 md:col-span-4">
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
               <div className="flex items-center justify-center bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
