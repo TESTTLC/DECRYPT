@@ -42,7 +42,6 @@ const EVM: React.FC = () => {
       bridgeState.toChain,
     );
 
-  // const { tokenContract } = useContracts('LSO', bridgeState.token);
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );

@@ -8,7 +8,7 @@ import { useContracts } from '../hooks/useContracts';
 import SNXStatBackground from '../assets/svg/snx-stat-background.svg';
 
 interface Props {
-  coinTag: 'TLX' | 'TLC' | 'LSO' | 'CSY';
+  coinTag: 'TLX' | 'TLC' | 'LSO' | 'CSY' | 'OldLSO' | 'OldCSY' | 'OldTLX';
   totalRewards: number;
 }
 
@@ -48,7 +48,10 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   const getUserTLXBalance = useCallback(async () => {
     if (walletAddress && coinTag !== 'TLC') {
       const result =
-        coinTag === 'LSO' || coinTag === 'CSY'
+        coinTag === 'LSO' ||
+        coinTag === 'CSY' ||
+        coinTag === 'OldLSO' ||
+        coinTag === 'OldCSY'
           ? await contracts.getBalance(tokenContract, walletAddress)
           : await contracts.getActualBalanceOf(tokenContract, walletAddress);
       setBalance(result);

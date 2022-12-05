@@ -44,7 +44,17 @@ import RequireAuth from './pages/RequireAuth';
 import NFTDetails from './pages/NFTDetails';
 import WhiteLists from './pages/Whitelists';
 import NotificationModal from './pages/Notification/notification';
-export const coinsTags = ['TLX', 'TLC', 'LSO', 'CSY'];
+import OldStaking from './pages/OldStaking';
+import OldStakeCoin from './pages/OldStaking/components/OldStakeCoin';
+export const coinsTags = [
+  'TLX',
+  'TLC',
+  'LSO',
+  'CSY',
+  'OldLSO',
+  'OldCSY',
+  'OldTLX',
+];
 export const marketplaceRoutes = ['categories', 'collections'];
 
 const App = () => {
@@ -126,6 +136,11 @@ const App = () => {
                 >
                   <Route path="/staking/:coinTag" element={<StakeCoin />} />
                   <Route path="/staking" element={<Staking />} />
+                  <Route
+                    path="/oldStaking/:coinTag"
+                    element={<OldStakeCoin />}
+                  />
+                  <Route path="/oldStaking" element={<OldStaking />} />
                   <Route path="/launchpad" element={<Launchpad />} />
                   <Route
                     path="/launchpad/:coinTag"

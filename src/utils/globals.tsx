@@ -85,7 +85,15 @@ export const WTLCTokenContractAddress =
   '0xd887f0837949310C0D174989b7145B83636fE731';
 
 export const OldTLXTokenContractAddress =
-  '0xea255909e46a54d54255219468991c69ca0e659d';
+  '0xB8B538C5dD46d8D691f0A972754365be8c9DC20b';
+
+export const OldLSOTokenContractAddress =
+  '0xD62052Cea41E22fb2B97835b53f41190Fe219001';
+
+export const OldCSYTokenContractAddress =
+  '0x5d68D2c43e7E1F761deA6EB6353f14F622D5c664';
+// export const OldTLXTokenContractAddress =
+//   '0xea255909e46a54d54255219468991c69ca0e659d';
 // /** Mainnet */
 export const TLXTokenContractAddress =
   '0xFc9FEC6BD719F32aC632bDd3b3c15995dd6c89d9';
@@ -532,6 +540,34 @@ export const stakingRewards = {
     three_years: '66% APY - 36 months ',
   },
   CSY: {
+    one_month: '12.19% APY - 1 months ',
+    three_months: '17.32% APY - 3 months ',
+    six_months: '19.27% APY - 6 months ',
+    one_year: '51.25% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
+  },
+  OldTLX: {
+    one_month: '15.34% APY for - 1 months',
+    three_months: '21.25% APY - 3 months ',
+    six_months: '29.68% APY - 6 months ',
+    one_year: '40.56% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
+  },
+  OldLSO: {
+    one_month: '12.19% APY - 1 months ',
+    three_months: '17.32% APY - 3 months ',
+    six_months: '19.27% APY - 6 months ',
+    one_year: '51.25% APY - 12 months ',
+    three_years: '112% APY - 36 months ',
+  },
+  OldTLC: {
+    one_month: '1.8% APY - 1 months ',
+    three_months: '5.42% APY - 3 months ',
+    six_months: '11% APY - 6 months ',
+    one_year: '22.10% APY - 12 months ',
+    three_years: '66% APY - 36 months ',
+  },
+  OldCSY: {
     one_month: '12.19% APY - 1 months ',
     three_months: '17.32% APY - 3 months ',
     six_months: '19.27% APY - 6 months ',

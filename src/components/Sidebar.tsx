@@ -20,7 +20,6 @@ import { links } from '../utils/routes';
 
 const Sidebar: React.FC = () => {
   const { isMobileDevice } = useDeviceInfo();
-  console.log('isMobile', isMobileDevice);
   const dispatch = useDispatch();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
@@ -31,6 +30,7 @@ const Sidebar: React.FC = () => {
     if (innerWidth < 600) {
       dispatch(closeSidebar());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -35,8 +35,8 @@ import NotFound from '../../NotFound';
 import { coinsTags } from '../../../App';
 import { changeChain } from '../../../utils/functions/MetaMask';
 
-const StakeCoin: React.FC = () => {
-  const { coinTag = 'TLX' } = useParams();
+const OldStakeCoin: React.FC = () => {
+  const { coinTag = 'OldTLX' } = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
   const walletAddress = useSelector<StoreState, string | undefined>(
@@ -87,7 +87,7 @@ const StakeCoin: React.FC = () => {
     if (window.ethereum?.networkVersion) {
       setCurrentChainId(
         //@ts-ignore
-        ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
+        ethers.utils.hexlify(parseInt(window.ethereum?.networkVersion, 10)),
       );
     }
   };
@@ -98,7 +98,7 @@ const StakeCoin: React.FC = () => {
   };
 
   const getLaunchpadRegistration = useCallback(async () => {
-    if (coinTag === 'LSO' && walletAddress) {
+    if (coinTag === 'OldLSO' && walletAddress) {
       const isRegisteredInLaunchpad = await getLSOLaunchpadRegistration(
         walletAddress,
       );
@@ -158,12 +158,10 @@ const StakeCoin: React.FC = () => {
 
   const getUserTLXBalance = useCallback(async () => {
     if (walletAddress) {
-      console.log('1111: ');
       const result =
-        coinTag === 'LSO' || coinTag === 'CSY'
+        coinTag === 'OldLSO' || coinTag === 'OldCSY'
           ? await contracts.getBalance(tokenContract, walletAddress)
           : await contracts.getActualBalanceOf(tokenContract, walletAddress);
-      console.log('RESULT: ', result);
       setBalance(result);
     }
   }, [coinTag, tokenContract, walletAddress]);
@@ -175,12 +173,13 @@ const StakeCoin: React.FC = () => {
         if (stakes && stakes.length) {
           let totalRew = 0;
           stakes.forEach((stake: Stake) => {
+            console.log('Stakeee: ', stake);
             const amount = parseFloat(ethers.utils.formatEther(stake.amount));
             if (
-              coinTag === 'TLX' ||
               coinTag === 'TLC' ||
-              coinTag === 'LSO' ||
-              coinTag === 'CSY'
+              coinTag === 'OldTLX' ||
+              coinTag === 'OldLSO' ||
+              coinTag === 'OldCSY'
             ) {
               totalRew += (stakeRewards[coinTag][stake.period] / 100) * amount;
             }
@@ -226,12 +225,12 @@ const StakeCoin: React.FC = () => {
               "
               src={
                 // eslint-disable-next-line no-nested-ternary
-                coinTag === 'LSO'
+                coinTag === 'OldLSO'
                   ? lso_1x
                   : // eslint-disable-next-line no-nested-ternary
                   coinTag === 'TLC'
                   ? tlc_1x
-                  : coinTag === 'TLX'
+                  : coinTag === 'OldTLX'
                   ? tlx_1x
                   : CSY_1x
               }
@@ -258,28 +257,33 @@ const StakeCoin: React.FC = () => {
                     </p>
                     <p className="text-gray-400">
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
-                          .one_month
+                        stakingRewards[
+                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                        ].one_month
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
-                          .three_months
+                        stakingRewards[
+                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                        ].three_months
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
-                          .six_months
+                        stakingRewards[
+                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                        ].six_months
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
-                          .one_year
+                        stakingRewards[
+                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                        ].one_year
                       }
                       <br />
                       {
-                        stakingRewards[coinTag as 'TLX' | 'TLC' | 'LSO' | 'CSY']
-                          .three_years
+                        stakingRewards[
+                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                        ].three_years
                       }
                     </p>
                   </>
@@ -290,7 +294,7 @@ const StakeCoin: React.FC = () => {
                 <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
                   {chainErrorMessage}
                 </p>
-              ) : !isRegisteredInLSOLaunchpad && coinTag === 'LSO' ? (
+              ) : !isRegisteredInLSOLaunchpad && coinTag === 'OldLSO' ? (
                 <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
                   You must be registered to Launchpad with at least 1% power
                 </p>
@@ -350,7 +354,7 @@ const StakeCoin: React.FC = () => {
                             if (
                               coinTag &&
                               coinTag !== 'TLC' &&
-                              coinTag !== 'LSO' &&
+                              coinTag !== 'OldLSO' &&
                               stakeContract &&
                               parseFloat(stakeAmount) > 0
                             ) {
@@ -380,7 +384,7 @@ const StakeCoin: React.FC = () => {
                               setIsLoading(false);
                             } else if (
                               coinTag &&
-                              coinTag === 'LSO' &&
+                              coinTag === 'OldLSO' &&
                               stakeContract &&
                               isRegisteredInLSOLaunchpad &&
                               parseFloat(stakeAmount) > 0
@@ -416,7 +420,6 @@ const StakeCoin: React.FC = () => {
                     .toDateString()
                     .slice(4);
                   const amountStaked = ethers.utils.formatEther(stake.amount);
-                  console.log('userStakes: ', userStakes);
 
                   if (parseFloat(amountStaked) > 0) {
                     return (
@@ -456,64 +459,6 @@ const StakeCoin: React.FC = () => {
     );
   };
 
-  const unfreezeCurrent = async () => {
-    try {
-      if (!isUnfreezing) {
-        setIsUnfreezing(true);
-        if (coinTag === 'LSO') {
-          const freezes = await freezeContract.getUserFreezed();
-          let indexToUnfreeze = 0;
-
-          for (const [index, freeze] of freezes.entries()) {
-            if (parseFloat(ethers.utils.formatEther(freeze.amount)) > 0) {
-              indexToUnfreeze = index;
-              break;
-            }
-          }
-
-          const result = await freezeContract.withdrawFreeze(indexToUnfreeze);
-        } else {
-          const result = await tokenContract.releaseOnce();
-        }
-
-        setIsUnfreezing(false);
-      }
-    } catch (error) {
-      setIsUnfreezing(false);
-    }
-  };
-
-  const testTBT = async () => {
-    const c = new ethers.Contract(
-      '0x7d2fCB4e971EF7775D490850f204ae1449dA620A',
-      testContract.abi,
-      provider?.getSigner(),
-    );
-    const overrides = { value: ethers.utils.parseEther('0.05') };
-    const tx = await c.receiveTokens(
-      '0xff8046Ae3b6E9c275728501856b5E0e37F59d6eb',
-      overrides,
-    );
-    const response = await tx.wait();
-
-    console.log('response: ', response);
-  };
-
-  const unlockTokens = async () => {
-    const c = new ethers.Contract(
-      '0x7d2fCB4e971EF7775D490850f204ae1449dA620A',
-      testContract.abi,
-      provider?.getSigner(),
-    );
-    console.log('walletAddress: ', walletAddress);
-    const tx = await c.unlockTokens(
-      '0xd09e3A1F47432A14C6D782cAE30ec07543992E57',
-      ethers.utils.parseEther('0.04'),
-    );
-    const response = await tx.wait();
-    console.log('response: ', response);
-  };
-
   return coinsTags.includes(coinTag ?? '') ? (
     <div className="w-full border-t-2 border-white border-opacity-60">
       {/* <button onClick={testTBT} className="w-40 h-10 bg-black bg-opacity-70">
@@ -527,12 +472,14 @@ const StakeCoin: React.FC = () => {
         Unlock
       </button> */}
       <Stats
-        coinTag={coinTag as 'TLC' | 'TLX' | 'LSO'}
+        coinTag={
+          coinTag as 'TLC' | 'TLX' | 'LSO' | 'OldTLX' | 'OldLSO' | 'OldCSY'
+        }
         totalRewards={totalRewards}
       />
 
       {!walletAddress && (
-        <p className="text-xl text-white font-semibold font-poppins text-center self-center ">
+        <p className="text-xl text-white font-semibold font-poppins text-center self-center">
           Connect MetaMask wallet to access the staking options
         </p>
       )}
@@ -595,4 +542,4 @@ const StakeCoin: React.FC = () => {
   );
 };
 
-export default StakeCoin;
+export default OldStakeCoin;

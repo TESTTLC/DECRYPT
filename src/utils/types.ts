@@ -113,10 +113,12 @@ export const defaultPowers = {
 export const stakeRewards = {
   // all values are represented as percentage
   TLX: [15.34, 21.25, 29.68, 40.56, 112],
-  //   TLC: [11.25, 15.56, 18.8, 19.26, 63.58],
   TLC: [1.8, 5.42, 11, 22.1, 66],
   LSO: [12.19, 17.32, 19.27, 51.25, 112],
   CSY: [12.19, 17.32, 19.27, 51.25, 112],
+  OldTLX: [15.34, 21.25, 29.68, 40.56, 112],
+  OldLSO: [12.19, 17.32, 19.27, 51.25, 112],
+  OldCSY: [12.19, 17.32, 19.27, 51.25, 112],
 };
 
 export enum ProfileCategories {

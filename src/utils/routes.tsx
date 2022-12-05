@@ -35,6 +35,14 @@ export const links = [
     category: 'BASIC',
   },
   {
+    id: 9,
+    url: '/oldStaking',
+    text: 'old staking',
+    icon: '',
+    imageSource: stakingIcon,
+    category: 'BASIC',
+  },
+  {
     id: 2,
     url: '/launchpad',
     text: 'launchpad',

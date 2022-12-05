@@ -33,9 +33,11 @@ import {
   WTLCTokenContractAddress,
   CSYTokenContractAddress,
   CSYStakeContractAddress,
+  OldLSOTokenContractAddress,
+  OldCSYTokenContractAddress,
 } from '../utils/globals';
 
-export const useContracts = (coinTag: string, currentChainId?: string) => {
+export const useContracts = (coinTag: string) => {
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
   );
@@ -84,6 +86,16 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setStakeAddress(TLXStakeContractAddress);
       setTokenAbi(OldTLXToken.abi);
       setStakeAbi(TheLuxuryBankStake.abi);
+    } else if (coinTag === 'OldLSO') {
+      setTokenAddress(OldLSOTokenContractAddress);
+      setStakeAddress(LussoStakeContractAddress);
+      setTokenAbi(LuxandiaToken.abi);
+      setStakeAbi(LuxandiaStake.abi);
+    } else if (coinTag === 'OldCSY') {
+      setTokenAddress(OldCSYTokenContractAddress);
+      setStakeAddress(CSYStakeContractAddress);
+      setTokenAbi(CSYToken.abi);
+      setStakeAbi(CSYStake.abi);
     } else if (coinTag === 'CSY') {
       setTokenAddress(CSYTokenContractAddress);
       setStakeAddress(CSYStakeContractAddress);
@@ -110,7 +122,7 @@ export const useContracts = (coinTag: string, currentChainId?: string) => {
       setTokenAbi(WrappedTLC.abi);
       setStakeAbi(TheLuxuryLiquidityPoolStake.abi); //to be removed
     }
-  }, [coinTag, currentChainId]);
+  }, [coinTag]);
 
   const connectToContracts = async () => {
     try {
