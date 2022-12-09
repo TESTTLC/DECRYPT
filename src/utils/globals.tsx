@@ -93,6 +93,7 @@ export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
 // export const OLDWTLCTokenContractAddress =
+
 //   '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711'; // this is on tlxscan
 // export const WTLCTokenContractAddress =
 //   '0xd887f0837949310C0D174989b7145B83636fE731'; // this is on 5117
@@ -168,10 +169,10 @@ export const TLChain_Klatyn_SideBridgeContractAddress =
   '0xE79f6aefB16AdeFF38dAA435372a7A166815685D';
 
 export const TLChain_USDC_SideBridgeContractAddress =
-  '0xdC7858415244B20c903E0cd857aC58b7225f046F';
+  '0x160d97B05a7E7D249f8FcEb47b2A35170f3eF949';
 
 export const TLChain_USDT_SideBridgeContractAddress =
-  '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
+  '0xF0A8Bb6F6b2018Ec2063B9f149bfFd96c01Eb3f1';
 
 export const TLChain_wEGLD_SideBridgeContractAddress =
   '0x51ecC0062002808B9e632D57A207be5F1850F118';
@@ -181,14 +182,18 @@ export const Binance_LSO_SideBridgeContractAddress =
   '0x25C6330D43445985f564285f3735600c8A94b74a';
 
 export const Binance_TLC_SideBridgeContractAddress =
-  '0x6aeefD1DD025862a80543e6A39c013cE0Ba3DE64';
+  '0x7c2f783ec3E14513B24C0898849DF88b32Fd7229';
+
+//old 06 Dec 2022
+// export const Binance_TLC_SideBridgeContractAddress =
+//   '0x6aeefD1DD025862a80543e6A39c013cE0Ba3DE64';
 
 //Fantom
 export const Fantom_LSO_SideBridgeContractAddress =
   '0xBb4b426deA349e1F7283ee36dbbb77B1Eb6DB1bF';
 
 export const Fantom_TLC_SideBridgeContractAddress =
-  '0xCd6a8C968F6820f7163e7fb41F75048b92E4318D';
+  '0x24b74c5A0b0126E37Fc0EE9fe231D6105Bbf4815';
 
 //Avalanche
 export const Avalanche_LSO_SideBridgeContractAddress =
@@ -199,7 +204,7 @@ export const Avalanche_TLC_SideBridgeContractAddress =
 
 //Polygon
 export const Polygon_wTLC_SideBridgeContractAddress =
-  '0x7E47c9Be6Ea658C12E3EB3bEa1dDec42e9BA5224';
+  '0xa503e0834a73b8577C88e788532c33D08075eE78';
 
 export const Polygon_wLSO_SideBridgeContractAddress =
   '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
@@ -211,7 +216,7 @@ export const Ethereum_wTLC_SideBridgeContractAddress =
 /** MainBridges */
 
 export const TLC_MainBridgeContractAddress =
-  '0x04BFed9B1bC8FE6bA02e1A99bd99c78b2de3662a';
+  '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
 
 export const TLC_EGLD_MainBridgeContractAddress =
   '0x53656E9a47A2e875a38a6CBcabD31EaD4f2b812d';
@@ -221,12 +226,10 @@ export const LSO_MainBridgeContractAddress =
   '0xFf8370506581DA34641e1C4605DFA5E21D6102Ea';
 
 export const Binance_USDC_MainBridgeContractAddress =
-  //   '0xa503e0834a73b8577C88e788532c33D08075eE78';
-  '0x6b5EEde6d493a9C68C2912498F70e13b29148a38';
+  '0xa753a6df08046Bb87B85f921540B8c4b41f2D13A';
 
 export const Binance_USDT_MainBridgeContractAddress =
-  //   '0xabd0F4b51CaA250c9EAD80742496Be39798D1c46';
-  '0x2bB2a4D8E96D2b3713B934a9BeD7d24Cc313752B';
+  '0x03F9b684904EFa7a8db60dd48EAA98Ca7dD44798';
 
 //** ChildTokens */
 
@@ -235,6 +238,7 @@ export const Binance_USDT_MainBridgeContractAddress =
 //   '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
 export const TLChain_USDC_ChildTokenContractAddress =
   '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
+
 // export const TLChain_USDT_ChildTokenContractAddress =
 //   '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 export const TLChain_USDT_ChildTokenContractAddress =
@@ -254,21 +258,21 @@ export const Avalance_LSO_ChildTokenContractAddress =
 
 // Binance
 export const Binance_TLC_ChildTokenContractAddress =
-  '0x9079b1FbA7eB0B28991471d316A3772290EE81ae';
+  '0x400302C1e29ED85B924c2B6451e06487861Deac5';
 
 export const Binance_LSO_ChildTokenContractAddress =
   '0x56F0878AE8F02E30d08B2D8D540ec59ffFa9e06e';
 
 //Fantom
 export const Fantom_TLC_ChildTokenContractAddress =
-  '0x7E47c9Be6Ea658C12E3EB3bEa1dDec42e9BA5224';
+  '0x7169c9Dc369eeD6C5862604E170734AF2B96aC21';
 
 export const Fantom_LSO_ChildTokenContractAddress =
   '0x76b560bD1e8c05Fb04c7a8855f118A7a2A50216D';
 
 //Polygon
 export const Polygon_wTLC_ChildTokenContractAddress =
-  '0x9D1A776BFC15382Ae3b8f791f62ED93F6A83bAB1';
+  '0x7169c9Dc369eeD6C5862604E170734AF2B96aC21';
 
 export const Polygon_wLSO_ChildTokenContractAddress =
   '0x76Ad20159F8BaeeB986d1A8792d6A3aeD750885c';

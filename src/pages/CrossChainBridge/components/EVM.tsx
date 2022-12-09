@@ -6,24 +6,26 @@ import { useSelector } from 'react-redux';
 import { TailSpin } from 'react-loader-spinner';
 import { BridgeState, StoreState } from 'src/utils/storeTypes';
 import { useBridgeContracts } from 'src/hooks/useBridgeContracts';
-import { getChain, getChainId } from 'src/utils/functions/Contracts';
+import { getChainId } from 'src/utils/functions/Contracts';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { getTransaction, initialize } from 'src/api/index';
 import { isStableCoin } from 'src/utils/functions/utils';
+import SideBridge from 'src/contracts/SideBridge.json';
 
 import { ChainsIds } from '../../../utils/types';
 import { changeChain } from '../../../utils/functions/MetaMask';
-import { useContracts } from '../../../hooks/useContracts';
 import { modalChains, modalCoins } from '../../../utils/globals';
 
 import TokensModal from './TokensModal';
 
 const fees = {
-  TLC: 1,
-  LSO: 5,
-  USDT: 1,
-  USDC: 1,
+  TLC: 0.1,
+  LSO: 0.1,
+  USDT: 0.1,
+  USDC: 0.1,
 };
+
+// const fee = 0.1;
 
 const EVM: React.FC = () => {
   const bridgeState = useSelector<StoreState, BridgeState>(
@@ -47,10 +49,17 @@ const EVM: React.FC = () => {
   );
 
   const [currentChainId, setCurrentChainId] = useState<string>();
-  const [fee, setFee] = useState(bridgeState.token === 'LSO' ? 5 : 1);
+  const [fee, setFee] = useState(
+    bridgeState.token === 'TLC' || bridgeState.token === 'wTLC' ? 0.1 : 1,
+  );
 
   useEffect(() => {
-    setFee(bridgeState.token === 'LSO' ? 5 : 1);
+    if (bridgeState.token === 'TLC' || bridgeState.token === 'wTLC') {
+      setFee(0.1);
+    } else {
+      setFee(1);
+    }
+    //   setFee(bridgeState.token === 'LSO' ? 5 : 1);
   }, [bridgeState.token]);
 
   const chainChange = useCallback(async () => {
@@ -91,6 +100,11 @@ const EVM: React.FC = () => {
   }, [window.ethereum, bridgeState.fromChain]);
 
   useEffect(() => {
+    console.log('window.ethereum: ', window?.ethereum.networkVersion);
+    console.log(
+      'ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)): ',
+      ethers.utils.hexlify(parseInt(window.ethereum.networkVersion, 10)),
+    );
     if (window?.ethereum) {
       setCurrentChainId(
         //@ts-ignore
@@ -206,6 +220,7 @@ const EVM: React.FC = () => {
   };
 
   const receiveTokens = async () => {
+    console.log('PRESSED RECEIVE TOKENS');
     try {
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
@@ -253,6 +268,7 @@ const EVM: React.FC = () => {
   };
 
   const returnTokens = async () => {
+    console.log('PRESSED RETURN TOKENS');
     try {
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
@@ -260,17 +276,25 @@ const EVM: React.FC = () => {
           'sideBridgeContract?.address: ',
           sideBridgeContract?.address,
         );
-        // console.log(
-        //   'allowance: ',
-        //   await sideBridgeContract?.allowance(walletAddress),
-        // );
-        console.log('side: ', sideBridgeContract);
+
         const finalAmount = parseFloat(amountToSend) + fee;
+        console.log('mainBridge?.address: ', mainBridgeContract?.address);
         const tx = await sideBridgeContract?.returnTokens(
           ethers.utils.parseUnits(finalAmount.toString(), 'ether'),
           mainBridgeContract?.address,
         );
-        await tx.wait();
+        console.log('Tx is: ', tx);
+        const receipt = await tx.wait();
+        console.log('receipt: ', receipt);
+
+        const iface = new ethers.utils.Interface(SideBridge.abi);
+        const decodedData = iface.parseTransaction({
+          data: tx.data,
+          value: tx.value,
+        });
+
+        console.log('DecodedData: ', decodedData);
+
         setIsLoading(false);
         setApproveDone(false);
       }
@@ -287,12 +311,13 @@ const EVM: React.FC = () => {
       } else {
         setErrorMessage('Something went wrong');
       }
-      console.log('Err on receiveTokens: ', error);
+      console.log('Err on returnTokens: ', error);
     }
   };
 
   const chainError = useMemo(() => {
     const neededChainId = getChainId(bridgeState.fromChain);
+
     console.log('currentChainId: ', currentChainId);
     console.log('neededChainId: ', neededChainId);
     if (currentChainId !== neededChainId) {
@@ -329,6 +354,9 @@ const EVM: React.FC = () => {
       }
     }
   };
+
+  console.log('SidebridgeAddress: ', sideBridgeContract?.address);
+  console.log('MainbridgeAddress: ', mainBridgeContract?.address);
 
   return (
     <>

@@ -102,6 +102,7 @@ export const useBridgeContracts = (
         const sideContract = new ethers.Contract(
           sideBridgeAddress,
           SideBridge.abi,
+          //   SideBridge.abi,
           provider.getSigner(),
         );
         const tknContract = new ethers.Contract(
