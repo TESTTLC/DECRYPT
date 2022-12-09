@@ -178,7 +178,7 @@ export const CandleStickChart = (props: any) => {
     async function fetchData() {
       if (swapTrans) {
         const data = swapTrans;
-        // console.log('chart data length', data.length);
+        console.log('chart data length', data.length);
         const chartData: any = [];
         for (let i = 0; i < data.length; i++) {
           const { index, swapData, path, timeStamp, transactionHash } = data[i];

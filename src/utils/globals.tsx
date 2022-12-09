@@ -45,14 +45,27 @@ export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 
 //TLChain
+// export const RouterContractAddress =
+//   '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
 export const RouterContractAddress =
-  '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
+  '0xe0abA3A77A37Ef8e16F50CFCBe7901A3AFe336d1'; // 2321 chain
+// export const RouterContractAddress =
+//   '0xbd45968046F24bd1AD46F93A60a0bff558c8821a'; // 5117
+
+// export const FactoryContractAddress =
+//   '0x48500D88430B37E33237dD47948A8D02df660473';
 export const FactoryContractAddress =
-  '0x48500D88430B37E33237dD47948A8D02df660473';
+  '0x837e7cfe3a85d1419771ebBf975EC78cE9b62f5c'; // 2321 chain
+// export const FactoryContractAddress =
+//   '0x9BBCf500583062f3FE3D70F6cFa0cE2542927760'; // 5117
+// export const MasterchefContractAddress =
+//   '0x088C8ED82231DEcC2a13F6367c551a7d35361f67';
 export const MasterchefContractAddress =
-  '0x088C8ED82231DEcC2a13F6367c551a7d35361f67';
-export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6';
-export const TempUsdc = '0x284ad65F779Ca1d8f52e710EE6728638FB3BAfa9';
+  '0x82c3E9e20C9fB643B738145d94D2593111CB7895';
+// export const TempUsdt = '0xfFDDD20d35BF9be18bA46EB5f15eCBDA173157F6'; // maybe xxx
+// export const TempUsdt = '0xB5aE15E68C1bd1F7391d024384319FD3EBDCE7EF'; // 5117 testing
+export const TempUsdt = '0xEB5f15235612D31Df253c71b3Ea36E0aAa9F6031'; // 2321 chain
+export const TempUsdc = '0x03B03AeC4b14dc8aA9Ab3ef61A31Af63DD247cAB';
 
 //Ethereum
 // export const RouterContractAddress =
@@ -80,11 +93,14 @@ export const TLNFTTokenContractAddress =
   '0xE333A9333A302ed898caF8b7920Eb0cE5a26bba8';
 
 // export const OLDWTLCTokenContractAddress =
-//   '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711';
+
+//   '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711'; // this is on tlxscan
 // export const WTLCTokenContractAddress =
-//   '0xd887f0837949310C0D174989b7145B83636fE731';
+//   '0xd887f0837949310C0D174989b7145B83636fE731'; // this is on 5117
 export const WTLCTokenContractAddress =
-  '0x422b6cDF97c750a0eDcDDc39c88f25379E59e96e';
+  '0x422b6cDF97c750a0eDcDDc39c88f25379E59e96e'; // 2321 chain
+// export const WTLCTokenContractAddress =
+//   '0xc0e25EA876fbD0b2A12bf8eBfB133D98346CC711'; // 5117
 
 export const OldTLXTokenContractAddress =
   '0xB8B538C5dD46d8D691f0A972754365be8c9DC20b';
@@ -218,11 +234,17 @@ export const Binance_USDT_MainBridgeContractAddress =
 //** ChildTokens */
 
 // TLChain
+// export const TLChain_USDC_ChildTokenContractAddress =
+//   '0xd3f978dc308C0441A435bE8D67b15Ec2cFF7776f';
 export const TLChain_USDC_ChildTokenContractAddress =
   '0x2578850d2a34e7DcE51355895dB05F3bBE562822';
 
+// export const TLChain_USDT_ChildTokenContractAddress =
+//   '0xD3298Dd2f86356e888e7FB6898720E1C3DCA5985';
 export const TLChain_USDT_ChildTokenContractAddress =
-  '0x76Ad20159F8BaeeB986d1A8792d6A3aeD750885c';
+  '0x76ad20159f8baeeb986d1a8792d6a3aed750885c'; // 2321 new deployed
+// export const TLChain_USDT_ChildTokenContractAddress =
+//   '0xCd0CC89a54614A7Acb11032dd3C7ef5C565843f5'; // 5117 chain for testing
 
 export const TLChain_wEGLD_ChildTokenContractAddress =
   '0xBABfCD8324b2457c091B643CD6DC46B25577B253';
