@@ -187,7 +187,6 @@ const EVM: React.FC = () => {
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
         const finalAmount = parseFloat(amountToSend) + fee;
-        console.log('finalAmount approveSIde: ', finalAmount);
 
         const tx = await tokenContract?.functions.approve(
           sideBridgeContract?.address,
@@ -220,12 +219,10 @@ const EVM: React.FC = () => {
   };
 
   const receiveTokens = async () => {
-    console.log('PRESSED RECEIVE TOKENS');
     try {
       setErrorMessage(undefined);
       if (parseFloat(amountToSend) > 0) {
         setIsLoading(true);
-        console.log('ssss: ', sideBridgeContract?.address);
         const finalAmount = parseFloat(amountToSend) + fee;
         let tx;
 
@@ -240,9 +237,6 @@ const EVM: React.FC = () => {
             overrides,
           );
         } else {
-          console.log('2: ', mainBridgeContract?.address);
-          console.log('3: ', sideBridgeContract?.address);
-          console.log('FinalAmount: ', finalAmount);
           tx = await mainBridgeContract?.receiveTokens(
             ethers.utils.parseEther(finalAmount.toString()),
             sideBridgeContract?.address,
