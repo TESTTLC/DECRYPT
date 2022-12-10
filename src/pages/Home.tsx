@@ -525,9 +525,9 @@ const Home: React.FC = () => {
                 // subtitle="Become a modern investor and learn more about the ecosystem & benefits of tokenization."
                 subtitle="Access is granted by users connecting their crypto wallets and verifying their ownership of designated membership NFT"
                 // onClick={() => navigate('/tokenization')}
-                onClick={() =>
-                  window.open('https://www.tlchain.group/directory', '_blank')
-                }
+                // onClick={() =>
+                //   window.open('https://www.tlchain.group/directory', '_blank')
+                // }
                 imageSource={lendingAndBorrowingImage}
                 titleStyle={'text-lg'}
                 subtitleStyle={'text-xs'}
@@ -631,7 +631,7 @@ const Home: React.FC = () => {
               </div>
               <p className="font-semibold mt-2 text-center">TLC</p>
               <p className="text-xs text-gray-400 text-center">TLChain</p>
-              <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
+              <div className="h-[1px] w-full mt-2 bg-white bg-opacity-30 " />
               <p className="font-semibold mt-2">${prices.TLC}</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
@@ -644,7 +644,8 @@ const Home: React.FC = () => {
               </div>
               <p className="font-semibold mt-2 text-center">LSO</p>
               <p className="text-xs text-gray-400 text-center">Lusso</p>
-              <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
+
+              <div className="h-[1px] w-full mt-2 bg-white bg-opacity-30 " />
               <p className="font-semibold mt-2">$0.10</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2 mt-4">
@@ -658,7 +659,8 @@ const Home: React.FC = () => {
               </div>
               <p className="font-semibold mt-2 text-center">TLX</p>
               <p className="text-xs text-gray-400 text-center">The Luxury</p>
-              <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
+
+              <div className="h-[1px] w-full mt-2 bg-white bg-opacity-30 " />
               <p className="font-semibold mt-2">${prices.TLX}</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2 mt-4">
@@ -672,7 +674,8 @@ const Home: React.FC = () => {
               </div>
               <p className="font-semibold mt-2 text-center">CSY</p>
               <p className="text-xs text-gray-400 text-center">Coressy</p>
-              <div className="h-[1px] w-full mt-2 bg-gradient-to-r from-transparent via-white to-transparent " />
+
+              <div className="h-[1px] w-full mt-2 bg-white bg-opacity-30 " />
               <p className="font-semibold mt-2">${prices.CSY}</p>
             </div>
           </div>

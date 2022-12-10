@@ -126,7 +126,7 @@ const Sidebar: React.FC = () => {
             })}
             <hr className="my-6" />
             <a
-              href="https://discord.gg/6nrsDk29WH"
+              href="https://discord.gg/tlchain"
               target={'_blank'}
               className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >

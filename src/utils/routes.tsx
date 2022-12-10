@@ -29,7 +29,7 @@ export const links = [
   {
     id: 1,
     url: '/staking',
-    text: 'staking',
+    text: 'X Boost',
     icon: '',
     imageSource: stakingIcon,
     category: 'BASIC',
@@ -37,7 +37,7 @@ export const links = [
   {
     id: 9,
     url: '/oldStaking',
-    text: 'old staking',
+    text: 'Old X Boost',
     icon: '',
     imageSource: stakingIcon,
     category: 'BASIC',
@@ -45,7 +45,7 @@ export const links = [
   {
     id: 2,
     url: '/launchpad',
-    text: 'launchpad',
+    text: 'LaunchX',
     icon: '',
     imageSource: launchpadIcon,
     category: 'BASIC',
@@ -53,7 +53,7 @@ export const links = [
   {
     id: 3,
     url: 'https://luxandia.com',
-    text: 'metaverse',
+    text: 'X Station',
 
     icon: '',
     imageSource: metaverseIcon,
@@ -62,7 +62,7 @@ export const links = [
   {
     id: 4,
     url: '/nftmarketplace',
-    text: 'nft marketplace',
+    text: 'X NFT',
     icon: '',
     imageSource: nftMarketplaceIcon,
     category: 'BASIC',
@@ -70,7 +70,7 @@ export const links = [
   {
     id: 5,
     url: '/crosschainbridge',
-    text: 'cross chain bridge',
+    text: 'X Bridges',
     icon: '',
     imageSource: ccbIcon,
     category: 'BASIC',
@@ -79,7 +79,7 @@ export const links = [
   {
     id: 6,
     url: 'https://factory.decryption.com',
-    text: 'create your token',
+    text: 'X Factory',
     icon: '',
     imageSource: createTokenIcon,
     category: 'FINANCE',
@@ -88,7 +88,7 @@ export const links = [
   {
     id: 7,
     url: '/dex',
-    text: 'decentralized exchange',
+    text: 'IChangeX',
     icon: '',
     imageSource: dexIcon,
     category: 'FINANCE',
@@ -97,8 +97,9 @@ export const links = [
   {
     id: 8,
     // url: '/tokenization',
-    url: 'https://www.tlchain.group/directory',
-    text: 'Asset Tokenization',
+    // url: 'https://www.tlchain.group/directory',
+    url: '#',
+    text: 'VIP Access',
     icon: '',
     imageSource: assetTokenizationIcon,
     category: 'FINANCE',

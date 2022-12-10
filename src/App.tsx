@@ -91,7 +91,7 @@ const App = () => {
 
   return (
     <>
-      <NotificationModal></NotificationModal>
+      {/* <NotificationModal></NotificationModal> */}
       <div className="bg-image"></div>
       <div className="z-10 flex flex-col font-poppins text-white">
         {/* {localStorage.getItem('user') ? ( */}
