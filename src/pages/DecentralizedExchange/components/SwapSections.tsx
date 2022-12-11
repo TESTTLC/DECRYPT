@@ -207,13 +207,13 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
   useEffect(() => {
     if (chainSectionIndex === 0) {
-      console.log('0');
+      // console.log('0');
       setFromModalTokens(fromBinanceModalTokens);
       setToModalTokens(fromBinanceToTLChainModalTokens);
       setFromToken(fromBinanceModalTokens[0].tag);
       setToToken(fromBinanceToTLChainModalTokens[0].tag);
     } else if (chainSectionIndex === 1) {
-      console.log('1');
+      // console.log('1');
       setFromModalTokens(fromTLChainModalTokens);
       setToModalTokens(fromTLChainToTLChainModalTokens);
       setFromToken(fromTLChainModalTokens[0].tag);
@@ -228,7 +228,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         value: parseEther(amountToSwap.toString()),
       });
       const result = await tx?.wait();
-      console.log('Result: ', result);
     }
   }, [amountToSwap, provider]);
 
@@ -247,7 +246,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
 
       const tx = await wTLCContract.withdraw(finalAmount);
       const result = await tx?.wait();
-      console.log('Result: ', result);
     }
   }, [amountToSwap, provider]);
 
@@ -278,12 +276,12 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       try {
         setIsLoading(true);
         const address1 = WTLCTokenContractAddress;
-        console.log('swapExactEthForToken from address', address1);
+        // console.log('swapExactEthForToken from address', address1);
         const address2 = fromTLChainToTLChainModalTokens.find(
           (token) => token.tag === toToken,
         ).address;
 
-        console.log('swapExactEthForToken to address', address2);
+        // console.log('swapExactEthForToken to address', address2);
 
         const routerContract = new Contract(
           RouterContractAddress,
@@ -305,7 +303,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         );
 
         const swapResult = await tx.wait();
-        console.log('Swap Result is: ', swapResult);
         setIsLoading(false);
       } catch (error) {
         console.log('Error on swapExactEthForTokens: ', error);
@@ -321,7 +318,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         const address1 = fromTLChainModalTokens.find(
           (token) => token.tag === fromToken,
         ).address;
-        console.log('address1: ', address1);
         const address2 = WTLCTokenContractAddress;
         const routerContract = new Contract(
           RouterContractAddress,
@@ -335,21 +331,19 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         const block = await provider.getBlock(blockNumber);
         const timestamp = block?.timestamp + 300;
 
-        console.log('blockNumber: ', blockNumber);
-        console.log('firstToken.address: ', address1);
-        console.log('secondToken.address: ', address2);
+        // console.log('blockNumber: ', blockNumber);
+        // console.log('firstToken.address: ', address1);
+        // console.log('secondToken.address: ', address2);
         const amount1 = parseEther(amountToSwap.toString());
         const approvedAmount = await token.allowance(
           walletAddress,
           RouterContractAddress,
         );
-        console.log('amount1', amount1.toString());
-        console.log('approveAMount', approvedAmount.toString());
+        // console.log('amount1', amount1.toString());
+        // console.log('approveAMount', approvedAmount.toString());
         if (amount1.gt(approvedAmount)) {
-          console.log('need to approve');
           const approveTx = await token.approve(RouterContractAddress, amount1);
           const approve1Result = await approveTx.wait();
-          console.log('approve1Result: ', approve1Result);
         }
 
         // swap exact token to eth
@@ -362,7 +356,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         );
 
         const swapResult = await tx.wait();
-        console.log('Swap swapExactTokensForEth result is: ', swapResult);
         setIsLoading(false);
       } catch (error) {
         console.log('Error on swapExactTokensForEth: ', error);
@@ -377,20 +370,15 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         const address1 = fromTLChainModalTokens.find(
           (token) => token.tag === fromToken,
         ).address;
-        console.log('address1: ', address1);
-
         const address2 = fromTLChainToTLChainModalTokens.find(
           (token) => token.tag === toToken,
         ).address;
-
-        console.log('address2: ', address2);
 
         const routerContract = new Contract(
           RouterContractAddress,
           Router.abi,
           provider?.getSigner(),
         );
-        console.log('routerContractt: ', routerContract);
 
         const wUSDTContract = new Contract(
           TLChain_USDT_ChildTokenContractAddress,
@@ -413,9 +401,9 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         const block = await provider.getBlock(blockNumber);
         const timestamp = block?.timestamp + 300;
 
-        console.log('blockNumber: ', blockNumber);
-        console.log('firstToken.address: ', address1);
-        console.log('secondToken.address: ', address2);
+        // console.log('blockNumber: ', blockNumber);
+        // console.log('firstToken.address: ', address1);
+        // console.log('secondToken.address: ', address2);
         const amount1 = parseEther(amountToSwap.toString());
 
         let approve1tx;
@@ -425,21 +413,18 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
             amount1,
           );
           const approve1Result = await approve1tx.wait();
-          console.log('approve1Result: ', approve1Result);
         } else if (toToken === 'wUSDC') {
           approve1tx = await wUSDCContract.approve(
             RouterContractAddress,
             amount1,
           );
           const approve1Result = await approve1tx.wait();
-          console.log('approve1Result: ', approve1Result);
         } else if (fromToken === 'wTLC') {
           approve1tx = await wTLCContract.approve(
             RouterContractAddress,
             amount1,
           );
           const approve1Result = await approve1tx.wait();
-          console.log('approve1Result: ', approve1Result);
         }
 
         const tx = await routerContract.swapExactTokensForTokens(
@@ -450,7 +435,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           timestamp,
         );
         const swapResult = await tx.wait();
-        console.log('Swap Result is: ', swapResult);
         setIsLoading(false);
       } catch (error) {
         console.log('Error on swapExactTokensForTokens: ', error);
@@ -574,12 +558,10 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
               if (fromToken === 'TLC' || toToken === 'TLC') {
                 if (fromToken === 'TLC') {
                   if (toToken === 'TLC') {
-                    console.log('from and to should be different');
                     return;
                   }
                   await swapExactEthForTokens();
                 } else {
-                  console.log('here here');
                   await swapExactTokenForEth();
                 }
               }
@@ -661,7 +643,6 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
   ]);
 
   const getAmountsOut = useCallback(async () => {
-    console.log('get amount output...');
     let out = 0;
     try {
       const routerC = new Contract(
@@ -674,13 +655,13 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
         (t) => t.tag === fromToken,
       );
       const to = fromTLChainToTLChainModalTokens.find((t) => t.tag === toToken);
-      console.log('get amount from', from);
-      console.log('get amount, to', to);
-      console.log(
-        'parseEther(amountToSwap.toString()): ',
-        parseEther(amountToSwap.toString()),
-      );
-      console.log('[from.address, to.address]: ', [from.address, to.address]);
+      // console.log('get amount from', from);
+      // console.log('get amount, to', to);
+      // console.log(
+      //   'parseEther(amountToSwap.toString()): ',
+      //   parseEther(amountToSwap.toString()),
+      // );
+      // console.log('[from.address, to.address]: ', [from.address, to.address]);
       if (from?.address && to?.address) {
         const result = await routerC.getAmountsOut(
           parseEther(amountToSwap.toString()),
