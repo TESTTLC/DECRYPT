@@ -3,7 +3,7 @@ import { FaArrowCircleDown } from 'react-icons/fa';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import { TailSpin } from 'react-loader-spinner';
 import tlchainImage from 'src/assets/images/tlc-bridge.png';
-import { Project } from 'src/utils/types';
+import { Project, ChainsIds } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
 import usdtLogo from 'src/assets/images/USDT-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
@@ -35,6 +35,7 @@ import {
   parseUnits,
 } from 'ethers/lib/utils';
 
+import RemoveLiquidity from './RemoveLiquidity';
 import LiquidityTokensModal from './LiquidityTokensModal';
 import Categories from './Categories';
 
@@ -50,9 +51,14 @@ export const toModalTokes: Project[] = [
 interface Props {
   usdtTlcApr: string;
   usdcTlcApr: string;
+  currentChainId: string;
 }
 
-const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
+const LiquiditySections: React.FC<Props> = ({
+  currentChainId,
+  usdtTlcApr,
+  usdcTlcApr,
+}) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fromModalTokens: any[] = [
     {
@@ -197,9 +203,7 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
   }, [provider, walletAddress, amountToSwap, calculateInputAmount]);
 
   const addLiquidity = useCallback(async () => {
-    console.log('Started addLiquidity');
     if (provider) {
-      console.log('Provider here');
       try {
         setIsLoading(true);
         const routerContract = new Contract(
@@ -210,34 +214,6 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
 
         const address1 = firstToken.address;
         const token = new Contract(address1, ERC20.abi, provider.getSigner());
-
-        // const wUSDTContract = new Contract(
-        //   TLChain_USDT_ChildTokenContractAddress,
-        //   ERC20.abi,
-        //   provider.getSigner(),
-        // );
-        // const wUSDCContract = new Contract(
-        //   TLChain_USDC_ChildTokenContractAddress,
-        //   ERC20.abi,
-        //   provider.getSigner(),
-        // );
-        // const wUSDTContract = new Contract(
-        //   Ethereum_USDT_TokenContractAddress,
-        //   ERC20.abi,
-        //   provider.getSigner(),
-        // );
-        // const wUSDCContract = new Contract(
-        //   Ethereum_USDC_TokenContractAddress,
-        //   ERC20.abi,
-        //   provider.getSigner(),
-        // );
-        // const wTLCContract = new Contract(
-        //   Ethereum_wTLC_ChildTokenContractAddress,
-        //   ERC20.abi,
-        //   provider.getSigner(),
-        // );
-
-        console.log('Contract: ', routerContract);
         const amount1 = parseEther(amountToSwap.toString()); // wUSDT
         // const amount2 = amount1 / 4.89; // TLC
         // const amountAMin = amount1 - (0.5 / 100) * amount1; //amount1 - 0.5% slippage
@@ -249,44 +225,6 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
         const blockNumber = await provider.getBlockNumber();
         const block = await provider.getBlock(blockNumber);
         const timestamp = block?.timestamp + 300;
-
-        // console.log('blockNumber: ', blockNumber);
-        // console.log('firstToken.address: ', firstToken.address);
-        // console.log('secondToken.address: ', secondToken.address);
-        // console.log('secondAmount: ', secondAmount);
-        // console.log(
-        //   'ethers.FixedNumber.fromValue(parseEther(secondAmount.toFixed(18)))',
-        //   parseEther(
-        //     formatEther(parseEther(secondAmount.toString())),
-        //   ).toString(),
-        // );
-
-        // let approve1tx;
-        // if (firstToken.tag === 'wUSDT') {
-        //   console.log('Here1');
-        //   approve1tx = await wUSDTContract.approve(
-        //     RouterContractAddress,
-        //     // parseUnits(amount1.toString(), 6),
-        //     parseUnits(amount1.toString(), 18),
-        //     {
-        //       gasLimit: 250000,
-        //     },
-        //   );
-        // } else {
-        //   console.log('Here');
-        //   approve1tx = await wUSDCContract.approve(
-        //     RouterContractAddress,
-        //     // parseUnits(amount1.toString(), 6),
-        //     parseUnits(amount1.toString(), 18),
-        //     {
-        //       gasLimit: 250000,
-        //     },
-        //   );
-        // }
-
-        // const approve1Result = await approve1tx.wait();
-        // console.log('approve1tx: ', approve1tx);
-        // console.log('approve1Result: ', approve1Result);
 
         const approvedAmount = await token.allowance(
           walletAddress,
@@ -300,31 +238,6 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
           const approve1Result = await approveTx.wait();
           console.log('approve1Result: ', approve1Result);
         }
-
-        /* const approve2tx = await wTLCContract.approve(
-          RouterContractAddress,
-          //   parseEther(secondAmount.toString()),
-          parseEther(formatEther(parseEther(secondAmount.toString()))),
-          //   ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
-        );
-        const approve2Result = await approve2tx.wait();
-        console.log('approve2tx: ', approve2tx);
-        console.log('approve2Result: ', approve2Result);
-        const result = await routerContract.addLiquidity(
-          firstToken.address,
-          secondToken.address,
-          //   parseEther(amount1.toString()),
-          parseUnits(amount1.toString(), 6),
-          parseEther(formatEther(parseEther(secondAmount.toString()))),
-          // ethers.FixedNumber.fromValue(parseEther(amount2.toFixed(18))),
-          //   parseEther(amount2.toFixed(18)),
-          0,
-          0,
-          //   parseEther(amountAMin.toString()),
-          //   parseEther(amountBMin.toString()),
-          walletAddress,
-          timestamp,
-        ); */
         const result = await routerContract.addLiquidityETH(
           firstToken.address,
           parseUnits(amount1.toString(), 18),
@@ -355,6 +268,47 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
   //   useEffect(() => {
   //     addLiquidity();
   //   }, [addLiquidity]);
+
+  const bsctest = async () => {
+    if (provider) {
+      try {
+        const routerContract = new Contract(
+          '0x72d4e97cc51b83a3f5c31d4501b0d20a5bec7a90',
+          Router.abi,
+          provider.getSigner(),
+        );
+
+        const blockNumber = await provider.getBlockNumber();
+        const block = await provider.getBlock(blockNumber);
+        const timestamp = block?.timestamp + 300000;
+
+        const usdtLpContract = new Contract(
+          '0x6c486B79c8c65ADD876Bce251cfb342516cAe0cC',
+          Pair.abi,
+          provider?.getSigner(),
+        );
+        const usdtLp = await usdtLpContract.balanceOf(walletAddress);
+        // approve amount
+        const approveLp = await usdtLpContract.approve(
+          '0x72d4e97cc51b83a3f5c31d4501b0d20a5bec7a90',
+          usdtLp,
+        );
+
+        const result = await routerContract.removeLiquidityETH(
+          '0x27F9A6F275acA58801b61965580e06B90DCcae28',
+          usdtLp,
+          0,
+          0,
+          walletAddress,
+          timestamp,
+          { gasLimit: 5000000 },
+        );
+        await result.wait();
+      } catch (error) {
+        console.log('bsc error', error);
+      }
+    }
+  };
 
   return (
     <div className="relative items-center w-[34rem] xs:w-[22rem] xs:px-4 rounded-lg bg-black bg-opacity-60 text-white font-poppins">
@@ -439,20 +393,36 @@ const LiquiditySections: React.FC<Props> = ({ usdtTlcApr, usdcTlcApr }) => {
               </div>
             </div>
             <div className="h-14 mt-2" />
-            <button
-              onClick={addLiquidity}
-              className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+            {/* <button
+              className="flex h-6 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+              onClick={() => bsctest()}
             >
-              {isLoading ? (
-                <>
-                  {' '}
-                  Adding in progress &nbsp;
-                  <TailSpin color="#fff" height={18} width={18} />
-                </>
-              ) : (
-                'Add'
-              )}
-            </button>
+              bsc test
+            </button> */}
+            {walletAddress &&
+            parseInt(currentChainId) === parseInt(ChainsIds.TLC) ? (
+              <button
+                onClick={addLiquidity}
+                className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
+              >
+                {isLoading ? (
+                  <>
+                    {' '}
+                    Adding in progress &nbsp;
+                    <TailSpin color="#fff" height={18} width={18} />
+                  </>
+                ) : (
+                  'Add'
+                )}
+              </button>
+            ) : (
+              <p className="text-red-400 leading-tight">
+                {/* Please connect to TLChain Mainnet{' '} */}
+                Please connect to TLChain Mainnet{' '}
+                {!walletAddress && 'and connect your wallet'}{' '}
+              </p>
+            )}
+            <RemoveLiquidity currentChainId={currentChainId} />
           </>
         ) : (
           <>
