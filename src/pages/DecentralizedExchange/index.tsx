@@ -281,7 +281,11 @@ const DecentralizedExchange: React.FC = () => {
           <SwapSections currentChainId={currentChainId ?? ''} />
         </div>
         <div className="">
-          <LiquiditySections usdtTlcApr={usdtTlcApr} usdcTlcApr={usdcTlcApr} />
+          <LiquiditySections
+            currentChainId={currentChainId ?? ''}
+            usdtTlcApr={usdtTlcApr}
+            usdcTlcApr={usdcTlcApr}
+          />
         </div>
       </div>
 
