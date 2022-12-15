@@ -125,7 +125,7 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
         const timestamp = block?.timestamp + 300000;
         if (lpType == 0) {
           // remove wUSDT-tlc lp
-          const usdtLpContract = new Contract(
+          /*const usdtLpContract = new Contract(
             TempUsdt,
             Pair.abi,
             provider?.getSigner(),
@@ -142,20 +142,10 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
           console.log(approveLp);
           console.log('usdtlp', usdtLp.toString());
           console.log('usdt nonce', nonce.toString());
-          console.log('block time', timestamp);
-          // Remove liquidity
-          // const result = await routerContract.removeLiquidityETH(
-          //   TempUsdt,
-          //   usdtLp,
-          //   0,
-          //   0,
-          //   walletAddress,
-          //   timestamp,
-          //   { gasLimit: 100000 },
-          // );
-          // console.log('result', result);
+          console.log('block time', timestamp);*/
 
-          const result = await routerContract.removeLiquidityETH(
+          // Remove liquidity
+          /* const result = await routerContract.removeLiquidityETH(
             TLChain_USDT_ChildTokenContractAddress,
             usdtLp,
             // usdtLp,
@@ -166,7 +156,7 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
             { gasLimit: 1000000 },
           );
           await result.wait();
-          console.log('done');
+          console.log('done');*/
 
           // const msgParams = JSON.stringify({
           //   types: {
