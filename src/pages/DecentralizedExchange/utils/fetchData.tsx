@@ -44,7 +44,7 @@ export function useSwapTrans() {
     // check the collection address is available
     axios({
       method: 'GET',
-      url: `${API_URL}?module=logs&action=getLogs&fromBlock=1300000&toBlock=2300000&address=0xEB5f15235612D31Df253c71b3Ea36E0aAa9F6031&topic0=0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822`,
+      url: `${API_URL}?module=logs&action=getLogs&fromBlock=1486700&toBlock=2300000&address=0xEB5f15235612D31Df253c71b3Ea36E0aAa9F6031&topic0=0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822`,
       // url: `${API_URL}?module=logs&action=getLogs&fromBlock=15719340&toBlock=25000000&address=0x002043eAD35D81B1F5847D8Aad1D18DDEf20389A&topic0=0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822&page=1&offset=1000&apikey=3SFTR5FF1FAP4ZCVAJH394NEI1NUG7GASS`,
       // url: `${API_URL}?module=logs&action=getLogs&fromBlock=15719340&toBlock=25000000&address=${usdt_tlc_pool_eth}&topic0=0xd78ad95fa46c994b6551d0da85fc275fe613ce37657fb8d5e3d130840159d822&page=1&offset=50&apikey=3SFTR5FF1FAP4ZCVAJH394NEI1NUG7GASS`,
       headers: {
