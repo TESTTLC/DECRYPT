@@ -93,7 +93,7 @@ const FarmModal: React.FC<Props> = ({
         if (stakingType) {
           if (poolId == 0) {
             const tlc_usdt_cont = new Contract(
-              usdt_tlc_pool_eth,
+              TempUsdt,
               ERC20.abi,
               provider.getSigner(),
             );
@@ -101,7 +101,7 @@ const FarmModal: React.FC<Props> = ({
             setBal(formatEther(amount.toString()));
           } else {
             const tlc_usdc_cont = new Contract(
-              usdc_tlc_pool_eth,
+              TempUsdc,
               ERC20.abi,
               provider.getSigner(),
             );
