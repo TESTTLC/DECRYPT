@@ -50,6 +50,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
 
   const [allowranceUsdt, setAllowranceUsdt] = useState(parseEther('0'));
   const [allowranceUsdc, setAllowranceUsdc] = useState(parseEther('0'));
+  const [allowranceTlx, setAllowranceTlx] = useState(parseEther('0'));
   const [usdtPoolUser, setUsdtPoolUserInfo] = useState('');
   const [usdcPoolUser, setUsdcPoolUserInfo] = useState('');
   const [usdtPendingRewards, setUsdtPendingRewards] = useState('');
@@ -69,12 +70,12 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
           provider.getSigner(),
         );
         const tlc_usdt_cont = new Contract(
-          usdt_tlc_pool_eth,
+          TempUsdt,
           ERC20.abi,
           provider.getSigner(),
         );
         const tlc_usdc_cont = new Contract(
-          usdc_tlc_pool_eth,
+          TempUsdc,
           ERC20.abi,
           provider.getSigner(),
         );
@@ -118,7 +119,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
       // console.log('here working');
       if (param === 0) {
         const tlc_usdt_cont = new Contract(
-          usdt_tlc_pool_eth,
+          TempUsdt,
           ERC20.abi,
           provider.getSigner(),
         );
@@ -129,7 +130,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
         // console.log('approve', result);
       } else if (param === 1) {
         const tlc_usdc_cont = new Contract(
-          usdc_tlc_pool_eth,
+          TempUsdc,
           ERC20.abi,
           provider.getSigner(),
         );
@@ -354,7 +355,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
         </div>
         <div
           className={`${
-            !walletAddress || allowranceUsdt <= parseEther('0')
+            !walletAddress || allowranceTlx <= parseEther('0')
               ? 'grid grid-cols-5 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
               : 'grid grid-cols-7 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
           }`}
@@ -393,7 +394,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
           </div>
           {walletAddress ? (
             <>
-              {allowranceUsdt > parseEther('0') ? (
+              {allowranceTlx > parseEther('0') ? (
                 <>
                   <button
                     className="flex xs:col-span-2 md:col-span-2 md:w-full h-8 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center m-px"
@@ -435,7 +436,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
         </div>
         <div
           className={`${
-            !walletAddress || allowranceUsdt <= parseEther('0')
+            !walletAddress || allowranceTlx <= parseEther('0')
               ? 'grid grid-cols-5 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
               : 'grid grid-cols-7 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
           }`}
@@ -474,7 +475,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
           </div>
           {walletAddress ? (
             <>
-              {allowranceUsdc > parseEther('0') ? (
+              {allowranceTlx > parseEther('0') ? (
                 <>
                   <button
                     className="flex xs:col-span-2 md:col-span-2 md:w-full h-8 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center m-px"

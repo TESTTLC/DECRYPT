@@ -10,6 +10,11 @@ import {
   usdt_eth,
   usdc_eth,
   wtlc_eth,
+  TempUsdt,
+  TempUsdc,
+  WTLCTokenContractAddress,
+  TLChain_USDT_ChildTokenContractAddress,
+  TLChain_USDC_ChildTokenContractAddress,
 } from 'src/utils/globals';
 import USDTToken from 'src/contracts/USDT.json';
 import { getBalance } from 'src/utils/functions/Contracts';
@@ -71,21 +76,37 @@ const DecentralizedExchange: React.FC = () => {
     async function getApr() {
       /**
        * APY calculation
-       * block count per year: 3600s * 24h * 365d / 12s = 2628000
-       * tlc per block: 360000000000000000 => 0.36 tlc
+       * block count per year: 3600s * 24h * 365d / 3s = 10512000
+       * tlc per block: 90000000000000000  => 0.09 tlc
        * allocation point: 200, 200
        **/
       try {
-        const url =
-          'https://mainnet.infura.io/v3/7f7f3d56bbbb45389554ccbaf12df8e3';
+        // const url ='https://mainnet.infura.io/v3/7f7f3d56bbbb45389554ccbaf12df8e3';
+        const url = 'https://mainnet-rpc.tlchain.live/';
         const customHttpProvider = new ethers.providers.JsonRpcProvider(url);
-        const usdt_cont = new Contract(usdt_eth, ERC20.abi, customHttpProvider);
-        const usdc_cont = new Contract(usdc_eth, ERC20.abi, customHttpProvider);
-        const tlc_cont = new Contract(wtlc_eth, ERC20.abi, customHttpProvider);
+        // const usdt_cont = new Contract(usdt_eth, ERC20.abi, customHttpProvider);
+        // const usdc_cont = new Contract(usdc_eth, ERC20.abi, customHttpProvider);
+        // const tlc_cont = new Contract(wtlc_eth, ERC20.abi, customHttpProvider);
+        const usdt_cont = new Contract(
+          TLChain_USDT_ChildTokenContractAddress,
+          ERC20.abi,
+          customHttpProvider,
+        );
+        const usdc_cont = new Contract(
+          TLChain_USDC_ChildTokenContractAddress,
+          ERC20.abi,
+          customHttpProvider,
+        );
+        const tlc_cont = new Contract(
+          WTLCTokenContractAddress,
+          ERC20.abi,
+          customHttpProvider,
+        );
         ///////////////// current USDT-TLC lp locked amount in farming pools start//////////////////////////////////////
         // usdt-tlc lp locked price
         const tlc_usdt_cont = new Contract(
-          usdt_tlc_pool_eth,
+          // usdt_tlc_pool_eth,
+          TempUsdt,
           ERC20.abi,
           customHttpProvider,
         );
@@ -99,22 +120,27 @@ const DecentralizedExchange: React.FC = () => {
         );
         // console.log('locked_tlc_usdt', formatEther(locked_tlc_usdt.toString()));
         // usdt-tlc lp usdt
-        const usdt_amount = await usdt_cont.balanceOf(usdt_tlc_pool_eth);
+        const usdt_amount = await usdt_cont.balanceOf(TempUsdt);
         const usdt_amount_fl = parseFloat(
-          formatUnits(
+          // formatUnits(
+          //   usdt_amount.toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          //   6,
+          // ),
+          formatEther(
             usdt_amount.toLocaleString('fullwide', {
               useGrouping: false,
             }),
-            6,
           ),
         );
         // console.log('usdt tlc lp usdt amount', usdt_amount_fl);
         // locked usdt-tlc lp price
         const locked_usdt_tlc_lp_price =
           (2 * usdt_amount_fl * locked_tlc_usdt) / tlc_usdt_total_supply;
-        // console.log('usdt tlc price', locked_usdt_tlc_lp_price);
+        console.log('usdt tlc price', locked_usdt_tlc_lp_price);
         // CURRENT TLC PRICE
-        const tlc_amount = await tlc_cont.balanceOf(usdt_tlc_pool_eth);
+        const tlc_amount = await tlc_cont.balanceOf(TempUsdt);
         const tlc_amount_fl = parseFloat(
           formatEther(
             tlc_amount.toLocaleString('fullwide', {
@@ -124,15 +150,15 @@ const DecentralizedExchange: React.FC = () => {
         );
         // console.log('tlc amount at tlc-usdt lp', tlc_amount_fl);
         const current_tlc_price = usdt_amount_fl / tlc_amount_fl;
-        // console.log('current tlc price', current_tlc_price);
+        console.log('current tlc price', current_tlc_price);
         // usdt-tlc pool apr =>  tlc_reward * block_per_year / total_alloc * pool_alloc * tlc_Price / pool_price * 100%
         let usdt_tlc_apr = 500;
         if (locked_usdt_tlc_lp_price < 10) {
           usdt_tlc_apr =
-            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) / 10) * 100;
+            ((((0.09 * 10512000) / 400) * 200 * current_tlc_price) / 10) * 100;
         } else {
           usdt_tlc_apr =
-            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) /
+            ((((0.09 * 10512000) / 400) * 200 * current_tlc_price) /
               locked_usdt_tlc_lp_price) *
             100;
         }
@@ -142,7 +168,7 @@ const DecentralizedExchange: React.FC = () => {
         ///////////////// current USDC-TLC lp locked amount in farming pools start//////////////////////////////////////
         // usdc-tlc lp locked price
         const tlc_usdc_cont = new Contract(
-          usdc_tlc_pool_eth,
+          TempUsdc,
           ERC20.abi,
           customHttpProvider,
         );
@@ -151,13 +177,18 @@ const DecentralizedExchange: React.FC = () => {
           MasterchefContractAddress,
         );
         // usdc-tlc lp usdc
-        const usdc_amount = await usdc_cont.balanceOf(usdc_tlc_pool_eth);
+        const usdc_amount = await usdc_cont.balanceOf(TempUsdc);
         const usdc_amount_fl = parseFloat(
-          formatUnits(
+          // formatUnits(
+          //   usdc_amount.toLocaleString('fullwide', {
+          //     useGrouping: false,
+          //   }),
+          //   6,
+          // ),
+          formatEther(
             usdc_amount.toLocaleString('fullwide', {
               useGrouping: false,
             }),
-            6,
           ),
         );
         // locked usdc-tlc lp price
@@ -168,10 +199,10 @@ const DecentralizedExchange: React.FC = () => {
         let usdc_tlc_apr = 500;
         if (locked_usdc_tlc_lp_price < 10) {
           usdc_tlc_apr =
-            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) / 10) * 100;
+            ((((0.09 * 10512000) / 400) * 200 * current_tlc_price) / 10) * 100;
         } else {
           usdc_tlc_apr =
-            ((((0.36 * 2628000) / 400) * 200 * current_tlc_price) /
+            ((((0.09 * 10512000) / 400) * 200 * current_tlc_price) /
               locked_usdc_tlc_lp_price) *
             100;
         }
