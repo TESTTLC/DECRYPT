@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { HiTicket, HiX } from 'react-icons/hi';
 import { MdSettings } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { closeSidebar } from 'src/redux/modules/globals/actions';
 import { useDeviceInfo } from 'src/hooks/useDeviceInfo';
+import useCurrentChain from 'src/hooks/useCurrentChain';
 
 import SMALL_LOGO from '../assets/images/logo.png';
 import Main_Logo from '../assets/images/Main-Logo.png';
 import ticketsIcon from '../assets/images/Tickets.png';
 import communityIcon from '../assets/images/Community.png';
-import { links } from '../utils/routes';
+import { links, oldLinks } from '../utils/routes';
 
 <script
   src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
@@ -21,6 +22,7 @@ import { links } from '../utils/routes';
 const Sidebar: React.FC = () => {
   const { isMobileDevice } = useDeviceInfo();
   const dispatch = useDispatch();
+  const { chainId } = useCurrentChain();
   const isSidebarOpen = useSelector<StoreState, boolean>(
     (state) => state.globals.isSidebarOpen,
   );
@@ -31,6 +33,10 @@ const Sidebar: React.FC = () => {
       dispatch(closeSidebar());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const oldStakingLink = useMemo(() => {
+    return oldLinks.find((link) => link.url === '/oldStaking');
   }, []);
 
   return (
@@ -62,10 +68,15 @@ const Sidebar: React.FC = () => {
             </span>
           </h2> */}
         </div>
-
-        <div className="flex flex-col mt-6 justify-between flex-1">
+        {chainId && (
+          <p className="text-gray-200 px-2 font-semibold mt-2">
+            Current Chain: <span className="text-green-500">{chainId}</span>
+          </p>
+        )}
+        <div className="flex flex-col mt-3 justify-between flex-1">
           <nav className="text">
-            {links.map((link) => {
+            <p className="text-gray-200 text-xs px-2">TLChain Mainnet - 2321</p>
+            {links.map((link, index) => {
               const { id, url, text, icon, imageSource } = link;
               return url.startsWith('https') ? (
                 <a
@@ -74,15 +85,17 @@ const Sidebar: React.FC = () => {
                   target={'_blank'}
                   rel="noreferrer"
                   className={`h-10
-                capitalize flex items-center px-2 py-2 ${
+                capitalize flex items-center px-2 py-1 ${
                   location.pathname === link.url
                     ? ''
                     : 'hover:bg-gray-600 hover:text-gray-200'
-                }  mt-5 transition-colors duration-200 transform
+                }  ${
+                    index === 0 ? 'mt-2' : 'mt-4'
+                  } transition-colors duration-200 transform
                  rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
-                    <img src={imageSource} className="w-10 h-10" />
+                    <img src={imageSource} className="w-8 h-8" />
                   ) : (
                     icon
                   )}
@@ -101,16 +114,18 @@ const Sidebar: React.FC = () => {
                   }
                   key={`${id}/${url}`}
                   to={{ pathname: url }}
-                  className={`h-10
-                  capitalize flex items-center px-2 py-2 ${
+                  className={`h-8
+                  capitalize flex items-center px-2 py-1 ${
                     location.pathname === link.url
                       ? ''
                       : 'hover:bg-gray-600 hover:text-gray-200'
-                  }  mt-5 transition-colors duration-200 transform
+                  } ${
+                    index === 0 ? 'mt-2' : 'mt-4'
+                  } transition-colors duration-200 transform
                    rounded-md font-oswald text-white`}
                 >
                   {imageSource ? (
-                    <img src={imageSource} className="w-10 h-10" />
+                    <img src={imageSource} className="w-8 h-8" />
                   ) : (
                     icon
                   )}
@@ -124,13 +139,47 @@ const Sidebar: React.FC = () => {
                 </Link>
               );
             })}
+            <p className="text-gray-200 text-xs px-2 mt-8">
+              TLChain OLD - 5177
+            </p>
+            {oldStakingLink && (
+              <Link
+                onClick={
+                  isMobileDevice ? () => dispatch(closeSidebar()) : undefined
+                }
+                //   key={`${id}/${url}`}
+                to={{ pathname: oldStakingLink?.url }}
+                className={`h-8
+                  capitalize flex items-center px-2 py-1 ${
+                    location.pathname === oldStakingLink.url
+                      ? ''
+                      : 'hover:bg-gray-600 hover:text-gray-200'
+                  }  mt-2 transition-colors duration-200 transform
+                   rounded-md font-oswald text-white`}
+              >
+                {oldStakingLink.imageSource ? (
+                  <img src={oldStakingLink.imageSource} className="w-8 h-8" />
+                ) : (
+                  oldStakingLink.icon
+                )}
+                <span
+                  className={`mx-4 font-medium ${
+                    location.pathname === oldStakingLink.url
+                      ? 'text-green-500'
+                      : ''
+                  }`}
+                >
+                  {oldStakingLink.text.toUpperCase()}
+                </span>
+              </Link>
+            )}
             <hr className="my-6" />
             <a
               href="https://discord.gg/tlchain"
               target={'_blank'}
               className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
-              <img src={ticketsIcon} className="w-10 h-10" />
+              <img src={ticketsIcon} className="w-8 h-8" />
 
               <p className="mx-4 font-medium font-oswald uppercase">Tickets</p>
             </a>
@@ -139,7 +188,7 @@ const Sidebar: React.FC = () => {
               target={'_blank'}
               className="flex items-center px-4  mt-5 rounded-md text-white hover:text-gray-700 hover:bg-gray-200 transition-colors transform"
             >
-              <img src={communityIcon} className="w-10 h-10" />
+              <img src={communityIcon} className="w-8 h-8" />
 
               <span className="mx-4 font-medium font-oswald uppercase">
                 Community

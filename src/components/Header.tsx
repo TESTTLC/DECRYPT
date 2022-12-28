@@ -355,7 +355,7 @@ const Header: React.FC = () => {
           </a>
           <button
             onClick={claimVesting}
-            className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-4 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
+            className="xs:col-span-4 sm:col-span-2 md:col-span-2 xs:mt-1 flex h-8 space-x-2 text-white items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg text-sm px-5 text-center"
           >
             <span className="leading-[12px]">Claim Vesting</span>
           </button>

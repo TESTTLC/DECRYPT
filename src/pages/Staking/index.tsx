@@ -40,23 +40,23 @@ const Stake: React.FC = () => {
           {/* </GlowingWrapper> */}
 
           {/* <GlowingWrapper> */}
-          <Item
+          {/* <Item
             coinTag="LSO"
             title="LUXANDIA"
             subtitle="Luxandia is a virtual reality metaverse that reinvents and generalizes the way social experiences and  virtual creations are built."
             onClick={() => navigate(`/staking/LSO`)}
             imageSource={LSO}
-          />
+          /> */}
           {/* </GlowingWrapper> */}
 
           {/* <GlowingWrapper> */}
-          <Item
+          {/* <Item
             coinTag="TLX"
             title="THE LUXURY"
             subtitle="The Luxury is a decentralized cryptocurrency that was created to become the token of reference for the luxury industry."
             onClick={() => navigate(`/staking/TLX`)}
             imageSource={TheLuxuryBank}
-          />
+          /> */}
           {/* </GlowingWrapper> */}
           {/* <GlowingWrapper> */}
           <Item

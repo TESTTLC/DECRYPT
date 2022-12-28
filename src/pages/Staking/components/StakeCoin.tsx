@@ -119,10 +119,11 @@ const StakeCoin: React.FC = () => {
 
   useEffect(() => {
     console.log('currentChainId: ', currentChainId);
-    if (currentChainId === ChainsIds.OldTLC) {
+    if (currentChainId === ChainsIds.TLC) {
+      console.log('HEREE???');
       setChainErrorMessage(undefined);
     } else {
-      setChainErrorMessage('Please connect to TLChain - 5177');
+      setChainErrorMessage('Please connect to TLChain - 2321');
     }
   }, [currentChainId]);
 

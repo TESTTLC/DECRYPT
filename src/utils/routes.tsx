@@ -35,14 +35,6 @@ export const links = [
     category: 'BASIC',
   },
   {
-    id: 9,
-    url: '/oldStaking',
-    text: 'Old X Boost',
-    icon: '',
-    imageSource: stakingIcon,
-    category: 'BASIC',
-  },
-  {
     id: 2,
     url: '/launchpad',
     text: 'LaunchX',
@@ -103,6 +95,17 @@ export const links = [
     icon: '',
     imageSource: assetTokenizationIcon,
     category: 'FINANCE',
+  },
+];
+
+export const oldLinks = [
+  {
+    id: 9,
+    url: '/oldStaking',
+    text: 'Old X Boost',
+    icon: '',
+    imageSource: stakingIcon,
+    category: 'BASIC',
   },
 ];
 
