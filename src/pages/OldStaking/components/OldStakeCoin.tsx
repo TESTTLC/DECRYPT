@@ -258,156 +258,70 @@ const OldStakeCoin: React.FC = () => {
                     <p className="text-gray-400">
                       {
                         stakingRewards[
-                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                          coinTag === 'TLC'
+                            ? 'OldTLC'
+                            : (coinTag as
+                                | 'OldTLX'
+                                | 'OldLSO'
+                                | 'OldCSY'
+                                | 'OldTLC')
                         ].one_month
                       }
                       <br />
                       {
                         stakingRewards[
-                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                          coinTag === 'TLC'
+                            ? 'OldTLC'
+                            : (coinTag as
+                                | 'OldTLX'
+                                | 'OldLSO'
+                                | 'OldCSY'
+                                | 'OldTLC')
                         ].three_months
                       }
                       <br />
                       {
                         stakingRewards[
-                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                          coinTag === 'TLC'
+                            ? 'OldTLC'
+                            : (coinTag as
+                                | 'OldTLX'
+                                | 'OldLSO'
+                                | 'OldCSY'
+                                | 'OldTLC')
                         ].six_months
                       }
                       <br />
                       {
                         stakingRewards[
-                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                          coinTag === 'TLC'
+                            ? 'OldTLC'
+                            : (coinTag as
+                                | 'OldTLX'
+                                | 'OldLSO'
+                                | 'OldCSY'
+                                | 'OldTLC')
                         ].one_year
                       }
                       <br />
                       {
                         stakingRewards[
-                          coinTag as 'OldTLX' | 'OldLSO' | 'OldCSY'
+                          coinTag === 'TLC'
+                            ? 'OldTLC'
+                            : (coinTag as
+                                | 'OldTLX'
+                                | 'OldLSO'
+                                | 'OldCSY'
+                                | 'OldTLC')
                         ].three_years
                       }
                     </p>
                   </>
                 )}
               </div>
-              {/* eslint-disable-next-line no-nested-ternary */}
-              {chainErrorMessage ? (
-                <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
-                  {chainErrorMessage}
-                </p>
-              ) : !isRegisteredInLSOLaunchpad && coinTag === 'OldLSO' ? (
-                <p className="mb-2 font-poppins text-red-400 mt-6 text-lg">
-                  You must be registered to Launchpad with at least 1% power
-                </p>
-              ) : (
-                <div className="py-5 pr-2 mt-2 flex flex-col">
-                  <div className="flex justify-between border-b-2 border-opacity-30 pb-1">
-                    <p className="text-xl text-white font-bold">
-                      Stake your {coinTag}
-                    </p>
-
-                    <p className="text-xl text-green-500 font-bold">
-                      {' '}
-                      {balance} {coinTag} available
-                    </p>
-                  </div>
-
-                  <span className="mt-4 flex flex-col xl:flex-row 2xl-flex:row">
-                    <input
-                      className="text-white h-8 rounded-md px-3 my-2 mr-2 w-64 bg-customBlue-300"
-                      type={'number'}
-                      ref={stakeInputRef}
-                      onChange={(e) => {
-                        setStakeAmount(e.target.value);
-                      }}
-                      placeholder="Value..."
-                      value={stakeAmount}
-                    />
-                    <div className="my-2 mr-2 w-64">
-                      <SelectDropdown
-                        text={'Staking duration (months)'}
-                        elements={[1, 3, 6, 12, 36]}
-                        onSelect={(e) => {
-                          if (parseInt(e.target.value, 10) === 1) {
-                            setDuration(StackingDuration.ONE_MONTH);
-                          } else if (parseInt(e.target.value, 10) === 3) {
-                            setDuration(StackingDuration.THREE_MONTHS);
-                          } else if (parseInt(e.target.value, 10) === 6) {
-                            setDuration(StackingDuration.SIX_MONTHS);
-                          } else if (parseInt(e.target.value, 10) === 12) {
-                            setDuration(StackingDuration.ONE_YEAR);
-                          } else if (parseInt(e.target.value, 10) === 36) {
-                            setDuration(StackingDuration.THREE_YEARS);
-                          }
-                        }}
-                      />
-                    </div>
-
-                    <div className="my-2 mr-2 flex items-center justify-center ">
-                      {isLoading ? (
-                        <div className="items-center justify-center ml-4">
-                          <LoadingSpinner height={20} width={20} />
-                        </div>
-                      ) : (
-                        <GlowingButton
-                          text={`Stake ${stakeAmount || 0}`}
-                          onClick={async () => {
-                            if (
-                              coinTag &&
-                              coinTag !== 'TLC' &&
-                              coinTag !== 'OldLSO' &&
-                              stakeContract &&
-                              parseFloat(stakeAmount) > 0
-                            ) {
-                              setIsLoading(true);
-                              await webStake(
-                                tokenContract,
-                                stakeContract,
-                                stakeAddress,
-                                walletAddress,
-                                parseFloat(stakeAmount),
-                                duration,
-                                coinTag,
-                              );
-                              setIsLoading(false);
-                            } else if (
-                              coinTag &&
-                              coinTag === 'TLC' &&
-                              stakeContract &&
-                              parseFloat(stakeAmount) > 0
-                            ) {
-                              setIsLoading(true);
-                              await contracts.tlcStake(
-                                stakeContract,
-                                parseFloat(stakeAmount),
-                                duration,
-                              );
-                              setIsLoading(false);
-                            } else if (
-                              coinTag &&
-                              coinTag === 'OldLSO' &&
-                              stakeContract &&
-                              isRegisteredInLSOLaunchpad &&
-                              parseFloat(stakeAmount) > 0
-                            ) {
-                              setIsLoading(true);
-                              await webStake(
-                                tokenContract,
-                                stakeContract,
-                                stakeAddress,
-                                walletAddress,
-                                parseFloat(stakeAmount),
-                                duration,
-                                coinTag,
-                              );
-                              setIsLoading(false);
-                            }
-                          }}
-                        />
-                      )}
-                    </div>
-                  </span>
-                </div>
-              )}
+              <p className="mt-6">
+                For staking, please use the new chain and Staking page.
+              </p>
             </div>
             <div
               className={`"text-center flex h-full p-5 flex-col justify-center" overflow-y-scroll ${
