@@ -31,7 +31,7 @@ const useCurrentChain = () => {
     console.log('Lets see: ', ethers.utils.hexlify(chainId));
   }
 
-  if (location.pathname === '/oldStaking') {
+  if (location.pathname.includes('/oldStaking')) {
     changeChain(ChainsIds.OldTLC);
   } else if (chainId && ethers.utils.hexlify(chainId) === ChainsIds.OldTLC) {
     console.log("I'm in the old chain");
