@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { StoreState } from 'src/utils/storeTypes';
 import { formatEther, parseEther } from 'ethers/lib/utils';
+import { useLocation } from 'react-router-dom';
 
 import * as contracts from '../utils/functions/Contracts';
 import { useContracts } from '../hooks/useContracts';
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
+  const location = useLocation();
+
   const { stakeContract, tokenContract } = useContracts(coinTag);
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
@@ -22,7 +25,11 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
 
   const getUserTLCBalance = async () => {
     if (walletAddress) {
-      const TLCBalance = await contracts.getTLCBalance(walletAddress);
+      let chain: 'new' | 'old' = 'new';
+      if (location.pathname.includes('/old')) {
+        chain = 'old';
+      }
+      const TLCBalance = await contracts.getTLCBalance(walletAddress, chain);
       setBalance(TLCBalance);
     }
   };

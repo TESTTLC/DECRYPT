@@ -76,7 +76,7 @@ const OldStakeCoin: React.FC = () => {
 
   const getUserTLCBalance = useCallback(async () => {
     if (walletAddress) {
-      const TLCBalance = await contracts.getTLCBalance(walletAddress);
+      const TLCBalance = await contracts.getTLCBalance(walletAddress, 'old');
       setBalance(TLCBalance);
     }
   }, [walletAddress]);

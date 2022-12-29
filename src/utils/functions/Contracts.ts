@@ -258,9 +258,14 @@ export const getBalance = async (tokenContract: any, account: string) => {
   return userBalance;
 };
 
-export const getTLCBalance = async (account: string) => {
-  const api = `https://explorer.tlchain.live/api?module=account&action=balance&address=${account}`;
-  //   const api = `https://tlxscan.com/api?module=account&action=balance&address=${account}`;
+export const getTLCBalance = async (account: string, chain: 'new' | 'old') => {
+  let api = '';
+  if (chain === 'old') {
+    api = `https://tlxscan.com/api?module=account&action=balance&address=${account}`;
+  } else {
+    api = `https://explorer.tlchain.live/api?module=account&action=balance&address=${account}`;
+  }
+
   let balance = '0';
   await fetch(api)
     .then((response) => response.json())
