@@ -365,6 +365,10 @@ const StakeCoin: React.FC = () => {
                                 duration,
                                 coinTag,
                               );
+
+                              setTimeout(async () => {
+                                await getStakeTransactions();
+                              }, 1000);
                               setIsLoading(false);
                             } else if (
                               coinTag &&
@@ -378,6 +382,10 @@ const StakeCoin: React.FC = () => {
                                 parseFloat(stakeAmount),
                                 duration,
                               );
+
+                              setTimeout(async () => {
+                                await getStakeTransactions();
+                              }, 1000);
                               setIsLoading(false);
                             } else if (
                               coinTag &&
@@ -396,6 +404,10 @@ const StakeCoin: React.FC = () => {
                                 duration,
                                 coinTag,
                               );
+
+                              setTimeout(async () => {
+                                await getStakeTransactions();
+                              }, 1000);
                               setIsLoading(false);
                             }
                           }}

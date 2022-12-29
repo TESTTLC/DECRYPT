@@ -124,7 +124,8 @@ export const tlcStake = async (
   try {
     const price = ethers.utils.parseUnits(amount.toString(), 'ether');
     const overrides = { value: price };
-    await stakeContract.stakeTokens(stakingDuration, overrides);
+    const tx = await stakeContract.stakeTokens(stakingDuration, overrides);
+    const result = await tx.wait();
     // let result;
     // const tx = await stakeContract.transfer(stakeContractAddress, price)
     // result = await stakeContract.approve(stakeContractAddress, price);
