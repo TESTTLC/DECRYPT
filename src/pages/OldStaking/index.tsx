@@ -34,7 +34,7 @@ const OldStaking: React.FC = () => {
             coinTag="TLC"
             title="TLChain"
             subtitle="$TLC is the native, energy-efficient cryptocurrency of TLChain that powers the full DeFi, GameFi and Metaverse ecosystem."
-            onClick={() => navigate(`/oldStaking/TLC`)}
+            onClick={() => navigate(`/oldStaking/OldTLC`)}
             imageSource={TheLuxuryCoin}
           />
           {/* </GlowingWrapper> */}

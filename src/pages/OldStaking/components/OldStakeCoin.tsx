@@ -127,7 +127,7 @@ const OldStakeCoin: React.FC = () => {
   }, [currentChainId]);
 
   useEffect(() => {
-    if (coinTag === 'TLC') {
+    if (coinTag === 'TLC' || coinTag === 'OldTLC') {
       getUserTLCBalance();
     }
     getLaunchpadRegistration();
@@ -177,6 +177,7 @@ const OldStakeCoin: React.FC = () => {
             const amount = parseFloat(ethers.utils.formatEther(stake.amount));
             if (
               coinTag === 'TLC' ||
+              coinTag === 'OldTLC' ||
               coinTag === 'OldTLX' ||
               coinTag === 'OldLSO' ||
               coinTag === 'OldCSY'
@@ -192,7 +193,7 @@ const OldStakeCoin: React.FC = () => {
   }, [coinTag, stakeContract]);
 
   useEffect(() => {
-    if (tokenContract && coinTag !== 'TLC') {
+    if (tokenContract && coinTag !== 'TLC' && coinTag !== 'OldTLC') {
       getUserTLXBalance();
     }
   }, [coinTag, getUserTLXBalance, tokenContract]);
@@ -228,7 +229,7 @@ const OldStakeCoin: React.FC = () => {
                 coinTag === 'OldLSO'
                   ? lso_1x
                   : // eslint-disable-next-line no-nested-ternary
-                  coinTag === 'TLC'
+                  coinTag === 'TLC' || coinTag === 'OldTLC'
                   ? tlc_1x
                   : coinTag === 'OldTLX'
                   ? tlx_1x
@@ -387,7 +388,14 @@ const OldStakeCoin: React.FC = () => {
       </button> */}
       <Stats
         coinTag={
-          coinTag as 'TLC' | 'TLX' | 'LSO' | 'OldTLX' | 'OldLSO' | 'OldCSY'
+          coinTag as
+            | 'TLC'
+            | 'TLX'
+            | 'LSO'
+            | 'OldTLX'
+            | 'OldLSO'
+            | 'OldCSY'
+            | 'OldTLC'
         }
         totalRewards={totalRewards}
       />

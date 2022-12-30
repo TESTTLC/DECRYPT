@@ -9,7 +9,15 @@ import { useContracts } from '../hooks/useContracts';
 import SNXStatBackground from '../assets/svg/snx-stat-background.svg';
 
 interface Props {
-  coinTag: 'TLX' | 'TLC' | 'LSO' | 'CSY' | 'OldLSO' | 'OldCSY' | 'OldTLX';
+  coinTag:
+    | 'TLX'
+    | 'TLC'
+    | 'LSO'
+    | 'CSY'
+    | 'OldLSO'
+    | 'OldCSY'
+    | 'OldTLX'
+    | 'OldTLC';
   totalRewards: number;
 }
 
@@ -35,7 +43,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   };
 
   useEffect(() => {
-    if (coinTag === 'TLC') {
+    if (coinTag === 'TLC' || coinTag === 'OldTLC') {
       getUserTLCBalance();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +61,7 @@ const Stats: React.FC<Props> = ({ coinTag, totalRewards }) => {
   };
 
   const getUserTLXBalance = useCallback(async () => {
-    if (walletAddress && coinTag !== 'TLC') {
+    if (walletAddress && coinTag !== 'TLC' && coinTag !== 'OldTLC') {
       const result =
         coinTag === 'LSO' ||
         coinTag === 'CSY' ||

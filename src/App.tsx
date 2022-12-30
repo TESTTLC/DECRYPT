@@ -54,6 +54,7 @@ export const coinsTags = [
   'OldLSO',
   'OldCSY',
   'OldTLX',
+  'OldTLC',
 ];
 export const marketplaceRoutes = ['categories', 'collections'];
 

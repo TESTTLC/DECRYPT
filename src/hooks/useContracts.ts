@@ -35,6 +35,7 @@ import {
   CSYStakeContractAddress,
   OldLSOTokenContractAddress,
   OldCSYTokenContractAddress,
+  OldTLCStakeContractAddress,
 } from '../utils/globals';
 
 export const useContracts = (coinTag: string) => {
@@ -79,6 +80,11 @@ export const useContracts = (coinTag: string) => {
     } else if (coinTag === 'TLC') {
       setTokenAddress(TLCTokenContractAddress);
       setStakeAddress(TLCStakeContractAddress);
+      setTokenAbi(TheLuxuryCoinToken.abi);
+      setStakeAbi(TheLuxuryCoinStake.abi);
+    } else if (coinTag === 'OldTLC') {
+      setTokenAddress(TLCTokenContractAddress);
+      setStakeAddress(OldTLCStakeContractAddress);
       setTokenAbi(TheLuxuryCoinToken.abi);
       setStakeAbi(TheLuxuryCoinStake.abi);
     } else if (coinTag === 'OldTLX') {
