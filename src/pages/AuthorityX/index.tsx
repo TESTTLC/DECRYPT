@@ -26,9 +26,10 @@ const AuthorityX = () => {
   const { chainId } = useCurrentChain();
 
   const chainError = useMemo(() => {
-    if (!chainId) return 'Please connect to Old TLChain - 5177';
+    if (!chainId)
+      return 'Please connect wallet and connect to Old TLChain - 5177';
     if (ethers.utils.hexlify(chainId) !== ChainsIds.OldTLC) {
-      return 'Please connect to Old TLChain - 5177';
+      return 'Please connect wallet and connect to Old TLChain - 5177';
     } else {
       return '';
     }
@@ -166,6 +167,7 @@ const AuthorityX = () => {
               className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
               //   disabled={isLoading}
             >
+              Send
               {/* {isLoading ? (
                 <>
                   <TailSpin color="#fff" height={18} width={18} />
