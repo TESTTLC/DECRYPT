@@ -46,6 +46,7 @@ import WhiteLists from './pages/Whitelists';
 import NotificationModal from './pages/Notification/notification';
 import OldStaking from './pages/OldStaking';
 import OldStakeCoin from './pages/OldStaking/components/OldStakeCoin';
+import AuthorityX from './pages/AuthorityX';
 export const coinsTags = [
   'TLX',
   'TLC',
@@ -201,6 +202,7 @@ const App = () => {
                     element={<TokenizationProjectDetails />}
                   />
                   <Route path="/dhs" element={<DHS />} />
+                  <Route path="/authorityX" element={<AuthorityX />} />
 
                   <Route path="*" element={<Navigate to="/" />} />
                 </Route>

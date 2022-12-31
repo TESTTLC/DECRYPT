@@ -37,7 +37,24 @@ Modal.setAppElement('#root');
 interface Props {
   index?: number;
   chains: Partial<typeof modalChains>;
-  coins: Partial<typeof modalCoins>;
+  coins:
+    | Partial<typeof modalCoins>
+    | {
+        TLX: {
+          name: 'The Luxury Coin';
+          tag: 'TLX';
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          image: any;
+        };
+      }
+    | {
+        X: {
+          name: 'X';
+          tag: 'X';
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          image: any;
+        };
+      };
   type: 'from' | 'to';
   chainType?: 'ELROND' | 'EVM';
 }

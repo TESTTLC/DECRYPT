@@ -15,6 +15,7 @@ import assetTokenizationIcon from '../assets/images/Asset-Tokenization.png';
 import ccbIcon from '../assets/images/Cross-Chain-Bridge.png';
 import createTokenIcon from '../assets/images/Token-Factory.png';
 import metaverseIcon from '../assets/images/Metaverse.png';
+import authorityXIcon from '../assets/images/authority-x.png';
 
 //Sidebar
 export const links = [
@@ -100,11 +101,19 @@ export const links = [
 
 export const oldLinks = [
   {
-    id: 9,
+    id: 1,
     url: '/oldStaking',
     text: 'Old X Boost',
     icon: '',
     imageSource: stakingIcon,
+    category: 'BASIC',
+  },
+  {
+    id: 2,
+    url: '/authorityX',
+    text: 'Authority X',
+    icon: '',
+    imageSource: authorityXIcon,
     category: 'BASIC',
   },
 ];

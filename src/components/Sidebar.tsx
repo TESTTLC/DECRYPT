@@ -142,37 +142,40 @@ const Sidebar: React.FC = () => {
             <p className="text-gray-200 text-xs px-2 mt-8">
               TLChain OLD - 5177
             </p>
-            {oldStakingLink && (
-              <Link
-                onClick={
-                  isMobileDevice ? () => dispatch(closeSidebar()) : undefined
-                }
-                //   key={`${id}/${url}`}
-                to={{ pathname: oldStakingLink?.url }}
-                className={`h-8
+            {oldLinks.map((link, index) => {
+              const { id, url, text, icon, imageSource } = link;
+              return (
+                <Link
+                  onClick={
+                    isMobileDevice ? () => dispatch(closeSidebar()) : undefined
+                  }
+                  key={`${id}/${url}`}
+                  to={{ pathname: url }}
+                  className={`h-8
                   capitalize flex items-center px-2 py-1 ${
-                    location.pathname === oldStakingLink.url
+                    location.pathname === link.url
                       ? ''
                       : 'hover:bg-gray-600 hover:text-gray-200'
-                  }  mt-2 transition-colors duration-200 transform
+                  } ${
+                    index === 0 ? 'mt-2' : 'mt-4'
+                  } transition-colors duration-200 transform
                    rounded-md font-oswald text-white`}
-              >
-                {oldStakingLink.imageSource ? (
-                  <img src={oldStakingLink.imageSource} className="w-8 h-8" />
-                ) : (
-                  oldStakingLink.icon
-                )}
-                <span
-                  className={`mx-4 font-medium ${
-                    location.pathname === oldStakingLink.url
-                      ? 'text-green-500'
-                      : ''
-                  }`}
                 >
-                  {oldStakingLink.text.toUpperCase()}
-                </span>
-              </Link>
-            )}
+                  {imageSource ? (
+                    <img src={imageSource} className="w-8 h-8" />
+                  ) : (
+                    icon
+                  )}
+                  <span
+                    className={`mx-4 font-medium ${
+                      location.pathname === link.url ? 'text-green-500' : ''
+                    }`}
+                  >
+                    {text.toUpperCase()}
+                  </span>
+                </Link>
+              );
+            })}
             <hr className="my-6" />
             <a
               href="https://discord.gg/tlchain"
