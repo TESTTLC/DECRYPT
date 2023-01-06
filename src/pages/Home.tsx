@@ -34,8 +34,12 @@ import {
   usdt_eth,
   usdc_eth,
   wtlc_eth,
+  TLChain_USDT_ChildTokenContractAddress,
+  WTLCTokenContractAddress,
+  TempUsdt,
 } from 'src/utils/globals';
 import ERC20 from 'src/contracts/ERC20.json';
+import WBNB from 'src/contracts/WTLC.json';
 import { formatEther, parseEther, formatUnits } from 'ethers/lib/utils';
 import { Contract, ethers } from 'ethers';
 import { useSelector } from 'react-redux';
@@ -71,7 +75,45 @@ const Home: React.FC = () => {
   const [usdtTlcApr, setUsdtTlcApr] = useState('-');
   const [usdcTlcApr, setUsdcTlcApr] = useState('-');
   const { fastRefresh, slowRefresh } = useRefresh();
+  const [tlcPrice, setTlcPrice] = useState('0');
+  const uri = 'https://mainnet-rpc.tlchain.live/';
+  useEffect(() => {
+    async function fetchData() {
+      // get the price
+      const customHttpProvider = new ethers.providers.JsonRpcProvider(uri);
+      const tlc_usdt_cont = new Contract(
+        TLChain_USDT_ChildTokenContractAddress,
+        // usdt_eth,
+        ERC20.abi,
+        customHttpProvider,
+      );
+      const usdt_amount = await tlc_usdt_cont.balanceOf(TempUsdt);
+      const usdt_amount_fl = parseFloat(
+        formatEther(
+          usdt_amount.toLocaleString('fullwide', {
+            useGrouping: false,
+          }),
+        ),
+      );
 
+      const tlc_wbnb_cont = new Contract(
+        WTLCTokenContractAddress,
+        WBNB.abi,
+        customHttpProvider,
+      );
+      const wbnb_amount = await tlc_wbnb_cont.balanceOf(TempUsdt);
+      const wbnb_amount_fl = parseFloat(
+        formatEther(
+          wbnb_amount.toLocaleString('fullwide', {
+            useGrouping: false,
+          }),
+        ),
+      );
+      const price = usdt_amount_fl / wbnb_amount_fl;
+      setTlcPrice(price.toFixed(2));
+    }
+    fetchData();
+  }, []);
   const walletAddress = useSelector<StoreState, string | undefined>(
     (state) => state.account.walletAddress,
   );
@@ -632,7 +674,8 @@ const Home: React.FC = () => {
               <p className="font-semibold mt-2 text-center">TLC</p>
               <p className="text-xs text-gray-400 text-center">TLChain</p>
               <div className="h-[1px] w-full mt-2 bg-white bg-opacity-30 " />
-              <p className="font-semibold mt-2">${prices.TLC}</p>
+              {/* <p className="font-semibold mt-2">${prices.TLC}111</p> */}
+              <p className="font-semibold mt-2">{tlcPrice}</p>
             </div>
             <div className="flex flex-col justify-center items-center w-full h-52 bg-black bg-opacity-70 rounded-md p-2">
               <div className="flex items-center justify-center  bg-gradient-to-r from-gray-600 via-transparent to-gray-600 rounded-full  min-w-[2.5rem] min-h-[2.5rem] p-1">
