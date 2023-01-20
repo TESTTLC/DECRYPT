@@ -311,8 +311,10 @@ const AuthorityX = () => {
 
             <div className="flex w-full space-x-8">
               <button
-                onClick={() => {
-                  send();
+                onClick={async () => {
+                  await send();
+                  getVestingStatus();
+                  getVestingAmount();
                 }}
                 className="w-full flex h-14 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
                 disabled={isLoading}
@@ -339,13 +341,17 @@ const AuthorityX = () => {
             <p className="text-gray-300 text-sm font-poppins mb-4 text-center">
               <p className="text-red-500 text-sm">{vestingChainIdError}</p>
             </p>
-            <p className="text-center font-medium mb-1 text-lg">
-              Total amount:{' '}
-              <span className="text-green-400">
-                {' '}
-                {formatEther(vestingAmount)}
-              </span>
-            </p>
+            {vestingChainIdError ? (
+              ''
+            ) : (
+              <p className="text-center font-medium mb-1 text-lg">
+                Total amount:{' '}
+                <span className="text-green-400">
+                  {' '}
+                  {formatEther(vestingAmount)}
+                </span>
+              </p>
+            )}
             <div className="grid grid-cols-2">
               {vestingValues?.map((item, index) => {
                 return (
