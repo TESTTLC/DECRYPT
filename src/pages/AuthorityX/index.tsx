@@ -215,7 +215,7 @@ const AuthorityX = () => {
   useEffect(() => {
     if (selectedToken.tag === 'LSO') {
       setAmountToSend(amountToSend);
-      setAmountToReceive((Number(amountToSend) * 400).toString());
+      setAmountToReceive((Number(amountToSend) / 400).toString());
     } else if (selectedToken.tag === 'TLX') {
       setAmountToSend(amountToSend);
       setAmountToReceive(amountToSend);
@@ -250,7 +250,7 @@ const AuthorityX = () => {
                   value={amountToSend}
                   onChange={(e) => {
                     if (selectedToken.tag === 'LSO') {
-                      const amount = Number(e.target.value) * 400;
+                      const amount = Number(e.target.value) / 400;
                       setAmountToReceive(amount.toString());
                     } else {
                       setAmountToReceive(e.target.value);
