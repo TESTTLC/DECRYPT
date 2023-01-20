@@ -44,6 +44,12 @@ export const marketplaceAddress = '0x1247c60f85aae688b22dC6d230f52D5675974f3E';
 
 export const NFTDropAddress = '0x632fb67bCFF5F6222270cda6bD5Dc71cA0Da6e02';
 
+//Vesting X Token
+export const vestingLockContractAddress =
+  '0x7ffa8b5357DD1216CF8209c875e0F9398CB1A249';
+export const vestingUnLockContractAddress =
+  '0x1ba02e49FB44D3dD99bC43761fA931E22629d5b2';
+
 //TLChain
 // export const RouterContractAddress =
 //   '0xBece9145C26b581204cca673Ad4c9331E5b9B322';
