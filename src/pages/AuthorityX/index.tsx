@@ -86,6 +86,7 @@ const AuthorityX = () => {
   const [vestingStatus, setVestingStatus] = useState([]);
   const [vestingAmount, setVestingAmount] = useState(0);
   const [amountToSend, setAmountToSend] = useState('0');
+  const [amountToReceive, setAmountToReceive] = useState('0');
   const [isLoading, setIsLoading] = useState(false);
 
   const connectToContracts = useCallback(async () => {
@@ -211,6 +212,16 @@ const AuthorityX = () => {
     await unlockVestingContract?.unlockTokens(indexes[0]);
   };
 
+  useEffect(() => {
+    if (selectedToken.tag === 'LSO') {
+      setAmountToSend(amountToSend);
+      setAmountToReceive((Number(amountToSend) * 400).toString());
+    } else if (selectedToken.tag === 'TLX') {
+      setAmountToSend(amountToSend);
+      setAmountToReceive(amountToSend);
+    }
+  }, [amountToReceive, amountToSend, selectedToken]);
+
   return (
     <div>
       <div className="flex flex-col flex-1 items-center">
@@ -237,7 +248,15 @@ const AuthorityX = () => {
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="text"
                   value={amountToSend}
-                  onChange={(e) => setAmountToSend(e.target.value)}
+                  onChange={(e) => {
+                    if (selectedToken.tag === 'LSO') {
+                      const amount = Number(e.target.value) * 400;
+                      setAmountToReceive(amount.toString());
+                    } else {
+                      setAmountToReceive(e.target.value);
+                    }
+                    setAmountToSend(e.target.value);
+                  }}
                 ></input>
               </div>
 
@@ -282,8 +301,9 @@ const AuthorityX = () => {
                 <input
                   className="w-full h-2/3 text-lg pt-2 bg-transparent font-poppins text-white focus:outline-none"
                   type="text"
-                  value={amountToSend}
-                  onChange={(e) => setAmountToSend(e.target.value)}
+                  value={amountToReceive}
+                  disabled
+                  //   onChange={(e) => setAmountToSend(e.target.value)}
                 ></input>
               </div>
 
