@@ -51,6 +51,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
   const [allowranceUsdt, setAllowranceUsdt] = useState(parseEther('0'));
   const [allowranceUsdc, setAllowranceUsdc] = useState(parseEther('0'));
   const [allowranceTlx, setAllowranceTlx] = useState(parseEther('0'));
+  const [allowranceX, setAllowranceX] = useState(parseEther('0'));
   const [usdtPoolUser, setUsdtPoolUserInfo] = useState('');
   const [usdcPoolUser, setUsdcPoolUserInfo] = useState('');
   const [usdtPendingRewards, setUsdtPendingRewards] = useState('');
@@ -347,15 +348,15 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="flex xs:flex-col justify-between">
-          <span className="flex-[0.4] text-lg font-bold mb-2">TLX Farms</span>
+        <div className="flex xs:flex-col justify-between mt-10">
+          <span className="flex-[0.4] text-lg font-bold mb-2 ">X Farms</span>
           <div className="flex-[0.6]">
             <Categories />
           </div>
         </div>
         <div
           className={`${
-            !walletAddress || allowranceTlx <= parseEther('0')
+            !walletAddress || allowranceX <= parseEther('0')
               ? 'grid grid-cols-5 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
               : 'grid grid-cols-7 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
           }`}
@@ -365,7 +366,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
             <div className="flex flex-col text-center">
               {/* <span>Stake & Earn</span>
               <span className="border-b-2 border-dotted">$2.483.110</span> */}
-              <span>TLX-USDT LP</span>
+              <span>X-USDT LP</span>
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -436,7 +437,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
         </div>
         <div
           className={`${
-            !walletAddress || allowranceTlx <= parseEther('0')
+            !walletAddress || allowranceX <= parseEther('0')
               ? 'grid grid-cols-5 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
               : 'grid grid-cols-7 xs:grid-cols-2 md:grid-cols-2 xs:space-y-4 justify-between items-center w-full bg-black bg-opacity-75 px-4 py-2 rounded-md'
           }`}
@@ -446,7 +447,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
             <div className="flex flex-col text-center">
               {/* <span>Stake & Earn</span>
               <span className="border-b-2 border-dotted">$2.483.110</span> */}
-              <span>TLX-USDC LP</span>
+              <span>X-USDC LP</span>
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -475,7 +476,7 @@ const Farms: React.FC<Props> = ({ currentChainId, usdtTlcApr, usdcTlcApr }) => {
           </div>
           {walletAddress ? (
             <>
-              {allowranceTlx > parseEther('0') ? (
+              {allowranceX > parseEther('0') ? (
                 <>
                   <button
                     className="flex xs:col-span-2 md:col-span-2 md:w-full h-8 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center m-px"
