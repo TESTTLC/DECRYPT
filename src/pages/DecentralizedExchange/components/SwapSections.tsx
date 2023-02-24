@@ -5,6 +5,7 @@ import { TailSpin } from 'react-loader-spinner';
 import { ChainsIds } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
 import usdtLogo from 'src/assets/images/tether.png';
+import xLogo from 'src/assets/images/X-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import lsoLogo from 'src/assets/images/LSO-logo.png';
 import tlLpLogo from 'src/assets/images/TLLP_COIN.png';
@@ -18,6 +19,7 @@ import {
   RouterContractAddress,
   TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
+  TLChain_X_ChildTokenContractAddress,
   TLCTokenContractAddress,
   USDTContractAddress,
   WTLCTokenContractAddress,
@@ -129,6 +131,13 @@ export const fromTLChainModalTokens: any[] = [
     value: 1,
     address: TLChain_USDC_ChildTokenContractAddress,
   },
+  {
+    name: 'Luxury Token',
+    tag: 'X',
+    image: xLogo,
+    value: 1,
+    address: TLChain_X_ChildTokenContractAddress,
+  },
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -161,6 +170,13 @@ export const fromTLChainToTLChainModalTokens: any[] = [
     image: usdcLogo,
     value: 1,
     address: TLChain_USDC_ChildTokenContractAddress,
+  },
+  {
+    name: 'Luxury Token',
+    tag: 'X',
+    image: xLogo,
+    value: 1,
+    address: TLChain_X_ChildTokenContractAddress,
   },
 ];
 
@@ -397,6 +413,12 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
           provider.getSigner(),
         );
 
+        const XContract = new Contract(
+          TLChain_X_ChildTokenContractAddress,
+          ERC20.abi,
+          provider.getSigner(),
+        );
+
         const blockNumber = await provider.getBlockNumber();
         const block = await provider.getBlock(blockNumber);
         const timestamp = block?.timestamp + 300;
@@ -413,17 +435,14 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
             amount1,
           );
           const approve1Result = await approve1tx.wait();
-        } else if (toToken === 'wUSDC') {
+        } else if (fromToken === 'wUSDC') {
           approve1tx = await wUSDCContract.approve(
             RouterContractAddress,
             amount1,
           );
           const approve1Result = await approve1tx.wait();
-        } else if (fromToken === 'wTLC') {
-          approve1tx = await wTLCContract.approve(
-            RouterContractAddress,
-            amount1,
-          );
+        } else if (fromToken === 'X') {
+          approve1tx = await XContract.approve(RouterContractAddress, amount1);
           const approve1Result = await approve1tx.wait();
         }
 
@@ -564,6 +583,8 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
                 } else {
                   await swapExactTokenForEth();
                 }
+              } else {
+                await swapExactTokensForTokens();
               }
             }}
             disabled={isLoading || amountToSwap < minimumAmount}
@@ -661,7 +682,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       //   'parseEther(amountToSwap.toString()): ',
       //   parseEther(amountToSwap.toString()),
       // );
-      // console.log('[from.address, to.address]: ', [from.address, to.address]);
+      console.log('[from.address, to.address]: ', [from.address, to.address]);
       if (from?.address && to?.address) {
         const result = await routerC.getAmountsOut(
           parseEther(amountToSwap.toString()),

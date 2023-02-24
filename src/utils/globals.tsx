@@ -72,7 +72,9 @@ export const MasterchefContractAddress =
 // export const TempUsdt = '0xB5aE15E68C1bd1F7391d024384319FD3EBDCE7EF'; // 5117 testing
 export const TempUsdt = '0xEB5f15235612D31Df253c71b3Ea36E0aAa9F6031'; // 2321 chain
 export const TempUsdc = '0x03B03AeC4b14dc8aA9Ab3ef61A31Af63DD247cAB';
-
+export const X_TLC = '0xDF57620ee36F2E5f696298582f4E05FF53724181';
+export const X_USDT = '0x6db6eaf878dc9329590113caff6288359775952d';
+export const X_USDC = '0xbb545a16a195fe09572e8b9eebea5c3cda69ca62';
 //Ethereum
 // export const RouterContractAddress =
 //   '0x48500D88430B37E33237dD47948A8D02df660473';
@@ -254,6 +256,9 @@ export const TLChain_USDT_ChildTokenContractAddress =
   '0x76ad20159f8baeeb986d1a8792d6a3aed750885c'; // 2321 new deployed
 // export const TLChain_USDT_ChildTokenContractAddress =
 //   '0xCd0CC89a54614A7Acb11032dd3C7ef5C565843f5'; // 5117 chain for testing
+
+export const TLChain_X_ChildTokenContractAddress =
+  '0x24d8421ce5709ae8e957cf0fa046622ca599411c';
 
 export const TLChain_wEGLD_ChildTokenContractAddress =
   '0xBABfCD8324b2457c091B643CD6DC46B25577B253';
