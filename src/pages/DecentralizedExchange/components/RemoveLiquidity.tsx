@@ -15,6 +15,9 @@ import {
   RouterContractAddress,
   TempUsdc,
   TempUsdt,
+  X_TLC,
+  X_USDT,
+  X_USDC,
   TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
   WTLCTokenContractAddress,
@@ -73,6 +76,9 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [usdtLpBal, setUsdtLpBal] = useState(0);
   const [usdcLpBal, setUsdcLpBal] = useState(0);
+  const [xTlcLpBal, setXTlcLpBal] = useState(0);
+  const [xUsdtLpBal, setXUsdtLpBal] = useState(0);
+  const [xUsdcLpBal, setXUsdcLpBal] = useState(0);
   const provider = useSelector<StoreState, Web3Provider | undefined>(
     (state) => state.globals.provider,
   );
@@ -100,6 +106,21 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
         Pair.abi,
         provider?.getSigner(),
       );
+      const xTlcLpContract = new Contract(
+        X_TLC,
+        Pair.abi,
+        provider?.getSigner(),
+      );
+      const xUsdtLpContract = new Contract(
+        X_USDT,
+        Pair.abi,
+        provider?.getSigner(),
+      );
+      const xUsdcLpContract = new Contract(
+        X_USDC,
+        Pair.abi,
+        provider?.getSigner(),
+      );
 
       const usdtLp = await usdtLpContract.balanceOf(walletAddress);
       const usdtLpAmount = parseFloat(formatEther(usdtLp));
@@ -107,6 +128,15 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
       const usdcLp = await usdcLpContract.balanceOf(walletAddress);
       const usdcLpAmount = parseFloat(formatEther(usdcLp));
       setUsdcLpBal(usdcLpAmount);
+      const xLp = await xTlcLpContract.balanceOf(walletAddress);
+      const xLpAmount = parseFloat(formatEther(xLp));
+      setXTlcLpBal(xLpAmount);
+      const xUsdtLp = await xUsdtLpContract.balanceOf(walletAddress);
+      const xUsdtLpAmount = parseFloat(formatEther(xUsdtLp));
+      setXUsdtLpBal(xUsdtLpAmount);
+      const xUsdcLp = await xUsdcLpContract.balanceOf(walletAddress);
+      const xUsdcLpAmount = parseFloat(formatEther(xUsdcLp));
+      setXUsdcLpBal(xUsdcLpAmount);
     }
   }, [provider, walletAddress]);
 
@@ -221,9 +251,9 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
   };
   return (
     <div className="relative text-white font-poppins">
-      <div className="flex justify-between items-center w-full mb-4 mt-4 h-10">
+      <div className="flex flex-col justify-between items-center w-full mb-4 mt-4">
         {usdtLpBal > 0 ? (
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full m-1">
             <h1>wUSDT-TLC LP</h1>
             <h1>{usdtLpBal.toFixed(4)}</h1>
             <button
@@ -237,9 +267,42 @@ const RemoveLiquidity: React.FC<Props> = ({ currentChainId }) => {
           <></>
         )}
         {usdcLpBal > 0 ? (
-          <div className="flex justify-between w-full">
+          <div className="flex justify-between w-full m-1">
             <h1>wUSDC-TLC LP</h1>
             <h1>{usdcLpBal.toFixed(4)}</h1>
+            <button className="flex h-6 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
+              Remove LP
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+        {xTlcLpBal > 0 ? (
+          <div className="flex justify-between w-full m-1">
+            <h1>X-TLC LP</h1>
+            <h1>{xTlcLpBal.toFixed(4)}</h1>
+            <button className="flex h-6 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
+              Remove LP
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+        {xUsdtLpBal > 0 ? (
+          <div className="flex justify-between w-full m-1">
+            <h1>X-USDT LP</h1>
+            <h1>{xUsdtLpBal.toFixed(4)}</h1>
+            <button className="flex h-6 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
+              Remove LP
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
+        {xUsdcLpBal > 0 ? (
+          <div className="flex justify-between w-full m-1">
+            <h1>X-USDC LP</h1>
+            <h1>{xUsdcLpBal.toFixed(4)}</h1>
             <button className="flex h-6 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center">
               Remove LP
             </button>

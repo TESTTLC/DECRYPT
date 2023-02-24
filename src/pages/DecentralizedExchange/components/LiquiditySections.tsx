@@ -6,6 +6,7 @@ import tlchainImage from 'src/assets/images/tlc-bridge.png';
 import { Project, ChainsIds } from 'src/utils/types';
 import usdcLogo from 'src/assets/images/USDC-logo.png';
 import usdtLogo from 'src/assets/images/USDT-logo.png';
+import xLogo from 'src/assets/images/X-logo.png';
 import tlcLogo from 'src/assets/images/TLC-logo.png';
 import { AiFillLock } from 'react-icons/ai';
 import {
@@ -15,8 +16,12 @@ import {
   RouterContractAddress,
   TempUsdc,
   TempUsdt,
+  X_TLC,
+  X_USDC,
+  X_USDT,
   TLChain_USDC_ChildTokenContractAddress,
   TLChain_USDT_ChildTokenContractAddress,
+  TLChain_X_ChildTokenContractAddress,
   WTLCTokenContractAddress,
 } from 'src/utils/globals';
 import { Contract, ethers, FixedNumber } from 'ethers';
@@ -78,6 +83,15 @@ const LiquiditySections: React.FC<Props> = ({
       percentage1: usdtTlcApr,
       // percentage2: 179,
       address: TLChain_USDC_ChildTokenContractAddress,
+    },
+    {
+      name: 'Luxury Token',
+      tag: 'X',
+      image: xLogo,
+      iconBackground: '',
+      percentage1: 100,
+      // percentage2: 179,
+      address: TLChain_X_ChildTokenContractAddress,
     },
 
     //   {
@@ -146,9 +160,20 @@ const LiquiditySections: React.FC<Props> = ({
   };
 
   const calculateInputAmount = useCallback(async () => {
-    let pairAddress = TempUsdc;
-    if (firstToken.address === TLChain_USDT_ChildTokenContractAddress) {
-      pairAddress = TempUsdt;
+    let pairAddress = TempUsdt;
+    switch (firstToken.address) {
+      case TLChain_USDT_ChildTokenContractAddress:
+        pairAddress = TempUsdt;
+        break;
+      case TLChain_USDC_ChildTokenContractAddress:
+        pairAddress = TempUsdc;
+        break;
+      case TLChain_X_ChildTokenContractAddress:
+        pairAddress = X_TLC;
+        break;
+      default:
+        pairAddress = TempUsdt;
+        break;
     }
 
     const pairContract = new Contract(
@@ -173,15 +198,29 @@ const LiquiditySections: React.FC<Props> = ({
     // it looks like reserves are reversed in the LP Contracts
     let reserve1 = 0;
     let reserve2 = 0;
-    if (pairAddress === TempUsdt) {
-      //   reserve1 = reservesResult[1].toString() * 1000000000000;
-      reserve2 = Number(formatEther(reservesResult[0].toString()));
-      reserve1 = Number(formatUnits(reservesResult[1], 18));
-    } else {
-      reserve1 = Number(formatUnits(reservesResult[0], 18));
-      reserve2 = Number(formatEther(reservesResult[1].toString()));
-      //   reserve1 = reservesResult[0].toString();
+    switch (pairAddress) {
+      case TempUsdt:
+        reserve2 = Number(formatEther(reservesResult[0].toString()));
+        reserve1 = Number(formatUnits(reservesResult[1], 18));
+        break;
+      case TempUsdc:
+        reserve1 = Number(formatUnits(reservesResult[0], 18));
+        reserve2 = Number(formatEther(reservesResult[1].toString()));
+        break;
+      default:
+        reserve1 = Number(formatUnits(reservesResult[0], 18));
+        reserve2 = Number(formatUnits(reservesResult[1], 18));
+        break;
     }
+    // if (pairAddress === TempUsdt) {
+    //   //   reserve1 = reservesResult[1].toString() * 1000000000000;
+    //   reserve2 = Number(formatEther(reservesResult[0].toString()));
+    //   reserve1 = Number(formatUnits(reservesResult[1], 18));
+    // } else if(par){
+    //   reserve1 = Number(formatUnits(reservesResult[0], 18));
+    //   reserve2 = Number(formatEther(reservesResult[1].toString()));
+    //   //   reserve1 = reservesResult[0].toString();
+    // }
     const ratio = reserve1 / reserve2;
 
     console.log('ratio: ', ratio);
