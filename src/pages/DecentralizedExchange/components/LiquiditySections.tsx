@@ -65,6 +65,22 @@ const LiquiditySections: React.FC<Props> = ({
   usdcTlcApr,
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const toTokens: any[] = [
+    {
+      name: 'TLC',
+      tag: 'TLC',
+      image: tlchainImage,
+      address: '',
+    },
+    {
+      name: 'Luxury Token',
+      tag: 'X',
+      image: xLogo,
+      value: 1,
+      address: TLChain_X_ChildTokenContractAddress,
+    },
+  ];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const fromModalTokens: any[] = [
     {
       name: 'Wrapped USDT',
@@ -132,7 +148,7 @@ const LiquiditySections: React.FC<Props> = ({
   const [amountToSwap, setAmountToSwap] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [firstToken, setFirstToken] = useState(fromModalTokens[0]);
-  const [secondToken, setSecondToken] = useState(toModalTokes[0]);
+  const [secondToken, setSecondToken] = useState(toTokens[0]);
   const [secondAmount, setSecondAmount] = useState(0);
 
   const provider = useSelector<StoreState, Web3Provider | undefined>(
@@ -145,13 +161,12 @@ const LiquiditySections: React.FC<Props> = ({
 
   const onFirstTokenChange = (tag: string) => {
     const token = fromModalTokens.find((item) => item.tag === tag);
-    console.log('T: ', token);
     setFirstToken(token);
   };
 
   const onSecondTokenChange = (tag: string) => {
-    const token = toModalTokes.find((item) => item.tag === tag);
-    // setSecondToken(token);
+    const token = toTokens.find((item) => item.tag === tag);
+    setSecondToken(token);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -160,21 +175,38 @@ const LiquiditySections: React.FC<Props> = ({
   };
 
   const calculateInputAmount = useCallback(async () => {
-    let pairAddress = TempUsdt;
-    switch (firstToken.address) {
-      case TLChain_USDT_ChildTokenContractAddress:
+    // console.log(secondToken);
+    let pairAddress = '';
+    // switch (firstToken.address) {
+    //   case TLChain_USDT_ChildTokenContractAddress:
+    //     pairAddress = TempUsdt;
+    //     break;
+    //   case TLChain_USDC_ChildTokenContractAddress:
+    //     pairAddress = TempUsdc;
+    //     break;
+    //   case TLChain_X_ChildTokenContractAddress:
+    //     pairAddress = X_TLC;
+    //     break;
+    //   default:
+    //     pairAddress = TempUsdt;
+    //     break;
+    // }
+    if (secondToken.tag === 'TLC') {
+      if (firstToken.address == TLChain_USDT_ChildTokenContractAddress) {
         pairAddress = TempUsdt;
-        break;
-      case TLChain_USDC_ChildTokenContractAddress:
+      } else if (firstToken.address == TLChain_USDC_ChildTokenContractAddress) {
         pairAddress = TempUsdc;
-        break;
-      case TLChain_X_ChildTokenContractAddress:
+      } else if (firstToken.address == TLChain_X_ChildTokenContractAddress) {
         pairAddress = X_TLC;
-        break;
-      default:
-        pairAddress = TempUsdt;
-        break;
+      }
+    } else {
+      if (firstToken.address == TLChain_USDT_ChildTokenContractAddress) {
+        pairAddress = X_USDT;
+      } else if (firstToken.address == TLChain_USDC_ChildTokenContractAddress) {
+        pairAddress = X_USDC;
+      }
     }
+    if (pairAddress === '') return;
 
     const pairContract = new Contract(
       pairAddress,
@@ -182,18 +214,17 @@ const LiquiditySections: React.FC<Props> = ({
       provider?.getSigner(),
     );
 
-    console.log('PairContract: ', pairContract);
     // const reservesResult = await pairContract.getReserves(
     //   FactoryContractAddress,
     //   firstToken.address,
     //   secondToken.address,
     // );
     const reservesResult = await pairContract.getReserves();
-    console.log(
-      'Reserves result: ',
-      reservesResult[0].toString(),
-      reservesResult[1].toString(),
-    );
+    // console.log(
+    //   'Reserves result: ',
+    //   reservesResult[0].toString(),
+    //   reservesResult[1].toString(),
+    // );
 
     // it looks like reserves are reversed in the LP Contracts
     let reserve1 = 0;
@@ -207,9 +238,13 @@ const LiquiditySections: React.FC<Props> = ({
         reserve1 = Number(formatUnits(reservesResult[0], 18));
         reserve2 = Number(formatEther(reservesResult[1].toString()));
         break;
-      default:
+      case X_TLC:
         reserve1 = Number(formatUnits(reservesResult[0], 18));
         reserve2 = Number(formatUnits(reservesResult[1], 18));
+        break;
+      default:
+        reserve1 = Number(formatUnits(reservesResult[1], 18));
+        reserve2 = Number(formatUnits(reservesResult[0], 18));
         break;
     }
     // if (pairAddress === TempUsdt) {
@@ -223,24 +258,109 @@ const LiquiditySections: React.FC<Props> = ({
     // }
     const ratio = reserve1 / reserve2;
 
-    console.log('ratio: ', ratio);
-    console.log(
-      'parseFloat(ratio.toFixed(8)',
-      parseFloat(ratio.toString()).toFixed(8),
-    );
+    // console.log('ratio: ', ratio);
+    // console.log(
+    //   'parseFloat(ratio.toFixed(8)',
+    //   parseFloat(ratio.toString()).toFixed(8),
+    // );
     const finalSecondInput = amountToSwap / ratio;
 
-    console.log('finalSecondInput: ', finalSecondInput);
-
-    setSecondAmount(finalSecondInput);
-  }, [firstToken.address, amountToSwap, provider]);
+    // console.log('finalSecondInput: ', finalSecondInput);
+    // setSecondAmount(finalSecondInput);
+    // setSecondAmount(Number(formatUnits(finalSecondInput.toString())));
+    setSecondAmount(parseFloat(finalSecondInput.toFixed(18)));
+  }, [firstToken.address, amountToSwap, provider, secondToken.address]);
 
   useEffect(() => {
     if (provider && walletAddress) {
       calculateInputAmount();
     }
   }, [provider, walletAddress, amountToSwap, calculateInputAmount]);
+  const addLiquidityTokentoToken = useCallback(async () => {
+    if (provider) {
+      try {
+        setIsLoading(true);
+        const routerContract = new Contract(
+          RouterContractAddress,
+          Router.abi,
+          provider.getSigner(),
+        );
 
+        const address1 = firstToken.address;
+        const address2 = secondToken.address;
+        const token = new Contract(address1, ERC20.abi, provider.getSigner());
+        const token2 = new Contract(address2, ERC20.abi, provider.getSigner());
+        const amount1 = parseEther(amountToSwap.toString()); // wUSDT
+        const amount2 = parseEther(secondAmount.toString());
+        const deadline = addHours(1);
+
+        // console.log('Deadline: ', deadline);
+        // console.log('amount1 length', amountToSwap.toString());
+        // console.log('amount2 length', secondAmount.toString());
+
+        const blockNumber = await provider.getBlockNumber();
+        const block = await provider.getBlock(blockNumber);
+        const timestamp = block?.timestamp + 30000;
+
+        const approvedAmount1 = await token.allowance(
+          walletAddress,
+          RouterContractAddress,
+        );
+        const approvedAmount2 = await token2.allowance(
+          walletAddress,
+          RouterContractAddress,
+        );
+        // console.log('approved amount', approvedAmount1.toString());
+        // console.log('amount', amount1.toString());
+        // console.log('approved amount2', approvedAmount2.toString());
+        // console.log('amount2', amount2.toString());
+        if (amount1.gt(approvedAmount1)) {
+          // console.log('need to approve');
+          const approveTx = await token.approve(RouterContractAddress, amount1);
+          const approve1Result = await approveTx.wait();
+          // console.log('approve1Result: ', approve1Result);
+        }
+        if (amount2.gt(approvedAmount2)) {
+          // console.log('need to approve2');
+          const approveTx = await token2.approve(
+            RouterContractAddress,
+            amount2,
+          );
+          const approve2Result = await approveTx.wait();
+          // console.log('approve2Result: ', approve2Result);
+        }
+        // console.log('add liquidity');
+        // console.log('first amount', amount1.toString());
+        // console.log('second amount', amount2.toString());
+        // console.log('parseUint', parseUnits(amount1.toString(), 18).toString());
+        // console.log('parseUint', parseUnits(amount2.toString(), 18).toString());
+        const result = await routerContract.addLiquidity(
+          firstToken.address,
+          secondToken.address,
+          amount1.toString(),
+          amount2.toString(),
+          0,
+          0,
+          walletAddress,
+          timestamp,
+        );
+        // console.log('result: ', result.wait());
+        setIsLoading(false);
+        // console.log('first value', parseUnits(amount1.toString(), 18));
+        // console.log('second value', parseEther(secondAmount.toString()));
+      } catch (error) {
+        console.log('Error on addLiquidity: ', error);
+        setIsLoading(false);
+      }
+    }
+  }, [
+    amountToSwap,
+    firstToken.address,
+    provider,
+    secondAmount,
+    secondToken.address,
+    walletAddress,
+  ]);
   const addLiquidity = useCallback(async () => {
     if (provider) {
       try {
@@ -259,7 +379,7 @@ const LiquiditySections: React.FC<Props> = ({
         // const amountBMin = amount2 - (0.5 / 100) * amount2; //amount1 - 0.5% slippage
         const deadline = addHours(1);
 
-        console.log('Deadline: ', deadline);
+        // console.log('Deadline: ', deadline);
 
         const blockNumber = await provider.getBlockNumber();
         const block = await provider.getBlock(blockNumber);
@@ -269,27 +389,34 @@ const LiquiditySections: React.FC<Props> = ({
           walletAddress,
           RouterContractAddress,
         );
-        console.log('approved amount', approvedAmount.toString());
-        console.log('amount', amount1.toString());
-        if (amount1.gt(approvedAmount)) {
-          console.log('need to approve');
-          const approveTx = await token.approve(RouterContractAddress, amount1);
+        // console.log('approved amount', approvedAmount.toString());
+        // console.log('amount', amount1.toString());
+        if (amount1.gte(approvedAmount)) {
+          // console.log('need to approve');
+          const amount = parseEther('2000000000000000000000000000000000000');
+          const approveTx = await token.approve(RouterContractAddress, amount);
           const approve1Result = await approveTx.wait();
-          console.log('approve1Result: ', approve1Result);
+          // console.log('approve1Result: ', approve1Result);
         }
+        // console.log('come here?');
+        // console.log('first value', amount1.toString());
+        // console.log(
+        //   'second value',
+        //   parseEther(secondAmount.toString()).toString(),
+        // );
         const result = await routerContract.addLiquidityETH(
           firstToken.address,
-          parseUnits(amount1.toString(), 18),
+          amount1,
           0,
           0,
           walletAddress,
           timestamp,
           { value: parseEther(secondAmount.toString()) },
         );
-        console.log('result: ', result.wait());
+        // console.log('result: ', result.wait());
         setIsLoading(false);
-        console.log('first value', parseUnits(amount1.toString(), 18));
-        console.log('second value', parseEther(secondAmount.toString()));
+        // console.log('first value', parseUnits(amount1.toString(), 18));
+        // console.log('second value', parseEther(secondAmount.toString()));
       } catch (error) {
         console.log('Error on addLiquidity: ', error);
         setIsLoading(false);
@@ -423,12 +550,16 @@ const LiquiditySections: React.FC<Props> = ({
                 ></input>
               </div>
               <div className="flex w-1/2 justify-end items-center mt-4">
-                <img
+                {/* <img
                   className="text-white font-poppins w-9 h-9 mr-2 object-cover "
                   src={tlchainImage}
                   alt="TLChain-Logo"
                 />
-                <p className="font-poppins text-md text-white">TLC</p>
+                <p className="font-poppins text-md text-white">TLC</p> */}
+                <LiquidityTokensModal
+                  tokens={toTokens}
+                  onTokenChange={onSecondTokenChange}
+                />
               </div>
             </div>
             <div className="h-14 mt-2" />
@@ -441,7 +572,11 @@ const LiquiditySections: React.FC<Props> = ({
             {walletAddress &&
             parseInt(currentChainId) === parseInt(ChainsIds.TLC) ? (
               <button
-                onClick={addLiquidity}
+                onClick={
+                  secondToken.tag === 'TLC'
+                    ? addLiquidity
+                    : addLiquidityTokentoToken
+                }
                 className="flex w-full h-10 text-white text-md font-poppins items-center justify-center bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl font-medium rounded-lg px-5 text-center"
               >
                 {isLoading ? (

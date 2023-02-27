@@ -682,7 +682,7 @@ const SwapSections: React.FC<Props> = ({ currentChainId }) => {
       //   'parseEther(amountToSwap.toString()): ',
       //   parseEther(amountToSwap.toString()),
       // );
-      console.log('[from.address, to.address]: ', [from.address, to.address]);
+      // console.log('[from.address, to.address]: ', [from.address, to.address]);
       if (from?.address && to?.address) {
         const result = await routerC.getAmountsOut(
           parseEther(amountToSwap.toString()),
