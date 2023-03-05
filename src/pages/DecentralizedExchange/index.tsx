@@ -34,6 +34,7 @@ import LiquiditySections from './components/LiquiditySections';
 import Farms from './components/Farms';
 import ChartSection from './components/ChartSection';
 import DexInfo from './components/DexInfo';
+import TradingView from './components/TradingView';
 
 export const localModalTokens: Project[] = [
   {
@@ -329,13 +330,19 @@ const DecentralizedExchange: React.FC = () => {
 
       <DexInfo />
 
-      <div
+      {/* <div
         id="chartContainer"
         className="self-center flex items-center justify-center my-6 rounded-md xs:w-[22rem] md:w-[39rem] lg:w-[50rem] w-[70rem]"
       >
         <ChartSection />
-      </div>
+      </div> */}
 
+      <div
+        id="chartContainer1"
+        className="self-center flex items-center justify-center my-6 rounded-md xs:w-[22rem] md:w-[39rem] lg:w-[50rem] w-[70rem]"
+      >
+        <TradingView />
+      </div>
       <div className="relative flex flex-col space-y-8 w-[70rem] xs:w-[22rem] md:w-[40rem] px-8 xs:px-2 sm:px-4 py-8 rounded-lg bg-black bg-opacity-60 text-white text-sm">
         <Farms
           currentChainId={currentChainId ?? ''}
