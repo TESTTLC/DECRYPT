@@ -15,6 +15,9 @@ thirdweb-dev/react/*
 thirdweb-dev/react/**
 thirdweb-dev/react/**/*
 
+canvaschart
+./canvaschart/*
+
 node_modules
 node_modules/wagmi
 node_modules/wagmi-core
